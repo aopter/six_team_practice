@@ -1,4 +1,4 @@
-package net.onest.timestoryprj.utils;
+package net.onest.timestoryprj.customview;
 
 import android.app.Application;
 import android.graphics.Typeface;
