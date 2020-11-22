@@ -11,4 +11,91 @@ public class Card {
     private long cardCreationTime;//创建时间
 
     private Dynasty cardDynasty;//卡片所属朝代
+
+    public Integer getCardId() {
+        return cardId;
+    }
+
+    public void setCardId(Integer cardId) {
+        this.cardId = cardId;
+    }
+
+    public String getCardName() {
+        return cardName;
+    }
+
+    public void setCardName(String cardName) {
+        this.cardName = cardName;
+    }
+
+    public Integer getCardType() {
+        return cardType;
+    }
+
+    public void setCardType(Integer cardType) {
+        this.cardType = cardType;
+    }
+
+    public String getCardInfo() {
+        return cardInfo;
+    }
+
+    public void setCardInfo(String cardInfo) {
+        this.cardInfo = cardInfo;
+    }
+
+    public String getCardPicture() {
+        return cardPicture;
+    }
+
+    public void setCardPicture(String cardPicture) {
+        this.cardPicture = cardPicture;
+    }
+
+    public String getCardStore() {
+        return cardStore;
+    }
+
+    public void setCardStore(String cardStore) {
+        this.cardStore = cardStore;
+    }
+
+    public String getCardCreator() {
+        return cardCreator;
+    }
+
+    public void setCardCreator(String cardCreator) {
+        this.cardCreator = cardCreator;
+    }
+
+    public long getCardCreationTime() {
+        return cardCreationTime;
+    }
+
+    public void setCardCreationTime(long cardCreationTime) {
+        this.cardCreationTime = cardCreationTime;
+    }
+
+    public Dynasty getCardDynasty() {
+        return cardDynasty;
+    }
+
+    public void setCardDynasty(Dynasty cardDynasty) {
+        this.cardDynasty = cardDynasty;
+    }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "cardId=" + cardId +
+                ", cardName='" + cardName + '\'' +
+                ", cardType=" + cardType +
+                ", cardInfo='" + cardInfo + '\'' +
+                ", cardPicture='" + cardPicture + '\'' +
+                ", cardStore='" + cardStore + '\'' +
+                ", cardCreator='" + cardCreator + '\'' +
+                ", cardCreationTime=" + cardCreationTime +
+                ", cardDynasty=" + cardDynasty +
+                '}';
+    }
 }
