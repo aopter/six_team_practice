@@ -49,8 +49,6 @@ public class LoginActivity extends AppCompatActivity {
     private Gson gson = new Gson();
     private SharedPreferences sharedPreferences;
 
-    public String SERVER_ADDR ="http://192.168.43.39:8080";
-    public String NET_HOME = "CakePrj";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +101,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    URL url = new URL(SERVER_ADDR+"/"+NET_HOME+"/Exercise");
+                    URL url = new URL("");
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("POST");
                     OutputStream outputStream = connection.getOutputStream();

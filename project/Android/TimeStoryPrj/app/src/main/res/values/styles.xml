@@ -20,4 +20,29 @@
         <item name="android:layout_width">80dp</item>
         <item name="android:layout_height">20dp</item>
     </style>
+
+    <style name="loginEtStyle">
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_width">200dp</item>
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:background">#bfffffff</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="loginBtn">
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@android:color/holo_orange_light</item>
+    </style>
+    <style name="settingBtn">
+        <item name="android:background">@android:color/white</item>
+        <item name="android:layout_width">120dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">80dp</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#B22222</item>
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
 </resources>
