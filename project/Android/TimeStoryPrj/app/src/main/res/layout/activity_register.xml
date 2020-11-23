@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/login"
+    android:orientation="vertical"
+    tools:context=".activity.user.RegisterActivity">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textColor="@android:color/white"
+        android:textSize="35sp"
+        android:layout_gravity="center"
+        android:text="用户注册"/>
+    <EditText
+        android:id="@+id/et_res_phone"
+        android:layout_width="200dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="50dp"
+        android:background="#bfffffff"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:inputType="number"
+        android:hint="手机号"/>
+    <EditText
+        android:id="@+id/et_res_pwd"
+        android:layout_width="200dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="30dp"
+        android:background="#bfffffff"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:inputType="textPassword"
+        android:hint="密码"/>
+
+    <Button
+        android:id="@+id/btn_res"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:text="注册"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:textColor="@android:color/white"
+        android:background="@android:color/holo_orange_light"/>
+
+</LinearLayout>

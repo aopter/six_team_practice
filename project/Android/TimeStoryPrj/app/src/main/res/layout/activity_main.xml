@@ -19,10 +19,18 @@
         android:text="系统自带"
         android:textColor="@android:color/black"
         android:textSize="20dp" />
+<<<<<<< Updated upstream
 
     <Button
         android:id="@+id/btn_homepage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="首页"/>
+=======
+    <Button
+        android:id="@+id/login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="登录"/>
+>>>>>>> Stashed changes
 </LinearLayout>
