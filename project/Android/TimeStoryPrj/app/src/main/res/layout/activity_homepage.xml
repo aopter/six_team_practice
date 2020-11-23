@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@mipmap/timg1"
+    tools:context=".activity.dynasty.HomepageActivity">
+
+    <LinearLayout
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- 头像、名称-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_header"
+                android:layout_width="80dp"
+                android:layout_height="80dp" />
+            <TextView
+                android:id="@+id/tv_name"
+                style="@style/normalBtn"/>
+        </LinearLayout>
+
+        <!-- 等级、经验-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_level"
+                android:layout_marginTop="40dp"
+                style="@style/normalBtn"/>
+
+            <ProgressBar
+                android:id="@+id/btn_experience"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:background="@android:color/white"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+        <!-- 积分 -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="20dp">
+
+            <TextView
+                android:id="@+id/tv_point"
+                style="@style/normalBtn"/>
+            <Button
+                android:id="@+id/btn_plus"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@mipmap/plus"/>
+        </LinearLayout>
+        <!-- 抽卡 -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="20dp">
+
+            <Button
+                android:id="@+id/btn_card"
+                style="@style/normalBtn"
+                android:text="抽卡"/>
+        </LinearLayout>
+
+        <!-- 我的卡片 -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="20dp">
+
+            <Button
+                android:id="@+id/btn_my_card"
+                style="@style/normalBtn"
+                android:text="我的卡片"/>
+        </LinearLayout>
+
+        <!-- 我的收藏 -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="20dp">
+
+            <Button
+                android:id="@+id/btn_my_collections"
+                style="@style/normalBtn"
+                android:text="我的收藏"/>
+        </LinearLayout>
+
+        <!-- 音量-->
+        <RelativeLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_toLeftOf="@+id/btn_settings"
+                android:layout_marginRight="10dp"
+                android:id="@+id/btn_voice"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@mipmap/voice"/>
+            <Button
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:id="@+id/btn_settings"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@mipmap/settings"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <HorizontalScrollView
+        android:id="@+id/hsv_dynasty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </HorizontalScrollView>
+</LinearLayout>
