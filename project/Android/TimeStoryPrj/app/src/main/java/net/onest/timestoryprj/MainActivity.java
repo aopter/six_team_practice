@@ -9,39 +9,36 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import net.onest.timestoryprj.activity.card.MyCardActivity;
 import net.onest.timestoryprj.activity.dynasty.HomepageActivity;
-<<<<<<< HEAD
 import net.onest.timestoryprj.activity.user.UserCenterActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-=======
+import butterknife.OnClick;
+
 import net.onest.timestoryprj.activity.user.LoginActivity;
->>>>>>> 873e25da223ce291776ce426a68c361ffa082b3b
 
 public class MainActivity extends AppCompatActivity {
     private Button btnLogin;
     private Button btnHomepage;
 
-<<<<<<< HEAD
-    @BindView(R.id.btn_history)
-    public Button btnHis;
-=======
 
->>>>>>> 873e25da223ce291776ce426a68c361ffa082b3b
+    @BindView(R.id.btn_user_center)
+    public Button btnHis;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //隐藏状态栏
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
-<<<<<<< HEAD
+
         ButterKnife.bind(this);
-=======
->>>>>>> 873e25da223ce291776ce426a68c361ffa082b3b
 
         btnHomepage = findViewById(R.id.btn_homepage);
         btnLogin = findViewById(R.id.login);
+//       跳转主页
         btnHomepage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,20 +48,33 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-<<<<<<< HEAD
-        btnHis.setOnClickListener(view -> {
-            Intent intent = new Intent();
-            intent.setClass(MainActivity.this, UserCenterActivity.class);
-            Log.e("jumpHis: ","执行" );
-            startActivity(intent);
-=======
+//       跳转登录
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
             }
->>>>>>> 873e25da223ce291776ce426a68c361ffa082b3b
+
         });
     }
+
+    //        跳转回家
+    @OnClick(R.id.btn_user_center)
+    public void userCenter() {
+        Intent intent = new Intent();
+        intent.setClass(MainActivity.this, UserCenterActivity.class);
+        Log.e("jumpHis: ", "执行");
+        startActivity(intent);
+    }
+
+    //   跳转卡片
+    @OnClick(R.id.btn_user_card)
+    public void userCard() {
+        Intent intent = new Intent();
+        intent.setClass(MainActivity.this, MyCardActivity.class);
+        Log.e("jumpHis: ", "执行");
+        startActivity(intent);
+    }
+
 }
