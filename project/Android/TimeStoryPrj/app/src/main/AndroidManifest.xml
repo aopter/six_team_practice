@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
+<<<<<<< Updated upstream
         <activity android:name=".activity.dynasty.DynastyIntroduceActivity"></activity>
         <activity
             android:name=".activity.dynasty.HomepageActivity"
@@ -24,6 +25,16 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".MainActivity"
+=======
+        <activity
+            android:name=".activity.card.SpectficCardDetailActivity"
+            android:screenOrientation="landscape"></activity>
+        <activity
+            android:name=".activity.card.SpecificDynastyCardActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.card.MyCardActivity"
+>>>>>>> Stashed changes
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,6 +42,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>
