@@ -15,9 +15,10 @@
 
     <style name="normalBtn">
         <item name="android:gravity">center</item>
+        <item name="android:textSize">8sp</item>
         <item name="android:background">@color/ourDynastyRed</item>
         <item name="android:textColor">#fff</item>
-        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_width">70dp</item>
         <item name="android:layout_height">20dp</item>
     </style>
 </resources>

@@ -3,7 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
+    <Button
+        android:id="@+id/btn_homepage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="首页"/>
     <net.onest.timestoryprj.customview.CusTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,8 +25,9 @@
         android:textSize="20dp" />
 
     <Button
-        android:id="@+id/btn_homepage"
+        android:id="@+id/btn_history"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="首页"/>
+        android:text="跳转历史上的今天"/>
+
 </LinearLayout>
