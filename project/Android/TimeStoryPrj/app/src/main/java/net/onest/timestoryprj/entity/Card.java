@@ -1,22 +1,21 @@
 package net.onest.timestoryprj.entity;
 
 public class Card {
-    private Integer cardId;//卡片标识符
+    private int cardId;//卡片标识符
     private String cardName;//卡片名称
-    private Integer cardType;//卡片分类
+    private int cardType;//卡片分类
     private String cardInfo;//卡片简介
     private String cardPicture;//卡片图片
-    private String cardStore;//卡片故事
+    private String cardStory;//卡片故事
     private String cardCreator;//创建人
     private long cardCreationTime;//创建时间
+    private int dynastyId;//卡片所属朝代
 
-    private Dynasty cardDynasty;//卡片所属朝代
-
-    public Integer getCardId() {
+    public int getCardId() {
         return cardId;
     }
 
-    public void setCardId(Integer cardId) {
+    public void setCardId(int cardId) {
         this.cardId = cardId;
     }
 
@@ -28,11 +27,11 @@ public class Card {
         this.cardName = cardName;
     }
 
-    public Integer getCardType() {
+    public int getCardType() {
         return cardType;
     }
 
-    public void setCardType(Integer cardType) {
+    public void setCardType(int cardType) {
         this.cardType = cardType;
     }
 
@@ -52,12 +51,12 @@ public class Card {
         this.cardPicture = cardPicture;
     }
 
-    public String getCardStore() {
-        return cardStore;
+    public String getCardStory() {
+        return cardStory;
     }
 
-    public void setCardStore(String cardStore) {
-        this.cardStore = cardStore;
+    public void setCardStory(String cardStory) {
+        this.cardStory = cardStory;
     }
 
     public String getCardCreator() {
@@ -76,12 +75,12 @@ public class Card {
         this.cardCreationTime = cardCreationTime;
     }
 
-    public Dynasty getCardDynasty() {
-        return cardDynasty;
+    public int getDynastyId() {
+        return dynastyId;
     }
 
-    public void setCardDynasty(Dynasty cardDynasty) {
-        this.cardDynasty = cardDynasty;
+    public void setDynastyId(int dynastyId) {
+        this.dynastyId = dynastyId;
     }
 
     @Override
@@ -92,10 +91,10 @@ public class Card {
                 ", cardType=" + cardType +
                 ", cardInfo='" + cardInfo + '\'' +
                 ", cardPicture='" + cardPicture + '\'' +
-                ", cardStore='" + cardStore + '\'' +
+                ", cardStory='" + cardStory + '\'' +
                 ", cardCreator='" + cardCreator + '\'' +
                 ", cardCreationTime=" + cardCreationTime +
-                ", cardDynasty=" + cardDynasty +
+                ", dynastyId=" + dynastyId +
                 '}';
     }
 }

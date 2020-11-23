@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/setting"
+    tools:context=".activity.user.SettingActivity">
+    <LinearLayout
+        android:layout_width="200dp"
+        android:layout_height="280dp"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical">
+        <Button
+            android:text="个人资料"
+            style="@style/settingBtn" />
+        <Button
+            android:text="音量设置"
+            style="@style/settingBtn"/>
+        <Button
+            style="@style/settingBtn"
+            android:text="查看规则"/>
+        <Button
+            style="@style/settingBtn"
+            android:text="反馈问题"/>
+        <Button
+            style="@style/settingBtn"
+            android:text="退出登录"/>
+
+    </LinearLayout>
+
+</FrameLayout>

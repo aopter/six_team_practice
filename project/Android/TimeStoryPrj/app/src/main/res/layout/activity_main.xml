@@ -24,10 +24,21 @@
         android:textColor="@android:color/black"
         android:textSize="20dp" />
 
+
     <Button
         android:id="@+id/btn_history"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:text="跳转历史上的今天"/>
+
+        android:text="首页"/>
+
+    <Button
+        android:id="@+id/login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="登录"/>
+>>>>>>> 873e25da223ce291776ce426a68c361ffa082b3b
 
 </LinearLayout>
