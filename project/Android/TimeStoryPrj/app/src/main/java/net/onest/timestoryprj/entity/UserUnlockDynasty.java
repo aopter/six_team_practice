@@ -6,7 +6,7 @@ public class UserUnlockDynasty {
     private Integer id;//流水号
     private Integer progress;//答对题目个数
 
-    private Dynasty dynasty;//朝代
+    private String dynasty;//朝代
 
 
     @Override
@@ -34,11 +34,11 @@ public class UserUnlockDynasty {
         this.progress = progress;
     }
 
-    public Dynasty getDynasty() {
+    public String getDynasty() {
         return dynasty;
     }
 
-    public void setDynasty(Dynasty dynasty) {
+    public void setDynasty(String dynasty) {
         this.dynasty = dynasty;
     }
 }

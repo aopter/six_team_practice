@@ -6,7 +6,6 @@ package net.onest.timestoryprj.constant;
 public class ServiceConfig {
     //历史上的今天接口
     public static String HISTORY_TODAY = "http://api.juheapi.com/japi/toh";
-    //服务器根目录
-    public static String SERVICE_ROOT = "";
-
+//    public static String SERVICE_ROOT = "";
+    public static String SERVICE_ROOT = "http://10.7.86.252:8080/TestPrj/";
 }

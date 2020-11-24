@@ -2,6 +2,7 @@ package net.onest.timestoryprj.constant;
 
 import net.onest.timestoryprj.entity.HistoryDay;
 import net.onest.timestoryprj.entity.User;
+import net.onest.timestoryprj.entity.UserUnlockDynasty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,10 +15,8 @@ public class Constant {
     public static String DELIMITER = "|||";
     //当前登录的用户
     public static User User;
-
-
-
-
     //历史上的今天事件集合
     public static List<HistoryDay> historyDays = new ArrayList<>();
+    //当前登录用户解锁的朝代
+    public static List<UserUnlockDynasty> UnlockDynasty = new ArrayList<>();
 }
