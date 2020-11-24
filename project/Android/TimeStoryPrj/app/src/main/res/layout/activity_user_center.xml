@@ -24,12 +24,13 @@
                 android:layout_height="60dp" />
 
             <TextView
+                android:layout_gravity="center"
                 android:text="小妹"
                 android:id="@+id/tv_name"
                 style="@style/normalBtn"
                 android:textSize="8sp"
                 android:layout_height="15dp"
-                android:width="40dp"
+                android:layout_width="45dp"
                 android:textColor="@android:color/white" />
 
         </LinearLayout>
@@ -97,7 +98,7 @@
 
             <Button
                 android:layout_width="wrap_content"
-                android:id="@+id/btn_dynasty"
+                android:id="@+id/btn_go_dynasty"
                 style="@style/normalBtn"
                 android:text="出行"
                 android:textColor="@android:color/white" />
@@ -119,65 +120,54 @@
                 android:textColor="@android:color/white" />
         </LinearLayout>
     </LinearLayout>
+
+
     <LinearLayout
         android:layout_above="@+id/user_center_buttom"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:paddingBottom="15dp"
         android:orientation="horizontal">
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="2"
             android:layout_height="match_parent">
+
             <ListView
-                android:alpha="0.8"
-                android:background="#FFF"
-                android:layout_marginLeft="10dp"
+                android:id="@+id/lv_user_list"
                 android:layout_width="220dp"
                 android:layout_height="match_parent"
-                android:id="@+id/lv_user_list"/>
+                android:layout_marginLeft="10dp"
+                android:alpha="0.8"
+                android:background="#FFF" />
         </LinearLayout>
         <LinearLayout
+            android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_weight="3"
             android:layout_height="match_parent">
-
-            <LinearLayout
-                android:alpha="0.8"
+            <TextView
+                android:alpha="0.9"
                 android:background="@color/ourDynastyRed"
-
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:textColor="#fff"
+                android:padding="2dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:text="历史上的今天"/>
+            <LinearLayout
+                android:id="@+id/ll_his"
+                android:alpha="0.8"
                 android:layout_width="320dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="#fff"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:text="历史上的今天"/>
-                <TextView
-                    android:id="@+id/tv_history_title"
-                    android:textColor="#FFF"
-                    android:gravity="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="title" />
-                <TextView
-                    android:id="@+id/tv_history_time"
 
-                    android:textColor="#FFF"
-                    android:gravity="right"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/re_his_today"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="时间" />
-                <TextView
-                    android:id="@+id/tv_history_context"
-                    android:padding="5dp"
-                    android:textColor="#FFF"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="内容" />
+                    android:layout_height="match_parent"/>
 
             </LinearLayout>
 

@@ -11,6 +11,7 @@ import android.widget.Button;
 
 import net.onest.timestoryprj.activity.card.MyCardActivity;
 import net.onest.timestoryprj.activity.dynasty.HomepageActivity;
+import net.onest.timestoryprj.activity.problem.SelectProblemTypeActivity;
 import net.onest.timestoryprj.activity.user.UserCenterActivity;
 
 import butterknife.BindView;
@@ -26,6 +27,9 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.btn_user_center)
     public Button btnHis;
+
+    @BindView(R.id.btn_problem)
+    public Button btnProblem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +77,15 @@ public class MainActivity extends AppCompatActivity {
     public void userCard() {
         Intent intent = new Intent();
         intent.setClass(MainActivity.this, MyCardActivity.class);
+        Log.e("jumpHis: ", "执行");
+        startActivity(intent);
+    }
+
+    //   跳转问题
+    @OnClick(R.id.btn_problem)
+    public void userProblem() {
+        Intent intent = new Intent();
+        intent.setClass(MainActivity.this, SelectProblemTypeActivity.class);
         Log.e("jumpHis: ", "执行");
         startActivity(intent);
     }

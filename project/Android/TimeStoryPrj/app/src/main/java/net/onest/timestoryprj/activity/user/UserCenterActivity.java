@@ -1,22 +1,30 @@
 package net.onest.timestoryprj.activity.user;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
 import net.onest.timestoryprj.R;
+import net.onest.timestoryprj.activity.card.MyCardActivity;
+import net.onest.timestoryprj.activity.dynasty.HomepageActivity;
+import net.onest.timestoryprj.adapter.user.HistoryTodayAdapter;
 import net.onest.timestoryprj.adapter.user.UserRankListAdapter;
 import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
@@ -34,6 +42,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -59,12 +68,15 @@ public class UserCenterActivity extends AppCompatActivity {
     public ListView rankList;
 
 
-    @BindView(R.id.tv_history_title)
-    TextView tvHistoryTitle;
-    @BindView(R.id.tv_history_time)
-    TextView tvHistoryTime;
-    @BindView(R.id.tv_history_context)
-    TextView tvHistoryContext;
+    @BindView(R.id.re_his_today)
+    RecyclerView recyclerView;
+
+    @BindView(R.id.btn_go_dynasty)
+    Button btnGoDynasty;
+    @BindView(R.id.btn_my_card)
+    Button btnMyCards;
+
+
 
     private Handler handler = new Handler() {
         @Override
@@ -72,14 +84,21 @@ public class UserCenterActivity extends AppCompatActivity {
             switch (msg.arg1){
                 case 1:
                     //加载完毕
-               for (int i = 0; i < Constant.historyDays.size(); i++) {
-                   HistoryDay historyDay = Constant.historyDays.get(i);
-                   Log.e("changdu: ", Constant.historyDays.get(i).toString());
-                   tvHistoryTitle.setText(historyDay.getTitle());
-                   tvHistoryTime.setText(historyDay.getLunar()+"");
-                   tvHistoryContext.setText(historyDay.getDes());
-                    break;
-                }
+                    HistoryTodayAdapter historyTodayAdapter = new HistoryTodayAdapter(UserCenterActivity.this);
+//                    配置
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(UserCenterActivity.this);
+                    linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                    recyclerView.setLayoutManager(linearLayoutManager);
+                    recyclerView.setAdapter(historyTodayAdapter);
+
+//               for (int i = 0; i < Constant.historyDays.size(); i++) {
+//                   HistoryDay historyDay = Constant.historyDays.get(i);
+//                   Log.e("changdu: ", Constant.historyDays.get(i).toString());
+//                   tvHistoryTitle.setText(historyDay.getTitle());
+//                   tvHistoryTime.setText(historyDay.getLunar()+"");
+//                   tvHistoryContext.setText(historyDay.getDes());
+//                    break;
+//                }
                     break;
             }
         }
@@ -158,5 +177,16 @@ public class UserCenterActivity extends AppCompatActivity {
                 R.layout.item_user_rank_list);
         rankList.setAdapter(cakeListAdapter);
 
+    }
+
+    @OnClick(R.id.btn_go_dynasty)
+    public void jumpDynasty(){
+        Intent intent = new Intent(UserCenterActivity.this, HomepageActivity.class);
+        startActivity(intent);
+    }
+    @OnClick(R.id.btn_my_card)
+    public void jumpMyCard(){
+        Intent intent = new Intent(UserCenterActivity.this, MyCardActivity.class);
+        startActivity(intent);
     }
 }

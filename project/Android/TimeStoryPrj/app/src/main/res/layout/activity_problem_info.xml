@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg_problem_info"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingTop="20dp">
+
+    <net.onest.timestoryprj.customview.CusTextView
+        android:id="@+id/problem_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="我来考考你"
+        android:textColor="@color/ourDynastyRed"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <!--    选择题-->
+    <LinearLayout
+        android:id="@+id/type_xuan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/problem_title"
+        android:orientation="vertical">
+        <!--    题目/描述-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="题目：你喜欢这个界面吗"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/optionA"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/iv_optionA"
+                        style="@style/ivOptionPic"
+                        android:layout_height="117dp"
+                        android:src="@mipmap/select_lian" />
+
+                    <TextView
+                        android:id="@+id/tv_optionA"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="喜欢" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/optionB"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+
+                        android:id="@+id/iv_optionB"
+                        style="@style/ivOptionPic"
+
+                        android:src="@mipmap/select_lian" />
+
+                    <TextView
+                        android:id="@+id/tv_optionB"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="非常喜欢" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/optionC"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/iv_optionC"
+                        style="@style/ivOptionPic"
+
+                        android:src="@mipmap/select_lian" />
+
+                    <TextView
+                        android:id="@+id/tv_optionC"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="太喜欢" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/optionD"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/iv_optionD"
+                        style="@style/ivOptionPic"
+                        android:src="@mipmap/select_lian" />
+
+                    <TextView
+                        android:id="@+id/tv_optionD"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="好看死了" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!--            连线题-->
+    <LinearLayout
+        android:id="@+id/type_lian"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/problem_title"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="题目：你喜欢这个界面吗"
+            android:textSize="16sp"
+            android:textStyle="bold"  />
+
+        <LinearLayout
+            android:id="@+id/lian_first"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv1_lian_first"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="王伟" />
+
+            <TextView
+                android:id="@+id/tv2_lian_first"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="java" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lian_second"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv1_lian_second"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="王伟" />
+
+            <TextView
+                android:id="@+id/tv2_lian_second"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="java" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lian_third"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv1_lian_third"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="王伟" />
+
+            <TextView
+                android:id="@+id/tv2_lian_third"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="java" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lian_forth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv1_lian_forth"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="王伟" />
+
+            <TextView
+                android:id="@+id/tv2_lian_forth"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="java" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <!--排序题-->
+    <!--    题干-->
+    <LinearLayout
+        android:id="@+id/type_pai"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/problem_title"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="题目：你喜欢这个界面吗"
+            android:textSize="16sp"
+            android:textStyle="bold"  />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_pai_first"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="李白乘舟将欲行" />
+
+            <TextView
+                android:id="@+id/tv_pai_second"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="桃花潭水深千尺" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_pai_third"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="不及汪伦送我情" />
+
+            <TextView
+                android:id="@+id/tv_pai_forth"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="忽闻岸上踏歌声" />
+        </LinearLayout>
+
+
+        <!--        答案区-->
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_pai_a"
+                    android:layout_width="180dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="30dp"
+                    android:background="@mipmap/bg_option_pai" />
+
+                <TextView
+                    android:id="@+id/tv_pai_b"
+                    android:layout_width="180dp"
+                    android:layout_height="50dp"
+                    android:background="@mipmap/bg_option_pai" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_pai_c"
+                    android:layout_width="180dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="30dp"
+                    android:background="@mipmap/bg_option_pai" />
+
+                <TextView
+                    android:id="@+id/tv_pai_d"
+                    android:layout_width="180dp"
+                    android:layout_height="50dp"
+                    android:background="@mipmap/bg_option_pai" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="15dp"
+        android:gravity="right"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/problem_answer"
+            style="@style/normalBtn"
+            android:text="查看解析" />
+
+        <Button
+            android:id="@+id/problem_save"
+            style="@style/normalBtn"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:text="收藏" />
+    </LinearLayout>
+</RelativeLayout>

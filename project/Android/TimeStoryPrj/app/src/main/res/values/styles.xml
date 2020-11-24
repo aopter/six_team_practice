@@ -15,6 +15,7 @@
     </style>
 
     <style name="normalBtn">
+        <item name="android:alpha">0.9</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">8sp</item>
         <item name="android:background">@color/ourDynastyRed</item>
@@ -46,5 +47,21 @@
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">#B22222</item>
         <item name="android:layout_marginTop">10dp</item>
+    </style>
+
+    <style name="tvSelectProblemType">
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/ourDynastyRed</item>
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
+
+    <style name="ivOptionPic">
+
+        <item name="android:layout_width">110dp</item>
+        <item name="android:layout_height">110dp</item>
     </style>
 </resources>
