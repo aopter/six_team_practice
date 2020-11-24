@@ -67,7 +67,7 @@ public class MyCardActivity extends AppCompatActivity {
         dynasties.add(dynasty1);
         Dynasty dynasty2 = new Dynasty();
         dynasty2.setDynastyName("元朝");
-        dynasties.add(dynasty);
+        dynasties.add(dynasty2);
         Dynasty dynasty3 = new Dynasty();
         dynasty3.setDynastyName("明朝");
         dynasties.add(dynasty3);

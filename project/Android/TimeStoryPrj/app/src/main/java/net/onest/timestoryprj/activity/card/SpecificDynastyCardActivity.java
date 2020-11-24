@@ -13,6 +13,7 @@ import android.widget.Toast;
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.adapter.card.CardAdapter;
 import net.onest.timestoryprj.adapter.card.SpecificDynastyCardAdapter;
+import net.onest.timestoryprj.customview.DropdownListView;
 import net.onest.timestoryprj.entity.Card;
 
 import java.util.ArrayList;
@@ -22,11 +23,15 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
     private RecyclerView dyanstyCardView;
     private List<Card> cards = new ArrayList<>();
     private SpecificDynastyCardAdapter cardAdapter;
+    private DropdownListView typeView;
+    private ArrayList<String> types;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_specific_dynasty_card);
+        typeView = findViewById(R.id.card_types);
+        initTypes();
         initDynastyCards();
         cardAdapter = new SpecificDynastyCardAdapter(getApplicationContext(), cards);
         cardAdapter.setOnItemClickLitener(new CardAdapter.OnItemClickLitener() {
@@ -41,6 +46,18 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
         GridLayoutManager layoutManager = new GridLayoutManager(this, 4);
         dyanstyCardView.setLayoutManager(layoutManager);
         dyanstyCardView.setAdapter(cardAdapter);
+    }
+
+    private void initTypes() {
+        if (types == null) {
+            types = new ArrayList<>();
+            types.add("全部卡片");
+            types.add("人物卡片");
+            types.add("文物卡片");
+            typeView.setDatas(types);
+        } else {
+            typeView.setDatas(types);
+        }
     }
 
     private void initDynastyCards() {
