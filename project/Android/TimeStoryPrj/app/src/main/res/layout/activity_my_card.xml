@@ -4,14 +4,30 @@
     android:layout_height="match_parent"
     android:background="@mipmap/dynasty"
     android:orientation="vertical"
-    android:padding="40dp">
+    android:padding="20dp">
 
-    <net.onest.timestoryprj.customview.CusTextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="请先选择朝代吧"
-        android:textColor="@android:color/black"
-        android:textSize="20dp" />
+        android:gravity="center_vertical"
+        android:layout_height="60dp"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:padding="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/back" />
+
+        <net.onest.timestoryprj.customview.CusTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="请先选择朝代吧"
+            android:textColor="@android:color/black"
+            android:textSize="20dp" />
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="550dp"

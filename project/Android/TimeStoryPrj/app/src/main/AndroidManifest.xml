@@ -3,35 +3,59 @@
     package="net.onest.timestoryprj">
 
     <uses-permission android:name="android.permission.INTERNET" />
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+<<<<<<< Updated upstream
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".activity.dynasty.DynastyIntroduceActivity"
             android:screenOrientation="landscape"></activity>
         <activity android:name=".activity.problem.ProblemInfoActivity"
             android:screenOrientation="landscape"></activity>
+=======
+        android:theme="@style/AppTheme.NoActionBar"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".activity.card.DrawCardActivity"></activity>
+>>>>>>> Stashed changes
         <activity
-            android:name=".activity.problem.SelectProblemTypeActivity"
+            android:name=".activity.card.ShowCardStoryActivity"
             android:screenOrientation="landscape" />
+<<<<<<< Updated upstream
         <activity android:name=".dialog.dynasty.EventDialogActivity"></activity>
         <activity
             android:name=".activity.dynasty.DetailsEventActivity"
+=======
+        <activity
+            android:name=".activity.dynasty.DynastyIntroduceActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.problem.ProblemInfoActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.problem.SelectProblemTypeActivity"
+>>>>>>> Stashed changes
             android:screenOrientation="landscape" />
         <activity
             android:name=".activity.dynasty.HomepageActivity"
             android:screenOrientation="landscape" />
+<<<<<<< Updated upstream
         <activity android:name=".activity.user.SettingActivity"
             android:screenOrientation="landscape"/>
 
+=======
+        <activity android:name=".activity.user.SettingActivity" />
+>>>>>>> Stashed changes
         <activity
             android:name=".activity.user.RegisterActivity"
             android:screenOrientation="landscape" />
-
         <activity
             android:name=".activity.user.LoginActivity"
             android:screenOrientation="landscape" />

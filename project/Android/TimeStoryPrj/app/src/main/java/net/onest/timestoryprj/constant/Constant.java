@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class Constant {
     //分隔符
-    public static String DELIMITER = "|||";
+    public static String DELIMITER = "fengefu";
     //当前登录的用户
     public static User User;
     //历史上的今天事件集合

@@ -4,8 +4,12 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="ourDynastyRed">#AE5B41</color>
-    <color name="colorDropdown">#B3FFFAFA</color>
+    <color name="colorDropdown">#CCFFFAFA</color>
     <color name="colorSearch">#F5F5F5</color>
     <color name="colorBorder">#CCC</color>
+<<<<<<< Updated upstream
     <color name="ourTimeLine">#DA70D0</color>
+=======
+    <color name="colorTitle">#FFFAF0</color>
+>>>>>>> Stashed changes
 </resources>
