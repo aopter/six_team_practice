@@ -12,10 +12,12 @@ import android.widget.Button;
 import net.onest.timestoryprj.activity.card.MyCardActivity;
 import net.onest.timestoryprj.activity.dynasty.DynastyIntroduceActivity;
 import net.onest.timestoryprj.activity.dynasty.HomepageActivity;
+import net.onest.timestoryprj.activity.problem.LinkLineTextActivity;
 import net.onest.timestoryprj.activity.problem.SelectProblemTypeActivity;
 import net.onest.timestoryprj.activity.user.UserCenterActivity;
 
 import butterknife.BindView;
+import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -31,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.btn_problem)
     public Button btnProblem;
+
+    @BindView(R.id.btn_lkl_lian)
+    Button btnLian;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +92,13 @@ public class MainActivity extends AppCompatActivity {
     public void userProblem() {
         Intent intent = new Intent();
         intent.setClass(MainActivity.this, SelectProblemTypeActivity.class);
+        Log.e("jumpHis: ", "执行");
+        startActivity(intent);
+    }
+    @OnClick(R.id.btn_lkl_lian)
+    public void jumpLianActivity(){
+        Intent intent = new Intent();
+        intent.setClass(MainActivity.this, LinkLineTextActivity.class);
         Log.e("jumpHis: ", "执行");
         startActivity(intent);
     }

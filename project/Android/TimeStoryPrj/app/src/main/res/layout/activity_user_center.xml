@@ -2,7 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@mipmap/user_cbg"
+    android:background="@mipmap/bg_problem_info"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -97,7 +97,6 @@
             android:layout_marginRight="20dp">
 
             <Button
-                android:layout_width="wrap_content"
                 android:id="@+id/btn_go_dynasty"
                 style="@style/normalBtn"
                 android:text="出行"
@@ -125,7 +124,7 @@
     <LinearLayout
         android:layout_above="@+id/user_center_buttom"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="240dp"
         android:paddingBottom="15dp"
         android:orientation="horizontal">
 
@@ -147,7 +146,7 @@
             android:layout_width="0dp"
             android:layout_weight="3"
             android:layout_height="match_parent">
-            <TextView
+            <net.onest.timestoryprj.customview.CusTextView
                 android:alpha="0.9"
                 android:background="@color/ourDynastyRed"
                 android:layout_width="wrap_content"

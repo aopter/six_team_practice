@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="net.onest.timestoryprj">
 
     <uses-permission android:name="android.permission.INTERNET" />
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
-
+=======
 >>>>>>> Stashed changes
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme.NoActionBar">
@@ -24,6 +28,21 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity android:name=".activity.card.DrawCardActivity"></activity>
+>>>>>>> Stashed changes
+=======
+        android:theme="@style/AppTheme.NoActionBar"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".activity.problem.LinkLineTextActivity"
+            android:screenOrientation="landscape" ></activity>
+        <activity
+            android:name=".activity.problem.ProblemCollectionActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.dynasty.DynastyIntroduceActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.problem.ProblemInfoActivity"
+            android:screenOrientation="landscape" />
 >>>>>>> Stashed changes
         <activity
             android:name=".activity.card.ShowCardStoryActivity"
@@ -39,10 +58,13 @@
         <activity
             android:name=".activity.problem.ProblemInfoActivity"
             android:screenOrientation="landscape" />
+<<<<<<< Updated upstream
         <activity
             android:name=".activity.problem.SelectProblemTypeActivity"
 >>>>>>> Stashed changes
             android:screenOrientation="landscape" />
+=======
+>>>>>>> Stashed changes
         <activity
             android:name=".activity.dynasty.HomepageActivity"
             android:screenOrientation="landscape" />
