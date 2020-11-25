@@ -1,29 +1,31 @@
 package net.onest.timestoryprj.entity;
 
+import androidx.annotation.NonNull;
+
 import net.onest.timestoryprj.entity.Dynasty;
 
 public class UserUnlockDynasty {
-    private Integer id;//流水号
+    private Integer userId;//流水号
     private Integer progress;//答对题目个数
 
-    private String dynasty;//朝代
+    private String dynastyId;//朝代
 
 
     @Override
     public String toString() {
         return "UserUnlockDynasty{" +
-                "id=" + id +
+                "userId=" + userId +
                 ", progress=" + progress +
-                ", dynasty=" + dynasty +
+                ", dynastyId='" + dynastyId + '\'' +
                 '}';
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public Integer getProgress() {
@@ -34,11 +36,11 @@ public class UserUnlockDynasty {
         this.progress = progress;
     }
 
-    public String getDynasty() {
-        return dynasty;
+    public String getDynastyId() {
+        return dynastyId;
     }
 
-    public void setDynasty(String dynasty) {
-        this.dynasty = dynasty;
+    public void setDynastyId(String dynastyId) {
+        this.dynastyId = dynastyId;
     }
 }

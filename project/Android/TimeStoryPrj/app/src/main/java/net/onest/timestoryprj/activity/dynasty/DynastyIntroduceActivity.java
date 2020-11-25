@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -36,9 +38,8 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
     private TextView tvDynastyIntro;
     private Button btnQuestions;
     private Button btnDetails;
-    private String dynastyName;
     private String dynastyId;
-    private String DYNASTY_INFO;
+    private String DYNASTY_INFO = "/dynasty/details/";
     private Gson gson;
     private Handler handler;
     @Override
@@ -55,6 +56,10 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
                 switch (msg.what){
                     case 1:
                         Dynasty dynasty1 = (Dynasty) msg.obj;
+                        AssetManager assets = getAssets();
+                        final Typeface typeface = Typeface.createFromAsset(assets, "fonts/custom_font.ttf");
+                        tvDynastyName.setTypeface(typeface);
+                        tvDynastyIntro.setTypeface(typeface);
                         tvDynastyName.setText(dynasty1.getDynastyName());
                         tvDynastyIntro.setText(dynasty1.getDynastyInfo());
                         break;
@@ -82,9 +87,8 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
 
     private void initData() {
         Intent intent = getIntent();
-        String id = intent.getStringExtra("dynastyId");
-        downloadDynastyIntro(id);
-        Log.i("cyl", id);
+        dynastyId = intent.getStringExtra("dynastyId");
+        downloadDynastyIntro(dynastyId);
     }
 
     /**
@@ -95,19 +99,20 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    URL url = new URL(ServiceConfig.SERVICE_ROOT + DYNASTY_INFO + "?id=" + id);
+                    URL url = new URL(ServiceConfig.SERVICE_ROOT + DYNASTY_INFO  + id);
                     url.openStream();
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    Log.i("cyll", "测试");
                     connection.setRequestMethod("GET");
                     InputStream in = connection.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
                     String json = reader.readLine();
                     Dynasty dynasty = gson.fromJson(json, Dynasty.class);
-
+                    Log.i("cyll", json);
                     Message msg = new Message();
                     msg.obj = dynasty;
                     msg.what = 1;
-
+                    handler.sendMessage(msg);
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -132,6 +137,11 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
                 case R.id.btn_questions:
                     break;
                 case R.id.btn_details:
+                    Intent intent1 = new Intent();
+                    intent1.setClass(DynastyIntroduceActivity.this, DetailsEventActivity.class);
+                    intent1.putExtra("dynastyName1", tvDynastyName.getText());
+                    intent1.putExtra("dynastyId1", dynastyId);
+                    startActivity(intent1);
                     break;
             }
         }

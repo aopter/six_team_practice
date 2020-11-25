@@ -2,53 +2,32 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="net.onest.timestoryprj">
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    <uses-permission android:name="android.permission.INTERNET"/>
-=======
-=======
->>>>>>> Stashed changes
     <uses-permission android:name="android.permission.INTERNET" />
-
->>>>>>> Stashed changes
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
+        android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".activity.dynasty.DynastyIntroduceActivity"
             android:screenOrientation="landscape"></activity>
-=======
-        android:theme="@style/AppTheme.NoActionBar"
-        android:usesCleartextTraffic="true">
         <activity android:name=".activity.problem.ProblemInfoActivity"
             android:screenOrientation="landscape"></activity>
         <activity
             android:name=".activity.problem.SelectProblemTypeActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".activity.dynasty.DynastyIntroduceActivity" />
->>>>>>> Stashed changes
+        <activity android:name=".dialog.dynasty.EventDialogActivity"></activity>
+        <activity
+            android:name=".activity.dynasty.DetailsEventActivity"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".activity.dynasty.HomepageActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".activity.user.SettingActivity" />
-=======
-        android:theme="@style/AppTheme.NoActionBar"
-        android:usesCleartextTraffic="true">
+        <activity android:name=".activity.user.SettingActivity"
+            android:screenOrientation="landscape"/>
 
-        <activity android:name=".activity.dynasty.DynastyIntroduceActivity"></activity>
-
-        <activity
-            android:name=".activity.dynasty.HomepageActivity"
-            android:screenOrientation="landscape" />
-
-        <activity android:name=".activity.user.SettingActivity"></activity>
-
->>>>>>> Stashed changes
         <activity
             android:name=".activity.user.RegisterActivity"
             android:screenOrientation="landscape" />
@@ -58,7 +37,6 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".activity.card.SpectficCardDetailActivity"
-<<<<<<< Updated upstream
             android:screenOrientation="landscape" />
         <activity
             android:name=".activity.card.SpecificDynastyCardActivity"
@@ -70,24 +48,6 @@
             android:name=".activity.user.UserCenterActivity"
             android:launchMode="singleTask"
             android:screenOrientation="landscape" />
-=======
-            android:screenOrientation="landscape"></activity>
-
-        <activity
-            android:name=".activity.card.SpecificDynastyCardActivity"
-            android:screenOrientation="landscape" />
-
-        <activity
-            android:name=".activity.card.MyCardActivity"
-            android:screenOrientation="landscape"></activity>
-
-        <activity
-            android:name=".activity.user.UserCenterActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="landscape"></activity>
-
-
->>>>>>> Stashed changes
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTask"

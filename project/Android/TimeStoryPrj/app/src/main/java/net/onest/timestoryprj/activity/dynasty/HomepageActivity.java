@@ -65,12 +65,11 @@ public class HomepageActivity extends AppCompatActivity {
     private ImageView ivHeader;
     private Button btnVoice;
     private Button btnSettings;
-    private HorizontalScrollView hsvDynasty;
     private LinearLayout llLayout1;
     private LinearLayout llLayout2;
     private List<TextView> tvs = new ArrayList<>();
-    private String DYNASTY_LIST = "TestServlet1";
-    private String UNLOCK_DYNASTY_LIST = "TestServlet2";
+    private String DYNASTY_LIST = "/dynasty/list";
+    private String UNLOCK_DYNASTY_LIST = "/userunlockdynasty/list/1";
     private Gson gson;
     private List<Dynasty> dynasties1;
     private Handler handler;
@@ -89,7 +88,6 @@ public class HomepageActivity extends AppCompatActivity {
         initGson();
         initData();
         AssetManager assets = getAssets();
-
         final Typeface typeface = Typeface.createFromAsset(assets, "fonts/custom_font.ttf");
         handler = new Handler(){
             @Override
@@ -100,8 +98,8 @@ public class HomepageActivity extends AppCompatActivity {
                         for (int i = 0;i < dynasties1.size(); i++) {
                             TextView tv = new TextView(getApplicationContext());
                             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                                    LinearLayout.LayoutParams.WRAP_CONTENT
+                                    300,
+                                    300
                             );
                             tv.setText(dynasties1.get(i).getDynastyName());
                             tv.setTextColor(Color.RED);
@@ -109,11 +107,15 @@ public class HomepageActivity extends AppCompatActivity {
                             tv.setTextSize(30);
                             Log.i("cyl", dynasties1.get(i).getDynastyName());
                             if (i % 2 == 0) {
-                                params.setMargins(20, 50, 0, 0);
+                                params.setMargins(80, 50, 0, 0);
                                 tv.setLayoutParams(params);
                                 llLayout1.addView(tv);
                             } else {
-                                params.setMargins(30, 80, 0, 0);
+                                if (i == 1){
+                                    params.setMargins(200, 80, 0, 0);
+                                }else{
+                                    params.setMargins(90, 80, 0, 0);
+                                }
                                 tv.setLayoutParams(params);
                                 llLayout2.addView(tv);
                             }
@@ -122,7 +124,7 @@ public class HomepageActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(View view) {
                                     for (int j = 0; j < Constant.UnlockDynasty.size();j++){
-                                        if (Constant.UnlockDynasty.get(j).getId() == dynasties1.get(finalI).getDynastyId()){
+                                        if (Constant.UnlockDynasty.get(j).getDynastyId().equals(dynasties1.get(finalI).getDynastyId().toString())){
                                             Intent intent = new Intent();
                                             intent.setClass(getApplicationContext(), DynastyIntroduceActivity.class);
                                             intent.putExtra("dynastyId", dynasties1.get(finalI).getDynastyId().toString());
@@ -172,21 +174,22 @@ public class HomepageActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    URL url = new URL(ServiceConfig.SERVICE_ROOT + UNLOCK_DYNASTY_LIST + "?id=" + 1);
+                    URL url = new URL(ServiceConfig.SERVICE_ROOT + UNLOCK_DYNASTY_LIST);
                     url.openStream();
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("GET");
                     InputStream in = connection.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
                     String json1 = reader.readLine();
-                    JSONObject obj = new JSONObject(json1);
-                    String json = obj.getJSONArray("mydynasty").toString();
+//                    JSONObject obj = new JSONObject(json1);
+//                    String json = obj.getJSONArray("mydynasty").toString();
+                    Log.i("cyl", json1);
                     //1.得到集合类型
                     Type type = new TypeToken<List<UserUnlockDynasty>>(){}.getType();
                     //2.反序列化
-                    List<UserUnlockDynasty> dynasties = gson.fromJson(json, type);
+                    List<UserUnlockDynasty> dynasties = gson.fromJson(json1, type);
                     Constant.UnlockDynasty = dynasties;
-
+                    Log.i("cyl1", Constant.UnlockDynasty.toString());
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (UnsupportedEncodingException e) {
@@ -194,8 +197,6 @@ public class HomepageActivity extends AppCompatActivity {
                 } catch (ProtocolException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
@@ -222,13 +223,13 @@ public class HomepageActivity extends AppCompatActivity {
                     InputStream in = connection.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
                     String json1 = reader.readLine();
-                    JSONObject obj = new JSONObject(json1);
-                    String json = obj.getJSONArray("dynasty").toString();
+//                    JSONObject obj = new JSONObject(json1);
+//                    String json = obj.getJSONArray("Value").toString();
 
                     //1.得到集合类型
                     Type type = new TypeToken<List<Dynasty>>(){}.getType();
                     //2.反序列化
-                    List<Dynasty> dynasties = gson.fromJson(json, type);
+                    List<Dynasty> dynasties = gson.fromJson(json1, type);
 
                     Message msg = new Message();
                     msg.what = 1;
@@ -237,8 +238,6 @@ public class HomepageActivity extends AppCompatActivity {
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
@@ -269,7 +268,6 @@ public class HomepageActivity extends AppCompatActivity {
         btnCard = findViewById(R.id.btn_card);
         btnMyCard = findViewById(R.id.btn_my_card);
         btnMyCollections = findViewById(R.id.btn_my_collections);
-        hsvDynasty = findViewById(R.id.hsv_dynasty);
         llLayout1 = findViewById(R.id.ll_layout1);
         llLayout2 = findViewById(R.id.ll_layout2);
     }

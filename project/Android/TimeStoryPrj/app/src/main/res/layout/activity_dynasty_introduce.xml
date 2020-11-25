@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/back2"
+    android:background="@mipmap/info1"
     android:orientation="vertical"
     tools:context=".activity.dynasty.DynastyIntroduceActivity">
 
@@ -28,20 +28,26 @@
             android:gravity="center"
             android:layout_width="40dp"
             android:layout_height="130dp"
-            android:textSize="30sp"
+            android:textSize="40sp"
+            android:alpha="0.7"
             android:background="@drawable/corner"
             android:textColor="@android:color/white"/>
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <TextView
-                android:id="@+id/tv_dynasty_intro"
+            android:layout_height="match_parent"
+            android:background="@drawable/corner"
+            android:alpha="0.7">
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textSize="20sp"
-                android:layout_gravity="center"
-                android:background="@drawable/corner"
-                android:textColor="@android:color/white"/>
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/tv_dynasty_intro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="30sp"
+                    android:layout_gravity="center"
+                    android:textColor="@android:color/white"/>
+            </LinearLayout>
 
         </ScrollView>
 

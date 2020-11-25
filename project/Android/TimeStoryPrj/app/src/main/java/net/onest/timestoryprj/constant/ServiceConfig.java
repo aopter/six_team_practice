@@ -7,5 +7,5 @@ public class ServiceConfig {
     //历史上的今天接口
     public static String HISTORY_TODAY = "http://api.juheapi.com/japi/toh";
 //    public static String SERVICE_ROOT = "";
-    public static String SERVICE_ROOT = "http://10.7.86.252:8080/TestPrj/";
+    public static String SERVICE_ROOT = "http://10.7.89.228:8080";
 }

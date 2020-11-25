@@ -3,6 +3,7 @@ package net.onest.timestoryprj.constant;
 import net.onest.timestoryprj.entity.HistoryDay;
 import net.onest.timestoryprj.entity.User;
 import net.onest.timestoryprj.entity.UserUnlockDynasty;
+import net.onest.timestoryprj.entity.UserUnlockDynastyIncident;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,4 +20,6 @@ public class Constant {
     public static List<HistoryDay> historyDays = new ArrayList<>();
     //当前登录用户解锁的朝代
     public static List<UserUnlockDynasty> UnlockDynasty = new ArrayList<>();
+    //当前登录用户解锁的某朝代的事件
+    public static List<UserUnlockDynastyIncident> UnlockDynastyIncident = new ArrayList<>();
 }

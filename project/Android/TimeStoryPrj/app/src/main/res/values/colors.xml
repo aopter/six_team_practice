@@ -7,4 +7,5 @@
     <color name="colorDropdown">#B3FFFAFA</color>
     <color name="colorSearch">#F5F5F5</color>
     <color name="colorBorder">#CCC</color>
+    <color name="ourTimeLine">#DA70D0</color>
 </resources>

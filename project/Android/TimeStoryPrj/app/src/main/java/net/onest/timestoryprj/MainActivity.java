@@ -10,6 +10,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import net.onest.timestoryprj.activity.card.MyCardActivity;
+import net.onest.timestoryprj.activity.dynasty.DynastyIntroduceActivity;
 import net.onest.timestoryprj.activity.dynasty.HomepageActivity;
 import net.onest.timestoryprj.activity.problem.SelectProblemTypeActivity;
 import net.onest.timestoryprj.activity.user.UserCenterActivity;
@@ -90,4 +91,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //跳转简介
+    @OnClick(R.id.btn_link_details)
+    public void dynastyDetails(){
+        Intent intent = new Intent();
+        intent.setClass(MainActivity.this, DynastyIntroduceActivity.class);
+        startActivity(intent);
+    }
 }
