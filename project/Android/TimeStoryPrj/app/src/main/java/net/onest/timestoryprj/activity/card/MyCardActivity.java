@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import net.onest.timestoryprj.R;
@@ -19,18 +20,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class MyCardActivity extends AppCompatActivity {
-    private RecyclerView dyanstiesView;
+    @BindView(R.id.dynasty_list)
+    RecyclerView dyanstiesView;
     private CardScaleHelper mCardScaleHelper;
     private CardAdapter cardAdapter;
     private List<Dynasty> dynasties = new ArrayList<>();
+    @BindView(R.id.back)
+    ImageView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_card);
-
-        dyanstiesView = findViewById(R.id.dynasty_list);
+        ButterKnife.bind(this);
         initRecyclerView();
     }
 
@@ -67,12 +74,17 @@ public class MyCardActivity extends AppCompatActivity {
         dynasties.add(dynasty1);
         Dynasty dynasty2 = new Dynasty();
         dynasty2.setDynastyName("元朝");
-        dynasties.add(dynasty);
+        dynasties.add(dynasty2);
         Dynasty dynasty3 = new Dynasty();
         dynasty3.setDynastyName("明朝");
         dynasties.add(dynasty3);
         Dynasty dynasty4 = new Dynasty();
         dynasty4.setDynastyName("清朝");
         dynasties.add(dynasty4);
+    }
+
+    @OnClick(R.id.back)
+    void backToLastPage() {
+        finish();
     }
 }

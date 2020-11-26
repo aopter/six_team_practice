@@ -5,20 +5,70 @@
     android:alpha="0.8"
     android:background="@mipmap/cardbackground"
     android:orientation="vertical"
-    android:padding="20dp">
+    android:padding="10dp">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="right"
-        android:orientation="horizontal">
+        android:layout_height="60dp"
+        android:padding="10dp">
 
-        <Spinner
-            android:id="@+id/spinner"
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:padding="10dp"
+            android:src="@mipmap/back" />
+
+        <RelativeLayout
+            android:id="@+id/search"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="20dp"
+            android:layout_toLeftOf="@+id/card_types"
+            android:background="@drawable/border_style"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <EditText
+                android:id="@+id/search_card_name"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="请输入卡片名称"
+                android:padding="5dp"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:visibility="invisible"
+                android:id="@+id/search_delete"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/search_card_name"
+                android:padding="8dp"
+                android:src="@mipmap/delete" />
+
+            <TextView
+                android:id="@+id/search_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/search_delete"
+                android:gravity="center_vertical"
+                android:padding="5dp"
+                android:text="搜索"
+                android:textColor="@android:color/black"
+                android:textSize="15sp" />
+        </RelativeLayout>
+
+        <net.onest.timestoryprj.customview.DropdownListView
+            android:id="@+id/card_types"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:entries="@array/card_type" />
-    </LinearLayout>
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp" />
+    </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dynasty_cards"

@@ -1,8 +1,10 @@
 package net.onest.timestoryprj.entity;
 
-public class Problem {
-    private Integer problemId;//题目标识符
-    private Integer problemType;//题目类型
+import java.io.Serializable;
+
+public class Problem implements Serializable {
+    private int problemId;//题目标识符
+    private int problemType;//题目类型
     private String problemContent;//题目描述
     private String problemKey;//题目答案
     private String problemDetails;//题目解析
@@ -10,19 +12,19 @@ public class Problem {
     private long problemCreationTime;//创建时间
 
 
-    public Integer getProblemId() {
+    public int getProblemId() {
         return problemId;
     }
 
-    public void setProblemId(Integer problemId) {
+    public void setProblemId(int problemId) {
         this.problemId = problemId;
     }
 
-    public Integer getProblemType() {
+    public int getProblemType() {
         return problemType;
     }
 
-    public void setProblemType(Integer problemType) {
+    public void setProblemType(int problemType) {
         this.problemType = problemType;
     }
 

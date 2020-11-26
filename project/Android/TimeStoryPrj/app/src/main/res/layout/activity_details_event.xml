@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/intro"
+    android:orientation="vertical"
+    tools:context=".activity.dynasty.DetailsEventActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="15dp"
+        android:orientation="vertical">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_big_word"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="50sp"
+                android:text="历史上的唐朝"
+                android:layout_marginBottom="20dp"
+                android:textColor="@color/ourDynastyRed"/>
+        </LinearLayout>
+
+        <GridView
+            android:orientation="horizontal"
+            android:id="@+id/hlv_timeline"
+            android:layout_width="wrap_content"
+            android:padding="0dp"
+            android:layout_height="match_parent"
+            android:horizontalSpacing="0dp"
+            android:verticalSpacing="0dp"
+            android:clickable="false"/>
+    </LinearLayout>
+</HorizontalScrollView>

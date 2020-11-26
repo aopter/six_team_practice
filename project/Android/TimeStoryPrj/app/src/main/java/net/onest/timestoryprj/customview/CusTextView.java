@@ -28,7 +28,7 @@ public class CusTextView extends TextView {
 
     private void initFont() {
         if (!isInEditMode()) {
-            Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), "fonts/custom_font.ttf");
+            Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), "fonts/custom_fontt.ttf");
             setTypeface(typeface);
         }
     }

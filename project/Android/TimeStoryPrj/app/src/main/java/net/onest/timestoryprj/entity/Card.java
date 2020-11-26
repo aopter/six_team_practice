@@ -1,6 +1,9 @@
 package net.onest.timestoryprj.entity;
 
-public class Card {
+
+import java.io.Serializable;
+
+public class Card implements Serializable {
     private int cardId;//卡片标识符
     private String cardName;//卡片名称
     private int cardType;//卡片分类

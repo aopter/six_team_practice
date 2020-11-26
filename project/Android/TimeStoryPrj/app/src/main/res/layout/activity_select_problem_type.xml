@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:alpha="0.8"
+    android:background="@mipmap/bg_user_select_lkl"
+    android:paddingTop="20dp"
+    android:orientation="vertical">
+    <net.onest.timestoryprj.customview.CusTextView
+        android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="要做什么题"
+        android:textColor="@color/ourDynastyRed"
+        android:textSize="24sp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+        <LinearLayout
+            android:id="@+id/type_problem_xuan"
+            android:paddingTop="12dp"
+            android:background="@mipmap/bg_select"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_gravity="center"
+                android:src="@mipmap/select_xuan" />
+            <TextView
+                style="@style/tvSelectProblemType"
+                android:text="选一选" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/type_problem_lian"
+            android:background="@mipmap/bg_select"
+            android:paddingTop="12dp"
+
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_gravity="center"
+                android:src="@mipmap/select_lian" />
+            <TextView
+                style="@style/tvSelectProblemType"
+                android:text="连一连" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="@mipmap/bg_select"
+            android:paddingTop="12dp"
+            android:id="@+id/type_problem_pai"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_gravity="center"
+                android:src="@mipmap/select_pai" />
+
+            <TextView
+                style="@style/tvSelectProblemType"
+                android:text="排一排" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/type_problem_all"
+            android:paddingTop="12dp"
+            android:background="@mipmap/bg_select"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_gravity="center"
+                android:src="@mipmap/select_kuai" />
+
+            <TextView
+                style="@style/tvSelectProblemType"
+                android:text="快速开始" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
