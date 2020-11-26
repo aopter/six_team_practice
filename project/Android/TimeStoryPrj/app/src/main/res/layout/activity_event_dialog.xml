@@ -5,10 +5,91 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/dialog"
+    android:orientation="vertical"
     tools:context=".dialog.dynasty.EventDialogActivity">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/tv_big_word2"
+        android:gravity="center"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="hello world"/>
+        android:textSize="40sp"
+        android:textColor="@color/ourDynastyRed"/>
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="40dp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_dialog_intro"
+                android:layout_width="200dp"
+                android:layout_height="130dp"
+                android:background="@mipmap/person_intro"/>
+            <ImageView
+                android:id="@+id/iv_dialog_intro_img"
+                android:layout_width="100dp"
+                android:layout_height="200dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+                <LinearLayout
+                    android:layout_marginRight="40dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+                    <TextView
+                        android:id="@+id/tv_dialog1"
+                        android:layout_width="150dp"
+                        android:layout_height="100dp"
+                        android:layout_marginRight="20dp"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:paddingTop="10dp"
+                        android:background="@mipmap/conversation1"/>
+                    <TextView
+                        android:id="@+id/tv_dialog2"
+                        android:layout_width="150dp"
+                        android:layout_height="100dp"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:paddingTop="10dp"
+                        android:background="@mipmap/conversation2"/>
+                </LinearLayout>
+            </ScrollView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <ImageView
+                    android:id="@+id/iv_dialog1_img"
+                    android:layout_width="100dp"
+                    android:layout_height="200dp"/>
+                <ImageView
+                    android:id="@+id/iv_dialog2_img"
+                    android:layout_width="100dp"
+                    android:layout_marginRight="40dp"
+                    android:layout_marginLeft="50dp"
+                    android:layout_height="200dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

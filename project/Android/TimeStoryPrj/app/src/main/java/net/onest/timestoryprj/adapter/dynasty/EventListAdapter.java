@@ -26,10 +26,12 @@ public class EventListAdapter extends BaseAdapter {
     private int layout;
     private TextView tvIncidentName;
     private ImageView ivIncidentImg;
-    public EventListAdapter(Context context, List<Incident> incidents, int layout) {
+    private String dynastyId;
+    public EventListAdapter(Context context, List<Incident> incidents, int layout, String dynastyId) {
         this.context = context;
         this.incidents = incidents;
         this.layout = layout;
+        this.dynastyId = dynastyId;
     }
 
     @Override
@@ -65,7 +67,8 @@ public class EventListAdapter extends BaseAdapter {
                 //跳转
                 Intent intent = new Intent();
                 intent.setClass(context, EventDialogActivity.class);
-                intent.putExtra("incidentId", incidents.get(position).getIncidentId());
+                intent.putExtra("dynastyId2", dynastyId);
+                intent.putExtra("incidentId", incidents.get(position).getIncidentId().toString());
                 context.startActivity(intent);
             }
         });
@@ -75,7 +78,8 @@ public class EventListAdapter extends BaseAdapter {
                 //跳转
                 Intent intent = new Intent();
                 intent.setClass(context, EventDialogActivity.class);
-                intent.putExtra("incidentId", incidents.get(position).getIncidentId());
+                intent.putExtra("incidentId", incidents.get(position).getIncidentId().toString());
+                intent.putExtra("dynastyId2", dynastyId);
                 context.startActivity(intent);
             }
         });

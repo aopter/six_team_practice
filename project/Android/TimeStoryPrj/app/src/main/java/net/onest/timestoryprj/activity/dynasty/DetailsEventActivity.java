@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -21,9 +22,11 @@ import com.google.gson.reflect.TypeToken;
 
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.adapter.dynasty.EventListAdapter;
+import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.entity.Dynasty;
 import net.onest.timestoryprj.entity.Incident;
+import net.onest.timestoryprj.entity.UserUnlockDynastyIncident;
 import net.onest.timestoryprj.util.DensityUtil;
 import net.onest.timestoryprj.util.HorizontalListView;
 
@@ -48,9 +51,9 @@ public class DetailsEventActivity extends AppCompatActivity {
     private Gson gson;
     private Handler handler;
     private OkHttpClient okHttpClient;
+    private String dynastyId;
     private String INCIDENT_URL = "/incident/list/";
-    private String UNLOCK_INCIDENT_URL = "";
-
+    private String UNLOCK_INCIDENT_URL = "/userincident/list/";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +79,7 @@ public class DetailsEventActivity extends AppCompatActivity {
      * 初始化Adapter
      */
     private void initAdapter() {
-        eventListAdapter = new EventListAdapter(this, incidentList, R.layout.item_incident);
+        eventListAdapter = new EventListAdapter(this, incidentList, R.layout.item_incident, dynastyId);
         ViewGroup.LayoutParams params = hlvTimeline.getLayoutParams();
         params.width = DensityUtil.dip2px(getApplicationContext(), 110) * incidentList.size();
         hlvTimeline.setLayoutParams(params);
@@ -90,9 +93,9 @@ public class DetailsEventActivity extends AppCompatActivity {
      */
     private void initData() {
         Intent intent = getIntent();
-        String dynastyId = intent.getStringExtra("dynastyId1");
+        dynastyId = intent.getStringExtra("dynastyId1");
         String dynastyName = intent.getStringExtra("dynastyName1");
-        downloadUnlockIncidentList();
+        downloadUnlockIncidentList(dynastyId);
         downloadIncidentList(dynastyId);
         String word = "历史上的" + dynastyName;
         AssetManager assets = getAssets();
@@ -104,8 +107,26 @@ public class DetailsEventActivity extends AppCompatActivity {
     /**
      * 下载已解锁的事件列表
      */
-    private void downloadUnlockIncidentList() {
-
+    private void downloadUnlockIncidentList(String dynastyId) {
+        //Constant.User.getUserId()
+        Request request = new Request.Builder()
+                .url(ServiceConfig.SERVICE_ROOT + UNLOCK_INCIDENT_URL + 1 + "/" + dynastyId)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        new Thread(()->{
+            try {
+                Response response = call.execute();
+                String json = response.body().string();
+                Log.i("cccccc", json);
+                //1.得到集合类型
+                Type type = new TypeToken<List<UserUnlockDynastyIncident>>(){}.getType();
+                //2.反序列化
+                List<UserUnlockDynastyIncident> unlockDynastyIncidentList = gson.fromJson(json,type);
+                Constant.UnlockDynastyIncident = unlockDynastyIncidentList;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     /**

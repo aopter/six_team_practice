@@ -20,7 +20,7 @@
                 android:id="@+id/tv_big_word"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="50sp"
+                android:textSize="40sp"
                 android:text="历史上的唐朝"
                 android:layout_marginBottom="20dp"
                 android:textColor="@color/ourDynastyRed"/>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="net.onest.timestoryprj">
-
     <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
@@ -18,7 +17,8 @@
         <activity
             android:name=".activity.problem.SelectProblemTypeActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".dialog.dynasty.EventDialogActivity"></activity>
+        <activity android:name=".dialog.dynasty.EventDialogActivity"
+            android:screenOrientation="landscape"></activity>
         <activity
             android:name=".activity.dynasty.DetailsEventActivity"
             android:screenOrientation="landscape" />
@@ -41,13 +41,7 @@
         <activity
             android:name=".activity.card.SpecificDynastyCardActivity"
             android:screenOrientation="landscape" />
-        <activity
-            android:name=".activity.card.MyCardActivity"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".activity.user.UserCenterActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="landscape" />
+        <activity android:name=".activity.card.MyCardActivity" />
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTask"

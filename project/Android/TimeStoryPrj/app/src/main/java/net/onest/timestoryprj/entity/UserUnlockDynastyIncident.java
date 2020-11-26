@@ -4,42 +4,41 @@ import net.onest.timestoryprj.entity.Dynasty;
 import net.onest.timestoryprj.entity.Incident;
 
 public class UserUnlockDynastyIncident {
-    private Integer id;//流水号
+    private Integer incidentId;//事件ID
 
-    private Dynasty dynasty;//朝代
-    private Incident incident;//事件
-
+    private String incidentName;//事件名
+    private String incidentPicture;//事件图片
 
     @Override
     public String toString() {
         return "UserUnlockDynastyIncident{" +
-                "id=" + id +
-                ", dynasty=" + dynasty +
-                ", incident=" + incident +
+                "incidentId=" + incidentId +
+                ", incidentName='" + incidentName + '\'' +
+                ", incidentPicture='" + incidentPicture + '\'' +
                 '}';
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getIncidentId() {
+        return incidentId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIncidentId(Integer incidentId) {
+        this.incidentId = incidentId;
     }
 
-    public Dynasty getDynasty() {
-        return dynasty;
+    public String getIncidentName() {
+        return incidentName;
     }
 
-    public void setDynasty(Dynasty dynasty) {
-        this.dynasty = dynasty;
+    public void setIncidentName(String incidentName) {
+        this.incidentName = incidentName;
     }
 
-    public Incident getIncident() {
-        return incident;
+    public String getIncidentPicture() {
+        return incidentPicture;
     }
 
-    public void setIncident(Incident incident) {
-        this.incident = incident;
+    public void setIncidentPicture(String incidentPicture) {
+        this.incidentPicture = incidentPicture;
     }
 }

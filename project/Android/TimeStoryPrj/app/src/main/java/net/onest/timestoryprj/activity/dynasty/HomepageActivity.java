@@ -90,6 +90,7 @@ public class HomepageActivity extends AppCompatActivity {
         AssetManager assets = getAssets();
         final Typeface typeface = Typeface.createFromAsset(assets, "fonts/custom_font.ttf");
         handler = new Handler(){
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void handleMessage(@NonNull Message msg) {
                 switch (msg.what){
@@ -102,7 +103,7 @@ public class HomepageActivity extends AppCompatActivity {
                                     300
                             );
                             tv.setText(dynasties1.get(i).getDynastyName());
-                            tv.setTextColor(Color.RED);
+                            tv.setTextColor(getColor(R.color.ourDynastyRed));
                             tv.setTypeface(typeface);
                             tv.setTextSize(30);
                             Log.i("cyl", dynasties1.get(i).getDynastyName());
