@@ -101,7 +101,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("");
+                    URL url = new URL("http://localhost:8080");
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("POST");
                     OutputStream outputStream = connection.getOutputStream();

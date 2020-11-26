@@ -18,10 +18,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import net.onest.timestoryprj.activity.user.LoginActivity;
+import net.onest.timestoryprj.activity.user.SettingActivity;
+
 
 public class MainActivity extends AppCompatActivity {
     private Button btnLogin;
     private Button btnHomepage;
+    private Button btnSet;
 
 
     @BindView(R.id.btn_user_center)
@@ -39,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         btnHomepage = findViewById(R.id.btn_homepage);
         btnLogin = findViewById(R.id.login);
 //       跳转主页
+        btnSet = findViewById(R.id.btn_set);
         btnHomepage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,6 +60,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
 
+        });
+
+        btnSet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
+                startActivity(intent);
+            }
         });
     }
 

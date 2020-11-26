@@ -4,4 +4,7 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="ourDynastyRed">#AE5B41</color>
+    <color name="back_color">#b0000000</color>
+    <color name="whrite">#ffffff</color>
+    <color name="orange">#FFB90F</color>
 </resources>

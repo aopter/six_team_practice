@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/setting"
+    android:background="@mipmap/set"
+    android:orientation="horizontal"
+    android:id="@+id/mainlayout"
     tools:context=".activity.user.SettingActivity">
     <LinearLayout
         android:layout_width="200dp"
@@ -12,21 +14,41 @@
         android:layout_gravity="center_vertical"
         android:orientation="vertical">
         <Button
+            android:id="@+id/btn_person"
             android:text="个人资料"
             style="@style/settingBtn" />
         <Button
+            android:id="@+id/btn_voice_set"
             android:text="音量设置"
             style="@style/settingBtn"/>
         <Button
+            android:id="@+id/btn_rule"
             style="@style/settingBtn"
             android:text="查看规则"/>
         <Button
+            android:id="@+id/btn_problem"
             style="@style/settingBtn"
             android:text="反馈问题"/>
         <Button
+            android:id="@+id/btn_exit_login"
             style="@style/settingBtn"
             android:text="退出登录"/>
-
     </LinearLayout>
 
-</FrameLayout>
+    <LinearLayout
+        android:id="@+id/rightlinear"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#0b000000"
+        android:orientation="vertical">
+
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:progress="30"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>

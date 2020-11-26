@@ -36,6 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="登录"/>
+
     <Button
         android:id="@+id/btn_user_center"
         android:layout_width="wrap_content"
@@ -46,4 +47,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="我的卡片"/>
+
+    <Button
+        android:id="@+id/btn_set"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="个人设置"/>
+
 </LinearLayout>
