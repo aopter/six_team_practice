@@ -48,12 +48,21 @@
         <item name="android:textColor">#B22222</item>
         <item name="android:layout_marginTop">10dp</item>
     </style>
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     <style name="settingContent">
         <item name="android:layout_width">130dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginLeft">20dp</item>
+<<<<<<< Updated upstream
         <item name="android:textSize">20sp</item>
     </style>
+=======
+        <item name="android:textSize">20sp</item></style>
+
+>>>>>>> Stashed changes
     <style name="tvSelectProblemType">
         <item name="android:gravity">center</item>
         <item name="android:textStyle">bold</item>

@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import net.onest.timestoryprj.R;
 
 import butterknife.BindView;
+import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -27,6 +29,9 @@ public class SelectProblemTypeActivity extends AppCompatActivity {
     //快速
     @BindView(R.id.type_problem_all)
     LinearLayout llProblemAll;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +44,7 @@ public class SelectProblemTypeActivity extends AppCompatActivity {
     public void llProblemLianOnClick(){
 //        跳转
         Intent intent = new Intent();
+        intent.putExtra("before","types");
         intent.putExtra("type","lian");
         intent.setClass(SelectProblemTypeActivity.this, ProblemInfoActivity.class);
         startActivity(intent);
@@ -47,7 +53,9 @@ public class SelectProblemTypeActivity extends AppCompatActivity {
     @OnClick(R.id.type_problem_xuan)
     public void llProblemXuanOnClick(){
 //        选择题
+
         Intent intent = new Intent();
+        intent.putExtra("before","types");
         intent.putExtra("type","xuan");
         intent.setClass(SelectProblemTypeActivity.this, ProblemInfoActivity.class);
         startActivity(intent);
@@ -56,6 +64,7 @@ public class SelectProblemTypeActivity extends AppCompatActivity {
     public void llProblemPaiOnClick(){
         //        排序题
         Intent intent = new Intent();
+        intent.putExtra("before","types");
         intent.putExtra("type","pai");
         intent.setClass(SelectProblemTypeActivity.this, ProblemInfoActivity.class);
         startActivity(intent);
@@ -64,6 +73,7 @@ public class SelectProblemTypeActivity extends AppCompatActivity {
     public void llProblemAllOnClick(){
         //        所有题
         Intent intent = new Intent();
+        intent.putExtra("before","types");
         intent.putExtra("type","all");
         intent.setClass(SelectProblemTypeActivity.this, ProblemInfoActivity.class);
         startActivity(intent);

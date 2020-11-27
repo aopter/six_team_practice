@@ -6,9 +6,17 @@
     android:background="@mipmap/bg_problem_info"
     android:orientation="vertical"
     android:paddingLeft="20dp"
-    android:paddingTop="10dp">
+   >
+
+    <ImageView
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:id="@+id/iv_gif_bg"/>
 
     <net.onest.timestoryprj.customview.CusTextView
+        android:layout_marginTop="10dp"
         android:id="@+id/problem_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

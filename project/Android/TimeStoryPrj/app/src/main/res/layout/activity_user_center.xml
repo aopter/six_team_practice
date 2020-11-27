@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+
+    android:paddingTop="16dp"
+    android:paddingLeft="20dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@mipmap/bg_problem_info"
+    android:background="@mipmap/bg_user_center"
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/title"
+        android:layout_alignParentTop="true"
         android:paddingTop="2dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:layout_marginLeft="10dp"
         android:orientation="horizontal">
         <!-- 头像、名称-->
@@ -122,22 +127,36 @@
 
 
     <LinearLayout
+        android:layout_below="@+id/title"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
         android:layout_above="@+id/user_center_buttom"
         android:layout_width="match_parent"
-        android:layout_height="230dp"
+        android:layout_height="match_parent"
         android:paddingBottom="15dp"
         android:orientation="horizontal">
 
         <LinearLayout
+            android:orientation="vertical"
+            android:paddingLeft="5dp"
             android:layout_width="0dp"
             android:layout_weight="2"
             android:layout_height="match_parent">
+            <net.onest.timestoryprj.customview.CusTextView
 
+                android:alpha="0.9"
+                android:background="@color/ourDynastyRed"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:textColor="#fff"
+                android:padding="2dp"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:text="排行榜"/>
             <ListView
                 android:id="@+id/lv_user_list"
                 android:layout_width="220dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
                 android:alpha="0.8"
                 android:background="#FFF" />
         </LinearLayout>
@@ -147,13 +166,14 @@
             android:layout_weight="3"
             android:layout_height="match_parent">
             <net.onest.timestoryprj.customview.CusTextView
+
                 android:alpha="0.9"
                 android:background="@color/ourDynastyRed"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="25dp"
                 android:textColor="#fff"
                 android:padding="2dp"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 android:text="历史上的今天"/>
             <LinearLayout
@@ -176,7 +196,7 @@
     <LinearLayout
         android:id="@+id/user_center_buttom"
         android:gravity="center"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

@@ -5,12 +5,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.format.Time;
-import android.util.Log;
-import android.view.Window;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,9 +18,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 
 import net.onest.timestoryprj.R;
+import net.onest.timestoryprj.activity.card.DrawCardActivity;
 import net.onest.timestoryprj.activity.card.MyCardActivity;
 import net.onest.timestoryprj.activity.dynasty.HomepageActivity;
 import net.onest.timestoryprj.activity.problem.ProblemCollectionActivity;
@@ -51,11 +49,13 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class UserCenterActivity extends AppCompatActivity {
-
     //    okhttp客户端类
     private OkHttpClient okHttpClient;
     //    历史上的今天 文本框
     private TextView tvData;
+
+    @BindView(R.id.btn_set)
+    Button btnSet;
 
     @BindView(R.id.tv_name)
     public TextView tvName;
@@ -81,6 +81,9 @@ public class UserCenterActivity extends AppCompatActivity {
     @BindView(R.id.btn_my_collections)
     Button btnMyCollections;
 
+    @BindView(R.id.btn_card)
+    Button btnGetCard;
+
 
 
     private Handler handler = new Handler() {
@@ -95,15 +98,6 @@ public class UserCenterActivity extends AppCompatActivity {
                     linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                     recyclerView.setLayoutManager(linearLayoutManager);
                     recyclerView.setAdapter(historyTodayAdapter);
-
-//               for (int i = 0; i < Constant.historyDays.size(); i++) {
-//                   HistoryDay historyDay = Constant.historyDays.get(i);
-//                   Log.e("changdu: ", Constant.historyDays.get(i).toString());
-//                   tvHistoryTitle.setText(historyDay.getTitle());
-//                   tvHistoryTime.setText(historyDay.getLunar()+"");
-//                   tvHistoryContext.setText(historyDay.getDes());
-//                    break;
-//                }
                     break;
             }
         }
@@ -122,15 +116,29 @@ public class UserCenterActivity extends AppCompatActivity {
                 .load((R.mipmap.man))
                 .circleCrop()
                 .into(ivHeader);
+        okHttpClient = new OkHttpClient();
 //        tvData = findViewById(R.id.tv_data);
 //  //获取历史上的今天
         getHistoryToday();
+//        获取排行榜
+        getUserRank();
         initListView();
+    }
+
+    /**
+     *获取用户排行榜列表
+     */
+    private void getUserRank() {
+        Request.Builder builder = new Request.Builder();
+        builder.url(ServiceConfig.HISTORY_TODAY + "&key=7a9cf9c5a9ff6338f5484d484ba51587");
+        //构造请求类
+        Request request = builder.build();
+
     }
 
     //获取历史上的今天
     private void getHistoryToday() {
-        okHttpClient = new OkHttpClient();
+
         Request.Builder builder = new Request.Builder();
         Time t=new Time("GMT+8"); // 设置Time Zone资料。
         t.setToNow(); // 获得当前系统时间。
@@ -161,10 +169,6 @@ public class UserCenterActivity extends AppCompatActivity {
                 Message message = handler.obtainMessage();
                 message.arg1 = 1;
                 handler.sendMessage(message);
-//                for (int i = 0; i < Constant.historyDays.size(); i++) {
-////                    Log.e("changdu: ", Constant.historyDays.get(i).toString());
-////                }
-////                Log.e("run: ", "执行完");
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
@@ -177,12 +181,20 @@ public class UserCenterActivity extends AppCompatActivity {
     private void initListView() {
 //        造假数据
         List<User> userList = new ArrayList<>();
-        for(int i=0;i<7;++i){
+        for(int i=0;i<20;++i){
+
             User user = new User();
             UserStatus userStatus = new UserStatus();
-            userStatus.setStatusName("童生");
+            userStatus.setStatusName("秀才");
             user.setUserStatus(userStatus);
-            userList.add(user);
+
+            if(i==0 || i==1)
+            {
+                UserStatus userStatus2 = new UserStatus();
+                userStatus2.setStatusName("秀才");
+                user.setUserStatus(userStatus2);
+            }
+                userList.add(user);
         }
         UserRankListAdapter cakeListAdapter = new UserRankListAdapter(this,userList ,
                 R.layout.item_user_rank_list);
@@ -201,9 +213,21 @@ public class UserCenterActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    @OnClick(R.id.btn_my_collections)
-    public void JumpMyCollection(){
-        Intent intent = new Intent(UserCenterActivity.this, ProblemCollectionActivity.class);
-        startActivity(intent);
+    @OnClick({R.id.btn_my_collections,R.id.btn_card,R.id.btn_set})
+    public void onViewClicked(View view){
+        switch (view.getId()){
+            case R.id.btn_my_collections:
+                Intent intent = new Intent(UserCenterActivity.this, ProblemCollectionActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.btn_card:
+                Intent intent2 = new Intent(UserCenterActivity.this, DrawCardActivity.class);
+                startActivity(intent2);
+                break;
+            case R.id.btn_set:
+                Intent intent3 = new Intent(UserCenterActivity.this, SettingActivity.class);
+                startActivity(intent3);
+                break;
+        }
     }
 }

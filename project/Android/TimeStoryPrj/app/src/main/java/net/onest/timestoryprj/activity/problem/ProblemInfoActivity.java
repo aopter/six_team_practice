@@ -2,6 +2,8 @@ package net.onest.timestoryprj.activity.problem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,14 +12,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.adapter.problem.OnStartDragListener;
 import net.onest.timestoryprj.adapter.problem.OptionLianAdapter;
 import net.onest.timestoryprj.customview.LinkLineView;
+import net.onest.timestoryprj.dialog.problem.ProblemAnswerDialog;
+import net.onest.timestoryprj.dialog.user.CustomDialog;
 import net.onest.timestoryprj.entity.LinkDataBean;
 import net.onest.timestoryprj.entity.Problem;
 
@@ -27,6 +35,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class ProblemInfoActivity extends AppCompatActivity {
@@ -49,6 +58,15 @@ public class ProblemInfoActivity extends AppCompatActivity {
 
     @BindView(R.id.re_pai)
     RecyclerView rePai;
+    @BindView(R.id.iv_gif_bg)
+    ImageView ivGif;
+
+
+    @BindView(R.id.problem_answer)
+    Button btnAnswer;
+
+    @BindView(R.id.problem_save)
+    Button btnProblemSave;
 
     public static OnStartDragListener mDragStartListener;
 
@@ -58,9 +76,16 @@ public class ProblemInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_problem_info);
         ButterKnife.bind(this);
+
+        Glide.with(this).load(R.mipmap.deng).into(ivGif);
         Intent intent = getIntent();
+
         String type = intent.getStringExtra("type");
         Problem problem = (Problem) intent.getSerializableExtra("problem");
+
+        String before = intent.getStringExtra("before");
+        if (before.equals("types"))
+            btnAnswer.setVisibility(View.INVISIBLE);
         if (null != problem)
             Log.e("onCreate: ", problem.getProblemType() + "");
         if (null != type) {
@@ -198,10 +223,38 @@ public class ProblemInfoActivity extends AppCompatActivity {
                     helper.attachToRecyclerView(rePai);
 
 
-            break;
+                    break;
 
+            }
+        }
+
+
+    }
+
+    @OnClick({R.id.problem_save,R.id.problem_answer})
+    public void onViewClicked(View view){
+        switch (view.getId()){
+            case R.id.problem_save:
+                String s = btnProblemSave.getText().toString();
+                if(s.equals("收藏"))
+                    btnProblemSave.setText("已收藏");
+                else
+                    btnProblemSave.setText("收藏");
+                break;
+            case R.id.problem_answer:
+                getProblemAnswer();
+                break;
         }
     }
 
-}
+
+    /**
+     * 显示答案弹窗
+     */
+    private void getProblemAnswer() {
+//
+
+        ProblemAnswerDialog dialog = new ProblemAnswerDialog(this);
+        dialog.show();
+    }
 }

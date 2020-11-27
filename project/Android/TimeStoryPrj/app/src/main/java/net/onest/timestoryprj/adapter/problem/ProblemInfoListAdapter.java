@@ -57,6 +57,7 @@ public class ProblemInfoListAdapter extends RecyclerView.Adapter<ProblemInfoList
                         Intent intent = new Intent(context, ProblemInfoActivity.class);
                         intent.putExtra("type","xuan");
                         intent.putExtra("problem",problem);
+                        intent.putExtra("before","info");
 
                         context.startActivity(intent);
                     }

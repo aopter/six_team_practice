@@ -21,10 +21,15 @@ public class Constant {
     public static List<HistoryDay> historyDays = new ArrayList<>();
     //当前登录用户解锁的朝代
     public static List<UserUnlockDynasty> UnlockDynasty = new ArrayList<>();
+<<<<<<< Updated upstream
 
     //规则详情
     public static Rule rule;
 
+=======
+    //规则详情
+    public static Rule rule;
+>>>>>>> Stashed changes
     //当前登录用户解锁的某朝代的事件
     public static List<UserUnlockDynastyIncident> UnlockDynastyIncident = new ArrayList<>();
 }

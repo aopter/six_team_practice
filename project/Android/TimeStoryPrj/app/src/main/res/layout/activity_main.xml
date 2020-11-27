@@ -5,11 +5,24 @@
     android:fadingEdge="vertical"
     android:scrollbars="vertical">
 
+<<<<<<< Updated upstream
     <LinearLayout
+=======
+    <Button
+        android:id="@+id/btn_homepage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="首页" />
+
+
+    <Button
+        android:id="@+id/btn_history"
+>>>>>>> Stashed changes
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+<<<<<<< Updated upstream
         <Button
             android:id="@+id/btn_homepage"
             android:layout_width="match_parent"
@@ -31,6 +44,17 @@
             android:text="系统自带"
             android:textColor="@android:color/black"
             android:textSize="20dp" />
+=======
+    <Button
+        android:id="@+id/login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="登录"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+>>>>>>> Stashed changes
 
         <Button
             android:id="@+id/btn_history"
@@ -42,6 +66,7 @@
             android:id="@+id/login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+<<<<<<< Updated upstream
             android:text="登录" />
 
         <LinearLayout
@@ -85,6 +110,19 @@
                 android:text="抽卡" />
         </LinearLayout>
 
+=======
+            android:text="我的题"/>
+        <Button
+            android:id="@+id/btn_lkl_lian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="连线题"/></LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+>>>>>>> Stashed changes
         <Button
             android:id="@+id/btn_link_details"
             android:layout_width="wrap_content"
@@ -97,4 +135,19 @@
             android:layout_height="wrap_content"
             android:text="个人设置" />
     </LinearLayout>
+<<<<<<< Updated upstream
 </ScrollView>
+=======
+    <Button
+        android:id="@+id/btn_link_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="简介"/>
+
+    <Button
+        android:id="@+id/btn_set"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="个人设置"/>
+</LinearLayout>
+>>>>>>> Stashed changes
