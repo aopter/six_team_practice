@@ -1,6 +1,10 @@
 package net.onest.timestoryprj.activity.problem;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,11 +15,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.onest.timestoryprj.R;
+import net.onest.timestoryprj.adapter.problem.OnStartDragListener;
+import net.onest.timestoryprj.adapter.problem.OptionLianAdapter;
+import net.onest.timestoryprj.customview.LinkLineView;
 import net.onest.timestoryprj.entity.LinkDataBean;
 import net.onest.timestoryprj.entity.Problem;
-import net.onest.timestoryprj.view.LinkLineView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -39,6 +46,12 @@ public class ProblemInfoActivity extends AppCompatActivity {
     @BindView(R.id.type_lian)
     LinearLayout llTypeLian;
     LinearLayout llTypeAll;
+
+    @BindView(R.id.re_pai)
+    RecyclerView rePai;
+
+    public static OnStartDragListener mDragStartListener;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,10 +141,67 @@ public class ProblemInfoActivity extends AppCompatActivity {
                 case "pai":
                     llTypeXuan.setVisibility(View.INVISIBLE);
                     llTypeLian.setVisibility(View.INVISIBLE);
-                    break;
+                    List<String> options = new ArrayList<>();
+//                    {"李白乘舟将欲行", "不及汪伦送我情", "忽闻岸上踏歌声", "桃花潭水深千尺"};
+                    options.add("李白乘舟将欲行");
+                    options.add("不及汪伦送我情");
+                    options.add("忽闻岸上踏歌声");
+                    options.add("桃花潭水深千尺");
+                    options.add("穿棉衣穿棉衣啊");
+                    options.add("打地鼠穿棉衣啊");
 
-            }
+                    rePai.setLayoutManager(new GridLayoutManager(this, 3));
+//        rv.setLayoutManager(new LinearLayoutManager(this));
+                    OptionLianAdapter adapter = new OptionLianAdapter(options);
+                    rePai.setAdapter(adapter);
+                    //为RecycleView绑定触摸事件
+                    ItemTouchHelper helper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
+                        @Override
+                        public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                            //首先回调的方法 返回int表示是否监听该方向
+                            int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;//拖拽
+                            int swipeFlags = 0;//侧滑删除
+                            return makeMovementFlags(dragFlags, swipeFlags);
+                        }
+
+                        @Override
+                        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                            //滑动事件
+                            Log.e("getMovementFlags: ", "滑动");
+                            Collections.swap(options, viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                            adapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                            return false;
+                        }
+
+
+                        @Override
+                        public boolean isLongPressDragEnabled() {
+                            //是否可拖拽
+                            return true;
+                        }
+
+                        @Override
+                        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+                        }
+
+                    });
+
+
+                    mDragStartListener = new OnStartDragListener() {
+                        @Override
+                        public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
+                            helper.startDrag(viewHolder);
+                        }
+                    };
+
+                    helper.attachToRecyclerView(rePai);
+
+
+            break;
+
         }
-
     }
+
+}
 }

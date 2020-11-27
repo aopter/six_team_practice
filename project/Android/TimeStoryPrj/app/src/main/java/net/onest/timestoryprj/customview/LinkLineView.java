@@ -1,16 +1,14 @@
-package net.onest.timestoryprj.view;
+package net.onest.timestoryprj.customview;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Build;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -18,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tinytongtong.tinyutils.ListUtils;
@@ -36,8 +35,8 @@ import java.util.List;
 
 /**
  * @Description: 连线题的父容器
- * @Author wangdandandefather
- * @Date 2019-11-26 11:09
+ * @Author lkl
+ * @Date 2020-11-26
  * @Version
  */
 public class LinkLineView extends RelativeLayout {

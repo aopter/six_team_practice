@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@mipmap/bg_problem_info"
     android:orientation="vertical"
     android:paddingLeft="20dp"
@@ -158,99 +158,99 @@
             android:layout_marginBottom="0dp"
             android:text="题目：请将人物与学科相对应"
             android:textSize="16sp"
-            android:textStyle="bold"  />
+            android:textStyle="bold" />
 
-<!--        <LinearLayout-->
-<!--            android:id="@+id/lian_first"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="8dp"-->
-<!--            android:orientation="horizontal">-->
+        <!--        <LinearLayout-->
+        <!--            android:id="@+id/lian_first"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="8dp"-->
+        <!--            android:orientation="horizontal">-->
 
-<!--            <TextView-->
-<!--                android:id="@+id/tv1_lian_first"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:text="王伟" />-->
+        <!--            <TextView-->
+        <!--                android:id="@+id/tv1_lian_first"-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:text="王伟" />-->
 
-<!--            <TextView-->
-<!--                android:id="@+id/tv2_lian_first"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:text="java" />-->
+        <!--            <TextView-->
+        <!--                android:id="@+id/tv2_lian_first"-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:text="java" />-->
 
-<!--        </LinearLayout>-->
+        <!--        </LinearLayout>-->
 
-<!--        <LinearLayout-->
-<!--            android:id="@+id/lian_second"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="8dp"-->
-<!--            android:orientation="horizontal">-->
+        <!--        <LinearLayout-->
+        <!--            android:id="@+id/lian_second"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="8dp"-->
+        <!--            android:orientation="horizontal">-->
 
-<!--            <TextView-->
-<!--                android:id="@+id/tv1_lian_second"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:text="王伟" />-->
+        <!--            <TextView-->
+        <!--                android:id="@+id/tv1_lian_second"-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:text="王伟" />-->
 
-<!--            <TextView-->
-<!--                android:id="@+id/tv2_lian_second"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:text="java" />-->
+        <!--            <TextView-->
+        <!--                android:id="@+id/tv2_lian_second"-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:text="java" />-->
 
-<!--        </LinearLayout>-->
+        <!--        </LinearLayout>-->
 
-<!--        <LinearLayout-->
-<!--            android:id="@+id/lian_third"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="8dp"-->
-<!--            android:orientation="horizontal">-->
+        <!--        <LinearLayout-->
+        <!--            android:id="@+id/lian_third"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="8dp"-->
+        <!--            android:orientation="horizontal">-->
 
-<!--            <TextView-->
-<!--                android:id="@+id/tv1_lian_third"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:text="王伟" />-->
+        <!--            <TextView-->
+        <!--                android:id="@+id/tv1_lian_third"-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:text="王伟" />-->
 
-<!--            <TextView-->
-<!--                android:id="@+id/tv2_lian_third"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:text="java" />-->
+        <!--            <TextView-->
+        <!--                android:id="@+id/tv2_lian_third"-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:text="java" />-->
 
-<!--        </LinearLayout>-->
+        <!--        </LinearLayout>-->
 
-<!--        <LinearLayout-->
-<!--            android:id="@+id/lian_forth"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="8dp"-->
-<!--            android:orientation="horizontal">-->
+        <!--        <LinearLayout-->
+        <!--            android:id="@+id/lian_forth"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="8dp"-->
+        <!--            android:orientation="horizontal">-->
 
-<!--            <TextView-->
-<!--                android:id="@+id/tv1_lian_forth"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:text="王伟" />-->
+        <!--            <TextView-->
+        <!--                android:id="@+id/tv1_lian_forth"-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:text="王伟" />-->
 
-<!--            <TextView-->
-<!--                android:id="@+id/tv2_lian_forth"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:text="java" />-->
+        <!--            <TextView-->
+        <!--                android:id="@+id/tv2_lian_forth"-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:text="java" />-->
 
-<!--        </LinearLayout>-->
+        <!--        </LinearLayout>-->
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -258,15 +258,15 @@
 
             <FrameLayout
                 android:id="@+id/fl_link_line"
-                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:paddingLeft="13.0dip"
                 android:paddingRight="13.0dip"
                 android:paddingBottom="20.0dip"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <net.onest.timestoryprj.view.LinkLineView
+                <net.onest.timestoryprj.customview.LinkLineView
                     android:id="@+id/link_line_view"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content" />
@@ -297,7 +297,7 @@
             android:layout_margin="10dp"
             android:text="题目：你喜欢这个界面吗"
             android:textSize="16sp"
-            android:textStyle="bold"  />
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -306,98 +306,120 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/re_pai"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:padding="5dp" />
 
-            <TextView
-                android:id="@+id/tv_pai_first"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="李白乘舟将欲行" />
+        <!--        <LinearLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="10dp"-->
+        <!--            android:orientation="horizontal">-->
 
-            <TextView
-                android:id="@+id/tv_pai_second"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="桃花潭水深千尺" />
-        </LinearLayout>
+        <!--            <TextView-->
+        <!--                android:background="@mipmap/bg_option_pai"-->
+        <!--                android:id="@+id/tv_pai_first"-->
+        <!--                android:textSize="18sp"-->
+        <!--                android:gravity="center"-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_height="match_parent"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:text="李白乘舟将欲行" />-->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+        <!--            <TextView-->
+        <!--                android:textSize="18sp"-->
+        <!--                android:gravity="center"-->
+        <!--                android:background="@mipmap/bg_option_pai"-->
+        <!--                android:id="@+id/tv_pai_second"-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_height="match_parent"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:text="桃花潭水深千尺" />-->
+        <!--        </LinearLayout>-->
 
-            <TextView
-                android:id="@+id/tv_pai_third"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="不及汪伦送我情" />
+        <!--        <LinearLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="10dp"-->
+        <!--            android:orientation="horizontal">-->
 
-            <TextView
-                android:id="@+id/tv_pai_forth"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="忽闻岸上踏歌声" />
-        </LinearLayout>
+
+        <!--            <TextView-->
+        <!--                android:gravity="center"-->
+        <!--                android:textSize="18sp"-->
+        <!--                android:background="@mipmap/bg_option_pai"-->
+        <!--                android:id="@+id/tv_pai_third"-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_height="match_parent"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:text="不及汪伦送我情" />-->
+
+        <!--            <TextView-->
+        <!--                android:gravity="center"-->
+        <!--                android:textSize="18sp"-->
+        <!--                android:background="@mipmap/bg_option_pai"-->
+        <!--                android:id="@+id/tv_pai_forth"-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_height="match_parent"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:text="忽闻岸上踏歌声" />-->
+        <!--        </LinearLayout>-->
 
 
         <!--        答案区-->
-        <LinearLayout
+        <!--        <LinearLayout-->
 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:orientation="vertical">-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:orientation="horizontal">
+        <!--            <LinearLayout-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginTop="30dp"-->
+        <!--                android:orientation="horizontal">-->
 
-                <TextView
-                    android:id="@+id/tv_pai_a"
-                    android:layout_width="180dp"
-                    android:layout_height="50dp"
-                    android:layout_marginRight="30dp"
-                    android:background="@mipmap/bg_option_pai" />
+        <!--                <TextView-->
+        <!--                    android:id="@+id/tv_pai_a"-->
+        <!--                    android:layout_width="180dp"-->
+        <!--                    android:layout_height="50dp"-->
+        <!--                    android:layout_marginRight="30dp"-->
+        <!--                    android:background="@mipmap/bg_option_pai" />-->
 
-                <TextView
-                    android:id="@+id/tv_pai_b"
-                    android:layout_width="180dp"
-                    android:layout_height="50dp"
-                    android:background="@mipmap/bg_option_pai" />
+        <!--                <TextView-->
+        <!--                    android:id="@+id/tv_pai_b"-->
+        <!--                    android:layout_width="180dp"-->
+        <!--                    android:layout_height="50dp"-->
+        <!--                    android:background="@mipmap/bg_option_pai" />-->
 
-            </LinearLayout>
+        <!--            </LinearLayout>-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:orientation="horizontal">
+        <!--            <LinearLayout-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginTop="15dp"-->
+        <!--                android:orientation="horizontal">-->
 
-                <TextView
-                    android:id="@+id/tv_pai_c"
-                    android:layout_width="180dp"
-                    android:layout_height="50dp"
-                    android:layout_marginRight="30dp"
-                    android:background="@mipmap/bg_option_pai" />
+        <!--                <TextView-->
+        <!--                    android:id="@+id/tv_pai_c"-->
+        <!--                    android:layout_width="180dp"-->
+        <!--                    android:layout_height="50dp"-->
+        <!--                    android:layout_marginRight="30dp"-->
+        <!--                    android:background="@mipmap/bg_option_pai" />-->
 
-                <TextView
-                    android:id="@+id/tv_pai_d"
-                    android:layout_width="180dp"
-                    android:layout_height="50dp"
-                    android:background="@mipmap/bg_option_pai" />
+        <!--                <TextView-->
+        <!--                    android:id="@+id/tv_pai_d"-->
+        <!--                    android:layout_width="180dp"-->
+        <!--                    android:layout_height="50dp"-->
+        <!--                    android:background="@mipmap/bg_option_pai" />-->
 
-            </LinearLayout>
-        </LinearLayout>
+        <!--            </LinearLayout>-->
+        <!--        </LinearLayout>-->
     </LinearLayout>
 
 

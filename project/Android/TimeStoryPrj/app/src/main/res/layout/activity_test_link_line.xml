@@ -22,7 +22,7 @@
             android:paddingBottom="20.0dip"
             app:layout_constraintTop_toTopOf="parent">
 
-            <net.onest.timestoryprj.view.LinkLineView
+            <net.onest.timestoryprj.customview.LinkLineView
                 android:id="@+id/link_line_view"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" />

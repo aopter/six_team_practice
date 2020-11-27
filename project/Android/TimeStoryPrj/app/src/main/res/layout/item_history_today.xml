@@ -4,8 +4,6 @@
     android:layout_height="match_parent">
 
 
-
-
         <LinearLayout
             android:alpha="0.8"
             android:background="@color/ourDynastyRed"
