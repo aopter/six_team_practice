@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
@@ -47,8 +48,10 @@ public class ShowCardStoryActivity extends AppCompatActivity {
     TextView story3;
     @BindView(R.id.card_img)
     ImageView cardImg;
+    @BindView(R.id.text)
+    TextView tip;
     @BindView(R.id.title_container)
-    RelativeLayout titleContainer;
+    LinearLayout titleContainer;
     private int translate;
     private Animation tran;
     private int x;
@@ -63,18 +66,24 @@ public class ShowCardStoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        clickMillis = System.currentTimeMillis();
         setContentView(R.layout.activity_show_card_story);
+        clickMillis = System.currentTimeMillis();
         ButterKnife.bind(this);
-        story1.setMovementMethod(ScrollingMovementMethod.getInstance());
-        story2.setMovementMethod(ScrollingMovementMethod.getInstance());
-        story3.setMovementMethod(ScrollingMovementMethod.getInstance());
         Intent intent = getIntent();
         card = (Card) intent.getSerializableExtra("card");
         for (String e : card.getCardStory().split(Constant.DELIMITER)) {
             event.add(e);
         }
-        translate = ScreenUtil.getScreenWidth(getApplicationContext()) / 3;
+        defineViewAndAnimation();
+    }
+
+    private void defineViewAndAnimation() {
+        final Typeface typeface = Typeface.createFromAsset(getResources().getAssets(), "fonts/custom_font.ttf");
+        tip.setTypeface(typeface);
+        story1.setMovementMethod(ScrollingMovementMethod.getInstance());
+        story2.setMovementMethod(ScrollingMovementMethod.getInstance());
+        story3.setMovementMethod(ScrollingMovementMethod.getInstance());
+        translate = (ScreenUtil.getScreenWidth(getApplicationContext()) - ScreenUtil.dip2px(getApplicationContext(), 52)) / 3;
         in = new AlphaAnimation(0.0f, 1.0f);
         in.setDuration(1000);
         out = new AlphaAnimation(1.0f, 0.0f);
@@ -113,14 +122,14 @@ public class ShowCardStoryActivity extends AppCompatActivity {
                 } else {
                     if (currentStory % 3 == 0) {
                         // 第三次
-                        lp.setMargins(-translate, ScreenUtil.dip2px(getApplicationContext(), 170), 0, 0);
+                        lp.setMargins(-translate, ScreenUtil.dip2px(getApplicationContext(), 160), 0, 0);
                         cardImg.setLayoutParams(lp);
                         //lp代表某个控件，该控件可以获取到其父控件类型的LayoutParams
                         story1.startAnimation(out);
                         story1.setText(event.get(currentStory));
                         story1.startAnimation(in);
                     } else if (currentStory % 3 == 1) {
-                        lp.setMargins(0, ScreenUtil.dip2px(getApplicationContext(), 170), 0, 0);
+                        lp.setMargins(0, ScreenUtil.dip2px(getApplicationContext(), 160), 0, 0);
                         cardImg.setLayoutParams(lp);
                         // 第一次点击
                         cardImg.startAnimation(tran);
@@ -129,7 +138,7 @@ public class ShowCardStoryActivity extends AppCompatActivity {
                         story2.setText(event.get(currentStory));
                         story2.startAnimation(in);
                     } else if (currentStory % 3 == 2) {
-                        lp.setMargins(translate, ScreenUtil.dip2px(getApplicationContext(), 170), 0, 0);
+                        lp.setMargins(translate, ScreenUtil.dip2px(getApplicationContext(), 160), 0, 0);
                         cardImg.setLayoutParams(lp);
                         // 第二次点击
                         cardImg.startAnimation(tran);

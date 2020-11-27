@@ -5,15 +5,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.adapter.card.CardAdapter;
+import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.entity.Card;
 import net.onest.timestoryprj.entity.Dynasty;
+import net.onest.timestoryprj.entity.UserUnlockDynasty;
 import net.onest.timestoryprj.util.CardScaleHelper;
 
 import java.util.ArrayList;
@@ -32,12 +36,16 @@ public class MyCardActivity extends AppCompatActivity {
     private List<Dynasty> dynasties = new ArrayList<>();
     @BindView(R.id.back)
     ImageView back;
+    @BindView(R.id.text)
+    TextView tip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_card);
         ButterKnife.bind(this);
+        final Typeface typeface = Typeface.createFromAsset(getResources().getAssets(), "fonts/custom_font.ttf");
+        tip.setTypeface(typeface);
         initRecyclerView();
     }
 
@@ -81,6 +89,7 @@ public class MyCardActivity extends AppCompatActivity {
         Dynasty dynasty4 = new Dynasty();
         dynasty4.setDynastyName("清朝");
         dynasties.add(dynasty4);
+
     }
 
     @OnClick(R.id.back)

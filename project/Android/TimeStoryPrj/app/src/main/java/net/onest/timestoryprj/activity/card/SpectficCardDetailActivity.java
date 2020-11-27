@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
@@ -37,6 +38,8 @@ public class SpectficCardDetailActivity extends AppCompatActivity {
     Button cardStory;
     @BindView(R.id.back)
     ImageView back;
+    @BindView(R.id.text)
+    TextView tip;
     private Animation in;
 
 
@@ -46,6 +49,8 @@ public class SpectficCardDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spectfic_card_detail);
         ButterKnife.bind(this);
+        final Typeface typeface = Typeface.createFromAsset(getResources().getAssets(), "fonts/custom_font.ttf");
+        tip.setTypeface(typeface);
         in = new AlphaAnimation(0.0f, 1.0f);
         in.setDuration(1500);
         initView();

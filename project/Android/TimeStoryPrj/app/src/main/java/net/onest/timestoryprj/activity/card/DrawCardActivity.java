@@ -3,15 +3,18 @@ package net.onest.timestoryprj.activity.card;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.onest.timestoryprj.R;
@@ -35,15 +38,21 @@ public class DrawCardActivity extends AppCompatActivity {
     @BindView(R.id.to_last_view)
     Button toLastView;
     @BindView(R.id.card_container)
-    FrameLayout cardContainer;
+    LinearLayout cardContainer;
+    @BindView(R.id.front_container)
+    LinearLayout frontContainer;
     @BindView(R.id.draw_card_show)
     ImageView drawCard;
     @BindView(R.id.tip)
     TextView tip;
+    @BindView(R.id.text)
+    TextView text;
     private boolean flag = false;
+    private boolean isFlag = false;
     // 获取卡片
     private Card card;
     private Animation cardAnimation;
+    private AnimatorSet animatorSet;
 
 
     @Override
@@ -51,14 +60,18 @@ public class DrawCardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_draw_card);
         ButterKnife.bind(this);
+        final Typeface typeface = Typeface.createFromAsset(getResources().getAssets(), "fonts/custom_font.ttf");
+        tip.setTypeface(typeface);
+        text.setTypeface(typeface);
         getDrawCard();
-        cardContainer.setVisibility(View.GONE);
+        frontContainer.bringToFront();
         cardAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.back);
     }
 
     private void getDrawCard() {
         // TODO 从客户端获取卡片，参数user_id
         card = new Card();
+        card.setCardName("yang");
         card.setCardId(1);
     }
 
@@ -66,7 +79,7 @@ public class DrawCardActivity extends AppCompatActivity {
     void showCard() {
         if (!flag) {
             flag = true;
-            tip.setText("点击页面任意位置可直接查看卡片详情哦");
+            tip.setText("恭喜你获得‘" + card.getCardName() + "’的卡片");
             // TODO 卡片的动画效果
             // 调用setAnimationListener方法对动画的实现过程进行监听
             cardAnimation.setAnimationListener(new Animation.AnimationListener() {
@@ -97,8 +110,29 @@ public class DrawCardActivity extends AppCompatActivity {
 
     @OnClick({R.id.card1, R.id.card2, R.id.card3, R.id.card4})
     void showcardContainerPage() {
-        cardContainer.setVisibility(View.VISIBLE);
+        if (!isFlag) {
+            animatorSet = new AnimatorSet();
+            ObjectAnimator alphaAnim = ObjectAnimator.ofFloat(
+                    cardContainer,
+                    "alpha",
+                    0, 0.8f
+            );
+            alphaAnim.setDuration(400);
+            ObjectAnimator alphaAnim1 = ObjectAnimator.ofFloat(
+                    frontContainer,
+                    "alpha",
+                    0.95f, 0
+            );
+            alphaAnim1.setDuration(100);
+            animatorSet.setDuration(1000);
+            animatorSet.play(alphaAnim1).before(alphaAnim);
+            animatorSet.start();
+            isFlag = true;
+            cardContainer.bringToFront();
+        }
+        Log.e("card", isFlag + "");
     }
+
 
     @OnClick({R.id.back, R.id.to_last_view})
     void backToLastPage() {

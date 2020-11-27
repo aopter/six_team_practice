@@ -4,14 +4,14 @@
     android:layout_height="match_parent"
     android:alpha="0.8"
     android:background="@mipmap/bird"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="20dp">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/title_container"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:alpha="0.6"
-        android:background="@color/colorTitle"
+        android:gravity="center_vertical"
         android:padding="10dp">
 
         <ImageView
@@ -19,9 +19,17 @@
             android:layout_width="40dp"
             android:layout_height="50dp"
             android:layout_marginLeft="10dp"
-            android:padding="8dp"
+            android:padding="10dp"
             android:src="@mipmap/back" />
-    </RelativeLayout>
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="人物故事"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/container"
@@ -33,14 +41,15 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="15dp">
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:padding="20dp">
+                android:padding="15dp">
 
                 <TextView
                     android:id="@+id/story1"
@@ -59,7 +68,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:padding="20dp">
+                android:padding="15dp">
 
                 <TextView
                     android:id="@+id/story2"
@@ -78,7 +87,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:padding="20dp">
+                android:padding="15dp">
 
                 <TextView
                     android:id="@+id/story3"
@@ -97,7 +106,7 @@
             android:id="@+id/card_img"
             android:layout_width="100dp"
             android:layout_height="160dp"
-            android:layout_marginTop="170dp"
+            android:layout_marginTop="160dp"
             android:alpha="0.8"
             android:src="@mipmap/role" />
     </RelativeLayout>

@@ -5,22 +5,28 @@
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     <uses-permission android:name="android.permission.WRITE_APN_SETTINGS"
-        tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"
-        tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.CAMERA"/>
-
 =======
+    <uses-permission
+        android:name="android.permission.WRITE_APN_SETTINGS"
+>>>>>>> Stashed changes
+        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.INTERNET" />
+<<<<<<< Updated upstream
 >>>>>>> Stashed changes
 =======
     <uses-permission android:name="android.permission.INTERNET" />
 
+>>>>>>> Stashed changes
+=======
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.CAMERA" />
 >>>>>>> Stashed changes
 
     <application
@@ -28,8 +34,10 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
         android:requestLegacyExternalStorage="true"
@@ -38,17 +46,33 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".activity.dynasty.DynastyIntroduceActivity"
+=======
+        android:theme="@style/AppTheme.NoActionBar"
+        android:usesCleartextTraffic="true">
+
+        <activity
+            android:name=".activity.dynasty.DynastyIntroduceActivity"
+>>>>>>> Stashed changes
             android:screenOrientation="landscape"></activity>
-        <activity android:name=".activity.problem.ProblemInfoActivity"
+        <activity
+            android:name=".activity.problem.ProblemInfoActivity"
             android:screenOrientation="landscape"></activity>
 <<<<<<< Updated upstream
 
-        <activity android:name=".activity.card.DrawCardActivity"></activity>
+        <activity
+            android:name=".activity.card.DrawCardActivity"
+            android:screenOrientation="landscape"></activity>
 
+<<<<<<< Updated upstream
 =======
 >>>>>>> Stashed changes
         <activity android:name=".activity.problem.LinkLineTextActivity"
             android:screenOrientation="landscape" ></activity>
+=======
+        <activity
+            android:name=".activity.problem.LinkLineTextActivity"
+            android:screenOrientation="landscape"></activity>
+>>>>>>> Stashed changes
         <activity
             android:name=".activity.problem.ProblemCollectionActivity"
             android:screenOrientation="landscape" />
@@ -58,8 +82,7 @@
             android:screenOrientation="landscape" />
 
         <activity android:name=".dialog.dynasty.EventDialogActivity"></activity>
-        <activity
-            android:name=".activity.dynasty.DetailsEventActivity"/>
+        <activity android:name=".activity.dynasty.DetailsEventActivity" />
 
 =======
 
@@ -74,38 +97,10 @@
             android:name=".activity.dynasty.HomepageActivity"
             android:screenOrientation="landscape" />
 
-        <activity android:name=".activity.user.SettingActivity"
-            android:screenOrientation="landscape"/>
-
-=======
-        android:theme="@style/AppTheme.NoActionBar"
-        android:usesCleartextTraffic="true">
-
-        <activity
-            android:name=".activity.dynasty.DynastyIntroduceActivity"
-            android:screenOrientation="landscape"></activity>
-        <activity
-            android:name=".activity.problem.ProblemInfoActivity"
-            android:screenOrientation="landscape"></activity>
-        <activity android:name=".activity.card.DrawCardActivity"
-            android:screenOrientation="landscape"></activity>
-        <activity
-            android:name=".activity.card.ShowCardStoryActivity"
-            android:screenOrientation="landscape" />
-        <activity android:name=".dialog.dynasty.EventDialogActivity"
-            android:screenOrientation="landscape"></activity>
-        <activity
-            android:name=".activity.dynasty.DetailsEventActivity"
-            android:screenOrientation="landscape" />
-        <activity android:name=".activity.problem.SelectProblemTypeActivity"
-            android:screenOrientation="landscape"/>
-        <activity
-            android:name=".activity.dynasty.HomepageActivity"
-            android:screenOrientation="landscape" />
-
         <activity
             android:name=".activity.user.SettingActivity"
             android:screenOrientation="landscape" />
+<<<<<<< Updated upstream
 >>>>>>> Stashed changes
 
 =======
@@ -122,6 +117,8 @@
             android:screenOrientation="landscape" />
         <activity android:name=".activity.user.SettingActivity"
             android:screenOrientation="landscape"/>
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
         <activity
             android:name=".activity.user.RegisterActivity"
@@ -142,7 +139,6 @@
             android:name=".activity.user.UserCenterActivity"
             android:launchMode="singleTask"
             android:screenOrientation="landscape"></activity>
-
 
         <activity
             android:name=".MainActivity"
