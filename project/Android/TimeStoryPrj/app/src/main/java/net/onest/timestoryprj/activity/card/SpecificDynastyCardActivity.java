@@ -116,6 +116,7 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
         }
         for (int i = 0; i < 8; i++) {
             Card card = new Card();
+            card.setCardId(1);
             card.setCardName("card" + i);
             cards.add(card);
         }

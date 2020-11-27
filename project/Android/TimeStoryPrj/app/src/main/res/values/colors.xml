@@ -4,48 +4,15 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="ourDynastyRed">#AE5B41</color>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< HEAD
     <color name="back_color">#b0000000</color>
     <color name="whrite">#ffffff</color>
     <color name="orange">#FFB90F</color>
-=======
-<<<<<<< Updated upstream
-=======
->>>>>>> Stashed changes
-=======
-    <color name="back_color">#b0000000</color>
-    <color name="whrite">#ffffff</color>
-    <color name="orange">#FFB90F</color>
->>>>>>> Stashed changes
     <color name="colorDropdown">#CCFFFAFA</color>
     <color name="colorSearch">#F5F5F5</color>
     <color name="colorBorder">#CCC</color>
     <color name="ourTimeLine">#DA70D0</color>
     <color name="colorTitle">#FFFAF0</color>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
-=======
->>>>>>> Stashed changes
-
-
     <color name="answer_right">#ff00deab</color>
     <color name="answer_wrong">#ffff7c64</color>
     <color name="black">#ff000000</color>
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
->>>>>>> 88fc036dabcb01816e65ba824f214fd1a4ace90f
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
-    <color name="answer_right">#ff00deab</color>
-    <color name="answer_wrong">#ffff7c64</color>
-    <color name="black">#ff000000</color>
->>>>>>> Stashed changes
 </resources>
