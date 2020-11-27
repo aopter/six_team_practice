@@ -3,11 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <Button
         android:id="@+id/btn_homepage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="首页"/>
+        android:text="首页" />
+
     <net.onest.timestoryprj.customview.CusTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,47 +31,79 @@
         android:id="@+id/btn_history"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="首页"/>
+        android:text="首页" />
 
     <Button
         android:id="@+id/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+<<<<<<< Updated upstream
         android:text="登录"/>
 <<<<<<< HEAD
 
 =======
+=======
+        android:text="登录" />
+
+>>>>>>> Stashed changes
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <Button
             android:id="@+id/btn_user_center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="回家"/>
+            android:text="回家" />
+
         <Button
             android:id="@+id/btn_problem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+<<<<<<< Updated upstream
             android:text="我的题"/>
         <Button
             android:id="@+id/btn_lkl_lian"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="连线题"/>
-
-
+=======
+            android:text="我的题" />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+>>>>>>> Stashed changes
+
+        <Button
+            android:id="@+id/btn_user_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的卡片" />
+
+        <Button
+            android:id="@+id/btn_draw_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="抽卡" />
+    </LinearLayout>
+<<<<<<< Updated upstream
 >>>>>>> 88fc036dabcb01816e65ba824f214fd1a4ace90f
     <Button
         android:id="@+id/btn_user_card"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="我的卡片"/>
+=======
+
+>>>>>>> Stashed changes
     <Button
         android:id="@+id/btn_link_details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+<<<<<<< Updated upstream
 <<<<<<< HEAD
         android:text="我的卡片"/>
 
@@ -82,4 +116,7 @@
 =======
         android:text="简介"/>
 >>>>>>> 88fc036dabcb01816e65ba824f214fd1a4ace90f
+=======
+        android:text="简介" />
+>>>>>>> Stashed changes
 </LinearLayout>

@@ -13,10 +13,9 @@
     <color name="colorDropdown">#CCFFFAFA</color>
     <color name="colorSearch">#F5F5F5</color>
     <color name="colorBorder">#CCC</color>
-<<<<<<< Updated upstream
     <color name="ourTimeLine">#DA70D0</color>
-=======
     <color name="colorTitle">#FFFAF0</color>
+<<<<<<< Updated upstream
 >>>>>>> Stashed changes
 =======
 
@@ -26,4 +25,6 @@
     <color name="black">#ff000000</color>
 >>>>>>> Stashed changes
 >>>>>>> 88fc036dabcb01816e65ba824f214fd1a4ace90f
+=======
+>>>>>>> Stashed changes
 </resources>

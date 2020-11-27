@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.view.Gravity;
+import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.Button;
@@ -55,13 +57,18 @@ public class SpectficCardDetailActivity extends AppCompatActivity {
         int cardId = intent.getIntExtra("cardId", -1);
         if (cardId == -1) {
             Toast.makeText(getApplicationContext(), "获取卡片详情出错啦，请重新获取", Toast.LENGTH_SHORT).show();
+            cardName.setVisibility(View.INVISIBLE);
+            cardStory.setVisibility(View.INVISIBLE);
+            // TODO 弹窗提示获取卡片信息失败
         } else {
+            cardName.setVisibility(View.VISIBLE);
+            cardStory.setVisibility(View.VISIBLE);
             // TODO 从客户端获取卡片详情， 参数为 card_id
             card = new Card();
             card.setCardId(1);
             card.setCardName("杨贵妃");
 //            card.setCardPicture();
-            card.setCardInfo("人物简介：杨玉环（618年—907年）\n\n出身宦门世家曾祖父杨汪是隋朝的上柱国、吏部尚du书，唐初被李世zhi民所杀，父杨玄琰，是蜀州司户，叔父杨玄珪曾任河南府土曹，杨玉环的童年是在四川度过的，10岁左右，父亲去世，她寄养在洛阳的三叔杨玄珪家。\n 杨玉环天生丽质，加上优越的教育环境，使她具备有一定的文化修养，性格婉顺，精通音律，擅歌舞，并善弹琵琶。");
+            card.setCardInfo("人物简介：杨玉环（618年—907年）\n\n    出身宦门世家曾祖父杨汪是隋朝的上柱国、吏部尚du书，唐初被李世zhi民所杀，父杨玄琰，是蜀州司户，叔父杨玄珪曾任河南府土曹，杨玉环的童年是在四川度过的，10岁左右，父亲去世，她寄养在洛阳的三叔杨玄珪家。\n     杨玉环天生丽质，加上优越的教育环境，使她具备有一定的文化修养，性格婉顺，精通音律，擅歌舞，并善弹琵琶。");
             card.setCardType(1);
             card.setCardStory("开元二十五年（737年）武惠妃逝世，李瑁的母亲武惠妃是玄宗最为宠爱的妃子，在宫中的礼遇等同于皇后。玄宗因此郁郁寡欢，当时后宫数千，无可意者，有人进言杨玉环“姿质天挺，宜充掖廷”，于是唐玄宗将杨氏召入后宫之中。" + Constant.DELIMITER + "开元二十八年（740年）十月，以为玄宗母亲窦太后祈福的名义，敕书杨氏出家为女道士，道号“太真”。" +
                     Constant.DELIMITER + "天宝四年（745年），唐玄宗把韦昭训的女儿册立为寿王妃后，遂册立杨玉环为贵妃，玄宗自废掉王皇后就再未立后，因此杨贵妃就相当于皇后。" + Constant.DELIMITER +

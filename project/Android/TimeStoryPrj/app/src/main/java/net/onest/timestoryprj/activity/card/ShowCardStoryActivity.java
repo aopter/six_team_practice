@@ -57,6 +57,7 @@ public class ShowCardStoryActivity extends AppCompatActivity {
     private Animation in;
     private Animation out;
     private long clickMillis = 0;
+    private boolean flag = false;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -98,42 +99,45 @@ public class ShowCardStoryActivity extends AppCompatActivity {
 
     @OnClick(R.id.container)
     void shiftStory() {
-        long clickTwiceMillis = System.currentTimeMillis();
-        if ((clickTwiceMillis - clickMillis) < 1000) {
-            Toast.makeText(getApplicationContext(), "正在加载，请点击慢一些吧", Toast.LENGTH_SHORT).show();
-        } else {
-            clickMillis = clickTwiceMillis;
-            currentStory = currentStory + 1;
-            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(cardImg.getLayoutParams());
-            if (currentStory >= event.size()) {
-                Toast.makeText(getApplicationContext(), "没有更多了", Toast.LENGTH_SHORT).show();
+        if (!flag) {
+            long clickTwiceMillis = System.currentTimeMillis();
+            if ((clickTwiceMillis - clickMillis) < 1000) {
+                Toast.makeText(getApplicationContext(), "正在加载，请点击慢一些吧", Toast.LENGTH_SHORT).show();
             } else {
-                if (currentStory % 3 == 0) {
-                    // 第三次
-                    lp.setMargins(-translate, ScreenUtil.dip2px(getApplicationContext(), 170), 0, 0);
-                    cardImg.setLayoutParams(lp);
-                    //lp代表某个控件，该控件可以获取到其父控件类型的LayoutParams
-                    story1.startAnimation(out);
-                    story1.setText(event.get(currentStory));
-                    story1.startAnimation(in);
-                } else if (currentStory % 3 == 1) {
-                    lp.setMargins(0, ScreenUtil.dip2px(getApplicationContext(), 170), 0, 0);
-                    cardImg.setLayoutParams(lp);
-                    // 第一次点击
-                    cardImg.startAnimation(tran);
-                    x = cardImg.getLeft();
-                    story2.startAnimation(out);
-                    story2.setText(event.get(currentStory));
-                    story2.startAnimation(in);
-                } else if (currentStory % 3 == 2) {
-                    lp.setMargins(translate, ScreenUtil.dip2px(getApplicationContext(), 170), 0, 0);
-                    cardImg.setLayoutParams(lp);
-                    // 第二次点击
-                    cardImg.startAnimation(tran);
-                    x = cardImg.getLeft();
-                    story3.startAnimation(out);
-                    story3.setText(event.get(currentStory));
-                    story3.startAnimation(in);
+                clickMillis = clickTwiceMillis;
+                currentStory = currentStory + 1;
+                RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(cardImg.getLayoutParams());
+                if (currentStory >= event.size()) {
+                    Toast.makeText(getApplicationContext(), "没有更多了", Toast.LENGTH_SHORT).show();
+                    flag = true;
+                } else {
+                    if (currentStory % 3 == 0) {
+                        // 第三次
+                        lp.setMargins(-translate, ScreenUtil.dip2px(getApplicationContext(), 170), 0, 0);
+                        cardImg.setLayoutParams(lp);
+                        //lp代表某个控件，该控件可以获取到其父控件类型的LayoutParams
+                        story1.startAnimation(out);
+                        story1.setText(event.get(currentStory));
+                        story1.startAnimation(in);
+                    } else if (currentStory % 3 == 1) {
+                        lp.setMargins(0, ScreenUtil.dip2px(getApplicationContext(), 170), 0, 0);
+                        cardImg.setLayoutParams(lp);
+                        // 第一次点击
+                        cardImg.startAnimation(tran);
+                        x = cardImg.getLeft();
+                        story2.startAnimation(out);
+                        story2.setText(event.get(currentStory));
+                        story2.startAnimation(in);
+                    } else if (currentStory % 3 == 2) {
+                        lp.setMargins(translate, ScreenUtil.dip2px(getApplicationContext(), 170), 0, 0);
+                        cardImg.setLayoutParams(lp);
+                        // 第二次点击
+                        cardImg.startAnimation(tran);
+                        x = cardImg.getLeft();
+                        story3.startAnimation(out);
+                        story3.setText(event.get(currentStory));
+                        story3.startAnimation(in);
+                    }
                 }
             }
         }
