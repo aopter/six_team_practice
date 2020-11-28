@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
@@ -24,6 +25,7 @@ import com.bumptech.glide.request.RequestOptions;
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.activity.card.MyCardActivity;
 import net.onest.timestoryprj.activity.dynasty.HomepageActivity;
+import net.onest.timestoryprj.activity.problem.ProblemCollectionActivity;
 import net.onest.timestoryprj.adapter.user.HistoryTodayAdapter;
 import net.onest.timestoryprj.adapter.user.UserRankListAdapter;
 import net.onest.timestoryprj.constant.Constant;
@@ -76,6 +78,9 @@ public class UserCenterActivity extends AppCompatActivity {
     @BindView(R.id.btn_my_card)
     Button btnMyCards;
 
+    @BindView(R.id.btn_my_collections)
+    Button btnMyCollections;
+
 
 
     private Handler handler = new Handler() {
@@ -127,7 +132,13 @@ public class UserCenterActivity extends AppCompatActivity {
     private void getHistoryToday() {
         okHttpClient = new OkHttpClient();
         Request.Builder builder = new Request.Builder();
-        builder.url(ServiceConfig.HISTORY_TODAY + "?v=1.0&month=11&day=20&key=7a9cf9c5a9ff6338f5484d484ba51587");
+        Time t=new Time("GMT+8"); // 设置Time Zone资料。
+        t.setToNow(); // 获得当前系统时间。
+        int month = t.month+1; //月份前面加1，是因为从0开始计算，需要加1操作
+        int day = t.monthDay;
+//        获取当前月份
+//        获取当前时间
+        builder.url(ServiceConfig.HISTORY_TODAY + "?v=1.0&month="+month+"&day="+day+"&key=7a9cf9c5a9ff6338f5484d484ba51587");
         //构造请求类
         Request request = builder.build();
         final Call call = okHttpClient.newCall(request);
@@ -187,6 +198,12 @@ public class UserCenterActivity extends AppCompatActivity {
     @OnClick(R.id.btn_my_card)
     public void jumpMyCard(){
         Intent intent = new Intent(UserCenterActivity.this, MyCardActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.btn_my_collections)
+    public void JumpMyCollection(){
+        Intent intent = new Intent(UserCenterActivity.this, ProblemCollectionActivity.class);
         startActivity(intent);
     }
 }

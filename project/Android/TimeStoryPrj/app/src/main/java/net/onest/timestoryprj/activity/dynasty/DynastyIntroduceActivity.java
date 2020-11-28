@@ -41,7 +41,23 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
     private String dynastyId;
     private String DYNASTY_INFO = "/dynasty/details/";
     private Gson gson;
-    private Handler handler;
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            switch (msg.what){
+                case 1:
+                    Dynasty dynasty1 = (Dynasty) msg.obj;
+                    AssetManager assets = getAssets();
+                    final Typeface typeface = Typeface.createFromAsset(assets, "fonts/custom_fontt.ttf");
+                    final Typeface typeface1 = Typeface.createFromAsset(assets, "fonts/custom_font.ttf");
+                    tvDynastyName.setTypeface(typeface);
+                    tvDynastyIntro.setTypeface(typeface1);
+                    tvDynastyName.setText(dynasty1.getDynastyName());
+                    tvDynastyIntro.setText(dynasty1.getDynastyInfo());
+                    break;
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,22 +66,6 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
         initGson();
         initData();
         setListener();
-        handler = new Handler(){
-            @Override
-            public void handleMessage(@NonNull Message msg) {
-                switch (msg.what){
-                    case 1:
-                        Dynasty dynasty1 = (Dynasty) msg.obj;
-                        AssetManager assets = getAssets();
-                        final Typeface typeface = Typeface.createFromAsset(assets, "fonts/custom_font.ttf");
-                        tvDynastyName.setTypeface(typeface);
-                        tvDynastyIntro.setTypeface(typeface);
-                        tvDynastyName.setText(dynasty1.getDynastyName());
-                        tvDynastyIntro.setText(dynasty1.getDynastyInfo());
-                        break;
-                }
-            }
-        };
     }
 
     private void setListener() {

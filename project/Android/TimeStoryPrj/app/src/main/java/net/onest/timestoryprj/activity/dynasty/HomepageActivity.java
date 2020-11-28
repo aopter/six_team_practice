@@ -72,9 +72,63 @@ public class HomepageActivity extends AppCompatActivity {
     private String UNLOCK_DYNASTY_LIST = "/userunlockdynasty/list/1";
     private Gson gson;
     private List<Dynasty> dynasties1;
-    private Handler handler;
+    private Typeface typeface;
     //定义MediaPlayer
     private MediaPlayer mediaPlayer;
+    private Handler handler =  new Handler(){
+        @RequiresApi(api = Build.VERSION_CODES.M)
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            switch (msg.what){
+                case 1:
+                    dynasties1 = (List<Dynasty>) msg.obj;
+                    for (int i = 0;i < dynasties1.size(); i++) {
+                        TextView tv = new TextView(getApplicationContext());
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                                300,
+                                300
+                        );
+                        tv.setText(dynasties1.get(i).getDynastyName());
+                        tv.setTextColor(getColor(R.color.ourDynastyRed));
+                        tv.setTypeface(typeface);
+                        tv.setTextSize(30);
+                        Log.i("cyl", dynasties1.get(i).getDynastyName());
+                        if (i % 2 == 0) {
+                            params.setMargins(80, 50, 0, 0);
+                            tv.setLayoutParams(params);
+                            llLayout1.addView(tv);
+                        } else {
+                            if (i == 1){
+                                params.setMargins(200, 80, 0, 0);
+                            }else{
+                                params.setMargins(90, 80, 0, 0);
+                            }
+                            tv.setLayoutParams(params);
+                            llLayout2.addView(tv);
+                        }
+                        int finalI = i;
+                        tv.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                for (int j = 0; j < Constant.UnlockDynasty.size();j++){
+                                    if (Constant.UnlockDynasty.get(j).getDynastyId().equals(dynasties1.get(finalI).getDynastyId().toString())){
+                                        Intent intent = new Intent();
+                                        intent.setClass(getApplicationContext(), DynastyIntroduceActivity.class);
+                                        intent.putExtra("dynastyId", dynasties1.get(finalI).getDynastyId().toString());
+                                        Log.i("cyll", dynasties1.get(finalI).toString());
+                                        startActivity(intent);
+                                        break;
+                                    }else{
+                                        Toast.makeText(getApplicationContext(), "该朝代未解锁", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }
+                        });
+                    }
+                    break;
+            }
+        }
+    };
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,64 +140,10 @@ public class HomepageActivity extends AppCompatActivity {
         initMediaPlayer();
         //初始化gson
         initGson();
-        initData();
         AssetManager assets = getAssets();
-        final Typeface typeface = Typeface.createFromAsset(assets, "fonts/custom_font.ttf");
-        handler = new Handler(){
-            @RequiresApi(api = Build.VERSION_CODES.M)
-            @Override
-            public void handleMessage(@NonNull Message msg) {
-                switch (msg.what){
-                    case 1:
-                        dynasties1 = (List<Dynasty>) msg.obj;
-                        for (int i = 0;i < dynasties1.size(); i++) {
-                            TextView tv = new TextView(getApplicationContext());
-                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                                    300,
-                                    300
-                            );
-                            tv.setText(dynasties1.get(i).getDynastyName());
-                            tv.setTextColor(getColor(R.color.ourDynastyRed));
-                            tv.setTypeface(typeface);
-                            tv.setTextSize(30);
-                            Log.i("cyl", dynasties1.get(i).getDynastyName());
-                            if (i % 2 == 0) {
-                                params.setMargins(80, 50, 0, 0);
-                                tv.setLayoutParams(params);
-                                llLayout1.addView(tv);
-                            } else {
-                                if (i == 1){
-                                    params.setMargins(200, 80, 0, 0);
-                                }else{
-                                    params.setMargins(90, 80, 0, 0);
-                                }
-                                tv.setLayoutParams(params);
-                                llLayout2.addView(tv);
-                            }
-                            int finalI = i;
-                            tv.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    for (int j = 0; j < Constant.UnlockDynasty.size();j++){
-                                        if (Constant.UnlockDynasty.get(j).getDynastyId().equals(dynasties1.get(finalI).getDynastyId().toString())){
-                                            Intent intent = new Intent();
-                                            intent.setClass(getApplicationContext(), DynastyIntroduceActivity.class);
-                                            intent.putExtra("dynastyId", dynasties1.get(finalI).getDynastyId().toString());
-                                            Log.i("cyll", dynasties1.get(finalI).toString());
-                                            startActivity(intent);
-                                            break;
-                                        }else{
-                                            Toast.makeText(getApplicationContext(), "该朝代未解锁", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                }
-                            });
-                        }
-                        break;
-                }
-            }
-        };
+        typeface = Typeface.createFromAsset(assets, "fonts/custom_fontt.ttf");
 
+        initData();
     }
 
     /**
@@ -153,7 +153,7 @@ public class HomepageActivity extends AppCompatActivity {
         gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .serializeNulls()
-                .setDateFormat("YY:MM:DD")
+                .setDateFormat("yy:mm:dd")
                 .create();
     }
 

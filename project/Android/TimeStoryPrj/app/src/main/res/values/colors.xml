@@ -4,8 +4,15 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="ourDynastyRed">#AE5B41</color>
-    <color name="colorDropdown">#B3FFFAFA</color>
+    <color name="back_color">#b0000000</color>
+    <color name="whrite">#ffffff</color>
+    <color name="orange">#FFB90F</color>
+    <color name="colorDropdown">#CCFFFAFA</color>
     <color name="colorSearch">#F5F5F5</color>
     <color name="colorBorder">#CCC</color>
     <color name="ourTimeLine">#DA70D0</color>
+    <color name="colorTitle">#FFFAF0</color>
+    <color name="answer_right">#ff00deab</color>
+    <color name="answer_wrong">#ffff7c64</color>
+    <color name="black">#ff000000</color>
 </resources>

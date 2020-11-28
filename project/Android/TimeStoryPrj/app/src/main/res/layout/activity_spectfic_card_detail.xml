@@ -2,64 +2,98 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#8d1010"
-    android:orientation="horizontal"
-    android:padding="20dp">
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <ImageView
-            android:layout_above="@+id/card_name"
-            android:layout_width="140dp"
-            android:layout_height="300dp"
-            android:src="@mipmap/role" />
-
-        <Button
-            android:id="@+id/card_name"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentBottom="true"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:alpha="0.8"
-            android:background="@android:color/holo_red_dark"
-            android:text="杨贵妃"
-            android:textColor="@android:color/white"
-            android:textStyle="bold" />
-    </RelativeLayout>
+    android:background="@mipmap/bg_card"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="55dp"
+        android:alpha="0.95"
+        android:background="@color/colorTitle"
+        android:padding="10dp">
 
-        <TextView
-            android:scrollbars="vertical"
-            android:id="@+id/card_info"
-            android:textSize="18dp"
-            android:layout_above="@+id/card_story"
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="50dp"
-            android:layout_marginBottom="20dp"
-            android:textColor="@android:color/white" />
-
-        <Button
-            android:id="@+id/card_story"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginRight="50dp"
-            android:alpha="0.8"
-            android:background="@android:color/holo_red_dark"
-            android:text="查看生平"
-            android:textColor="@android:color/white"
-            android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:padding="8dp"
+            android:src="@mipmap/back" />
     </RelativeLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:padding="15dp">
+
+        <RelativeLayout
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="15dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/card_img"
+                android:layout_width="120dp"
+                android:layout_height="260dp"
+                android:layout_above="@+id/card_name_container" />
+
+            <LinearLayout
+                android:id="@id/card_name_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/card_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:alpha="0.7"
+                    android:background="@android:color/holo_red_dark"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="15dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/card_info"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/card_story"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginBottom="10dp"
+                android:alpha="0.85"
+                android:background="@color/colorDropdown"
+                android:scrollbars="vertical"
+                android:textColor="@android:color/black"
+                android:textSize="18dp" />
+
+            <Button
+                android:id="@+id/card_story"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="40dp"
+                android:alpha="0.7"
+                android:background="@android:color/holo_red_dark"
+                android:text="查看生平"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </LinearLayout>
 </LinearLayout>

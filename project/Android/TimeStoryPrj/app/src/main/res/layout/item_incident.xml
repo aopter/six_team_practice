@@ -57,7 +57,6 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginLeft="27dp"
-            android:layout_below="@+id/tv_incident_name"
-            android:src="@mipmap/settings"/>
+            android:layout_below="@+id/tv_incident_name" />
     </RelativeLayout>
 </LinearLayout>

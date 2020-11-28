@@ -1,37 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="net.onest.timestoryprj">
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_APN_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+
     <application
+
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".activity.dynasty.DynastyIntroduceActivity"
             android:screenOrientation="landscape"></activity>
         <activity android:name=".activity.problem.ProblemInfoActivity"
             android:screenOrientation="landscape"></activity>
+
+        <activity android:name=".activity.card.DrawCardActivity"
+            android:screenOrientation="landscape"></activity>
+
+        <activity android:name=".activity.problem.LinkLineTextActivity"
+            android:screenOrientation="landscape" ></activity>
         <activity
-            android:name=".activity.problem.SelectProblemTypeActivity"
+            android:name=".activity.problem.ProblemCollectionActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.card.ShowCardStoryActivity"
             android:screenOrientation="landscape" />
         <activity android:name=".dialog.dynasty.EventDialogActivity"
             android:screenOrientation="landscape"></activity>
         <activity
             android:name=".activity.dynasty.DetailsEventActivity"
+            android:screenOrientation="landscape"/>
+
+        <activity
+            android:name=".activity.problem.SelectProblemTypeActivity"
             android:screenOrientation="landscape" />
+
         <activity
             android:name=".activity.dynasty.HomepageActivity"
             android:screenOrientation="landscape" />
+
         <activity android:name=".activity.user.SettingActivity"
             android:screenOrientation="landscape"/>
+
 
         <activity
             android:name=".activity.user.RegisterActivity"
             android:screenOrientation="landscape" />
-
         <activity
             android:name=".activity.user.LoginActivity"
             android:screenOrientation="landscape" />
@@ -41,7 +68,13 @@
         <activity
             android:name=".activity.card.SpecificDynastyCardActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".activity.card.MyCardActivity" />
+        <activity
+            android:name=".activity.card.MyCardActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.user.UserCenterActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"></activity>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTask"

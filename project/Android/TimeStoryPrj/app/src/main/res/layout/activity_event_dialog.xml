@@ -2,94 +2,117 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_dialog_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/dialog"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     tools:context=".dialog.dynasty.EventDialogActivity">
 
-    <TextView
-        android:id="@+id/tv_big_word2"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="40sp"
-        android:textColor="@color/ourDynastyRed"/>
 
     <LinearLayout
-        android:gravity="center"
-        android:layout_marginTop="15dp"
-        android:layout_width="match_parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="20dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <Button
+            android:layout_marginBottom="80dp"
+            android:id="@+id/btn_pre2"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@mipmap/back" />
+        <TextView
+            android:id="@+id/tv_big_word2"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/ourDynastyRed"
+            android:textSize="35sp" />
+
+    </LinearLayout>
         <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="40dp"
             android:gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/tv_dialog_intro"
-                android:layout_width="200dp"
-                android:layout_height="130dp"
-                android:background="@mipmap/person_intro"/>
+
+            <ScrollView
+                android:layout_width="260dp"
+                android:layout_height="190dp"
+                android:layout_gravity="center">
+                <TextView
+                    android:clickable="false"
+                    android:scrollbars="vertical"
+                    android:id="@+id/tv_dialog_intro"
+                    android:layout_width="250dp"
+                    android:layout_height="180dp"
+                    android:textSize="20sp"
+                    android:padding="9dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@mipmap/bg_option_pai" />
+            </ScrollView>
+
+
+
             <ImageView
                 android:id="@+id/iv_dialog_intro_img"
-                android:layout_width="100dp"
-                android:layout_height="200dp"/>
+                android:layout_width="150dp"
+                android:layout_height="150dp" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:orientation="vertical">
+
             <ScrollView
+                android:id="@+id/sv_scroll"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center">
-                <LinearLayout
-                    android:layout_marginRight="40dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:gravity="center">
+                android:layout_height="230dp"
+                android:layout_gravity="center_horizontal">
+
+                <RelativeLayout
+                    android:id="@+id/rl_relativeLayout"
+                    android:layout_width="300dp"
+                    android:layout_height="110dp"
+                    android:gravity="center_horizontal">
+
                     <TextView
+                        android:layout_alignParentBottom="true"
                         android:id="@+id/tv_dialog1"
                         android:layout_width="150dp"
                         android:layout_height="100dp"
-                        android:layout_marginRight="20dp"
+                        android:background="@mipmap/conversation1"
                         android:paddingLeft="20dp"
-                        android:paddingRight="20dp"
                         android:paddingTop="10dp"
-                        android:background="@mipmap/conversation1"/>
-                    <TextView
-                        android:id="@+id/tv_dialog2"
-                        android:layout_width="150dp"
-                        android:layout_height="100dp"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp"
-                        android:paddingTop="10dp"
-                        android:background="@mipmap/conversation2"/>
-                </LinearLayout>
+                        android:paddingRight="20dp" />
+
+                </RelativeLayout>
             </ScrollView>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center">
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="25dp"
+                android:orientation="horizontal">
+
                 <ImageView
                     android:id="@+id/iv_dialog1_img"
-                    android:layout_width="100dp"
-                    android:layout_height="200dp"/>
+                    android:layout_width="150dp"
+                    android:layout_height="150dp" />
+
                 <ImageView
                     android:id="@+id/iv_dialog2_img"
-                    android:layout_width="100dp"
-                    android:layout_marginRight="40dp"
-                    android:layout_marginLeft="50dp"
-                    android:layout_height="200dp"/>
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp" />
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
 </LinearLayout>

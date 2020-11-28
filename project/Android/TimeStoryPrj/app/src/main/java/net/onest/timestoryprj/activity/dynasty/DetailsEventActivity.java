@@ -2,7 +2,6 @@ package net.onest.timestoryprj.activity.dynasty;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.res.AssetManager;
@@ -14,7 +13,6 @@ import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -24,21 +22,18 @@ import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.adapter.dynasty.EventListAdapter;
 import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
-import net.onest.timestoryprj.entity.Dynasty;
 import net.onest.timestoryprj.entity.Incident;
 import net.onest.timestoryprj.entity.UserUnlockDynastyIncident;
 import net.onest.timestoryprj.util.DensityUtil;
-import net.onest.timestoryprj.util.HorizontalListView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -49,11 +44,22 @@ public class DetailsEventActivity extends AppCompatActivity {
     private EventListAdapter eventListAdapter;
     private TextView tvBigWord;
     private Gson gson;
-    private Handler handler;
     private OkHttpClient okHttpClient;
     private String dynastyId;
     private String INCIDENT_URL = "/incident/list/";
     private String UNLOCK_INCIDENT_URL = "/userincident/list/";
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            switch (msg.what) {
+                case 1:
+                    incidentList = (List<Incident>) msg.obj;
+                    initAdapter();
+                    break;
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,17 +68,6 @@ public class DetailsEventActivity extends AppCompatActivity {
         initGson();
         initOkHttp();
         initData();
-
-        handler = new Handler() {
-            @Override
-            public void handleMessage(@NonNull Message msg) {
-                switch (msg.what) {
-                    case 1:
-                        incidentList = (List<Incident>) msg.obj;
-                        initAdapter();
-                }
-            }
-        };
     }
 
     /**
@@ -99,7 +94,7 @@ public class DetailsEventActivity extends AppCompatActivity {
         downloadIncidentList(dynastyId);
         String word = "历史上的" + dynastyName;
         AssetManager assets = getAssets();
-        final Typeface typeface = Typeface.createFromAsset(assets, "fonts/custom_font.ttf");
+        final Typeface typeface = Typeface.createFromAsset(assets, "fonts/custom_fontt.ttf");
         tvBigWord.setTypeface(typeface);
         tvBigWord.setText(word);
     }
@@ -113,16 +108,19 @@ public class DetailsEventActivity extends AppCompatActivity {
                 .url(ServiceConfig.SERVICE_ROOT + UNLOCK_INCIDENT_URL + 1 + "/" + dynastyId)
                 .build();
         Call call = okHttpClient.newCall(request);
-        new Thread(()->{
+        new Thread(() -> {
+            Response response = null;
             try {
-                Response response = call.execute();
+                response = call.execute();
                 String json = response.body().string();
                 Log.i("cccccc", json);
                 //1.得到集合类型
-                Type type = new TypeToken<List<UserUnlockDynastyIncident>>(){}.getType();
+                Type type = new TypeToken<List<UserUnlockDynastyIncident>>() {
+                }.getType();
                 //2.反序列化
-                List<UserUnlockDynastyIncident> unlockDynastyIncidentList = gson.fromJson(json,type);
+                List<UserUnlockDynastyIncident> unlockDynastyIncidentList = gson.fromJson(json, type);
                 Constant.UnlockDynastyIncident = unlockDynastyIncidentList;
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -138,14 +136,16 @@ public class DetailsEventActivity extends AppCompatActivity {
                 .build();
         Call call = okHttpClient.newCall(request);
         new Thread(() -> {
+            Response response = null;
             try {
-                Response response = call.execute();
+                response = call.execute();
                 String json1 = response.body().string();
                 //1.得到集合类型
-                Type type = new TypeToken<List<Incident>>(){}.getType();
+                Type type = new TypeToken<List<Incident>>() {
+                }.getType();
                 //2.反序列化
                 List<Incident> incident = gson.fromJson(json1, type);
-                Log.i("cyl", incident.toString());
+                Log.i("cyll", incident.toString());
                 Message msg = new Message();
                 msg.what = 1;
                 msg.obj = incident;
@@ -172,7 +172,9 @@ public class DetailsEventActivity extends AppCompatActivity {
      * 初始化OKHTTP对象
      */
     private void initOkHttp() {
-        okHttpClient = new OkHttpClient();
+        okHttpClient = new OkHttpClient().newBuilder().connectTimeout(60000, TimeUnit.MILLISECONDS)
+                .readTimeout(60000, TimeUnit.MILLISECONDS)
+                .build();
     }
 
     private void findViews() {

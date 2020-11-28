@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import net.onest.timestoryprj.R;
+import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.dialog.dynasty.EventDialogActivity;
 import net.onest.timestoryprj.entity.Incident;
 
@@ -58,9 +59,9 @@ public class EventListAdapter extends BaseAdapter {
         }
         AssetManager assets = context.getAssets();
         final Typeface typeface = Typeface.createFromAsset(assets, "fonts/custom_font.ttf");
+        Glide.with(context).load(ServiceConfig.SERVICE_ROOT + "/picture/download/incident/inc-" + (position + 1) + ".png").into(ivIncidentImg);
         tvIncidentName.setTypeface(typeface);
         tvIncidentName.setText(incidents.get(position).getIncidentName());
-//        Glide.with(context).load(incidents.get(position).getIncidentPicture()).into(holder.ivIncidentImg);
         tvIncidentName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

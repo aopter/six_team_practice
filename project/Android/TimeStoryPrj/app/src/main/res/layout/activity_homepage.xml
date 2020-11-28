@@ -5,17 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@mipmap/home"
     tools:context=".activity.dynasty.HomepageActivity">
 
     <LinearLayout
-        android:layout_marginLeft="10dp"
+        android:background="@mipmap/bg_home_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:orientation="horizontal">
 
         <!-- 头像、名称-->
         <LinearLayout
+            android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
@@ -132,7 +132,8 @@
     <HorizontalScrollView
         android:id="@+id/hsv_dynasty"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@mipmap/bg_home_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
