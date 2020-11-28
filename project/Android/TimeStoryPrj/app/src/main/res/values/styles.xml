@@ -51,10 +51,7 @@
         <item name="android:textColor">#B22222</item>
         <item name="android:layout_marginTop">10dp</item>
     </style>
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
     <style name="settingContent">
         <item name="android:layout_width">130dp</item>
         <item name="android:layout_height">wrap_content</item>

@@ -6,11 +6,7 @@ package net.onest.timestoryprj.constant;
 public class ServiceConfig {
     //历史上的今天接口
     public static String HISTORY_TODAY = "http://api.juheapi.com/japi/toh";
-<<<<<<< Updated upstream
-//    public static String SERVICE_ROOT = "";
-    public static String SERVICE_ROOT = "http://10.7.89.228:8888";
-=======
     //    public static String SERVICE_ROOT = "";
-    public static String SERVICE_ROOT = "http://10.7.89.92:8888";
->>>>>>> Stashed changes
+    public static String SERVICE_ROOT = "http://10.7.89.149:8888";
+
 }

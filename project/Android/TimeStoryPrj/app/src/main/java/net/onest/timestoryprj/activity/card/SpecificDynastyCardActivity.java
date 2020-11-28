@@ -194,6 +194,8 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
                         // TODO 从客户端获取数据, 参数为 user_id 与 dynasty
                         showCards();
                     }
+                } else {
+                    typeView.popupWindow.dismiss();
                 }
             }
         });

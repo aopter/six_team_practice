@@ -57,9 +57,27 @@ public class SpectficCardDetailActivity extends AppCompatActivity {
     private Animation in;
     private Gson gson;
     int cardId;
-    private Handler handler;
     private OkHttpClient client;
-
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            switch (msg.what) {
+                case 1:
+                    String result = (String) msg.obj;
+                    Log.e("info", result);
+                    card = gson.fromJson(result, Card.class);
+                    in = new AlphaAnimation(0.0f, 1.0f);
+                    in.setDuration(1500);
+                    cardInfo.setText(card.getCardInfo());
+                    cardInfo.startAnimation(in);
+                    cardName.setText(card.getCardName());
+                    Glide.with(getApplicationContext())
+                            .load(ServiceConfig.SERVICE_ROOT + "/picture/download/" + card.getCardPicture())
+                            .into(cardPic);
+                    break;
+            }
+        }
+    };
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -67,7 +85,6 @@ public class SpectficCardDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spectfic_card_detail);
         ButterKnife.bind(this);
-        initHandler();
         client = new OkHttpClient();
         cardInfo.setMovementMethod(ScrollingMovementMethod.getInstance());
         final Typeface typeface = Typeface.createFromAsset(getResources().getAssets(), "fonts/custom_font.ttf");
@@ -76,31 +93,6 @@ public class SpectficCardDetailActivity extends AppCompatActivity {
                 .serializeNulls()//允许输出Null值属性
                 .create();//创建Gson对象
         initView();
-    }
-
-    private void initHandler() {
-        HandlerThread handlerThread = new HandlerThread("MyThread");
-        handlerThread.start();
-        handler = new Handler(handlerThread.getLooper()) {
-            @Override
-            public void handleMessage(@NonNull Message msg) {
-                switch (msg.what) {
-                    case 1:
-                        String result = (String) msg.obj;
-                        Log.e("info", result);
-                        card = gson.fromJson(result, Card.class);
-                        in = new AlphaAnimation(0.0f, 1.0f);
-                        in.setDuration(1500);
-                        cardInfo.setText(card.getCardInfo());
-                        cardInfo.startAnimation(in);
-                        cardName.setText(card.getCardName());
-                        Glide.with(getApplicationContext())
-                                .load(ServiceConfig.SERVICE_ROOT + "/" + card.getCardPicture())
-                                .into(cardPic);
-                        break;
-                }
-            }
-        };
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -124,6 +116,7 @@ public class SpectficCardDetailActivity extends AppCompatActivity {
         new Thread() {
             @Override
             public void run() {
+                Log.e("url", ServiceConfig.SERVICE_ROOT + "/card/details/" + cardId);
                 Request request = new Request.Builder()
                         .url(ServiceConfig.SERVICE_ROOT + "/card/details/" + cardId)
                         .build();
@@ -144,7 +137,6 @@ public class SpectficCardDetailActivity extends AppCompatActivity {
                         handler.sendMessage(message);
                     }
                 });
-                Log.e("url", ServiceConfig.SERVICE_ROOT + "/card/details/" + cardId);
             }
         }.start();
     }

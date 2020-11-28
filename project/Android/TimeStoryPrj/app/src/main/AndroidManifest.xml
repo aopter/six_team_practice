@@ -2,10 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="net.onest.timestoryprj">
-    <uses-permission
-        android:name="android.permission.WRITE_SETTINGS"
-        tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.CAMERA"/>
+
     <uses-permission
         android:name="android.permission.WRITE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
@@ -13,7 +10,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_APN_SETTINGS"
+    <uses-permission
+        android:name="android.permission.WRITE_APN_SETTINGS"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.CAMERA" />
 
@@ -26,7 +24,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".dialog.DialogExampleAvtivity"></activity>
+        <activity
+            android:name=".dialog.DialogExampleAvtivity"
+            android:screenOrientation="landscape"></activity>
         <activity
             android:name=".activity.dynasty.DynastyIntroduceActivity"
             android:screenOrientation="landscape" />
@@ -35,35 +35,26 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".activity.card.DrawCardActivity"
-<<<<<<< Updated upstream
             android:screenOrientation="landscape"></activity>
         <activity
             android:name=".activity.problem.LinkLineTextActivity"
             android:screenOrientation="landscape"></activity>
 
-=======
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".activity.problem.LinkLineTextActivity"
-            android:screenOrientation="landscape" />
->>>>>>> Stashed changes
         <activity
             android:name=".activity.problem.ProblemCollectionActivity"
             android:screenOrientation="landscape" />
         <activity
             android:name=".activity.card.ShowCardStoryActivity"
             android:screenOrientation="landscape" />
-<<<<<<< Updated upstream
-        <activity android:name=".dialog.dynasty.EventDialogActivity"
+
+        <activity
+            android:name=".dialog.dynasty.EventDialogActivity"
             android:screenOrientation="landscape"></activity>
 
-        <activity android:name=".activity.dynasty.DetailsEventActivity"
-            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".activity.dynasty.DetailsEventActivity"
+            android:screenOrientation="landscape" />
 
-=======
-        <activity android:name=".dialog.dynasty.EventDialogActivity" />
-        <activity android:name=".activity.dynasty.DetailsEventActivity" />
->>>>>>> Stashed changes
         <activity
             android:name=".activity.problem.SelectProblemTypeActivity"
             android:screenOrientation="landscape" />
@@ -92,11 +83,8 @@
         <activity
             android:name=".activity.user.UserCenterActivity"
             android:launchMode="singleTask"
-<<<<<<< Updated upstream
             android:screenOrientation="landscape"></activity>
-=======
-            android:screenOrientation="landscape" />
->>>>>>> Stashed changes
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTask"

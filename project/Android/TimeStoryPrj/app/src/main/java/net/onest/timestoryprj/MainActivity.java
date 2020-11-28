@@ -23,6 +23,7 @@ import butterknife.OnClick;
 
 import net.onest.timestoryprj.activity.user.LoginActivity;
 import net.onest.timestoryprj.activity.user.SettingActivity;
+import net.onest.timestoryprj.dialog.DialogExampleAvtivity;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -34,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
     Button btnDrawCard;
 
 
-
     @BindView(R.id.btn_user_center)
     public Button btnHis;
 
@@ -43,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.btn_lkl_lian)
     Button btnLian;
+
+    @BindView(R.id.btn_dialog)
+    Button btnDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,8 +117,9 @@ public class MainActivity extends AppCompatActivity {
         Log.e("jumpHis: ", "执行");
         startActivity(intent);
     }
+
     @OnClick(R.id.btn_lkl_lian)
-    public void jumpLianActivity(){
+    public void jumpLianActivity() {
         Intent intent = new Intent();
         intent.setClass(MainActivity.this, LinkLineTextActivity.class);
         Log.e("jumpHis: ", "执行");
@@ -135,6 +139,14 @@ public class MainActivity extends AppCompatActivity {
     void toDrawCardPage() {
         Intent intent = new Intent();
         intent.setClass(MainActivity.this, DrawCardActivity.class);
+        startActivity(intent);
+    }
+
+    // 跳弹出框
+    @OnClick(R.id.btn_dialog)
+    void toDialogPage() {
+        Intent intent = new Intent();
+        intent.setClass(MainActivity.this, DialogExampleAvtivity.class);
         startActivity(intent);
     }
 }
