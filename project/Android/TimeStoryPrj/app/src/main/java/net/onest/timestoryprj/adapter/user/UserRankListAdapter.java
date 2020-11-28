@@ -16,6 +16,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.entity.User;
 
@@ -67,10 +69,16 @@ public class UserRankListAdapter extends BaseAdapter {
             view.setTag(holder);
         }
 
-        holder.rankLevel.setText(users.get(position).getUserStatus().getStatusName());
-        holder.rankHeader.setImageResource(R.mipmap.test_header);
-        holder.rankName.setText("小美");
-        holder.rankSign.setText("落红不是无情物，化作春泥更护花");
+        User user = users.get(position);
+//        holder.rankLevel.setText(users.get(position).getUserStatus().getStatusName());
+        if(null==user.getUserHeader())
+            holder.rankHeader.setImageResource(R.mipmap.test_header);
+        else {
+            Glide.with(mContext).load(user.getUserHeader()).into( holder.rankHeader);
+        }
+        holder.rankName.setText(user.getUserNickname());
+        holder.rankSign.setText(user.getUserSignature());
+        holder.rankCount.setText(user.getUserExperience()+"");
 
 //        更改图片
         switch (position){
@@ -163,6 +171,10 @@ public class UserRankListAdapter extends BaseAdapter {
 
         @BindView(R.id.rank_rank)
         TextView rank;
+
+        @BindView(R.id.rank_count)
+        TextView rankCount;
+
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);

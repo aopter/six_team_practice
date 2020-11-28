@@ -20,9 +20,9 @@
             android:orientation="vertical">
             <RelativeLayout
                 android:layout_width="20dp"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
                 <ImageView
+                    android:layout_centerInParent="true"
                     android:layout_width="20dp"
                     android:layout_height="15dp"
                     android:id="@+id/rank_img"
@@ -30,10 +30,11 @@
                     />
 
                 <TextView
+                    android:layout_centerInParent="true"
                     android:id="@+id/rank_rank"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
+                    android:paddingTop="3dp"
                     android:gravity="center"
                     android:text="1"
                     android:textColor="#fff"

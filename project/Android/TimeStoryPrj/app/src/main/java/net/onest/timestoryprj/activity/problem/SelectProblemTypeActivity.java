@@ -37,6 +37,16 @@ public class SelectProblemTypeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_problem_type);
         ButterKnife.bind(this);
+//        获得当前朝代
+//        获得是否解锁
+//        获得解锁进度
+
+
+//        准备答题
+//        /problem/ready/{dynastyId}
+//        三道题
+
+
     }
 
 //   选择题目种类跳转
@@ -44,7 +54,7 @@ public class SelectProblemTypeActivity extends AppCompatActivity {
     public void llProblemLianOnClick(){
 //        跳转
         Intent intent = new Intent();
-        intent.putExtra("before","types");
+        intent.putExtra("before","types");//从选择的界面跳转
         intent.putExtra("type","lian");
         intent.setClass(SelectProblemTypeActivity.this, ProblemInfoActivity.class);
         startActivity(intent);

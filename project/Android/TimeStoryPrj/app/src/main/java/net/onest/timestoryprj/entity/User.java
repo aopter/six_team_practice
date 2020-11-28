@@ -10,6 +10,15 @@ public class User {
     private String userNickname;//用户昵称
     private long userExperience;//用户经验点
     private int userCount;//用户积分
+    private String userSignature;//用户个性签名
+
+    public String getUserSignature() {
+        return userSignature;
+    }
+
+    public void setUserSignature(String userSignature) {
+        this.userSignature = userSignature;
+    }
 
     private UserStatus userStatus;//用户地位
     private Set<UserCard> userCards = new HashSet<>();//用户拥有的卡片

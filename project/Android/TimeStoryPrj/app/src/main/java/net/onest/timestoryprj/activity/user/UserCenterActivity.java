@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.format.Time;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -18,6 +19,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.activity.card.DrawCardActivity;
@@ -44,6 +47,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -83,6 +87,7 @@ public class UserCenterActivity extends AppCompatActivity {
 
     @BindView(R.id.btn_card)
     Button btnGetCard;
+    Gson gson ;
 
 
 
@@ -99,6 +104,12 @@ public class UserCenterActivity extends AppCompatActivity {
                     recyclerView.setLayoutManager(linearLayoutManager);
                     recyclerView.setAdapter(historyTodayAdapter);
                     break;
+                case 2://排行榜
+//                    加载数据到adapter
+                    UserRankListAdapter cakeListAdapter = new UserRankListAdapter(UserCenterActivity.this,Constant.UserRankList,
+                            R.layout.item_user_rank_list);
+                    rankList.setAdapter(cakeListAdapter);
+                    break;
             }
         }
     };
@@ -112,6 +123,7 @@ public class UserCenterActivity extends AppCompatActivity {
 //      绑定初始化ButterKnife
         ButterKnife.bind(this);
 
+        gson = new Gson();
         Glide.with(this)
                 .load((R.mipmap.man))
                 .circleCrop()
@@ -122,7 +134,7 @@ public class UserCenterActivity extends AppCompatActivity {
         getHistoryToday();
 //        获取排行榜
         getUserRank();
-        initListView();
+//        initListView();
     }
 
     /**
@@ -130,9 +142,26 @@ public class UserCenterActivity extends AppCompatActivity {
      */
     private void getUserRank() {
         Request.Builder builder = new Request.Builder();
-        builder.url(ServiceConfig.HISTORY_TODAY + "&key=7a9cf9c5a9ff6338f5484d484ba51587");
+        builder.url(ServiceConfig.SERVICE_ROOT + "/user/list");
         //构造请求类
         Request request = builder.build();
+        final Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("onFailure: ","下载排行榜失败" );
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String jsonData = response.body().string();
+                Constant.UserRankList = gson.fromJson(jsonData,new TypeToken<List<User>>(){}.getType());
+                Message message = new Message();
+                message.arg1 = 2;
+                handler.sendMessage(message);
+
+            }
+        });
 
     }
 
@@ -178,27 +207,37 @@ public class UserCenterActivity extends AppCompatActivity {
     }
 
 
-    private void initListView() {
-//        造假数据
-        List<User> userList = new ArrayList<>();
-        for(int i=0;i<20;++i){
+//    private void initListView() {
+////        获取排行榜
+//
+////        造假数据
+//        List<User> userList = new ArrayList<>();
+//        for(int i=0;i<20;++i){
+//
+//            User user = new User();
+//            UserStatus userStatus = new UserStatus();
+//            userStatus.setStatusName("秀才");
+//            user.setUserStatus(userStatus);
+//
+//            if(i==0 || i==1)
+//            {
+//                UserStatus userStatus2 = new UserStatus();
+//                userStatus2.setStatusName("秀才");
+//                user.setUserStatus(userStatus2);
+//            }
+//                userList.add(user);
+//        }
+//        UserRankListAdapter cakeListAdapter = new UserRankListAdapter(this,userList ,
+//                R.layout.item_user_rank_list);
+//        rankList.setAdapter(cakeListAdapter);
+//
+//    }
 
-            User user = new User();
-            UserStatus userStatus = new UserStatus();
-            userStatus.setStatusName("秀才");
-            user.setUserStatus(userStatus);
+    /**
+     * 获取排行榜
+     */
+    private void getUserList() {
 
-            if(i==0 || i==1)
-            {
-                UserStatus userStatus2 = new UserStatus();
-                userStatus2.setStatusName("秀才");
-                user.setUserStatus(userStatus2);
-            }
-                userList.add(user);
-        }
-        UserRankListAdapter cakeListAdapter = new UserRankListAdapter(this,userList ,
-                R.layout.item_user_rank_list);
-        rankList.setAdapter(cakeListAdapter);
 
     }
 

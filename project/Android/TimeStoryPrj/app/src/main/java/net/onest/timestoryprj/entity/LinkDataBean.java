@@ -11,7 +11,6 @@ public class LinkDataBean {
      * col : 0
      * row : 0
      */
-
     private String content;
     private int q_num;
     private int col;
