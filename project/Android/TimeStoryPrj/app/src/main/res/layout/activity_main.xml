@@ -9,124 +9,95 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
         <Button
             android:id="@+id/btn_homepage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="首页" />
-
-<<<<<<< Updated upstream
         <Button
             android:id="@+id/btn_history"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-=======
->>>>>>> Stashed changes
-
-        <net.onest.timestoryprj.customview.CusTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="自定义字体"
-            android:textColor="@android:color/black"
-            android:textSize="20dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="系统自带"
-            android:textColor="@android:color/black"
-            android:textSize="20dp" />
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/login"
-                android:layout_width="wrap_content"
+            android:orientation="vertical">
+            <net.onest.timestoryprj.customview.CusTextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="登录"/>
-            <Button
-                android:id="@+id/btn_set"
-                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:text="自定义字体"
+                android:textColor="@android:color/black"
+                android:textSize="20dp" />
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="个人设置"/>
-        </LinearLayout>
+                android:gravity="center"
+                android:text="系统自带"
+                android:textColor="@android:color/black"
+                android:textSize="20dp" />
 
-<<<<<<< Updated upstream
-=======
-        <Button
-            android:id="@+id/login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="登录" />
->>>>>>> Stashed changes
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:id="@+id/btn_user_center"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="回家" />
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="登录"/>
+                <Button
+                    android:id="@+id/btn_set"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="个人设置"/>
+            </LinearLayout>
 
-            <Button
-                android:id="@+id/btn_problem"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/btn_user_center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="回家" />
+                <Button
+                    android:id="@+id/btn_problem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="我的题" />
+
+                <Button
+                    android:id="@+id/btn_lkl_lian"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="连线题" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="我的题" />
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/btn_user_card"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="我的卡片" />
+                <Button
+                    android:id="@+id/btn_draw_card"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="抽卡" />
+            </LinearLayout>
 
             <Button
-                android:id="@+id/btn_lkl_lian"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="连线题" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btn_user_card"
+                android:id="@+id/btn_link_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="我的卡片" />
-
-            <Button
-                android:id="@+id/btn_draw_card"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="抽卡" />
         </LinearLayout>
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
-        <Button
-            android:id="@+id/btn_link_details"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="我的卡片" />
     </LinearLayout>
-<<<<<<< Updated upstream
-
 
 </ScrollView>
 
@@ -135,7 +106,3 @@
 
 
 
-
-=======
-</ScrollView>
->>>>>>> Stashed changes

@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +36,8 @@ import net.onest.timestoryprj.activity.user.SettingActivity;
 import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.entity.Dynasty;
+import net.onest.timestoryprj.entity.User;
+import net.onest.timestoryprj.entity.UserStatus;
 import net.onest.timestoryprj.entity.UserUnlockDynasty;
 
 import org.json.JSONArray;
@@ -51,6 +54,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,6 +80,8 @@ public class HomepageActivity extends AppCompatActivity {
     private Typeface typeface;
     //定义MediaPlayer
     private MediaPlayer mediaPlayer;
+    private ProgressBar progressBar;
+    private User user;
     private Handler handler =  new Handler(){
         @RequiresApi(api = Build.VERSION_CODES.M)
         @Override
@@ -165,6 +171,23 @@ public class HomepageActivity extends AppCompatActivity {
         getUserInfo();
         downloadUnlockDynastyList();
         downloadDynastyList();
+//        initProgress();
+    }
+
+    /**
+     * 初始化进度条
+     */
+    private void initProgress() {
+        long userExperience = user.getUserExperience();
+        UserStatus userStatus = user.getUserStatus();
+        long experMax = userStatus.getStatusExperienceTop();
+        long experMin = userStatus.getStatusExperienceLow();
+        long experOnStatus = experMax - experMin;
+        DecimalFormat df = new DecimalFormat("0.00");
+        String rate = df.format((float)(userExperience - experMin)/experOnStatus);
+        double exRate = Double.parseDouble(rate);
+        int progress = (int) (exRate * 100);
+        progressBar.setProgress(progress);
     }
 
     /**
@@ -209,6 +232,7 @@ public class HomepageActivity extends AppCompatActivity {
      * 通过跳转获得用户信息
      */
     private void getUserInfo() {
+//        user = Constant.User;
     }
 
     /**
@@ -272,6 +296,7 @@ public class HomepageActivity extends AppCompatActivity {
         btnMyCollections = findViewById(R.id.btn_my_collections);
         llLayout1 = findViewById(R.id.ll_layout1);
         llLayout2 = findViewById(R.id.ll_layout2);
+        progressBar = findViewById(R.id.experience_progress);
     }
 
     /**
