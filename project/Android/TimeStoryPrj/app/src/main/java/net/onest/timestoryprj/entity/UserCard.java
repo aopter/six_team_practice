@@ -5,7 +5,7 @@ public class UserCard {
     private Integer userCardId;//用户卡片标识符
     private Integer cardCount;//卡片数量
 
-    private Card card;//卡片
+    private Card cardListVO;//卡片
 
     public Integer getUserCardId() {
         return userCardId;
@@ -23,12 +23,12 @@ public class UserCard {
         this.cardCount = cardCount;
     }
 
-    public Card getCard() {
-        return card;
+    public Card getCardListVO() {
+        return cardListVO;
     }
 
-    public void setCard(Card card) {
-        this.card = card;
+    public void setCardListVO(Card cardListVO) {
+        this.cardListVO = cardListVO;
     }
 
     @Override
@@ -36,7 +36,7 @@ public class UserCard {
         return "UserCard{" +
                 "userCardId=" + userCardId +
                 ", cardCount=" + cardCount +
-                ", card=" + card +
+                ", cardListVO=" + cardListVO +
                 '}';
     }
 }

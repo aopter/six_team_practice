@@ -58,7 +58,8 @@ public class MyCardActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(getApplicationContext(), SpecificDynastyCardActivity.class);
-                intent.putExtra("dynasty", dynasties.get(position).getDynastyId());
+                // TODO 现为指定朝代
+                intent.putExtra("dynasty", 11);
                 startActivity(intent);
             }
         });

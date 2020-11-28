@@ -41,6 +41,7 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
     private String dynastyId;
     private String DYNASTY_INFO = "/dynasty/details/";
     private Gson gson;
+
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -67,7 +68,6 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
         initGson();
         initData();
         setListener();
-
 
     }
 

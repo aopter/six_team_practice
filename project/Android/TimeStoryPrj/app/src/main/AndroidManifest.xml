@@ -11,7 +11,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_APN_SETTINGS"
+    <uses-permission
+        android:name="android.permission.WRITE_APN_SETTINGS"
         tools:ignore="ProtectedPermissions" />
 
     <application
@@ -23,14 +24,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-
+        <activity
+            android:name=".dialog.DialogExampleAvtivity"
+            android:screenOrientation="landscape"></activity>
         <activity
             android:name=".activity.dynasty.DynastyIntroduceActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".activity.problem.ProblemInfoActivity"
-            android:screenOrientation="landscape"></activity>
-
+            android:screenOrientation="landscape" />
         <activity
             android:name=".activity.card.DrawCardActivity"
             android:screenOrientation="landscape"></activity>
@@ -41,16 +43,17 @@
         <activity
             android:name=".activity.problem.ProblemCollectionActivity"
             android:screenOrientation="landscape" />
-
         <activity
             android:name=".activity.card.ShowCardStoryActivity"
             android:screenOrientation="landscape" />
 
-        <activity android:name=".dialog.dynasty.EventDialogActivity"
+        <activity
+            android:name=".dialog.dynasty.EventDialogActivity"
             android:screenOrientation="landscape"></activity>
 
-        <activity android:name=".activity.dynasty.DetailsEventActivity"
-            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".activity.dynasty.DetailsEventActivity"
+            android:screenOrientation="landscape" />
 
         <activity
             android:name=".activity.problem.SelectProblemTypeActivity"
@@ -58,7 +61,6 @@
         <activity
             android:name=".activity.dynasty.HomepageActivity"
             android:screenOrientation="landscape" />
-
         <activity
             android:name=".activity.user.SettingActivity"
             android:screenOrientation="landscape" />
@@ -82,6 +84,7 @@
             android:name=".activity.user.UserCenterActivity"
             android:launchMode="singleTask"
             android:screenOrientation="landscape"></activity>
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTask"
