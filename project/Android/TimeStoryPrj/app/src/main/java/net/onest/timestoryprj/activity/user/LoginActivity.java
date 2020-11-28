@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
     private CheckBox chRemember;
     private String phone;
     private String pwd;
-    private Gson gson = new Gson();
+    private Gson gson;
     private SharedPreferences sharedPreferences;
 
 
@@ -56,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         findViews();
+        gson = new Gson();
         AssetManager assets = getAssets();
         final Typeface typeface = Typeface.createFromAsset(assets, "fonts/custom_font.ttf");
         btnLogin.setTypeface(typeface);

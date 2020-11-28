@@ -31,6 +31,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import net.onest.timestoryprj.R;
+import net.onest.timestoryprj.activity.user.SettingActivity;
 import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.entity.Dynasty;
@@ -306,6 +307,8 @@ public class HomepageActivity extends AppCompatActivity {
                 case R.id.btn_my_collections:
                     break;
                 case R.id.btn_settings:
+                    Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
+                    startActivity(intent);
                     break;
                 case R.id.iv_header:
                     break;

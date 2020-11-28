@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,12 +25,39 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 
 import net.onest.timestoryprj.R;
+import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.dialog.user.CustomDialog;
+import net.onest.timestoryprj.entity.User;
+import net.onest.timestoryprj.entity.UserDetails;
 import net.onest.timestoryprj.util.AudioUtil;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.DecimalFormat;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class SettingActivity extends AppCompatActivity {
 
@@ -41,7 +69,12 @@ public class SettingActivity extends AppCompatActivity {
     private LinearLayout rightLayout;
     private ImageView ivVoice;
     private ImageView ivHeader;
+    private AudioUtil audioUtil;
+    private Gson gson;
+    private String userInfo;
     private String picturePath = "";//相册路径
+    private Bitmap bitmap;//从相册选择的图片
+    private File file;
     private Handler handler = new Handler(){
 
     };
@@ -53,6 +86,28 @@ public class SettingActivity extends AppCompatActivity {
 
         findViews();
         setListener();
+        gson = new Gson();
+
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://192.168.43.39:8888/rule");
+                    URLConnection connection = url.openConnection();
+                    InputStream in = connection.getInputStream();
+                    BufferedReader reader = new BufferedReader(
+                            new InputStreamReader(in,"utf-8"));
+                    String rule = reader.readLine();
+                    Log.e("规则",rule);
+                    Constant.Rule.setRuleInfo(rule);
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
 
     }
 
@@ -72,6 +127,7 @@ public class SettingActivity extends AppCompatActivity {
         btnProblem = findViewById(R.id.btn_problem);
         btnExitLogin = findViewById(R.id.btn_exit_login);
         rightLayout = findViewById(R.id.rightlinear);
+        audioUtil = AudioUtil.getInstance(getApplicationContext());
     }
 
     class MyListener implements View.OnClickListener{
@@ -190,10 +246,19 @@ public class SettingActivity extends AppCompatActivity {
 
         SeekBar seekBar = new SeekBar(getApplicationContext());
         LinearLayout.LayoutParams par = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        par.topMargin = 10;
+        par.topMargin = 40;
         seekBar.setLayoutParams(par);
         seekBar.setMax(100);
-        seekBar.setProgress(30);
+        int mediaMax = audioUtil.getMediaMaxVolume();//最大音量
+        int media = audioUtil.getMediaVolume();//当前音量
+        DecimalFormat df = new DecimalFormat("0.00");
+        String stringVolume = df.format((float)media/mediaMax);
+        double volume = Double.parseDouble(stringVolume);
+        int progress = (int) (volume * 100);
+        if (progress == 0){
+            ivVoice.setBackgroundResource(R.mipmap.novoice);
+        }
+        seekBar.setProgress(progress);
         linearLayout.addView(seekBar);
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -211,7 +276,6 @@ public class SettingActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
                 Log.e("进度",seekBar.getProgress()+"");
                 int progress = seekBar.getProgress();
-                AudioUtil audioUtil = AudioUtil.getInstance(getApplicationContext());
                 int mediaMax = audioUtil.getMediaMaxVolume();
                 Log.e("多媒体最大",mediaMax+"");
                 int media = audioUtil.getMediaVolume();
@@ -257,7 +321,7 @@ public class SettingActivity extends AppCompatActivity {
         linearLayout.addView(tvTitle);
 
         TextView tvRule = new TextView(getApplicationContext());
-        tvRule.setText("规则");
+        tvRule.setText(Constant.Rule.getRuleInfo());
         tvRule.setTextSize(20);
         LinearLayout.LayoutParams ruleParam = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         ruleParam.leftMargin = 100;
@@ -281,6 +345,9 @@ public class SettingActivity extends AppCompatActivity {
         LinearLayout.LayoutParams tvParam = new LinearLayout.LayoutParams(350,LinearLayout.LayoutParams.WRAP_CONTENT);
         tvParam.leftMargin = 30;
         tvParam.topMargin = 30;
+        LinearLayout.LayoutParams etParam = new LinearLayout.LayoutParams(600, LinearLayout.LayoutParams.WRAP_CONTENT);
+        etParam.leftMargin = 20;
+        etParam.topMargin = 30;
         TextView tvPhoto = new TextView(getApplicationContext());
         tvPhoto.setText("头像:");
         tvPhoto.setTextSize(20);
@@ -290,10 +357,9 @@ public class SettingActivity extends AppCompatActivity {
         ivHeader = new ImageView(getApplicationContext());
         LinearLayout.LayoutParams ivParam = new LinearLayout.LayoutParams(200,200);
         ivParam.leftMargin = 20;
-        ivHeader.setBackgroundResource(R.mipmap.bg_man);
-        //TODO:传图片地址及设置名称
+        ivParam.topMargin = 20;
         Glide.with(this)
-                .load("")
+                .load(R.mipmap.man)
                 .circleCrop()
                 .into(ivHeader);
         ivHeader.setLayoutParams(ivParam);
@@ -311,7 +377,7 @@ public class SettingActivity extends AppCompatActivity {
         EditText etNiName = new EditText(getApplicationContext());
         etNiName.setText("小美");
         etNiName.setTextSize(20);
-        etNiName.setLayoutParams(tvParam);
+        etNiName.setLayoutParams(etParam);
         linearLayout2.addView(etNiName);
         rightLayout.addView(linearLayout2);
         //个性签名
@@ -327,7 +393,7 @@ public class SettingActivity extends AppCompatActivity {
 
         etSignature.setText("第五美女");
         etSignature.setTextSize(20);
-        etSignature.setLayoutParams(tvParam);
+        etSignature.setLayoutParams(etParam);
         linearLayout3.addView(etSignature);
         rightLayout.addView(linearLayout3);
         //性别
@@ -342,7 +408,7 @@ public class SettingActivity extends AppCompatActivity {
         EditText etSex = new EditText(getApplicationContext());
         etSex.setText("女");
         etSex.setTextSize(20);
-        etSex.setLayoutParams(tvParam);
+        etSex.setLayoutParams(etParam);
         linearLayout4.addView(etSex);
         rightLayout.addView(linearLayout4);
         //手机号
@@ -357,7 +423,7 @@ public class SettingActivity extends AppCompatActivity {
         EditText etPhone = new EditText(getApplicationContext());
         etPhone.setText("123456");
         etPhone.setTextSize(20);
-        etPhone.setLayoutParams(tvParam);
+        etPhone.setLayoutParams(etParam);
         linearLayout5.addView(etPhone);
         rightLayout.addView(linearLayout5);
 
@@ -392,8 +458,89 @@ public class SettingActivity extends AppCompatActivity {
                 String sex = etSex.getText().toString().trim();
                 String phone = etPhone.getText().toString().trim();
                 Log.e("提交",niName+signature+sex+phone);
+                //判断非空
+                if (null != niName && null != signature && null != sex && null != phone){
+                    int userId = Constant.User.getUserId();
+                    UserDetails userDetails = new UserDetails();
+                    userDetails.setUserId(userId);
+                    userDetails.setUserNickname(niName);
+                    userDetails.setUserNumber(phone);
+                    userDetails.setUserSex(sex);
+                    userDetails.setUserSignature(signature);
+                    userInfo = gson.toJson(userDetails);
+                    Log.e("userInfo",userInfo);
+                    //用户详情传给服务器
+                    upToServer();
+                    //上传头像
+                    upHeaderToServer();
+
+                }else {
+                    Toast.makeText(getApplicationContext(),"请您完善用户信息后提交",Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
+    }
+
+    /**
+     * 上传头像
+     */
+    private void upHeaderToServer() {
+        OkHttpClient client = new OkHttpClient();
+        RequestBody body = new MultipartBody.Builder()
+                .addFormDataPart("picture",file.getName(),RequestBody.create(MediaType.parse("image/*"),file))
+                .addFormDataPart("userId",Constant.User.getUserId()+"")
+                .build();
+        Request request = new Request.Builder()
+                .url("")
+                .post(body)
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            if (response.isSuccessful()){
+                Log.e("ok","上传头像成功");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * 向服务器上传用户更改后的信息
+     */
+    private void upToServer() {
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://192.168.43.39:8888/userdetails/modify");
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setRequestMethod("POST");
+                    OutputStream outputStream = connection.getOutputStream();
+                    outputStream.write(userInfo.getBytes());
+                    InputStream in = connection.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in,"utf-8"));
+                    String info = reader.readLine();
+                    JSONObject object = new JSONObject(info);
+                    boolean flag = object.getBoolean("result");
+                    if (flag){
+                        Toast.makeText(getApplicationContext(),"保存成功",Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(getApplicationContext(),"保存失败",Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (ProtocolException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 
     @Override
@@ -401,8 +548,33 @@ public class SettingActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK && null != data){
             picturePath = loadImagePath(data);
-            ivHeader.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+            Glide.with(getApplicationContext())
+                    .load(picturePath)
+                    .circleCrop()
+                    .into(ivHeader);
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+            bitmap = BitmapFactory.decodeFile(picturePath,options);
+//            ivHeader.setImageBitmap(bitmap);
+            convertBitmapToFile(bitmap);
         }
+    }
+
+    private File convertBitmapToFile(Bitmap bitmap) {
+        try {
+            file = new File(SettingActivity.this.getCacheDir(),"portrait");
+            file.createNewFile();
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG,0,bos);
+            byte[] bitmapdata = bos.toByteArray();
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(bitmapdata);
+            fos.flush();
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return file;
     }
 
     private String loadImagePath(Intent data) {

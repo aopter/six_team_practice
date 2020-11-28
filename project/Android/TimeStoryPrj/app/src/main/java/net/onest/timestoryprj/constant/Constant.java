@@ -16,11 +16,12 @@ public class Constant {
     //分隔符
     public static String DELIMITER = "&&&";
     //当前登录的用户
-    public static User User;
+    public static User User = new User();
     //历史上的今天事件集合
     public static List<HistoryDay> historyDays = new ArrayList<>();
     //当前登录用户解锁的朝代
     public static List<UserUnlockDynasty> UnlockDynasty = new ArrayList<>();
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 
     //规则详情
@@ -32,4 +33,14 @@ public class Constant {
 >>>>>>> Stashed changes
     //当前登录用户解锁的某朝代的事件
     public static List<UserUnlockDynastyIncident> UnlockDynastyIncident = new ArrayList<>();
+=======
+
+    //规则详情
+    public static Rule Rule = new Rule();
+
+    //当前登录用户解锁的某朝代的事件
+    public static List<UserUnlockDynastyIncident> UnlockDynastyIncident = new ArrayList<>();
+
+
+>>>>>>> Stashed changes
 }

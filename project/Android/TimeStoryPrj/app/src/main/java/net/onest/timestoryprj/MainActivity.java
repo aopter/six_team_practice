@@ -18,7 +18,6 @@ import net.onest.timestoryprj.activity.problem.SelectProblemTypeActivity;
 import net.onest.timestoryprj.activity.user.UserCenterActivity;
 
 import butterknife.BindView;
-import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -33,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.btn_draw_card)
     Button btnDrawCard;
+
 
 
     @BindView(R.id.btn_user_center)
@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.login);
 //       跳转主页
         btnSet = findViewById(R.id.btn_set);
+
         btnHomepage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
     }
 
     //        跳转回家
