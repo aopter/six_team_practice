@@ -74,6 +74,11 @@ public class SpectficCardDetailActivity extends AppCompatActivity {
                     Glide.with(getApplicationContext())
                             .load(ServiceConfig.SERVICE_ROOT + "/picture/download/" + card.getCardPicture())
                             .into(cardPic);
+                    if (card.getCardType() == 2) {
+                        cardStory.setVisibility(View.GONE);
+                    } else {
+                        cardStory.setVisibility(View.VISIBLE);
+                    }
                     break;
             }
         }

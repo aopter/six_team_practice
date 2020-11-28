@@ -10,13 +10,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import net.onest.timestoryprj.R;
+import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.entity.Card;
+import net.onest.timestoryprj.entity.UserCard;
 
 import java.util.List;
 
 public class SpecificDynastyCardAdapter extends RecyclerView.Adapter<SpecificDynastyCardAdapter.ViewHolder> {
-    private List<Card> cards;
+    private List<UserCard> cards;
     private Context mContext;
     private CardAdapter.OnItemClickLitener mOnItemClickLitener;
 
@@ -29,7 +33,7 @@ public class SpecificDynastyCardAdapter extends RecyclerView.Adapter<SpecificDyn
         this.mOnItemClickLitener = mOnItemClickLitener;
     }
 
-    public SpecificDynastyCardAdapter(Context context, List<Card> cards) {
+    public SpecificDynastyCardAdapter(Context context, List<UserCard> cards) {
         this.mContext = context;
         this.cards = cards;
     }
@@ -44,8 +48,10 @@ public class SpecificDynastyCardAdapter extends RecyclerView.Adapter<SpecificDyn
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        holder.cardName.setText(cards.get(position).getCardName());
-        holder.cardPic.setImageResource(R.mipmap.example);
+        holder.cardName.setText(cards.get(position).getCardListVO().getCardName());
+        Glide.with(mContext)
+                .load(ServiceConfig.SERVICE_ROOT + "/picture/download/" + cards.get(position).getCardListVO().getCardPicture())
+                .into(holder.cardPic);
         if (mOnItemClickLitener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

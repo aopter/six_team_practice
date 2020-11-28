@@ -97,6 +97,7 @@ public class DrawCardActivity extends AppCompatActivity {
         final Typeface typeface = Typeface.createFromAsset(getResources().getAssets(), "fonts/custom_font.ttf");
         tip.setTypeface(typeface);
         text.setTypeface(typeface);
+        client = new OkHttpClient();
         getDrawCard();
         frontContainer.bringToFront();
         cardAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.back);
