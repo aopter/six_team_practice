@@ -10,8 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 import net.onest.timestoryprj.R;
+import net.onest.timestoryprj.customview.LinkLineView;
 import net.onest.timestoryprj.entity.LinkDataBean;
-import net.onest.timestoryprj.view.LinkLineView;
 
 import java.util.ArrayList;
 import java.util.List;

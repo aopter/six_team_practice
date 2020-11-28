@@ -2,17 +2,69 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="40dp"
+    android:layout_height="50dp"
+    android:paddingLeft="10dp"
     android:orientation="horizontal">
 
     <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/rank_detail">
+        <LinearLayout
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+            android:padding="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                >
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="15dp"
+                    android:id="@+id/rank_img"
+                    android:src="@mipmap/rank_f"
+                    />
+
+                <TextView
+                    android:id="@+id/rank_rank"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textColor="#fff"
+                    android:textSize="8sp" />
+
+
+            </RelativeLayout>
+
+            <TextView
+                android:gravity="bottom"
+                android:textColor="@color/ourDynastyRed"
+                android:id="@+id/tv_user_level"
+                android:textSize="10sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="举人"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:gravity="center"
         android:layout_width="30dp"
         android:orientation="vertical"
         android:layout_height="match_parent">
         <ImageView
             android:id="@+id/rank_header"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="20dp"
             android:src="@mipmap/man" />
     </LinearLayout>
 
@@ -25,29 +77,42 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <TextView
-                android:textColor="@color/ourDynastyRed"
-                android:id="@+id/tv_user_level"
-                android:textSize="10sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="举人"/>
 
             <TextView
                 android:id="@+id/rank_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="8sp"
+                android:textSize="10sp"
                 android:text="小美"/>
+            <LinearLayout
+                android:gravity="right"
+                android:paddingRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="经验："
+                    android:textSize="10sp"/>
+                <TextView
+                    android:gravity="right"
+                    android:id="@+id/rank_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10sp"
+                    android:text="55555"/>
+
+            </LinearLayout>
+
 
         </LinearLayout>
 
         <TextView
             android:id="@+id/rank_sign"
-            android:layout_marginLeft="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="6sp"
+            android:textSize="9sp"
             android:text="打不死的小美"/>
 
     </LinearLayout>

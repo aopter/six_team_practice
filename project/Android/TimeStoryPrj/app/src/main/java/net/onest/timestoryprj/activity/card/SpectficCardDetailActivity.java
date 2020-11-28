@@ -1,27 +1,44 @@
 package net.onest.timestoryprj.activity.card;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Message;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
+import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import net.onest.timestoryprj.R;
-import net.onest.timestoryprj.constant.Constant;
+import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.entity.Card;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class SpectficCardDetailActivity extends AppCompatActivity {
     private Card card;
@@ -35,7 +52,13 @@ public class SpectficCardDetailActivity extends AppCompatActivity {
     Button cardStory;
     @BindView(R.id.back)
     ImageView back;
+    @BindView(R.id.text)
+    TextView tip;
     private Animation in;
+    private Gson gson;
+    int cardId;
+    private Handler handler;
+    private OkHttpClient client;
 
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -44,35 +67,86 @@ public class SpectficCardDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spectfic_card_detail);
         ButterKnife.bind(this);
-        in = new AlphaAnimation(0.0f, 1.0f);
-        in.setDuration(1500);
+        initHandler();
+        client = new OkHttpClient();
+        cardInfo.setMovementMethod(ScrollingMovementMethod.getInstance());
+        final Typeface typeface = Typeface.createFromAsset(getResources().getAssets(), "fonts/custom_font.ttf");
+        tip.setTypeface(typeface);
+        gson = new GsonBuilder()//创建GsonBuilder对象
+                .serializeNulls()//允许输出Null值属性
+                .create();//创建Gson对象
         initView();
+    }
+
+    private void initHandler() {
+        HandlerThread handlerThread = new HandlerThread("MyThread");
+        handlerThread.start();
+        handler = new Handler(handlerThread.getLooper()) {
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                switch (msg.what) {
+                    case 1:
+                        String result = (String) msg.obj;
+                        Log.e("info", result);
+                        card = gson.fromJson(result, Card.class);
+                        in = new AlphaAnimation(0.0f, 1.0f);
+                        in.setDuration(1500);
+                        cardInfo.setText(card.getCardInfo());
+                        cardInfo.startAnimation(in);
+                        cardName.setText(card.getCardName());
+                        Glide.with(getApplicationContext())
+                                .load(ServiceConfig.SERVICE_ROOT + "/" + card.getCardPicture())
+                                .into(cardPic);
+                        break;
+                }
+            }
+        };
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void initView() {
         Intent intent = getIntent();
-        int cardId = intent.getIntExtra("cardId", -1);
+        cardId = intent.getIntExtra("cardId", -1);
         if (cardId == -1) {
             Toast.makeText(getApplicationContext(), "获取卡片详情出错啦，请重新获取", Toast.LENGTH_SHORT).show();
+            cardName.setVisibility(View.INVISIBLE);
+            cardStory.setVisibility(View.INVISIBLE);
+            // TODO 弹窗提示获取卡片信息失败
         } else {
+            cardName.setVisibility(View.VISIBLE);
+            cardStory.setVisibility(View.VISIBLE);
             // TODO 从客户端获取卡片详情， 参数为 card_id
-            card = new Card();
-            card.setCardId(1);
-            card.setCardName("杨贵妃");
-//            card.setCardPicture();
-            card.setCardInfo("人物简介：杨玉环（618年—907年）\n\n出身宦门世家曾祖父杨汪是隋朝的上柱国、吏部尚du书，唐初被李世zhi民所杀，父杨玄琰，是蜀州司户，叔父杨玄珪曾任河南府土曹，杨玉环的童年是在四川度过的，10岁左右，父亲去世，她寄养在洛阳的三叔杨玄珪家。\n 杨玉环天生丽质，加上优越的教育环境，使她具备有一定的文化修养，性格婉顺，精通音律，擅歌舞，并善弹琵琶。");
-            card.setCardType(1);
-            card.setCardStory("开元二十五年（737年）武惠妃逝世，李瑁的母亲武惠妃是玄宗最为宠爱的妃子，在宫中的礼遇等同于皇后。玄宗因此郁郁寡欢，当时后宫数千，无可意者，有人进言杨玉环“姿质天挺，宜充掖廷”，于是唐玄宗将杨氏召入后宫之中。" + Constant.DELIMITER + "开元二十八年（740年）十月，以为玄宗母亲窦太后祈福的名义，敕书杨氏出家为女道士，道号“太真”。" +
-                    Constant.DELIMITER + "天宝四年（745年），唐玄宗把韦昭训的女儿册立为寿王妃后，遂册立杨玉环为贵妃，玄宗自废掉王皇后就再未立后，因此杨贵妃就相当于皇后。" + Constant.DELIMITER +
-                    "唐玄宗言国忠乱朝当诛，然贵妃无罪，本欲赦免，无奈禁军士兵皆认为贵妃乃祸国红颜，安史之乱乃因贵妃而起，不诛难慰军心、难振士气，继续包围皇帝。唐玄宗接受高力士的劝言，为求自保，不得已之下，赐死了杨贵妃。" + Constant.DELIMITER +
-                    "最终杨贵妃被赐白绫一条，缢死在佛堂的梨树下，时年三十八岁，这就是白居易的《长恨歌》中的“六军不发无奈何，宛转蛾眉马前死”之典故。玄宗在安史之乱平定后回宫，曾派人去寻找杨贵妃的遗体，但未寻得。");
-            cardInfo.setMovementMethod(ScrollingMovementMethod.getInstance());
-            cardInfo.setText(card.getCardInfo());
-            cardInfo.startAnimation(in);
-            cardName.setText(card.getCardName());
-            cardPic.setImageDrawable(getResources().getDrawable(R.mipmap.role));
+            getCardData();
         }
+    }
+
+    private void getCardData() {
+        new Thread() {
+            @Override
+            public void run() {
+                Request request = new Request.Builder()
+                        .url(ServiceConfig.SERVICE_ROOT + "/card/details/" + cardId)
+                        .build();
+                Call call = client.newCall(request);
+                call.enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        // TODO获取卡片内容失败
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        String result = response.body().string();
+                        Log.e("log", result);
+                        Message message = new Message();
+                        message.what = 1;
+                        message.obj = result;
+                        handler.sendMessage(message);
+                    }
+                });
+                Log.e("url", ServiceConfig.SERVICE_ROOT + "/card/details/" + cardId);
+            }
+        }.start();
     }
 
     @OnClick(R.id.card_story)

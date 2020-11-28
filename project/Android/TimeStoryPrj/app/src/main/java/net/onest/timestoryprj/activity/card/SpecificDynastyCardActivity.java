@@ -8,9 +8,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -58,9 +62,22 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         initTypes();
         initDynastyCards();
-        searchCardName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        searchCardName.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onFocusChange(View view, boolean b) {
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (!"".equals(searchCardName.getText().toString())) {
+                    searchDelete.setVisibility(View.VISIBLE);
+                } else {
+                    searchDelete.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
                 if (!"".equals(searchCardName.getText().toString())) {
                     searchDelete.setVisibility(View.VISIBLE);
                 } else {
@@ -99,6 +116,7 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
         }
         for (int i = 0; i < 8; i++) {
             Card card = new Card();
+            card.setCardId(1);
             card.setCardName("card" + i);
             cards.add(card);
         }

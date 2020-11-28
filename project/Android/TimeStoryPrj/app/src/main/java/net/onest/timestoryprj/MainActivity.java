@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import net.onest.timestoryprj.activity.card.DrawCardActivity;
 import net.onest.timestoryprj.activity.card.MyCardActivity;
 import net.onest.timestoryprj.activity.dynasty.DynastyIntroduceActivity;
 import net.onest.timestoryprj.activity.dynasty.HomepageActivity;
@@ -17,7 +18,6 @@ import net.onest.timestoryprj.activity.problem.SelectProblemTypeActivity;
 import net.onest.timestoryprj.activity.user.UserCenterActivity;
 
 import butterknife.BindView;
-import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -29,6 +29,10 @@ public class MainActivity extends AppCompatActivity {
     private Button btnLogin;
     private Button btnHomepage;
     private Button btnSet;
+
+    @BindView(R.id.btn_draw_card)
+    Button btnDrawCard;
+
 
 
     @BindView(R.id.btn_user_center)
@@ -53,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.login);
 //       跳转主页
         btnSet = findViewById(R.id.btn_set);
+
         btnHomepage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
     }
 
     //        跳转回家
@@ -117,9 +124,17 @@ public class MainActivity extends AppCompatActivity {
 
     //跳转简介
     @OnClick(R.id.btn_link_details)
-    public void dynastyDetails(){
+    public void dynastyDetails() {
         Intent intent = new Intent();
         intent.setClass(MainActivity.this, DynastyIntroduceActivity.class);
+        startActivity(intent);
+    }
+
+    // 跳转抽卡
+    @OnClick(R.id.btn_draw_card)
+    void toDrawCardPage() {
+        Intent intent = new Intent();
+        intent.setClass(MainActivity.this, DrawCardActivity.class);
         startActivity(intent);
     }
 }

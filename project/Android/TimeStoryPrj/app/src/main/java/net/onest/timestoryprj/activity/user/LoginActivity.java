@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
     private CheckBox chRemember;
     private String phone;
     private String pwd;
-    private Gson gson = new Gson();
+    private Gson gson;
     private SharedPreferences sharedPreferences;
 
 
@@ -56,16 +56,17 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         findViews();
+        gson = new Gson();
         AssetManager assets = getAssets();
         final Typeface typeface = Typeface.createFromAsset(assets, "fonts/custom_font.ttf");
         btnLogin.setTypeface(typeface);
         btnRegister.setTypeface(typeface);
         btnForget.setTypeface(typeface);
-        sharedPreferences = getSharedPreferences("userInfo",MODE_PRIVATE);
-        boolean flag = sharedPreferences.getBoolean("remember",false);
-        if (flag){
-            phone = sharedPreferences.getString("phone","");
-            pwd = sharedPreferences.getString("password","");
+        sharedPreferences = getSharedPreferences("userInfo", MODE_PRIVATE);
+        boolean flag = sharedPreferences.getBoolean("remember", false);
+        if (flag) {
+            phone = sharedPreferences.getString("phone", "");
+            pwd = sharedPreferences.getString("password", "");
             etPhone.setText(phone);
             etPwd.setText(pwd);
             chRemember.setChecked(true);
@@ -97,36 +98,36 @@ public class LoginActivity extends AppCompatActivity {
      * 将参数上传至服务器并获取返回消息
      */
     private void upToServer() {
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://localhost:8080");
+                    URL url = new URL("");
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("POST");
                     OutputStream outputStream = connection.getOutputStream();
                     JSONObject obj = new JSONObject();
-                    obj.put("number",phone);
-                    obj.put("password",pwd);
+                    obj.put("number", phone);
+                    obj.put("password", pwd);
                     String str = obj.toString();
                     outputStream.write(str.getBytes());
 
                     InputStream in = connection.getInputStream();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(in,"utf-8"));
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
                     String info = reader.readLine();
-                    Log.e("info",info);
-                    if (info.contains("false")){
+                    Log.e("info", info);
+                    if (info.contains("false")) {
                         //登录失败
                         Looper.prepare();
-                        Toast.makeText(getApplicationContext(),"登录失败，请检查您的用户名及密码",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "登录失败，请检查您的用户名及密码", Toast.LENGTH_SHORT).show();
                         Looper.loop();
-                    }else {
-                        Log.e("ok","可以跳转");
+                    } else {
+                        Log.e("ok", "可以跳转");
                         //判断是否记住密码
                         boolean isSave = chRemember.isChecked();
-                        if (isSave){
+                        if (isSave) {
                             saveUser();
-                        }else {
+                        } else {
                             deleteUser();
                         }
                         Constant.User = gson.fromJson(info, User.class);
@@ -149,20 +150,19 @@ public class LoginActivity extends AppCompatActivity {
     class MyListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
-            switch (view.getId()){
+            switch (view.getId()) {
                 case R.id.btn_login://登录
                     phone = etPhone.getText().toString().trim();
                     pwd = etPwd.getText().toString().trim();
-                    if (null != phone && null != pwd && phone.length()==11){
+                    if (null != phone && null != pwd && phone.length() == 11) {
                         upToServer();
-                    }
-                    else {
-                        Toast.makeText(getApplicationContext(),"您的格式不正确，请重新检查",Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "您的格式不正确，请重新检查", Toast.LENGTH_SHORT).show();
                     }
                     break;
                 case R.id.btn_register://注册
                     Intent intent = new Intent();
-                    intent.setClass(getApplicationContext(),RegisterActivity.class);
+                    intent.setClass(getApplicationContext(), RegisterActivity.class);
                     startActivity(intent);
                     break;
             }
@@ -173,10 +173,10 @@ public class LoginActivity extends AppCompatActivity {
      * 删除用户信息
      */
     private void deleteUser() {
-        sharedPreferences = getSharedPreferences("userInfo",MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("userInfo", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
-        Log.e("ok","删除成功");
+        Log.e("ok", "删除成功");
         editor.commit();
     }
 
@@ -184,12 +184,12 @@ public class LoginActivity extends AppCompatActivity {
      * 保存用户信息
      */
     private void saveUser() {
-        sharedPreferences = getSharedPreferences("userInfo",MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("userInfo", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("phone",phone);
-        editor.putString("password",pwd);
-        editor.putBoolean("remember",true);
-        Log.e("ok","保存成功");
+        editor.putString("phone", phone);
+        editor.putString("password", pwd);
+        editor.putBoolean("remember", true);
+        Log.e("ok", "保存成功");
         editor.commit();
     }
 

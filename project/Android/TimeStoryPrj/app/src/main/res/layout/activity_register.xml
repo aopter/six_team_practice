@@ -1,35 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/login"
     android:orientation="vertical"
     tools:context=".activity.user.RegisterActivity">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:textColor="@android:color/white"
-        android:textSize="35sp"
         android:layout_gravity="center"
-        android:text="用户注册"/>
+        android:layout_marginTop="20dp"
+        android:text="用户注册"
+        android:textColor="@android:color/white"
+        android:textSize="35sp" />
+
     <EditText
         android:id="@+id/et_res_phone"
         style="@style/loginEtStyle"
-        android:inputType="number"
-        android:hint="手机号"/>
+        android:hint="手机号"
+        android:imeOptions="actionDone|flagNoExtractUi"
+        android:inputType="number" />
+
     <EditText
         android:id="@+id/et_res_pwd"
         style="@style/loginEtStyle"
-        android:inputType="textPassword"
-        android:hint="密码"/>
+        android:hint="密码"
+        android:imeOptions="actionDone|flagNoExtractUi"
+        android:inputType="textPassword" />
 
     <Button
         android:id="@+id/btn_res"
-        android:text="注册"
+        style="@style/loginBtn"
         android:layout_marginTop="40dp"
-        style="@style/loginBtn"/>
+        android:text="注册" />
 
 </LinearLayout>

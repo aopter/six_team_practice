@@ -7,7 +7,7 @@ import net.onest.timestoryprj.entity.Dynasty;
 public class UserUnlockDynasty {
     private Integer userId;//流水号
     private Integer progress;//答对题目个数
-
+    private String dynastyName;
     private String dynastyId;//朝代
 
 
@@ -42,5 +42,13 @@ public class UserUnlockDynasty {
 
     public void setDynastyId(String dynastyId) {
         this.dynastyId = dynastyId;
+    }
+
+    public String getDynastyName() {
+        return dynastyName;
+    }
+
+    public void setDynastyName(String dynastyName) {
+        this.dynastyName = dynastyName;
     }
 }

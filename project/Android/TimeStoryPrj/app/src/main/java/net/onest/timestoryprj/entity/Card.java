@@ -1,6 +1,5 @@
 package net.onest.timestoryprj.entity;
 
-
 import java.io.Serializable;
 
 public class Card implements Serializable {

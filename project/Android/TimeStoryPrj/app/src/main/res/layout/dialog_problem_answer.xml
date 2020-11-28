@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:padding="30dp"
+    android:layout_height="match_parent">
+<TextView
+    android:paddingTop="15dp"
+    android:padding="5dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:textColor="@color/ourDynastyRed"
+    android:text="这是题目的解析啊啊啊啊啊啊 啊啊啊啊
+这是题目的解析啊啊啊啊啊啊 啊啊啊啊
+这是题目的解析啊啊啊啊啊啊 啊啊啊啊
+这是题目的解析啊啊啊啊啊啊 啊啊啊啊这是题目的解析啊啊啊啊啊啊 啊啊啊啊这是题目的解析啊啊啊啊啊啊 啊啊啊啊
+
+
+"/>
+</LinearLayout>

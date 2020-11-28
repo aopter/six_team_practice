@@ -1,7 +1,7 @@
 package net.onest.timestoryprj.constant;
 
 /**
- *存放服务器相关常量 （路径）
+ * 存放服务器相关常量 （路径）
  */
 public class ServiceConfig {
     //历史上的今天接口

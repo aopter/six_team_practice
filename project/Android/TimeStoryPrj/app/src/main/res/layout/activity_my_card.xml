@@ -20,7 +20,8 @@
             android:layout_marginRight="10dp"
             android:src="@mipmap/back" />
 
-        <net.onest.timestoryprj.customview.CusTextView
+        <TextView
+            android:id="@+id/text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="请先选择朝代吧"
