@@ -1,10 +1,12 @@
 package net.onest.timestoryprj.entity;
 
+import java.io.Serializable;
+
 /**
  * @Description: 连线的原数据
  * @Version
  */
-public class LinkDataBean {
+public class LinkDataBean implements Serializable {
     /**
      * content : chair
      * q_num : 0

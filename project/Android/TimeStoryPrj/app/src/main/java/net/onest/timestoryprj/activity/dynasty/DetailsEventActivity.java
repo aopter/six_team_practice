@@ -164,7 +164,7 @@ public class DetailsEventActivity extends AppCompatActivity {
         gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .serializeNulls()
-                .setDateFormat("YY:MM:DD")
+                .setDateFormat("yy:mm:dd")
                 .create();
     }
 

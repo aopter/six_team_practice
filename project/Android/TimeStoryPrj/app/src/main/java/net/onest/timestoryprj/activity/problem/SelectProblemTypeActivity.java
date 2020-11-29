@@ -4,10 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
 import net.onest.timestoryprj.R;
+import net.onest.timestoryprj.constant.Constant;
+import net.onest.timestoryprj.entity.Dynasty;
+import net.onest.timestoryprj.entity.UserUnlockDynasty;
 
 import butterknife.BindView;
 import butterknife.BindViews;
@@ -16,6 +20,8 @@ import butterknife.OnClick;
 
 public class SelectProblemTypeActivity extends AppCompatActivity {
 
+    //是否解锁当前朝代
+    private boolean isUnLock = false;
     //连线
     @BindView(R.id.type_problem_lian)
     LinearLayout llProblemLian;
@@ -30,6 +36,7 @@ public class SelectProblemTypeActivity extends AppCompatActivity {
     @BindView(R.id.type_problem_all)
     LinearLayout llProblemAll;
 
+    private String dynastyId;
 
 
     @Override
@@ -38,11 +45,19 @@ public class SelectProblemTypeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_select_problem_type);
         ButterKnife.bind(this);
 //        获得当前朝代
+        Intent intent = getIntent();
+        dynastyId = intent.getStringExtra("dynastyId1");
 //        获得是否解锁
+//        Constant.UnlockDynasty
+        for(UserUnlockDynasty userUnlockDynasty:Constant.UnlockDynasty){
+            userUnlockDynasty.getDynastyId().equals(dynastyId);//解锁
+            isUnLock = true;
+        }
 //        获得解锁进度
 
 
 //        准备答题
+
 //        /problem/ready/{dynastyId}
 //        三道题
 
@@ -56,6 +71,7 @@ public class SelectProblemTypeActivity extends AppCompatActivity {
         Intent intent = new Intent();
         intent.putExtra("before","types");//从选择的界面跳转
         intent.putExtra("type","lian");
+        intent.putExtra("dynastyId",dynastyId);
         intent.setClass(SelectProblemTypeActivity.this, ProblemInfoActivity.class);
         startActivity(intent);
 
@@ -67,6 +83,8 @@ public class SelectProblemTypeActivity extends AppCompatActivity {
         Intent intent = new Intent();
         intent.putExtra("before","types");
         intent.putExtra("type","xuan");
+        intent.putExtra("dynastyId",dynastyId);
+        Log.e("llProblemXuanOnClick: ", dynastyId);
         intent.setClass(SelectProblemTypeActivity.this, ProblemInfoActivity.class);
         startActivity(intent);
     }
@@ -76,6 +94,7 @@ public class SelectProblemTypeActivity extends AppCompatActivity {
         Intent intent = new Intent();
         intent.putExtra("before","types");
         intent.putExtra("type","pai");
+        intent.putExtra("dynastyId",dynastyId);
         intent.setClass(SelectProblemTypeActivity.this, ProblemInfoActivity.class);
         startActivity(intent);
     }
@@ -85,6 +104,7 @@ public class SelectProblemTypeActivity extends AppCompatActivity {
         Intent intent = new Intent();
         intent.putExtra("before","types");
         intent.putExtra("type","all");
+        intent.putExtra("dynastyId",dynastyId);
         intent.setClass(SelectProblemTypeActivity.this, ProblemInfoActivity.class);
         startActivity(intent);
     }

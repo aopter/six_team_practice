@@ -1,6 +1,8 @@
 package net.onest.timestoryprj.entity.problem;
 
-public class OrderBean {
+import java.io.Serializable;
+
+public class OrderBean implements Serializable {
     private String content;
     private int order;
 

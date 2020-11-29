@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import net.onest.timestoryprj.R;
+import net.onest.timestoryprj.activity.problem.SelectProblemTypeActivity;
 import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.entity.Dynasty;
 
@@ -41,7 +42,10 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
     private String dynastyId;
     private String DYNASTY_INFO = "/dynasty/details/";
     private Gson gson;
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -138,6 +142,9 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.btn_questions:
+                    Intent intent = new Intent(DynastyIntroduceActivity.this, SelectProblemTypeActivity.class);
+                    intent.putExtra("dynastyId1",dynastyId);//朝代
+                    startActivity(intent);
                     break;
                 case R.id.btn_details:
                     Intent intent1 = new Intent();
