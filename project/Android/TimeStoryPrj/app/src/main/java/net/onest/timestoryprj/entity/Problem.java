@@ -3,6 +3,7 @@ package net.onest.timestoryprj.entity;
 import java.io.Serializable;
 
 public class Problem implements Serializable {
+    private String dynastyId;//朝代表示符
     private int problemId;//题目标识符
     private int problemType;//题目类型
     private String problemContent;//题目描述

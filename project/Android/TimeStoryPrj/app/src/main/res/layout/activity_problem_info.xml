@@ -41,6 +41,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/problem_xuan_info_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -64,16 +65,25 @@
                     <ImageView
                         android:id="@+id/iv_optionA"
                         style="@style/ivOptionPic"
-                        android:layout_height="117dp"
                         android:src="@mipmap/select_lian" />
 
-                    <TextView
-                        android:id="@+id/tv_optionA"
+                    <LinearLayout
+                        android:gravity="center"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:text="喜欢" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="A "/>
+                        <TextView
+                            android:id="@+id/tv_optionA"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="喜欢" />
+
+                    </LinearLayout>
+
 
                 </LinearLayout>
 
@@ -91,14 +101,23 @@
                         style="@style/ivOptionPic"
 
                         android:src="@mipmap/select_lian" />
-
-                    <TextView
-                        android:id="@+id/tv_optionB"
+                    <LinearLayout
+                        android:gravity="center"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:text="非常喜欢" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="B "/>
+                        <TextView
+                            android:id="@+id/tv_optionB"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="非常喜欢" />
+
+                    </LinearLayout>
+
 
                 </LinearLayout>
 
@@ -115,14 +134,23 @@
                         style="@style/ivOptionPic"
 
                         android:src="@mipmap/select_lian" />
-
-                    <TextView
-                        android:id="@+id/tv_optionC"
+                    <LinearLayout
+                        android:gravity="center"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:text="太喜欢" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="C "/>
+                        <TextView
+                            android:id="@+id/tv_optionC"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="太喜欢" />
+
+                    </LinearLayout>
+
 
                 </LinearLayout>
 
@@ -138,14 +166,23 @@
                         android:id="@+id/iv_optionD"
                         style="@style/ivOptionPic"
                         android:src="@mipmap/select_lian" />
-
-                    <TextView
-                        android:id="@+id/tv_optionD"
+                    <LinearLayout
+                        android:gravity="center"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:text="好看死了" />
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="D "/>
+                        <TextView
+                            android:id="@+id/tv_optionD"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="好看死了" />
+
+                    </LinearLayout>
+
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -160,6 +197,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/title_lian"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -322,6 +360,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp" />
+        <Button
+            android:layout_gravity="right"
+            android:layout_marginRight="15dp"
+            android:id="@+id/btn_pai_to_check"
+            style="@style/normalBtn"
+            android:text="提交"/>
+
 
         <!--        <LinearLayout-->
         <!--            android:layout_width="match_parent"-->

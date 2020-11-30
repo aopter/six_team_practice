@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.activity.problem.ProblemInfoActivity;
+import net.onest.timestoryprj.entity.problem.OrderBean;
 
 import java.util.List;
 
@@ -20,9 +21,9 @@ import butterknife.ButterKnife;
 
 public class OptionLianAdapter extends RecyclerView.Adapter<OptionLianAdapter.MyViewHolder> {
 
-    List<String> options;
+    List<OrderBean> options;
 
-    public OptionLianAdapter(List<String> options) {
+    public OptionLianAdapter(List<OrderBean> options) {
         this.options = options;
     }
 
@@ -35,7 +36,7 @@ public class OptionLianAdapter extends RecyclerView.Adapter<OptionLianAdapter.My
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        String tv =options.get(position);
+        String tv =options.get(position).getContent();
         holder.tvOption.setText(tv);
 
         holder.tvOption.setOnTouchListener(new View.OnTouchListener() {
@@ -49,6 +50,7 @@ public class OptionLianAdapter extends RecyclerView.Adapter<OptionLianAdapter.My
 
         });
     }
+
 
     @Override
     public int getItemCount() {

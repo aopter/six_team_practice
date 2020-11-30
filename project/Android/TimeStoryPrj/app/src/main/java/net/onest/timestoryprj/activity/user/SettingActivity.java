@@ -460,9 +460,9 @@ public class SettingActivity extends AppCompatActivity {
                 Log.e("提交",niName+signature+sex+phone);
                 //判断非空
                 if (null != niName && null != signature && null != sex && null != phone){
-                    int userId = Constant.User.getUserId();
+//                    int userId = Constant.User.getUserId();
                     UserDetails userDetails = new UserDetails();
-                    userDetails.setUserId(userId);
+//                    userDetails.setUserId(userId);
                     userDetails.setUserNickname(niName);
                     userDetails.setUserNumber(phone);
                     userDetails.setUserSex(sex);
@@ -470,9 +470,9 @@ public class SettingActivity extends AppCompatActivity {
                     userInfo = gson.toJson(userDetails);
                     Log.e("userInfo",userInfo);
                     //用户详情传给服务器
-                    upToServer();
+//                    upToServer();
                     //上传头像
-                    upHeaderToServer();
+//                    upHeaderToServer();
 
                 }else {
                     Toast.makeText(getApplicationContext(),"请您完善用户信息后提交",Toast.LENGTH_SHORT).show();
@@ -486,15 +486,18 @@ public class SettingActivity extends AppCompatActivity {
      * 上传头像
      */
     private void upHeaderToServer() {
+        Log.e("文件名称",file.getName());
+        Log.e("文件路径",file.getAbsolutePath());
         OkHttpClient client = new OkHttpClient();
         RequestBody body = new MultipartBody.Builder()
-                .addFormDataPart("picture",file.getName(),RequestBody.create(MediaType.parse("image/*"),file))
+                .addFormDataPart("userHeader",file.getName(),RequestBody.create(MediaType.parse("image/*"),file))
                 .addFormDataPart("userId",Constant.User.getUserId()+"")
                 .build();
         Request request = new Request.Builder()
-                .url("")
+                .url("http://192.168.43.39:8888/picture/upload")
                 .post(body)
                 .build();
+
         try {
             Response response = client.newCall(request).execute();
             if (response.isSuccessful()){
@@ -562,7 +565,7 @@ public class SettingActivity extends AppCompatActivity {
 
     private File convertBitmapToFile(Bitmap bitmap) {
         try {
-            file = new File(SettingActivity.this.getCacheDir(),"portrait");
+            file = new File(SettingActivity.this.getCacheDir(),"userHeader");
             file.createNewFile();
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG,0,bos);

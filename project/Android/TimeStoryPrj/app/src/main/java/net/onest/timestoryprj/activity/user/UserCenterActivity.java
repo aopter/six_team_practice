@@ -155,6 +155,7 @@ public class UserCenterActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String jsonData = response.body().string();
+                Log.e("onResponse: ", jsonData);
                 Constant.UserRankList = gson.fromJson(jsonData,new TypeToken<List<User>>(){}.getType());
                 Message message = new Message();
                 message.arg1 = 2;

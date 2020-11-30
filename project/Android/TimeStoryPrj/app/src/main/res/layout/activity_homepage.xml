@@ -43,12 +43,14 @@
                 style="@style/normalBtn"/>
 
             <ProgressBar
-                android:id="@+id/btn_experience"
-                android:layout_width="50dp"
-                android:layout_height="30dp"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:background="@android:color/white"
-                android:textColor="@android:color/white" />
+                android:id="@+id/experience_progress"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginTop="10dp"
+                android:max="100"
+                android:progress="50"
+                android:progressDrawable="@drawable/progressbar_style"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal" />
         </LinearLayout>
         <!-- 积分 -->
         <LinearLayout

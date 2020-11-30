@@ -27,6 +27,5 @@ public class Constant {
     public static List<UserUnlockDynastyIncident> UnlockDynastyIncident = new ArrayList<>();
     //规则详情
     public static Rule Rule = new Rule();
-
     public static List<User> UserRankList;
 }

@@ -1,11 +1,36 @@
 package net.onest.timestoryprj.entity.problem;
 
-public class ProblemSelect {
+import net.onest.timestoryprj.entity.Problem;
+
+import java.io.Serializable;
+
+public class ProblemSelect extends Problem implements Serializable {
 //     朝代id
-    private int dynastyId;//朝代标识符
+    private String dynastyId;//朝代标识符
 //     题目id
     private int problemId;//题目标识符
-//     选项A
+    private String title;//标题
+    private String problemDetails;
+
+    @Override
+    public String getProblemDetails() {
+        return problemDetails;
+    }
+
+    @Override
+    public void setProblemDetails(String problemDetails) {
+        this.problemDetails = problemDetails;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    //     选项A
     private String optionA;
     private String optionB;
     private String optionC;
@@ -26,11 +51,11 @@ public class ProblemSelect {
 
     private String details;
 
-    public int getDynastyId() {
+    public String getDynastyId() {
         return dynastyId;
     }
 
-    public void setDynastyId(int dynastyId) {
+    public void setDynastyId(String dynastyId) {
         this.dynastyId = dynastyId;
     }
 
