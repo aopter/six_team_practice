@@ -4,10 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.AssetManager;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Build;
@@ -16,12 +14,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,10 +32,6 @@ import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.entity.Dynasty;
 import net.onest.timestoryprj.entity.UserUnlockDynasty;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -51,11 +42,10 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 public class HomepageActivity extends AppCompatActivity {
-
+    public static MediaPlayer mediaPlayer;
     private TextView tvName;
     private TextView tvLevel;
     private TextView tvPoint;
@@ -68,14 +58,11 @@ public class HomepageActivity extends AppCompatActivity {
     private Button btnSettings;
     private LinearLayout llLayout1;
     private LinearLayout llLayout2;
-    private List<TextView> tvs = new ArrayList<>();
     private String DYNASTY_LIST = "/dynasty/list";
     private String UNLOCK_DYNASTY_LIST = "/userunlockdynasty/list/1";
     private Gson gson;
     private List<Dynasty> dynasties1;
     private Typeface typeface;
-    //定义MediaPlayer
-    private MediaPlayer mediaPlayer;
     private Handler handler =  new Handler(){
         @RequiresApi(api = Build.VERSION_CODES.M)
         @Override
@@ -138,9 +125,9 @@ public class HomepageActivity extends AppCompatActivity {
         findViews();
         loadImgWithPlaceHolders();
         setListener();
-        initMediaPlayer();
         //初始化gson
         initGson();
+        initMediaPlayer();
         AssetManager assets = getAssets();
         typeface = Typeface.createFromAsset(assets, "fonts/custom_fontt.ttf");
 
@@ -162,7 +149,7 @@ public class HomepageActivity extends AppCompatActivity {
      * 初始化首页数据
      */
     private void initData() {
-        getUserInfo();
+//        getUserInfo();
         downloadUnlockDynastyList();
         downloadDynastyList();
     }
@@ -209,6 +196,9 @@ public class HomepageActivity extends AppCompatActivity {
      * 通过跳转获得用户信息
      */
     private void getUserInfo() {
+        tvPoint.setText((int) Constant.User.getUserExperience());
+        tvLevel.setText(Constant.User.getUserStatus().getStatusName());
+        tvName.setText(Constant.User.getUserNickname());
     }
 
     /**
@@ -316,15 +306,19 @@ public class HomepageActivity extends AppCompatActivity {
             }
         }
     }
-
     /**
      * 初始化背景音乐
      */
     private void initMediaPlayer() {
         if (mediaPlayer == null){
             mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.music);
-            mediaPlayer.start();
-            mediaPlayer.setLooping(true);
         }
+        if (mediaPlayer.isPlaying()){
+            btnVoice.setBackgroundResource(R.mipmap.voice);
+        }else{
+            btnVoice.setBackgroundResource(R.mipmap.novoice);
+        }
+        mediaPlayer.setLooping(true);
     }
+
 }

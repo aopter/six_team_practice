@@ -1,6 +1,7 @@
 package net.onest.timestoryprj.activity.card;
 
 import androidx.annotation.NonNull;
+//抽卡
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
