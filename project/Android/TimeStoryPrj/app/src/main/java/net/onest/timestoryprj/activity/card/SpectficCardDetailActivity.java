@@ -66,23 +66,27 @@ public class SpectficCardDetailActivity extends AppCompatActivity {
                     String result = (String) msg.obj;
                     Log.e("info", result);
                     card = gson.fromJson(result, Card.class);
-                    in = new AlphaAnimation(0.0f, 1.0f);
-                    in.setDuration(1500);
-                    cardInfo.setText(card.getCardInfo());
-                    cardInfo.startAnimation(in);
-                    cardName.setText(card.getCardName());
-                    Glide.with(getApplicationContext())
-                            .load(ServiceConfig.SERVICE_ROOT + "/picture/download/" + card.getCardPicture())
-                            .into(cardPic);
-                    if (card.getCardType() == 2) {
-                        cardStory.setVisibility(View.GONE);
-                    } else {
-                        cardStory.setVisibility(View.VISIBLE);
-                    }
+                    showDatas();
                     break;
             }
         }
     };
+
+    private void showDatas() {
+        in = new AlphaAnimation(0.0f, 1.0f);
+        in.setDuration(1500);
+        cardInfo.setText(card.getCardInfo());
+        cardInfo.startAnimation(in);
+        cardName.setText(card.getCardName());
+        Glide.with(getApplicationContext())
+                .load(ServiceConfig.SERVICE_ROOT + "/picture/download/" + card.getCardPicture())
+                .into(cardPic);
+        if (card.getCardType() == 2) {
+            cardStory.setVisibility(View.GONE);
+        } else {
+            cardStory.setVisibility(View.VISIBLE);
+        }
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -103,17 +107,21 @@ public class SpectficCardDetailActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void initView() {
         Intent intent = getIntent();
-        cardId = intent.getIntExtra("cardId", -1);
-        if (cardId == -1) {
-            Toast.makeText(getApplicationContext(), "获取卡片详情出错啦，请重新获取", Toast.LENGTH_SHORT).show();
-            cardName.setVisibility(View.INVISIBLE);
-            cardStory.setVisibility(View.INVISIBLE);
-            // TODO 弹窗提示获取卡片信息失败
+        card = (Card) intent.getSerializableExtra("card");
+        if (card == null) {
+            cardId = intent.getIntExtra("cardId", -1);
+            if (cardId == -1) {
+                Toast.makeText(getApplicationContext(), "获取卡片详情出错啦，请重新获取", Toast.LENGTH_SHORT).show();
+                cardName.setVisibility(View.INVISIBLE);
+                cardStory.setVisibility(View.INVISIBLE);
+                // TODO 弹窗提示获取卡片信息失败
+            } else {
+                cardName.setVisibility(View.VISIBLE);
+                cardStory.setVisibility(View.VISIBLE);
+                getCardData();
+            }
         } else {
-            cardName.setVisibility(View.VISIBLE);
-            cardStory.setVisibility(View.VISIBLE);
-            // TODO 从客户端获取卡片详情， 参数为 card_id
-            getCardData();
+            showDatas();
         }
     }
 
@@ -135,7 +143,6 @@ public class SpectficCardDetailActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
                         String result = response.body().string();
-                        Log.e("log", result);
                         Message message = new Message();
                         message.what = 1;
                         message.obj = result;

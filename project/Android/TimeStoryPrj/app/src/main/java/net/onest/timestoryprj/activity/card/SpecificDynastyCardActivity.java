@@ -171,7 +171,7 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 4);
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
         dyanstyCardView.setLayoutManager(layoutManager);
         dyanstyCardView.setAdapter(cardAdapter);
     }

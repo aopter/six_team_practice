@@ -20,6 +20,7 @@ public class DialogExampleAvtivity extends AppCompatActivity {
 
     private PromptDialog promptDialog;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

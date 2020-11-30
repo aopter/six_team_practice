@@ -53,7 +53,7 @@ public class SpecificDynastyCardAdapter extends RecyclerView.Adapter<SpecificDyn
         Glide.with(mContext)
                 .load(ServiceConfig.SERVICE_ROOT + "/picture/download/" + cards.get(position).getCardListVO().getCardPicture())
                 .into(holder.cardPic);
-        if (cards.get(position).getCardCount() == 1 || cards.get(position).getCardCount() == null) {
+        if (cards.get(position).getCardCount() == null) {
             holder.cardNum.setVisibility(View.GONE);
         } else {
             holder.cardNum.setText(cards.get(position).getCardCount() + "");

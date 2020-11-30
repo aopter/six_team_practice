@@ -40,10 +40,10 @@
                     <ImageView
                         android:transitionName="ivGetCard"
                         android:id="@+id/draw_card_show"
-                        android:layout_width="200dp"
+                        android:layout_width="190dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
-                        android:background="@mipmap/exam"
+                        android:background="@mipmap/examplecard"
                         android:padding="15dp" />
                 </LinearLayout>
 
