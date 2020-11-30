@@ -28,7 +28,11 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import net.onest.timestoryprj.R;
+import net.onest.timestoryprj.activity.card.DrawCardActivity;
+import net.onest.timestoryprj.activity.card.MyCardActivity;
+import net.onest.timestoryprj.activity.problem.ProblemCollectionActivity;
 import net.onest.timestoryprj.activity.user.SettingActivity;
+import net.onest.timestoryprj.activity.user.UserCenterActivity;
 import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.entity.Dynasty;
@@ -49,6 +53,8 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
 
 public class HomepageActivity extends AppCompatActivity {
     public static MediaPlayer mediaPlayer;
@@ -71,6 +77,9 @@ public class HomepageActivity extends AppCompatActivity {
     private Typeface typeface;
     private ProgressBar progressBar;
     private User user;
+
+//
+
     private Handler handler =  new Handler(){
         @RequiresApi(api = Build.VERSION_CODES.M)
         @Override
@@ -319,16 +328,25 @@ public class HomepageActivity extends AppCompatActivity {
                 case R.id.btn_plus:
                     break;
                 case R.id.btn_card:
+                    Intent intent3 = new Intent(HomepageActivity.this, DrawCardActivity.class);
+                    startActivity(intent3);
                     break;
                 case R.id.btn_my_card:
+                    Intent intent4 = new Intent(HomepageActivity.this, MyCardActivity.class);
+                    startActivity(intent4);
                     break;
                 case R.id.btn_my_collections:
-                    break;
+                    Intent intent2 = new Intent(HomepageActivity.this, ProblemCollectionActivity.class);
+                    startActivity(intent2);
+                break;
                 case R.id.btn_settings:
                     Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.iv_header:
+//                    跳转
+                    Intent intent1 = new Intent(HomepageActivity.this, UserCenterActivity.class);
+                    startActivity(intent1);
                     break;
             }
         }

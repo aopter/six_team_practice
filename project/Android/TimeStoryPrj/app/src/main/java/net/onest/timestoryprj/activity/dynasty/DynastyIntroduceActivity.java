@@ -42,6 +42,10 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
     private String dynastyId;
     private String DYNASTY_INFO = "/dynasty/details/";
     private Gson gson;
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(@NonNull Message msg) {

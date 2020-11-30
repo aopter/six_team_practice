@@ -125,13 +125,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //跳转简介
-    @OnClick(R.id.btn_link_details)
-    public void dynastyDetails() {
-        Intent intent = new Intent();
-        intent.setClass(MainActivity.this, DynastyIntroduceActivity.class);
-        startActivity(intent);
-    }
+//    //跳转简介
+//    @OnClick(R.id.btn_link_details)
+//    public void dynastyDetails() {
+//        Intent intent = new Intent();
+//        intent.setClass(MainActivity.this, DynastyIntroduceActivity.class);
+//        startActivity(intent);
+//    }
 
     // 跳转抽卡
     @OnClick(R.id.btn_draw_card)

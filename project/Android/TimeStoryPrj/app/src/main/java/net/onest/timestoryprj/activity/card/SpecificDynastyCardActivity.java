@@ -189,7 +189,7 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call call, IOException e) {
                         // TODO获取卡片内容失败
-                        Toast.makeText(getApplicationContext(), "获取朝代卡片失败", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getApplicationContext(), "获取朝代卡片失败", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

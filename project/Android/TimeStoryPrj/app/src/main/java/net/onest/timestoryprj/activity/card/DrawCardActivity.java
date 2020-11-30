@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -172,7 +173,12 @@ public class DrawCardActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), SpectficCardDetailActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.putExtra("cardId", card.getCardId());
-            startActivity(intent);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//有版本限制
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this,drawCard,"ivGetCard").toBundle());
+            }
+            //开始下一个activity     android:transitionName="ivGetCard"
+
+
         }
     }
 

@@ -5,12 +5,34 @@
     android:fadingEdge="vertical"
     android:scrollbars="vertical">
 
+<<<<<<< Updated upstream
+=======
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/btn_homepage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="首页" />
+
+        <Button
+            android:id="@+id/btn_history"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"/>
+
+    </LinearLayout>
+>>>>>>> Stashed changes
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
 
+<<<<<<< Updated upstream
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -29,11 +51,34 @@
                 android:orientation="vertical" />
         </LinearLayout>
 
-        <LinearLayout
+=======
+        <net.onest.timestoryprj.customview.CusTextView
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="自定义字体"
+            android:textColor="@android:color/black"
+            android:textSize="20dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="系统自带"
+            android:textColor="@android:color/black"
+            android:textSize="20dp" />
+    </LinearLayout>
+>>>>>>> Stashed changes
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+<<<<<<< Updated upstream
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+=======
+            android:layout_height="wrap_content">
+>>>>>>> Stashed changes
 
             <net.onest.timestoryprj.customview.CusTextView
                 android:layout_width="match_parent"
@@ -50,6 +95,7 @@
                 android:text="系统自带"
                 android:textColor="@android:color/black"
                 android:textSize="20dp" />
+        </LinearLayout>
 
             <Button
                 android:id="@+id/login"
@@ -85,6 +131,7 @@
                 android:id="@+id/btn_lkl_lian"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                 android:text="连线题" />
         </LinearLayout>
 
@@ -120,3 +167,29 @@
             android:text="我的卡片" />
     </LinearLayout>
 </ScrollView>
+=======
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_user_card"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="我的卡片" />
+
+                <Button
+                    android:id="@+id/btn_draw_card"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="抽卡" />
+
+                <Button
+                    android:id="@+id/btn_dialog"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="相关弹出框" />
+            </LinearLayout>
+</LinearLayout>
+</ScrollView>
+
+
+>>>>>>> Stashed changes

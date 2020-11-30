@@ -38,6 +38,7 @@
                     android:orientation="horizontal">
 
                     <ImageView
+                        android:transitionName="ivGetCard"
                         android:id="@+id/draw_card_show"
                         android:layout_width="200dp"
                         android:layout_height="match_parent"
