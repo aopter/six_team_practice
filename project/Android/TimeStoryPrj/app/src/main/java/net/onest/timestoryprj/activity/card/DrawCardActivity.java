@@ -30,6 +30,7 @@ import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.entity.Card;
 import net.onest.timestoryprj.entity.User;
+import net.onest.timestoryprj.util.ScreenUtil;
 
 import java.io.IOException;
 
@@ -73,6 +74,8 @@ public class DrawCardActivity extends AppCompatActivity {
     private AnimatorSet animatorSet;
     private OkHttpClient client;
     private Gson gson;
+    int width;
+    int height;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -95,6 +98,8 @@ public class DrawCardActivity extends AppCompatActivity {
         // TODO 记得删除
         Constant.User = new User();
         Constant.User.setUserId(1);
+        width = ScreenUtil.dip2px(getApplicationContext(), 120);
+        height = ScreenUtil.dip2px(getApplicationContext(), 180);
         final Typeface typeface = Typeface.createFromAsset(getResources().getAssets(), "fonts/custom_font.ttf");
         tip.setTypeface(typeface);
         text.setTypeface(typeface);

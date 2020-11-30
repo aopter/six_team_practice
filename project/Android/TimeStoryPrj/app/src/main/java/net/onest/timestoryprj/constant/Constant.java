@@ -28,4 +28,5 @@ public class Constant {
     //规则详情
     public static Rule Rule = new Rule();
     public static List<User> UserRankList;
+
 }

@@ -96,11 +96,11 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_specific_dynasty_card);
         ButterKnife.bind(this);
         client = new OkHttpClient();
-        initTypes();
-        initDynastyCards();
         // TODO 记得删除
         Constant.User = new User();
         Constant.User.setUserId(1);
+        initTypes();
+        initDynastyCards();
         gson = new GsonBuilder()//创建GsonBuilder对象
                 .serializeNulls()//允许输出Null值属性
                 .create();//创建Gson对象
