@@ -528,6 +528,7 @@ public class SettingActivity extends AppCompatActivity {
     }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     /**
      * 创建保存图片的文件
      * @return
@@ -542,6 +543,8 @@ public class SettingActivity extends AppCompatActivity {
         File tempFile = new File(storageDir,imageName);
         return tempFile;
     }
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 
@@ -642,8 +645,11 @@ public class SettingActivity extends AppCompatActivity {
                 convertBitmapToFile(photo);
             }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 //            ivHeader.setImageBitmap(bitmap);
             convertBitmapToFile(bitmap);
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
         }
