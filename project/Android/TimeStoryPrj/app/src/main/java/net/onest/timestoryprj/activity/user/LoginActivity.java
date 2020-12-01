@@ -128,7 +128,11 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
+<<<<<<< Updated upstream
                     URL url = new URL(ServiceConfig.SERVICE_ROOT+"");
+=======
+                    URL url = new URL("");
+>>>>>>> Stashed changes
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("POST");
                     OutputStream outputStream = connection.getOutputStream();

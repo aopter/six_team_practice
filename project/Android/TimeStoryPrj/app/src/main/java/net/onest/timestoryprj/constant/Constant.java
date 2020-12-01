@@ -22,6 +22,7 @@ public class Constant {
     //当前登录用户解锁的朝代
     public static List<UserUnlockDynasty> UnlockDynasty = new ArrayList<>();
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
 
 >>>>>>> Stashed changes
@@ -37,6 +38,14 @@ public class Constant {
 >>>>>>> Stashed changes
     public static List<User> UserRankList;
 
+=======
+
+    //规则详情
+    public static Rule Rule = new Rule();
+
+    //当前登录用户解锁的某朝代的事件
+    public static List<UserUnlockDynastyIncident> UnlockDynastyIncident = new ArrayList<>();
+>>>>>>> Stashed changes
 
 
 }

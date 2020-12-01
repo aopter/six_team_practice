@@ -28,11 +28,15 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import net.onest.timestoryprj.R;
+<<<<<<< Updated upstream
 import net.onest.timestoryprj.activity.card.DrawCardActivity;
 import net.onest.timestoryprj.activity.card.MyCardActivity;
 import net.onest.timestoryprj.activity.problem.ProblemCollectionActivity;
 import net.onest.timestoryprj.activity.user.SettingActivity;
 import net.onest.timestoryprj.activity.user.UserCenterActivity;
+=======
+import net.onest.timestoryprj.activity.user.SettingActivity;
+>>>>>>> Stashed changes
 import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.entity.Dynasty;
