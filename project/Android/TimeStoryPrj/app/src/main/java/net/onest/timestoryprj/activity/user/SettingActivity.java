@@ -92,7 +92,7 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://192.168.43.39:8888/rule");
+                    URL url = new URL("http://192.168.42.160:8888/rule");
                     URLConnection connection = url.openConnection();
                     InputStream in = connection.getInputStream();
                     BufferedReader reader = new BufferedReader(
