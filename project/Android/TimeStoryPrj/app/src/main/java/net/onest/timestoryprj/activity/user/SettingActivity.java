@@ -87,7 +87,6 @@ public class SettingActivity extends AppCompatActivity {
     private Bitmap bitmapHeader;//从相册选择的图片
     private File file;
     private PromptDialog promptDialog;
-    private Uri mCameraUri;//用于保存拍照图片的uri
     private boolean isAndroidQ = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q;
     private Bitmap bitmap;//从相册选择的图片
     private Handler handler = new Handler(){
@@ -482,25 +481,9 @@ public class SettingActivity extends AppCompatActivity {
                 }),new PromptButton("拍照", new PromptButtonListener() {
                 @Override
                 public void onClick(PromptButton button) {
-                    Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    File photoFile = null;
-                    Uri ptotoUri = null;
-                    ptotoUri = createImageUri();
-                    photoFile = createImageFile();
-                    if (photoFile != null){
-                        picturePath = photoFile.getAbsolutePath();
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
-                            ptotoUri = FileProvider.getUriForFile(getApplicationContext(),getPackageName()+".fileprovider",photoFile);
-                        }else {
-                            ptotoUri = Uri.fromFile(photoFile);
-                        }
-                    }
-                    mCameraUri = ptotoUri;
-                    if (ptotoUri != null){
-                        camera.putExtra(MediaStore.EXTRA_OUTPUT,ptotoUri);
-                        camera.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                        startActivityForResult(camera,2);
-                    }
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                    intent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(new File(Environment.getExternalStorageDirectory(),"temp.jpg")));
+                    startActivityForResult(intent,2);
 
                 }
             }));
@@ -544,6 +527,7 @@ public class SettingActivity extends AppCompatActivity {
         });
     }
 
+<<<<<<< Updated upstream
     /**
      * 创建保存图片的文件
      * @return
@@ -558,19 +542,9 @@ public class SettingActivity extends AppCompatActivity {
         File tempFile = new File(storageDir,imageName);
         return tempFile;
     }
+=======
+>>>>>>> Stashed changes
 
-    /**
-     * 创建图片地址Uri，用于保存拍照后的照片
-     * @return
-     */
-    private Uri createImageUri() {
-        String status = Environment.getExternalStorageState();
-        if(status.equals(Environment.MEDIA_MOUNTED)){
-            return getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,new ContentValues());
-        }else {
-            return getContentResolver().insert(MediaStore.Images.Media.INTERNAL_CONTENT_URI,new ContentValues());
-        }
-    }
 
     /**
      * 上传头像
@@ -654,17 +628,28 @@ public class SettingActivity extends AppCompatActivity {
             bitmapHeader = BitmapFactory.decodeFile(picturePath,options);
             convertBitmapToFile(bitmapHeader);
         }else if (requestCode == 2 && resultCode == RESULT_OK && null != data){
-            if (isAndroidQ){
-                ivHeader.setImageURI(mCameraUri);
-                Log.e("mCameraUri",mCameraUri.toString());
-            }else {
-                Log.e("picturePath",picturePath);
-                ivHeader.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+            File picture = new File(Environment.getExternalStorageDirectory()+"/temp.jpg");
+            Bundle extras = data.getExtras();
+            if (extras != null){
+                Bitmap photo = extras.getParcelable("data");
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                photo.compress(Bitmap.CompressFormat.JPEG,75,stream);
+//                ivHeader.setImageBitmap(photo);
+                Glide.with(getApplicationContext())
+                        .load(photo)
+                        .circleCrop()
+                        .into(ivHeader);
+                convertBitmapToFile(photo);
             }
+<<<<<<< Updated upstream
 //            ivHeader.setImageBitmap(bitmap);
             convertBitmapToFile(bitmap);
+=======
+>>>>>>> Stashed changes
         }
     }
+
+
 
     private File convertBitmapToFile(Bitmap bitmap) {
         try {
