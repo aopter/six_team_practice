@@ -1,5 +1,6 @@
 package net.onest.timestoryprj.activity.user;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -7,7 +8,9 @@ import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +23,7 @@ import com.google.gson.Gson;
 
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.constant.Constant;
+import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.entity.User;
 
 import org.json.JSONException;
@@ -35,6 +39,8 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
+import me.leefeng.promptlibrary.PromptDialog;
+
 public class LoginActivity extends AppCompatActivity {
     private EditText etPhone;
     private EditText etPwd;
@@ -48,12 +54,32 @@ public class LoginActivity extends AppCompatActivity {
     private String pwd;
     private Gson gson;
     private SharedPreferences sharedPreferences;
+    private PromptDialog promptDialog;
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            switch (msg.what){
+                case 1:
+                    promptDialog = (PromptDialog) msg.obj;
+                    promptDialog.showSuccess("登录成功");
+                    break;
+                case 2:
+                    promptDialog = (PromptDialog) msg.obj;
+                    promptDialog.showError("登录失败");
+                    break;
+            }
+        }
+    };
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        promptDialog = new PromptDialog(this);
+        //设置自定义属性
+        promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
 
         findViews();
         gson = new Gson();
@@ -102,7 +128,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("");
+                    URL url = new URL(ServiceConfig.SERVICE_ROOT+"");
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("POST");
                     OutputStream outputStream = connection.getOutputStream();
@@ -118,10 +144,16 @@ public class LoginActivity extends AppCompatActivity {
                     Log.e("info", info);
                     if (info.contains("false")) {
                         //登录失败
-                        Looper.prepare();
-                        Toast.makeText(getApplicationContext(), "登录失败，请检查您的用户名及密码", Toast.LENGTH_SHORT).show();
-                        Looper.loop();
+                        Message message = handler.obtainMessage();
+                        message.what = 2;
+                        message.obj = promptDialog;
+                        handler.sendMessage(message);
+
                     } else {
+                        Message message = handler.obtainMessage();
+                        message.what = 1;
+                        message.obj = promptDialog;
+                        handler.sendMessage(message);
                         Log.e("ok", "可以跳转");
                         //判断是否记住密码
                         boolean isSave = chRemember.isChecked();
@@ -156,6 +188,7 @@ public class LoginActivity extends AppCompatActivity {
                     pwd = etPwd.getText().toString().trim();
                     if (null != phone && null != pwd && phone.length() == 11) {
                         upToServer();
+                        promptDialog.showLoading("正在登录");
                     } else {
                         Toast.makeText(getApplicationContext(), "您的格式不正确，请重新检查", Toast.LENGTH_SHORT).show();
                     }

@@ -2,15 +2,20 @@ package net.onest.timestoryprj.activity.user;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -29,6 +34,7 @@ import com.google.gson.Gson;
 
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.constant.Constant;
+import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.dialog.user.CustomDialog;
 import net.onest.timestoryprj.entity.User;
 import net.onest.timestoryprj.entity.UserDetails;
@@ -40,6 +46,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -51,7 +58,15 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
+import me.leefeng.promptlibrary.PromptButton;
+import me.leefeng.promptlibrary.PromptButtonListener;
+import me.leefeng.promptlibrary.PromptDialog;
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -73,8 +88,11 @@ public class SettingActivity extends AppCompatActivity {
     private Gson gson;
     private String userInfo;
     private String picturePath = "";//相册路径
-    private Bitmap bitmap;//从相册选择的图片
+    private Bitmap bitmapHeader;//从相册选择的图片
     private File file;
+    private PromptDialog promptDialog;
+    private Uri mCameraUri;//用于保存拍照图片的uri
+    private boolean isAndroidQ = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q;
     private Handler handler = new Handler(){
 
     };
@@ -84,6 +102,11 @@ public class SettingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
+        //创建对象
+        promptDialog = new PromptDialog(this);
+        //设置自定义属性
+        promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
+
         findViews();
         setListener();
         gson = new Gson();
@@ -92,7 +115,7 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://192.168.43.39:8888/rule");
+                    URL url = new URL(ServiceConfig.SERVICE_ROOT+"/rule");
                     URLConnection connection = url.openConnection();
                     InputStream in = connection.getInputStream();
                     BufferedReader reader = new BufferedReader(
@@ -162,14 +185,29 @@ public class SettingActivity extends AppCompatActivity {
      * 退出登录布局
      */
     private void setExitLoginAttr() {
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        CustomDialog dialog = new CustomDialog();
-        if (!dialog.isAdded()){
-            transaction.add(dialog,"dialog_tag");
-        }
-        transaction.show(dialog);
-        transaction.commit();
+        promptDialog.showWarnAlert("您确定退出登录吗？",new PromptButton("取消", new PromptButtonListener() {
+            @Override
+            public void onClick(PromptButton button) {
+                promptDialog.dismiss();
+            }
+        }), new PromptButton("确定", new PromptButtonListener() {
+            @Override
+            public void onClick(PromptButton button) {
+                Constant.User = null;
+                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        }));
+
+//        FragmentManager manager = getSupportFragmentManager();
+//        FragmentTransaction transaction = manager.beginTransaction();
+//        CustomDialog dialog = new CustomDialog();
+//        if (!dialog.isAdded()){
+//            transaction.add(dialog,"dialog_tag");
+//        }
+//        transaction.show(dialog);
+//        transaction.commit();
     }
 
     /**
@@ -443,9 +481,41 @@ public class SettingActivity extends AppCompatActivity {
         ivHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_PICK,null);
-                intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*");
-                startActivityForResult(intent,1);
+                PromptButton cancle = new PromptButton("取消", null);
+                cancle.setTextColor(Color.parseColor("#0076ff"));
+                promptDialog.showAlertSheet("",true,cancle,new PromptButton("从相册选择", new PromptButtonListener() {
+                    @Override
+                    public void onClick(PromptButton button) {
+                        Intent intent = new Intent(Intent.ACTION_PICK,null);
+                        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*");
+                        startActivityForResult(intent,1);
+                    }
+                }),new PromptButton("拍照", new PromptButtonListener() {
+                @Override
+                public void onClick(PromptButton button) {
+                    Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    File photoFile = null;
+                    Uri ptotoUri = null;
+                    ptotoUri = createImageUri();
+                    photoFile = createImageFile();
+                    if (photoFile != null){
+                        picturePath = photoFile.getAbsolutePath();
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+                            ptotoUri = FileProvider.getUriForFile(getApplicationContext(),getPackageName()+".fileprovider",photoFile);
+                        }else {
+                            ptotoUri = Uri.fromFile(photoFile);
+                        }
+                    }
+                    mCameraUri = ptotoUri;
+                    if (ptotoUri != null){
+                        camera.putExtra(MediaStore.EXTRA_OUTPUT,ptotoUri);
+                        camera.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                        startActivityForResult(camera,2);
+                    }
+
+                }
+            }));
+
             }
         });
 
@@ -462,7 +532,7 @@ public class SettingActivity extends AppCompatActivity {
                 if (null != niName && null != signature && null != sex && null != phone){
 //                    int userId = Constant.User.getUserId();
                     UserDetails userDetails = new UserDetails();
-//                    userDetails.setUserId(userId);
+                    userDetails.setUserId(1);
                     userDetails.setUserNickname(niName);
                     userDetails.setUserNumber(phone);
                     userDetails.setUserSex(sex);
@@ -472,7 +542,7 @@ public class SettingActivity extends AppCompatActivity {
                     //用户详情传给服务器
 //                    upToServer();
                     //上传头像
-//                    upHeaderToServer();
+                    upHeaderToServer();
 
                 }else {
                     Toast.makeText(getApplicationContext(),"请您完善用户信息后提交",Toast.LENGTH_SHORT).show();
@@ -483,30 +553,70 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     /**
+     * 创建保存图片的文件
+     * @return
+     */
+    private File createImageFile() {
+        String imageName = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        if (!storageDir.exists()){
+            storageDir.mkdir();
+        }
+        File tempFile = new File(storageDir,imageName);
+        return tempFile;
+    }
+
+    /**
+     * 创建图片地址Uri，用于保存拍照后的照片
+     * @return
+     */
+    private Uri createImageUri() {
+        String status = Environment.getExternalStorageState();
+        if(status.equals(Environment.MEDIA_MOUNTED)){
+            return getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,new ContentValues());
+        }else {
+            return getContentResolver().insert(MediaStore.Images.Media.INTERNAL_CONTENT_URI,new ContentValues());
+        }
+    }
+
+    /**
      * 上传头像
      */
     private void upHeaderToServer() {
         Log.e("文件名称",file.getName());
         Log.e("文件路径",file.getAbsolutePath());
         OkHttpClient client = new OkHttpClient();
-        RequestBody body = new MultipartBody.Builder()
-                .addFormDataPart("userHeader",file.getName(),RequestBody.create(MediaType.parse("image/*"),file))
-                .addFormDataPart("userId",Constant.User.getUserId()+"")
-                .build();
+        MultipartBody.Builder requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM);//通过表单上传
+        RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"),file);//上传的文件以及类型
+        requestBody.addFormDataPart("file",file.getName(),fileBody)
+                .addFormDataPart("userId",1+"");
         Request request = new Request.Builder()
-                .url("http://192.168.43.39:8888/picture/upload")
-                .post(body)
+                .url(ServiceConfig.SERVICE_ROOT+"/picture/upload")
+                .post(requestBody.build())
                 .build();
 
-        try {
-            Response response = client.newCall(request).execute();
-            if (response.isSuccessful()){
-                Log.e("ok","上传头像成功");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        RequestBody body = new MultipartBody.Builder()
+//                .setType(MultipartBody.FORM)//通过表单上传
+//                .addFormDataPart("file",file.getName(),RequestBody.create(MediaType.parse("image/*"),file))
+//                .addFormDataPart("userId",Constant.User.getUserId()+"")
+//                .build();
+//        Request request = new Request.Builder()
+//                .url(ServiceConfig.SERVICE_ROOT+"/picture/upload")
+//                .post(body)
+//                .build();
 
+        client.newBuilder().build().newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("no","失败");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Log.e("ok","成功");
+            }
+        });
     }
 
     /**
@@ -517,7 +627,7 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://192.168.43.39:8888/userdetails/modify");
+                    URL url = new URL(ServiceConfig.SERVICE_ROOT+"/userdetails/modify");
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("POST");
                     OutputStream outputStream = connection.getOutputStream();
@@ -557,9 +667,17 @@ public class SettingActivity extends AppCompatActivity {
                     .into(ivHeader);
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-            bitmap = BitmapFactory.decodeFile(picturePath,options);
-//            ivHeader.setImageBitmap(bitmap);
-            convertBitmapToFile(bitmap);
+            bitmapHeader = BitmapFactory.decodeFile(picturePath,options);
+            convertBitmapToFile(bitmapHeader);
+        }else if (requestCode == 2 && resultCode == RESULT_OK && null != data){
+            if (isAndroidQ){
+                ivHeader.setImageURI(mCameraUri);
+                Log.e("mCameraUri",mCameraUri.toString());
+            }else {
+                Log.e("picturePath",picturePath);
+                ivHeader.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+            }
+
         }
     }
 

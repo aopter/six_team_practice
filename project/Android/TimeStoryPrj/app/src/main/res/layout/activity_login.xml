@@ -29,12 +29,14 @@
         android:hint="密码"
         android:imeOptions="actionDone|flagNoExtractUi"
         android:inputType="textPassword" />
+
+
     <LinearLayout
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp">
         <CheckBox
             android:id="@+id/remember"
             android:layout_width="30dp"
@@ -91,6 +93,7 @@
             android:layout_height="40dp"
             android:layout_marginLeft="15dp"
             android:background="@mipmap/qq" />
+
 
         <Button
             android:id="@+id/btn_forget"

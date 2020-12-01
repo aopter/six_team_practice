@@ -29,4 +29,6 @@ public class Constant {
     public static Rule Rule = new Rule();
     public static List<User> UserRankList;
 
+
+
 }
