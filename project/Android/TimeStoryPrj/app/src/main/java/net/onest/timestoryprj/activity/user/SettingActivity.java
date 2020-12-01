@@ -33,11 +33,6 @@ import com.google.gson.Gson;
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
-<<<<<<< Updated upstream
-=======
-import net.onest.timestoryprj.dialog.user.CustomDialog;
-import net.onest.timestoryprj.entity.User;
->>>>>>> Stashed changes
 import net.onest.timestoryprj.entity.UserDetails;
 import net.onest.timestoryprj.util.AudioUtil;
 
@@ -117,11 +112,7 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-<<<<<<< Updated upstream
                     URL url = new URL(ServiceConfig.SERVICE_ROOT+"/rule");
-=======
-                    URL url = new URL(ServiceConfig.SERVICE_ROOT + "/rule");
->>>>>>> Stashed changes
                     URLConnection connection = url.openConnection();
                     InputStream in = connection.getInputStream();
                     BufferedReader reader = new BufferedReader(
@@ -598,16 +589,6 @@ public class SettingActivity extends AppCompatActivity {
                 .post(requestBody.build())
                 .build();
 
-//        RequestBody body = new MultipartBody.Builder()
-//                .setType(MultipartBody.FORM)//通过表单上传
-//                .addFormDataPart("file",file.getName(),RequestBody.create(MediaType.parse("image/*"),file))
-//                .addFormDataPart("userId",Constant.User.getUserId()+"")
-//                .build();
-//        Request request = new Request.Builder()
-//                .url(ServiceConfig.SERVICE_ROOT+"/picture/upload")
-//                .post(body)
-//                .build();
-
         client.newBuilder().build().newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -623,7 +604,6 @@ public class SettingActivity extends AppCompatActivity {
 
 
     /**
->>>>>>> Stashed changes
      * 向服务器上传用户更改后的信息
      */
     private void upToServer() {
