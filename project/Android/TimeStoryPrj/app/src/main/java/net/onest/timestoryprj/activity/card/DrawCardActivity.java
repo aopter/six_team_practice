@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -157,6 +158,7 @@ public class DrawCardActivity extends AppCompatActivity {
                 @Override
                 public void onAnimationEnd(Animation animation) {//当动画结束时需要执行的行为
                     animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.front);
+                    drawCard.setBackground(getResources().getDrawable(R.mipmap.card_bg));
                     Glide.with(getApplicationContext())
                             .load(ServiceConfig.SERVICE_ROOT + "/picture/download/" + card.getCardPicture())
                             .into(drawCard);
@@ -171,8 +173,18 @@ public class DrawCardActivity extends AppCompatActivity {
         } else {
             Intent intent = new Intent(getApplicationContext(), SpectficCardDetailActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+<<<<<<< Updated upstream
             intent.putExtra("cardId", card.getCardId());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//有版本限制
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this,drawCard,"ivGetCard").toBundle());
+            }
+            //开始下一个activity     android:transitionName="ivGetCard"
+
+
+=======
+            intent.putExtra("card", card);
             startActivity(intent);
+>>>>>>> Stashed changes
         }
     }
 

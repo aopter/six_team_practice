@@ -44,6 +44,7 @@
             android:orientation="vertical">
 
             <ImageView
+                android:transitionName="ivGetCard"
                 android:id="@+id/card_img"
                 android:layout_width="120dp"
                 android:layout_height="260dp"

@@ -1,34 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="10dp">
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/card_pic"
-        android:layout_width="120dp"
-        android:layout_height="160dp"
-        android:layout_centerInParent="true"
-        android:src="@mipmap/example" />
-
-    <TextView
-        android:id="@+id/card_num"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_alignTop="@+id/card_pic"
-        android:layout_toRightOf="@+id/card_pic"
-        android:background="@mipmap/red_bubble_bg"
-        android:gravity="center"
-        android:textColor="#FFFFFF"
-        android:textSize="10sp" />
-
-    <TextView
-        android:id="@+id/card_name"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/card_pic"
-        android:gravity="center"
-        android:padding="5dp"
-        android:textColor="@android:color/black" />
-</RelativeLayout>
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/card_pic"
+            android:layout_width="120dp"
+            android:layout_height="180dp"
+            android:layout_centerHorizontal="true"
+            android:alpha="0.9"
+            android:background="@mipmap/card_bg"
+            android:padding="10dp" />
+
+        <net.onest.timestoryprj.customview.CusTextView
+            android:id="@+id/card_num"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignTop="@id/card_pic"
+            android:layout_alignRight="@+id/card_pic"
+            android:background="@mipmap/center_bubble_bg"
+            android:gravity="center"
+            android:textColor="@color/ourDynastyRed"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/card_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/card_pic"
+            android:gravity="center"
+            android:padding="8dp"
+            android:textColor="@android:color/black" />
+    </RelativeLayout>
+</LinearLayout>
