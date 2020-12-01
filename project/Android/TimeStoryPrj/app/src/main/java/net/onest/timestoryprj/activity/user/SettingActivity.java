@@ -33,6 +33,11 @@ import com.google.gson.Gson;
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
+<<<<<<< Updated upstream
+=======
+import net.onest.timestoryprj.dialog.user.CustomDialog;
+import net.onest.timestoryprj.entity.User;
+>>>>>>> Stashed changes
 import net.onest.timestoryprj.entity.UserDetails;
 import net.onest.timestoryprj.util.AudioUtil;
 
@@ -112,7 +117,11 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
+<<<<<<< Updated upstream
                     URL url = new URL(ServiceConfig.SERVICE_ROOT+"/rule");
+=======
+                    URL url = new URL(ServiceConfig.SERVICE_ROOT + "/rule");
+>>>>>>> Stashed changes
                     URLConnection connection = url.openConnection();
                     InputStream in = connection.getInputStream();
                     BufferedReader reader = new BufferedReader(

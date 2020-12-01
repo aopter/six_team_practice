@@ -106,9 +106,15 @@ public class HomepageActivity extends AppCompatActivity {
                             llLayout1.addView(tv);
                         } else {
                             if (i == 1){
+<<<<<<< Updated upstream
                                 params.setMargins(200, 30, 0, 0);
                             }else{
                                 params.setMargins(90, 30, 0, 0);
+=======
+                                params.setMargins(200, 50, 0, 0);
+                            }else{
+                                params.setMargins(90, 50, 0, 0);
+>>>>>>> Stashed changes
                             }
                             tv.setLayoutParams(params);
 //                            ll.addView(iv);
@@ -119,7 +125,11 @@ public class HomepageActivity extends AppCompatActivity {
                         for (int j = 0; j < Constant.UnlockDynasty.size(); j++){
                             Log.e("cc", String.valueOf(Constant.UnlockDynasty.get(j).getDynastyId().equals(dynasties1.get(i).getDynastyId().toString())));
                             if (Constant.UnlockDynasty.get(j).getDynastyId().equals(dynasties1.get(i).getDynastyId().toString())){
+<<<<<<< Updated upstream
                                 tv.setBackgroundResource(R.mipmap.fff);
+=======
+                                tv.setBackgroundResource(R.mipmap.flag1);
+>>>>>>> Stashed changes
                             }
                         }
                         tv.setOnClickListener(new View.OnClickListener() {
