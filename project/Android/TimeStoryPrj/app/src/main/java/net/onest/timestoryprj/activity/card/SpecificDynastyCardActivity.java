@@ -95,10 +95,17 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_specific_dynasty_card);
         ButterKnife.bind(this);
+<<<<<<< HEAD
         // TODO 记得删除
         Constant.User = new User();
         Constant.User.setUserId(1);
         client = new OkHttpClient();
+=======
+        client = new OkHttpClient();
+        // TODO 记得删除
+        Constant.User = new User();
+        Constant.User.setUserId(1);
+>>>>>>> 0fbef57e1ffd0b922e72e52b62d4dc8c4e599473
         initTypes();
         initDynastyCards();
         gson = new GsonBuilder()//创建GsonBuilder对象
@@ -171,7 +178,7 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 4);
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
         dyanstyCardView.setLayoutManager(layoutManager);
         dyanstyCardView.setAdapter(cardAdapter);
     }
@@ -189,7 +196,7 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call call, IOException e) {
                         // TODO获取卡片内容失败
-                        Toast.makeText(getApplicationContext(), "获取朝代卡片失败", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getApplicationContext(), "获取朝代卡片失败", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

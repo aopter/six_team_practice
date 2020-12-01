@@ -46,6 +46,7 @@ public class DetailsEventActivity extends AppCompatActivity {
     private Gson gson;
     private OkHttpClient okHttpClient;
     private String dynastyId;
+    private String dynastyName;
     private String INCIDENT_URL = "/incident/list/";
     private String UNLOCK_INCIDENT_URL = "/userincident/list/";
     private Handler handler = new Handler() {
@@ -74,13 +75,12 @@ public class DetailsEventActivity extends AppCompatActivity {
      * 初始化Adapter
      */
     private void initAdapter() {
-        eventListAdapter = new EventListAdapter(this, incidentList, R.layout.item_incident, dynastyId);
+        eventListAdapter = new EventListAdapter(this, incidentList, R.layout.item_incident, dynastyId, dynastyName);
         ViewGroup.LayoutParams params = hlvTimeline.getLayoutParams();
         params.width = DensityUtil.dip2px(getApplicationContext(), 110) * incidentList.size();
         hlvTimeline.setLayoutParams(params);
         hlvTimeline.setNumColumns(incidentList.size());
         hlvTimeline.setAdapter(eventListAdapter);
-        Log.i("msg", "测试");
     }
 
     /**
@@ -89,7 +89,7 @@ public class DetailsEventActivity extends AppCompatActivity {
     private void initData() {
         Intent intent = getIntent();
         dynastyId = intent.getStringExtra("dynastyId1");
-        String dynastyName = intent.getStringExtra("dynastyName1");
+        dynastyName = intent.getStringExtra("dynastyName1");
         downloadUnlockIncidentList(dynastyId);
         downloadIncidentList(dynastyId);
         String word = "历史上的" + dynastyName;

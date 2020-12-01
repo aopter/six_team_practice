@@ -4,10 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.AssetManager;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Build;
@@ -16,9 +14,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -32,6 +28,11 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import net.onest.timestoryprj.R;
+import net.onest.timestoryprj.activity.card.DrawCardActivity;
+import net.onest.timestoryprj.activity.card.MyCardActivity;
+import net.onest.timestoryprj.activity.problem.ProblemCollectionActivity;
+import net.onest.timestoryprj.activity.user.SettingActivity;
+import net.onest.timestoryprj.activity.user.UserCenterActivity;
 import net.onest.timestoryprj.activity.user.SettingActivity;
 import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
@@ -39,10 +40,6 @@ import net.onest.timestoryprj.entity.Dynasty;
 import net.onest.timestoryprj.entity.User;
 import net.onest.timestoryprj.entity.UserStatus;
 import net.onest.timestoryprj.entity.UserUnlockDynasty;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -58,8 +55,10 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomepageActivity extends AppCompatActivity {
+import butterknife.BindView;
 
+public class HomepageActivity extends AppCompatActivity {
+    public static MediaPlayer mediaPlayer;
     private TextView tvName;
     private TextView tvLevel;
     private TextView tvPoint;
@@ -72,16 +71,16 @@ public class HomepageActivity extends AppCompatActivity {
     private Button btnSettings;
     private LinearLayout llLayout1;
     private LinearLayout llLayout2;
-    private List<TextView> tvs = new ArrayList<>();
     private String DYNASTY_LIST = "/dynasty/list";
     private String UNLOCK_DYNASTY_LIST = "/userunlockdynasty/list/1";
     private Gson gson;
     private List<Dynasty> dynasties1;
     private Typeface typeface;
-    //定义MediaPlayer
-    private MediaPlayer mediaPlayer;
     private ProgressBar progressBar;
     private User user;
+
+//
+
     private Handler handler =  new Handler(){
         @RequiresApi(api = Build.VERSION_CODES.M)
         @Override
@@ -144,9 +143,9 @@ public class HomepageActivity extends AppCompatActivity {
         findViews();
         loadImgWithPlaceHolders();
         setListener();
-        initMediaPlayer();
         //初始化gson
         initGson();
+        initMediaPlayer();
         AssetManager assets = getAssets();
         typeface = Typeface.createFromAsset(assets, "fonts/custom_fontt.ttf");
 
@@ -168,7 +167,7 @@ public class HomepageActivity extends AppCompatActivity {
      * 初始化首页数据
      */
     private void initData() {
-        getUserInfo();
+//        getUserInfo();
         downloadUnlockDynastyList();
         downloadDynastyList();
 //        initProgress();
@@ -232,6 +231,9 @@ public class HomepageActivity extends AppCompatActivity {
      * 通过跳转获得用户信息
      */
     private void getUserInfo() {
+        tvPoint.setText((int) Constant.User.getUserExperience());
+        tvLevel.setText(Constant.User.getUserStatus().getStatusName());
+        tvName.setText(Constant.User.getUserNickname());
 //        user = Constant.User;
     }
 
@@ -327,29 +329,42 @@ public class HomepageActivity extends AppCompatActivity {
                 case R.id.btn_plus:
                     break;
                 case R.id.btn_card:
+                    Intent intent3 = new Intent(HomepageActivity.this, DrawCardActivity.class);
+                    startActivity(intent3);
                     break;
                 case R.id.btn_my_card:
+                    Intent intent4 = new Intent(HomepageActivity.this, MyCardActivity.class);
+                    startActivity(intent4);
                     break;
                 case R.id.btn_my_collections:
-                    break;
+                    Intent intent2 = new Intent(HomepageActivity.this, ProblemCollectionActivity.class);
+                    startActivity(intent2);
+                break;
                 case R.id.btn_settings:
                     Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.iv_header:
+//                    跳转
+                    Intent intent1 = new Intent(HomepageActivity.this, UserCenterActivity.class);
+                    startActivity(intent1);
                     break;
             }
         }
     }
-
     /**
      * 初始化背景音乐
      */
     private void initMediaPlayer() {
         if (mediaPlayer == null){
             mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.music);
-            mediaPlayer.start();
-            mediaPlayer.setLooping(true);
         }
+        if (mediaPlayer.isPlaying()){
+            btnVoice.setBackgroundResource(R.mipmap.voice);
+        }else{
+            btnVoice.setBackgroundResource(R.mipmap.novoice);
+        }
+        mediaPlayer.setLooping(true);
     }
+
 }

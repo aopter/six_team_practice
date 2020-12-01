@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <path>
+        <external-files-path
+            name="images"
+            path="Pictures" />
+    </path>
+</resources>

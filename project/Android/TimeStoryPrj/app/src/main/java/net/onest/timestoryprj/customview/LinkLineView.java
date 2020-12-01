@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -111,8 +112,11 @@ public class LinkLineView extends RelativeLayout {
         if (linkDataBeanList == null || linkDataBeanList.size() == 0) {
             return;
         }
-
+        this.allList.clear();
+        leftList.clear();
+        rightList.clear();
         this.allList = linkDataBeanList;
+        LogUtils.e(TAG, "leftList:" + this.allList);
 
         // 将数据分为两列
         for (LinkDataBean item : allList) {

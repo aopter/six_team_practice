@@ -3,6 +3,7 @@ package net.onest.timestoryprj.activity.card;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -20,8 +21,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.constant.Constant;
+import net.onest.timestoryprj.constant.ServiceConfig;
+import net.onest.timestoryprj.customview.StoryNodeView;
 import net.onest.timestoryprj.entity.Card;
 import net.onest.timestoryprj.util.ScreenUtil;
 
@@ -38,29 +43,31 @@ public class ShowCardStoryActivity extends AppCompatActivity {
     int currentStory = 0;
     @BindView(R.id.back)
     ImageView back;
-    @BindView(R.id.container)
-    RelativeLayout container;
-    @BindView(R.id.story1)
-    TextView story1;
-    @BindView(R.id.story2)
-    TextView story2;
-    @BindView(R.id.story3)
-    TextView story3;
+    @BindView(R.id.former_story)
+    TextView formerStory;
+    @BindView(R.id.story)
+    TextView story;
+    @BindView(R.id.next_story)
+    TextView nextStory;
     @BindView(R.id.card_img)
     ImageView cardImg;
     @BindView(R.id.text)
     TextView tip;
+    @BindView(R.id.story_process)
+    StoryNodeView storyNode;
     @BindView(R.id.title_container)
     LinearLayout titleContainer;
     private int translate;
-    private Animation tran;
+    private ObjectAnimator tranFore;
+    private ObjectAnimator tranNext;
     private int x;
-    private int y;
-    private int title;
+    private int originX;
+    private int maxX;
+    private int[] location;
     private Animation in;
     private Animation out;
     private long clickMillis = 0;
-    private boolean flag = false;
+    private long clickTwiceMillis;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -74,31 +81,29 @@ public class ShowCardStoryActivity extends AppCompatActivity {
         for (String e : card.getCardStory().split(Constant.DELIMITER)) {
             event.add(e);
         }
+        storyNode.setNodeList(event);
+        storyNode.setSelectIndex(0);
+        Glide.with(getApplicationContext())
+                .load(ServiceConfig.SERVICE_ROOT + "/picture/download/" + card.getCardPicture())
+                .into(cardImg);
         defineViewAndAnimation();
     }
 
     private void defineViewAndAnimation() {
         final Typeface typeface = Typeface.createFromAsset(getResources().getAssets(), "fonts/custom_font.ttf");
         tip.setTypeface(typeface);
-        story1.setMovementMethod(ScrollingMovementMethod.getInstance());
-        story2.setMovementMethod(ScrollingMovementMethod.getInstance());
-        story3.setMovementMethod(ScrollingMovementMethod.getInstance());
-        translate = (ScreenUtil.getScreenWidth(getApplicationContext()) - ScreenUtil.dip2px(getApplicationContext(), 52)) / 3;
+        story.setMovementMethod(ScrollingMovementMethod.getInstance());
+        translate = (ScreenUtil.getScreenWidth(getApplicationContext()) - ScreenUtil.dip2px(getApplicationContext(), 40)) / event.size();
         in = new AlphaAnimation(0.0f, 1.0f);
         in.setDuration(1000);
         out = new AlphaAnimation(1.0f, 0.0f);
         out.setDuration(1000);
-        story1.setAnimation(out);
-        story1.setText(event.get(currentStory));
-        story1.setAnimation(in);
-        title = titleContainer.getBottom();
-        int[] location = new int[2];
+        story.setAnimation(out);
+        story.setText(event.get(currentStory));
+        story.setAnimation(in);
+        location = new int[2];
         cardImg.getLocationInWindow(location);
-        y = location[1]; // view距离window 顶边的距离（即y轴方向）
-        tran = new TranslateAnimation(x, x + translate, y - title, y - title);
-        tran.setDuration(1000);
-        tran.setRepeatCount(0);
-        tran.setFillAfter(true);
+        originX = location[0];
     }
 
     @OnClick(R.id.back)
@@ -106,48 +111,64 @@ public class ShowCardStoryActivity extends AppCompatActivity {
         finish();
     }
 
-    @OnClick(R.id.container)
-    void shiftStory() {
-        if (!flag) {
-            long clickTwiceMillis = System.currentTimeMillis();
-            if ((clickTwiceMillis - clickMillis) < 1000) {
-                Toast.makeText(getApplicationContext(), "正在加载，请点击慢一些吧", Toast.LENGTH_SHORT).show();
+    @OnClick(R.id.former_story)
+    void formerStory() {
+        clickTwiceMillis = System.currentTimeMillis();
+        if ((clickTwiceMillis - clickMillis) < 1000) {
+            Toast.makeText(getApplicationContext(), "正在加载，请点击慢一些吧", Toast.LENGTH_SHORT).show();
+        } else {
+            clickMillis = clickTwiceMillis;
+            currentStory = currentStory - 1;
+            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(cardImg.getLayoutParams());
+            if (currentStory < 0) {
+                Toast.makeText(getApplicationContext(), "不能再回头啦", Toast.LENGTH_SHORT).show();
+                currentStory = 0;
+                x = originX;
             } else {
-                clickMillis = clickTwiceMillis;
-                currentStory = currentStory + 1;
-                RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(cardImg.getLayoutParams());
-                if (currentStory >= event.size()) {
-                    Toast.makeText(getApplicationContext(), "没有更多了", Toast.LENGTH_SHORT).show();
-                    flag = true;
-                } else {
-                    if (currentStory % 3 == 0) {
-                        // 第三次
-                        lp.setMargins(-translate, ScreenUtil.dip2px(getApplicationContext(), 160), 0, 0);
-                        cardImg.setLayoutParams(lp);
-                        //lp代表某个控件，该控件可以获取到其父控件类型的LayoutParams
-                        story1.startAnimation(out);
-                        story1.setText(event.get(currentStory));
-                        story1.startAnimation(in);
-                    } else if (currentStory % 3 == 1) {
-                        lp.setMargins(0, ScreenUtil.dip2px(getApplicationContext(), 160), 0, 0);
-                        cardImg.setLayoutParams(lp);
-                        // 第一次点击
-                        cardImg.startAnimation(tran);
-                        x = cardImg.getLeft();
-                        story2.startAnimation(out);
-                        story2.setText(event.get(currentStory));
-                        story2.startAnimation(in);
-                    } else if (currentStory % 3 == 2) {
-                        lp.setMargins(translate, ScreenUtil.dip2px(getApplicationContext(), 160), 0, 0);
-                        cardImg.setLayoutParams(lp);
-                        // 第二次点击
-                        cardImg.startAnimation(tran);
-                        x = cardImg.getLeft();
-                        story3.startAnimation(out);
-                        story3.setText(event.get(currentStory));
-                        story3.startAnimation(in);
-                    }
-                }
+                cardImg.getLocationInWindow(location);
+                x = location[0];
+                Log.e("x", x + "");
+                tranFore = new ObjectAnimator().ofFloat(
+                        cardImg,
+                        "translationX",
+                        x, x - translate
+                );
+                tranFore.setDuration(1000);
+                tranFore.setRepeatCount(0);
+                tranFore.start();
+                storyNode.setSelectIndex(currentStory);
+                story.setText(event.get(currentStory));
+            }
+        }
+    }
+
+    @OnClick(R.id.next_story)
+    void nextStory() {
+        clickTwiceMillis = System.currentTimeMillis();
+        if ((clickTwiceMillis - clickMillis) < 1000) {
+            Toast.makeText(getApplicationContext(), "正在加载，请点击慢一些吧", Toast.LENGTH_SHORT).show();
+        } else {
+            clickMillis = clickTwiceMillis;
+            currentStory = currentStory + 1;
+            if (currentStory >= event.size()) {
+                currentStory = event.size() - 1;
+                Toast.makeText(getApplicationContext(), "没有更多了", Toast.LENGTH_SHORT).show();
+                x = maxX;
+            } else {
+                cardImg.getLocationInWindow(location);
+                x = location[0];
+                maxX = x;
+                Log.e("x", x + "");
+                tranNext = new ObjectAnimator().ofFloat(
+                        cardImg,
+                        "translationX",
+                        x, x + translate
+                );
+                tranNext.setDuration(1000);
+                tranNext.setRepeatCount(0);
+                tranNext.start();
+                storyNode.setSelectIndex(currentStory);
+                story.setText(event.get(currentStory));
             }
         }
     }

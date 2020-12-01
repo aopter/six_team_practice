@@ -24,13 +24,22 @@ public class Constant {
 
     //规则详情
     public static Rule rule;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0fbef57e1ffd0b922e72e52b62d4dc8c4e599473
     //当前登录用户解锁的某朝代的事件
     public static List<UserUnlockDynastyIncident> UnlockDynastyIncident = new ArrayList<>();
     //规则详情
     public static Rule Rule = new Rule();
 
+<<<<<<< HEAD
 
     public static List<User> UserRankList;
 
+=======
+    public static List<User> UserRankList;
+
+
+>>>>>>> 0fbef57e1ffd0b922e72e52b62d4dc8c4e599473
 }

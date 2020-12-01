@@ -136,6 +136,7 @@ public class ProblemInfoListAdapter extends RecyclerView.Adapter<ProblemInfoList
                     linkDataBean.setCol(1);
                     linkDataBeans.add(linkDataBean);
                 }
+                Log.e("linkDataBeans: ",linkDataBeans.size()+"" );
                 holder.problemTitles[1].setText(problemLinkLine.getTitle());
                 holder.linkLineView.setData(linkDataBeans);
 //                点击liner 跳转activity 携带数据

@@ -74,6 +74,7 @@ public class SelectProblemTypeActivity extends AppCompatActivity {
         intent.putExtra("dynastyId",dynastyId);
         intent.setClass(SelectProblemTypeActivity.this, ProblemInfoActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.anim_in_right,R.anim.anim_out_left);
 
     }
     @OnClick(R.id.type_problem_xuan)
@@ -84,9 +85,9 @@ public class SelectProblemTypeActivity extends AppCompatActivity {
         intent.putExtra("before","types");
         intent.putExtra("type","xuan");
         intent.putExtra("dynastyId",dynastyId);
-        Log.e("llProblemXuanOnClick: ", dynastyId);
         intent.setClass(SelectProblemTypeActivity.this, ProblemInfoActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.anim_in_right,R.anim.anim_out_left);
     }
     @OnClick(R.id.type_problem_pai)
     public void llProblemPaiOnClick(){
@@ -97,15 +98,21 @@ public class SelectProblemTypeActivity extends AppCompatActivity {
         intent.putExtra("dynastyId",dynastyId);
         intent.setClass(SelectProblemTypeActivity.this, ProblemInfoActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.anim_in_right,R.anim.anim_out_left);
+
     }
     @OnClick(R.id.type_problem_all)
     public void llProblemAllOnClick(){
-        //        所有题
+        JumpProblemInfoActoivity("all");
+    }
+
+    private void JumpProblemInfoActoivity(String type){
         Intent intent = new Intent();
         intent.putExtra("before","types");
-        intent.putExtra("type","all");
+        intent.putExtra("type",type);
         intent.putExtra("dynastyId",dynastyId);
         intent.setClass(SelectProblemTypeActivity.this, ProblemInfoActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.anim_in_right,R.anim.anim_out_left);
     }
 }

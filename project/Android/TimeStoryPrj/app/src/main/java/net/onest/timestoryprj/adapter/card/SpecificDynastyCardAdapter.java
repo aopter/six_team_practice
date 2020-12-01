@@ -22,6 +22,7 @@ import java.util.List;
 public class SpecificDynastyCardAdapter extends RecyclerView.Adapter<SpecificDynastyCardAdapter.ViewHolder> {
     private List<UserCard> cards;
     private Context mContext;
+    private View view;
     private CardAdapter.OnItemClickLitener mOnItemClickLitener;
 
     //设置回调接口
@@ -41,7 +42,7 @@ public class SpecificDynastyCardAdapter extends RecyclerView.Adapter<SpecificDyn
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.dynasty_card_item, null);
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.dynasty_card_item, null);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
@@ -52,6 +53,11 @@ public class SpecificDynastyCardAdapter extends RecyclerView.Adapter<SpecificDyn
         Glide.with(mContext)
                 .load(ServiceConfig.SERVICE_ROOT + "/picture/download/" + cards.get(position).getCardListVO().getCardPicture())
                 .into(holder.cardPic);
+        if (cards.get(position).getCardCount() == null) {
+            holder.cardNum.setVisibility(View.GONE);
+        } else {
+            holder.cardNum.setText(cards.get(position).getCardCount() + "");
+        }
         if (mOnItemClickLitener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -70,11 +76,13 @@ public class SpecificDynastyCardAdapter extends RecyclerView.Adapter<SpecificDyn
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView cardPic;
         private TextView cardName;
+        private TextView cardNum;
 
         public ViewHolder(final View view) {
             super(view);
             cardName = view.findViewById(R.id.card_name);
             cardPic = view.findViewById(R.id.card_pic);
+            cardNum = view.findViewById(R.id.card_num);
         }
     }
 }

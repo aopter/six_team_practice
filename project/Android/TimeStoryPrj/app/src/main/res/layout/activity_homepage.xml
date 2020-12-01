@@ -119,7 +119,7 @@
                 android:id="@+id/btn_voice"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:background="@mipmap/voice"/>
+                android:background="@mipmap/novoice"/>
             <Button
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"

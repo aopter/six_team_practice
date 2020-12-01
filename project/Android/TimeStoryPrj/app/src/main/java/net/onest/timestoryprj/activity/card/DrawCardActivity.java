@@ -1,11 +1,13 @@
 package net.onest.timestoryprj.activity.card;
 
 import androidx.annotation.NonNull;
+//抽卡
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -29,6 +31,7 @@ import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.entity.Card;
 import net.onest.timestoryprj.entity.User;
+import net.onest.timestoryprj.util.ScreenUtil;
 
 import java.io.IOException;
 
@@ -72,6 +75,8 @@ public class DrawCardActivity extends AppCompatActivity {
     private AnimatorSet animatorSet;
     private OkHttpClient client;
     private Gson gson;
+    int width;
+    int height;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -94,6 +99,8 @@ public class DrawCardActivity extends AppCompatActivity {
         // TODO 记得删除
         Constant.User = new User();
         Constant.User.setUserId(1);
+        width = ScreenUtil.dip2px(getApplicationContext(), 120);
+        height = ScreenUtil.dip2px(getApplicationContext(), 180);
         final Typeface typeface = Typeface.createFromAsset(getResources().getAssets(), "fonts/custom_font.ttf");
         tip.setTypeface(typeface);
         text.setTypeface(typeface);
@@ -151,6 +158,7 @@ public class DrawCardActivity extends AppCompatActivity {
                 @Override
                 public void onAnimationEnd(Animation animation) {//当动画结束时需要执行的行为
                     animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.front);
+                    drawCard.setBackground(getResources().getDrawable(R.mipmap.card_bg));
                     Glide.with(getApplicationContext())
                             .load(ServiceConfig.SERVICE_ROOT + "/picture/download/" + card.getCardPicture())
                             .into(drawCard);
@@ -166,7 +174,11 @@ public class DrawCardActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), SpectficCardDetailActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.putExtra("cardId", card.getCardId());
-            startActivity(intent);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//有版本限制
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this,drawCard,"ivGetCard").toBundle());
+            }
+            //开始下一个activity     android:transitionName="ivGetCard"
+
         }
     }
 

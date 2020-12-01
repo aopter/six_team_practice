@@ -31,6 +31,8 @@ import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.entity.Incident;
+import net.onest.timestoryprj.entity.UserUnlockDynasty;
+import net.onest.timestoryprj.entity.UserUnlockDynastyIncident;
 import net.onest.timestoryprj.util.DensityUtil;
 
 import org.json.JSONException;
@@ -59,11 +61,14 @@ public class EventDialogActivity extends AppCompatActivity {
     private String UNLOCK_DYNASTY_ADD = "/userunlockdynasty/addunlockdynasty/";
     private String DYNASTY_ISPASS = "/userunlockdynasty/ispass/";
     private String INCIDENT_DETAILS_URL = "/incident/details/";
+    private String UNLOCK_INCIDENT_ADD = "/userincident/unlock/";
     private OkHttpClient okHttpClient;
     private Gson gson;
     private String[] txtList;
     private ObjectAnimator objectAnimator;
+    private String incidentId;
     private String dynastyId;
+    private String dynastyName;
     private ScrollView svScroll;
     private Incident incident;
     private Typeface typeface1;
@@ -111,12 +116,15 @@ public class EventDialogActivity extends AppCompatActivity {
                             }
                             params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                             tv.setLayoutParams(params);
-//                                setDelay();
                             rlRelativeLayout.addView(tv);
                             if (count == 10) {
                                 llDialogLayout.setOnClickListener(null);
                                 isPass(dynastyId);
-                                Toast.makeText(getApplicationContext(), "您已看完此事件", Toast.LENGTH_LONG).show();
+//                                long experience = Constant.User.getUserExperience();
+//                                experience = experience + 15;
+//                                Constant.User.setUserExperience(experience);
+                                Log.i("ex", String.valueOf(Constant.User.getUserExperience()));
+                                addUnlockIncidents();
                             }
                         }
                     });
@@ -124,6 +132,43 @@ public class EventDialogActivity extends AppCompatActivity {
             }
         }
     };
+
+    /**
+     * 添加看过的事件
+     */
+    private void addUnlockIncidents() {
+        Request request = new Request.Builder()
+                .url(ServiceConfig.SERVICE_ROOT + UNLOCK_INCIDENT_ADD + "1/" + dynastyId + "/" + incidentId)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    Response response = call.execute();
+                    String json = response.body().string();
+                    Log.i("json", json);
+                    JSONObject json1 = new JSONObject(json);
+                    String isAdd = json1.getString("result");
+                    if (isAdd.equals("true")){
+                        Looper.prepare();
+                        Toast.makeText(getApplicationContext(), "您已看完此事件", Toast.LENGTH_LONG).show();
+                        Looper.loop();
+//                        UserUnlockDynastyIncident unlockIncident = new UserUnlockDynastyIncident();
+//                        unlockIncident.setIncidentId(incident.getIncidentId());
+//                        unlockIncident.setIncidentName(incident.getIncidentName());
+//                        unlockIncident.setIncidentPicture("incident/tang-" + incidentId + ".png");
+//                        Constant.UnlockDynastyIncident.add(unlockIncident);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -144,21 +189,9 @@ public class EventDialogActivity extends AppCompatActivity {
         AssetManager assets = getAssets();
         typeface = Typeface.createFromAsset(assets, "fonts/custom_fontt.ttf");
         typeface1 = Typeface.createFromAsset(assets, "fonts/custom_font.ttf");
-//        initHandler();
         initData();
     }
 
-//    private void initHandler() {
-//        HandlerThread handlerThread = new HandlerThread("MyThread");
-//        handlerThread.start();
-//        handler = new Handler(handlerThread.getLooper()){
-//            @Override
-//            public void handleMessage(@NonNull Message msg) {
-//
-//
-//            }
-//        };
-//    }
     private void findViews() {
         tvBigWord2 = findViewById(R.id.tv_big_word2);
         tvDialogIntro = findViewById(R.id.tv_dialog_intro);
@@ -178,7 +211,8 @@ public class EventDialogActivity extends AppCompatActivity {
     private void initData() {
         Intent intent = getIntent();
         dynastyId = intent.getStringExtra("dynastyId2");
-        String incidentId = intent.getStringExtra("incidentId");
+        incidentId = intent.getStringExtra("incidentId");
+        dynastyName = intent.getStringExtra("dynastyName");
         Log.i("incident", incidentId);
         downloadIncidentDialog(incidentId);
         downloadIncidentImg();
@@ -239,8 +273,16 @@ public class EventDialogActivity extends AppCompatActivity {
                 JSONObject json1 = new JSONObject(json);
                 String isPass = json1.getString("result");
                 if (isPass.equals("true")) {
+                    Looper.prepare();
                     //解锁成功
                     Toast.makeText(getApplicationContext(), "您已解锁下一朝代", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
+//                    UserUnlockDynasty unlockDynasty = new UserUnlockDynasty();
+//                    unlockDynasty.setDynastyId(dynastyId);
+//                    unlockDynasty.setDynastyName(dynastyName);
+//                    unlockDynasty.setProgress(0);
+//                    unlockDynasty.setUserId(Constant.User.getUserId());
+//                    Constant.UnlockDynasty.add(unlockDynasty);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

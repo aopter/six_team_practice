@@ -6,6 +6,7 @@
 
     <TextView
         android:text="秦"
+        android:textSize="11sp"
         android:id="@+id/tv_elv_childName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
