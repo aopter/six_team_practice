@@ -3,8 +3,6 @@ package net.onest.timestoryprj.activity.user;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -34,12 +32,7 @@ import com.google.gson.Gson;
 
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.constant.Constant;
-<<<<<<< Updated upstream
 import net.onest.timestoryprj.constant.ServiceConfig;
-=======
->>>>>>> Stashed changes
-import net.onest.timestoryprj.dialog.user.CustomDialog;
-import net.onest.timestoryprj.entity.User;
 import net.onest.timestoryprj.entity.UserDetails;
 import net.onest.timestoryprj.util.AudioUtil;
 
@@ -49,10 +42,6 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-<<<<<<< Updated upstream
-import java.io.FileNotFoundException;
-=======
->>>>>>> Stashed changes
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -80,12 +69,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class SettingActivity extends AppCompatActivity {
 
@@ -101,16 +84,12 @@ public class SettingActivity extends AppCompatActivity {
     private Gson gson;
     private String userInfo;
     private String picturePath = "";//相册路径
-<<<<<<< Updated upstream
     private Bitmap bitmapHeader;//从相册选择的图片
     private File file;
     private PromptDialog promptDialog;
     private Uri mCameraUri;//用于保存拍照图片的uri
     private boolean isAndroidQ = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q;
-=======
     private Bitmap bitmap;//从相册选择的图片
-    private File file;
->>>>>>> Stashed changes
     private Handler handler = new Handler(){
 
     };
@@ -133,11 +112,7 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-<<<<<<< Updated upstream
                     URL url = new URL(ServiceConfig.SERVICE_ROOT+"/rule");
-=======
-                    URL url = new URL("http://192.168.43.39:8888/rule");
->>>>>>> Stashed changes
                     URLConnection connection = url.openConnection();
                     InputStream in = connection.getInputStream();
                     BufferedReader reader = new BufferedReader(
@@ -222,14 +197,6 @@ public class SettingActivity extends AppCompatActivity {
             }
         }));
 
-//        FragmentManager manager = getSupportFragmentManager();
-//        FragmentTransaction transaction = manager.beginTransaction();
-//        CustomDialog dialog = new CustomDialog();
-//        if (!dialog.isAdded()){
-//            transaction.add(dialog,"dialog_tag");
-//        }
-//        transaction.show(dialog);
-//        transaction.commit();
     }
 
     /**
@@ -552,15 +519,11 @@ public class SettingActivity extends AppCompatActivity {
                 Log.e("提交",niName+signature+sex+phone);
                 //判断非空
                 if (null != niName && null != signature && null != sex && null != phone){
-<<<<<<< Updated upstream
 //                    int userId = Constant.User.getUserId();
                     UserDetails userDetails = new UserDetails();
                     userDetails.setUserId(1);
-=======
                     int userId = Constant.User.getUserId();
-                    UserDetails userDetails = new UserDetails();
                     userDetails.setUserId(userId);
->>>>>>> Stashed changes
                     userDetails.setUserNickname(niName);
                     userDetails.setUserNumber(phone);
                     userDetails.setUserSex(sex);
@@ -568,11 +531,8 @@ public class SettingActivity extends AppCompatActivity {
                     userInfo = gson.toJson(userDetails);
                     Log.e("userInfo",userInfo);
                     //用户详情传给服务器
-<<<<<<< Updated upstream
 //                    upToServer();
-=======
                     upToServer();
->>>>>>> Stashed changes
                     //上传头像
                     upHeaderToServer();
 
@@ -580,7 +540,6 @@ public class SettingActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"请您完善用户信息后提交",Toast.LENGTH_SHORT).show();
                 }
 
-<<<<<<< Updated upstream
             }
         });
     }
@@ -589,6 +548,7 @@ public class SettingActivity extends AppCompatActivity {
      * 创建保存图片的文件
      * @return
      */
+
     private File createImageFile() {
         String imageName = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
@@ -648,37 +608,10 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 Log.e("ok","成功");
-=======
->>>>>>> Stashed changes
             }
         });
     }
 
-    /**
-<<<<<<< Updated upstream
-=======
-     * 上传头像
-     */
-    private void upHeaderToServer() {
-        OkHttpClient client = new OkHttpClient();
-        RequestBody body = new MultipartBody.Builder()
-                .addFormDataPart("picture",file.getName(),RequestBody.create(MediaType.parse("image/*"),file))
-                .addFormDataPart("userId",Constant.User.getUserId()+"")
-                .build();
-        Request request = new Request.Builder()
-                .url("")
-                .post(body)
-                .build();
-        try {
-            Response response = client.newCall(request).execute();
-            if (response.isSuccessful()){
-                Log.e("ok","上传头像成功");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     /**
 >>>>>>> Stashed changes
@@ -689,11 +622,7 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-<<<<<<< Updated upstream
                     URL url = new URL(ServiceConfig.SERVICE_ROOT+"/userdetails/modify");
-=======
-                    URL url = new URL("http://192.168.43.39:8888/userdetails/modify");
->>>>>>> Stashed changes
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("POST");
                     OutputStream outputStream = connection.getOutputStream();
@@ -733,7 +662,6 @@ public class SettingActivity extends AppCompatActivity {
                     .into(ivHeader);
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-<<<<<<< Updated upstream
             bitmapHeader = BitmapFactory.decodeFile(picturePath,options);
             convertBitmapToFile(bitmapHeader);
         }else if (requestCode == 2 && resultCode == RESULT_OK && null != data){
@@ -744,22 +672,15 @@ public class SettingActivity extends AppCompatActivity {
                 Log.e("picturePath",picturePath);
                 ivHeader.setImageBitmap(BitmapFactory.decodeFile(picturePath));
             }
-
-=======
-            bitmap = BitmapFactory.decodeFile(picturePath,options);
 //            ivHeader.setImageBitmap(bitmap);
             convertBitmapToFile(bitmap);
->>>>>>> Stashed changes
         }
     }
 
     private File convertBitmapToFile(Bitmap bitmap) {
         try {
-<<<<<<< Updated upstream
             file = new File(SettingActivity.this.getCacheDir(),"userHeader");
-=======
             file = new File(SettingActivity.this.getCacheDir(),"portrait");
->>>>>>> Stashed changes
             file.createNewFile();
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG,0,bos);

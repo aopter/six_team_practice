@@ -44,7 +44,8 @@
             <ScrollView
                 android:layout_width="260dp"
                 android:layout_height="190dp"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:background="@mipmap/bg_option_pai">
                 <TextView
                     android:clickable="false"
                     android:scrollbars="vertical"
@@ -52,14 +53,14 @@
                     android:layout_width="250dp"
                     android:layout_height="180dp"
                     android:textSize="20sp"
-                    android:padding="9dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="@mipmap/bg_option_pai" />
+                    android:padding="10dp"
+                    android:layout_marginBottom="20dp" />
             </ScrollView>
 
 
 
             <ImageView
+                android:layout_marginTop="20dp"
                 android:id="@+id/iv_dialog_intro_img"
                 android:layout_width="150dp"
                 android:layout_height="150dp" />
@@ -99,7 +100,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:layout_marginTop="25dp"
                 android:orientation="horizontal">
 
                 <ImageView

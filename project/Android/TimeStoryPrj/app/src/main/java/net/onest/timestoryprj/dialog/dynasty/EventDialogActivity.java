@@ -40,9 +40,11 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
+import me.leefeng.promptlibrary.PromptButton;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -73,6 +75,8 @@ public class EventDialogActivity extends AppCompatActivity {
     private Incident incident;
     private Typeface typeface1;
     private Typeface typeface;
+    private long prelongTim = 0;
+    private long curTime = 0;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -114,8 +118,14 @@ public class EventDialogActivity extends AppCompatActivity {
                                 objectAnimator.setDuration(1000);
                                 objectAnimator.start();
                             }
+//                            try {
+//                                Thread.sleep(1000);
+//                            } catch (InterruptedException e) {
+//                                e.printStackTrace();
+//                            }
                             params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                             tv.setLayoutParams(params);
+
                             rlRelativeLayout.addView(tv);
                             if (count == 10) {
                                 llDialogLayout.setOnClickListener(null);

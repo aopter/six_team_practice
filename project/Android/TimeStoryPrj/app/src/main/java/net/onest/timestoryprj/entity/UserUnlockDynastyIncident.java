@@ -5,7 +5,6 @@ import net.onest.timestoryprj.entity.Incident;
 
 public class UserUnlockDynastyIncident {
     private Integer incidentId;//事件ID
-
     private String incidentName;//事件名
     private String incidentPicture;//事件图片
 
