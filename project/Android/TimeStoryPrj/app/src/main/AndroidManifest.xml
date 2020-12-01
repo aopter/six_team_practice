@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="net.onest.timestoryprj">
 
-<<<<<<< Updated upstream
     <uses-permission android:name="android.permission.WRITE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.CAMERA"/>
@@ -14,19 +13,6 @@
     <uses-permission
         android:name="android.permission.WRITE_APN_SETTINGS"
         tools:ignore="ProtectedPermissions" />
-=======
-    <uses-permission
-        android:name="android.permission.WRITE_APN_SETTINGS"
-        tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission
-        android:name="android.permission.WRITE_SETTINGS"
-        tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.CAMERA" />
->>>>>>> Stashed changes
 
     <application
         android:allowBackup="true"
@@ -37,7 +23,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-<<<<<<< Updated upstream
 
         <activity
             android:name=".dialog.DialogExampleAvtivity"
@@ -56,34 +41,17 @@
             android:name=".activity.problem.LinkLineTextActivity"
             android:screenOrientation="landscape"></activity>
 
-=======
-
-        <activity
-            android:name=".activity.dynasty.DynastyIntroduceActivity"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".activity.problem.ProblemInfoActivity"
-            android:screenOrientation="landscape" />
-        <activity android:name=".activity.card.DrawCardActivity" />
-        <activity
-            android:name=".activity.problem.LinkLineTextActivity"
-            android:screenOrientation="landscape" />
->>>>>>> Stashed changes
         <activity
             android:name=".activity.problem.ProblemCollectionActivity"
             android:screenOrientation="landscape" />
         <activity
             android:name=".activity.card.ShowCardStoryActivity"
             android:screenOrientation="landscape" />
-<<<<<<< Updated upstream
+
         <activity
             android:name=".dialog.dynasty.EventDialogActivity"
             android:screenOrientation="landscape"></activity>
 
-=======
-        <activity android:name=".dialog.dynasty.EventDialogActivity" />
-        <activity android:name=".activity.dynasty.DetailsEventActivity" />
->>>>>>> Stashed changes
         <activity
             android:name=".activity.dynasty.DetailsEventActivity"
             android:screenOrientation="landscape" />
@@ -96,10 +64,7 @@
         <activity
             android:name=".activity.user.SettingActivity"
             android:screenOrientation="landscape" />
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
         <activity
             android:name=".activity.user.RegisterActivity"
             android:screenOrientation="landscape" />
@@ -118,7 +83,6 @@
         <activity
             android:name=".activity.user.UserCenterActivity"
             android:launchMode="singleTask"
-<<<<<<< Updated upstream
             android:screenOrientation="landscape"></activity>
 
         <provider
@@ -130,9 +94,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths"/>
         </provider>
-=======
-            android:screenOrientation="landscape" />
->>>>>>> Stashed changes
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTask"

@@ -173,18 +173,12 @@ public class DrawCardActivity extends AppCompatActivity {
         } else {
             Intent intent = new Intent(getApplicationContext(), SpectficCardDetailActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-<<<<<<< Updated upstream
             intent.putExtra("cardId", card.getCardId());
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//有版本限制
                 startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this,drawCard,"ivGetCard").toBundle());
             }
             //开始下一个activity     android:transitionName="ivGetCard"
 
-
-=======
-            intent.putExtra("card", card);
-            startActivity(intent);
->>>>>>> Stashed changes
         }
     }
 
