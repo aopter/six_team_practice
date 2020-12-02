@@ -1,5 +1,4 @@
 package net.onest.timestoryprj.adapter.dynasty;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +20,7 @@ import net.onest.timestoryprj.dialog.dynasty.EventDialogActivity;
 import net.onest.timestoryprj.entity.Incident;
 
 import java.util.List;
+import java.util.function.Function;
 
 public class EventListAdapter extends BaseAdapter {
     private Context context;
@@ -30,12 +30,14 @@ public class EventListAdapter extends BaseAdapter {
     private ImageView ivIncidentImg;
     private String dynastyId;
     private String dynastyName;
-    public EventListAdapter(Context context, List<Incident> incidents, int layout, String dynastyId, String dynastyName) {
+    private Activity anim;
+    public EventListAdapter(Context context, List<Incident> incidents, int layout, String dynastyId, String dynastyName, Activity anim) {
         this.context = context;
         this.incidents = incidents;
         this.layout = layout;
         this.dynastyId = dynastyId;
         this.dynastyName = dynastyName;
+        this.anim = anim;
     }
 
     @Override
@@ -75,6 +77,7 @@ public class EventListAdapter extends BaseAdapter {
                 intent.putExtra("dynastyName", dynastyName);
                 intent.putExtra("incidentId", incidents.get(position).getIncidentId().toString());
                 context.startActivity(intent);
+                anim.overridePendingTransition(R.anim.anim_in_right,R.anim.anim_out_left);
             }
         });
         ivIncidentImg.setOnClickListener(new View.OnClickListener() {
@@ -87,6 +90,7 @@ public class EventListAdapter extends BaseAdapter {
                 intent.putExtra("dynastyId2", dynastyId);
                 intent.putExtra("dynastyName", dynastyName);
                 context.startActivity(intent);
+                anim.overridePendingTransition(R.anim.anim_in_right,R.anim.anim_out_left);
             }
         });
         return convertView;

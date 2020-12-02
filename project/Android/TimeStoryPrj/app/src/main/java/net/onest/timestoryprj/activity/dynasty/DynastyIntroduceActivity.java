@@ -112,13 +112,11 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
                     URL url = new URL(ServiceConfig.SERVICE_ROOT + DYNASTY_INFO + id);
                     url.openStream();
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    Log.i("cyll", "测试");
                     connection.setRequestMethod("GET");
                     InputStream in = connection.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
                     String json = reader.readLine();
                     Dynasty dynasty = gson.fromJson(json, Dynasty.class);
-                    Log.i("cyll", json);
                     Message msg = new Message();
                     msg.obj = dynasty;
                     msg.what = 1;

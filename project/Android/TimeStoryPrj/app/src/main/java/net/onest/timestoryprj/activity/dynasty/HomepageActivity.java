@@ -11,6 +11,7 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
@@ -52,6 +53,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -79,14 +81,14 @@ public class HomepageActivity extends AppCompatActivity {
 
 //
 
-    private Handler handler =  new Handler(){
+    private Handler handler = new Handler() {
         @RequiresApi(api = Build.VERSION_CODES.M)
         @Override
         public void handleMessage(@NonNull Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case 1:
                     dynasties1 = (List<Dynasty>) msg.obj;
-                    for (int i = 0;i < dynasties1.size(); i++) {
+                    for (int i = 0; i < dynasties1.size(); i++) {
 //                        LinearLayout ll = new LinearLayout(getApplicationContext());
 //                        ImageView iv = new ImageView(getApplicationContext());
 //                        iv.setImageResource(R.mipmap.redflag);
@@ -105,9 +107,9 @@ public class HomepageActivity extends AppCompatActivity {
                             tv.setLayoutParams(params);
                             llLayout1.addView(tv);
                         } else {
-                            if (i == 1){
+                            if (i == 1) {
                                 params.setMargins(200, 30, 0, 0);
-                            }else{
+                            } else {
                                 params.setMargins(90, 30, 0, 0);
                             }
                             tv.setLayoutParams(params);
@@ -116,25 +118,25 @@ public class HomepageActivity extends AppCompatActivity {
                             llLayout2.addView(tv);
                         }
                         int finalI = i;
-                        for (int j = 0; j < Constant.UnlockDynasty.size(); j++){
-                            Log.e("cc", String.valueOf(Constant.UnlockDynasty.get(j).getDynastyId().equals(dynasties1.get(i).getDynastyId().toString())));
-                            if (Constant.UnlockDynasty.get(j).getDynastyId().equals(dynasties1.get(i).getDynastyId().toString())){
+                        List<String> unlockDynastyIds = new ArrayList<>();
+                        for (int j = 0; j < Constant.UnlockDynasty.size(); j++) {
+                            unlockDynastyIds.add(Constant.UnlockDynasty.get(j).getDynastyId());
+                            if (unlockDynastyIds.contains(dynasties1.get(i).getDynastyId().toString())) {
                                 tv.setBackgroundResource(R.mipmap.fff);
                             }
                         }
                         tv.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                for (int j = 0; j < Constant.UnlockDynasty.size();j++){
-                                    if (Constant.UnlockDynasty.get(j).getDynastyId().equals(dynasties1.get(finalI).getDynastyId().toString())){
+                                for (int j = 0; j < Constant.UnlockDynasty.size(); j++) {
+                                    if (unlockDynastyIds.contains(dynasties1.get(finalI).getDynastyId().toString())) {
                                         Intent intent = new Intent();
                                         intent.setClass(getApplicationContext(), DynastyIntroduceActivity.class);
                                         intent.putExtra("dynastyId", dynasties1.get(finalI).getDynastyId().toString());
-                                        Log.i("cyll", dynasties1.get(finalI).toString());
                                         startActivity(intent);
-                                        overridePendingTransition(R.anim.anim_in_right,R.anim.anim_out_left);
+                                        overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
                                         break;
-                                    }else{
+                                    } else {
                                         Toast.makeText(getApplicationContext(), "该朝代未解锁", Toast.LENGTH_SHORT).show();
                                     }
                                 }
@@ -145,6 +147,7 @@ public class HomepageActivity extends AppCompatActivity {
             }
         }
     };
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -192,7 +195,7 @@ public class HomepageActivity extends AppCompatActivity {
         long experMin = userStatus.getStatusExperienceLow();
         long experOnStatus = experMax - experMin;
         DecimalFormat df = new DecimalFormat("0.00");
-        String rate = df.format((float)(userExperience - experMin)/experOnStatus);
+        String rate = df.format((float) (userExperience - experMin) / experOnStatus);
         double exRate = Double.parseDouble(rate);
         int progress = (int) (exRate * 100);
         progressBar.setProgress(progress);
@@ -203,7 +206,7 @@ public class HomepageActivity extends AppCompatActivity {
      */
     //1应为Constant.User.getUserId()
     private void downloadUnlockDynastyList() {
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 try {
@@ -216,9 +219,9 @@ public class HomepageActivity extends AppCompatActivity {
                     String json1 = reader.readLine();
 //                    JSONObject obj = new JSONObject(json1);
 //                    String json = obj.getJSONArray("mydynasty").toString();
-                    Log.i("cyl", json1);
                     //1.得到集合类型
-                    Type type = new TypeToken<List<UserUnlockDynasty>>(){}.getType();
+                    Type type = new TypeToken<List<UserUnlockDynasty>>() {
+                    }.getType();
                     //2.反序列化
                     List<UserUnlockDynasty> dynasties = gson.fromJson(json1, type);
                     Constant.UnlockDynasty = dynasties;
@@ -251,21 +254,19 @@ public class HomepageActivity extends AppCompatActivity {
      * 从服务器端获得朝代列表
      */
     private void downloadDynastyList() {
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 try {
-                    URL url = new URL(ServiceConfig.SERVICE_ROOT  + DYNASTY_LIST);
-                    HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+                    URL url = new URL(ServiceConfig.SERVICE_ROOT + DYNASTY_LIST);
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("GET");
                     InputStream in = connection.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
                     String json1 = reader.readLine();
-//                    JSONObject obj = new JSONObject(json1);
-//                    String json = obj.getJSONArray("Value").toString();
-
                     //1.得到集合类型
-                    Type type = new TypeToken<List<Dynasty>>(){}.getType();
+                    Type type = new TypeToken<List<Dynasty>>() {
+                    }.getType();
                     //2.反序列化
                     List<Dynasty> dynasties = gson.fromJson(json1, type);
 
@@ -322,16 +323,16 @@ public class HomepageActivity extends AppCompatActivity {
                 .into(ivHeader);
     }
 
-    class MyListener implements View.OnClickListener{
+    class MyListener implements View.OnClickListener {
 
         @Override
         public void onClick(View view) {
-            switch (view.getId()){
+            switch (view.getId()) {
                 case R.id.btn_voice:
-                    if (mediaPlayer.isPlaying()){
+                    if (mediaPlayer.isPlaying()) {
                         mediaPlayer.pause();
                         btnVoice.setBackgroundResource(R.mipmap.novoice);
-                    }else{
+                    } else {
                         mediaPlayer.start();
                         btnVoice.setBackgroundResource(R.mipmap.voice);
                     }
@@ -341,42 +342,43 @@ public class HomepageActivity extends AppCompatActivity {
                 case R.id.btn_card:
                     Intent intent3 = new Intent(HomepageActivity.this, DrawCardActivity.class);
                     startActivity(intent3);
-                    overridePendingTransition(R.anim.anim_in_right,R.anim.anim_out_left);
+                    overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
                     break;
                 case R.id.btn_my_card:
                     Intent intent4 = new Intent(HomepageActivity.this, MyCardActivity.class);
                     startActivity(intent4);
-                    overridePendingTransition(R.anim.anim_in_right,R.anim.anim_out_left);
+                    overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
                     break;
                 case R.id.btn_my_collections:
                     Intent intent2 = new Intent(HomepageActivity.this, ProblemCollectionActivity.class);
                     startActivity(intent2);
-                    overridePendingTransition(R.anim.anim_in_right,R.anim.anim_out_left);
-                break;
+                    overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
+                    break;
                 case R.id.btn_settings:
                     Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
                     startActivity(intent);
-                    overridePendingTransition(R.anim.anim_in_right,R.anim.anim_out_left);
+                    overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
                     break;
                 case R.id.iv_header:
 //                    跳转
                     Intent intent1 = new Intent(HomepageActivity.this, UserCenterActivity.class);
                     startActivity(intent1);
-                    overridePendingTransition(R.anim.anim_in_right,R.anim.anim_out_left);
+                    overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
                     break;
             }
         }
     }
+
     /**
      * 初始化背景音乐
      */
     private void initMediaPlayer() {
-        if (mediaPlayer == null){
+        if (mediaPlayer == null) {
             mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.music1);
         }
-        if (mediaPlayer.isPlaying()){
+        if (mediaPlayer.isPlaying()) {
             btnVoice.setBackgroundResource(R.mipmap.voice);
-        }else{
+        } else {
             btnVoice.setBackgroundResource(R.mipmap.novoice);
         }
         mediaPlayer.setLooping(true);

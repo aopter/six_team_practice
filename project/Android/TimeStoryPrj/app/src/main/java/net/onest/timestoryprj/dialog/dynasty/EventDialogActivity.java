@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -90,7 +91,19 @@ public class EventDialogActivity extends AppCompatActivity {
                     tvDialogIntro.setText(incident.getIncidentInfo());
                     tvDialogIntro.setTypeface(typeface1);
                     txtList = (String[]) msg.obj;
-                    tvDialog1.setText(0 + "个carcar");
+                    Log.e("abc", String.valueOf(txtList.length));
+                    ViewGroup.LayoutParams pp = rlRelativeLayout.getLayoutParams();
+                    pp.height = DensityUtil.dip2px(getApplicationContext(), 110) * txtList.length;
+                    rlRelativeLayout.setLayoutParams(pp);
+//                    svScroll.fullScroll(ScrollView.FOCUS_DOWN);
+                    svScroll.post(new Runnable(){
+                        @Override
+                        public void run() {
+                            svScroll.fullScroll(ScrollView.FOCUS_DOWN);
+                        }
+                    });
+                    tvDialog1.setText(txtList[0]);
+                    tvDialog1.setTypeface(typeface1);
                     llDialogLayout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -100,16 +113,17 @@ public class EventDialogActivity extends AppCompatActivity {
                             int height = DensityUtil.dip2px(getApplicationContext(), 100);
                             int th = DensityUtil.dip2px(getApplicationContext(), 20);
                             int tp = DensityUtil.dip2px(getApplicationContext(), 10);
+                            int ml = DensityUtil.dip2px(getApplicationContext(), 30);
                             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
-                            tv.setText(count + "个carcar");
+                            tv.setText(txtList[count]);
                             tv.setTypeface(typeface1);
                             tv.setMaxHeight(th);
                             tv.setPadding(th,tp,th,0);
                             if (count % 2 != 0) {
-                                params.setMargins(60,0,0,0);
+                                params.setMargins(ml,0,0,0);
                                 tv.setBackgroundResource(R.mipmap.conversation2);
                             } else {
-                                params.setMargins(0,0,60,0);
+                                params.setMargins(0,0,ml,0);
                                 tv.setBackgroundResource(R.mipmap.conversation1);
                             }
                             Log.e("count的值：", count + "");
@@ -123,23 +137,19 @@ public class EventDialogActivity extends AppCompatActivity {
                                 objectAnimator.setDuration(1000);
                                 objectAnimator.start();
                             }
-//                            try {
-//                                Thread.sleep(1000);
-//                            } catch (InterruptedException e) {
-//                                e.printStackTrace();
-//                            }
+//
                             params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                             tv.setLayoutParams(params);
 
                             rlRelativeLayout.addView(tv);
-                            if (count == 10) {
+                            if (count == txtList.length-1) {
                                 llDialogLayout.setOnClickListener(null);
-                                isPass(dynastyId);
 //                                long experience = Constant.User.getUserExperience();
 //                                experience = experience + 15;
 //                                Constant.User.setUserExperience(experience);
                                 Log.i("ex", String.valueOf(Constant.User.getUserExperience()));
                                 addUnlockIncidents();
+                                isPass(dynastyId);
                             }
                         }
                     });
@@ -193,15 +203,6 @@ public class EventDialogActivity extends AppCompatActivity {
         initGson();
         initOkHttp();
         catchException();
-        ViewGroup.LayoutParams pp = rlRelativeLayout.getLayoutParams();
-        pp.height = DensityUtil.dip2px(getApplicationContext(), 110) * 10;
-        rlRelativeLayout.setLayoutParams(pp);
-        svScroll.post(new Runnable(){
-            @Override
-            public void run() {
-                svScroll.fullScroll(ScrollView.FOCUS_DOWN);
-            }
-        });
         AssetManager assets = getAssets();
         typeface = Typeface.createFromAsset(assets, "fonts/custom_fontt.ttf");
         typeface1 = Typeface.createFromAsset(assets, "fonts/custom_font.ttf");
@@ -261,7 +262,6 @@ public class EventDialogActivity extends AppCompatActivity {
                 incident = gson.fromJson(json, Incident.class);
                 Log.i("xiang", incident.getIncidentDialog());
                 String[] txtList = incident.getIncidentDialog().split(Constant.DELIMITER);
-
                 Message msg = new Message();
                 msg.obj = txtList;
                 msg.what = 1;
@@ -277,8 +277,9 @@ public class EventDialogActivity extends AppCompatActivity {
      */
     //放到对话中
     private void addUnlockDynasty(String dynastyId) {
+        int dynastyID = Integer.parseInt(dynastyId) + 1;
         Request request = new Request.Builder()
-                .url(ServiceConfig.SERVICE_ROOT + UNLOCK_DYNASTY_ADD + 1 + "/" + dynastyId + 1)
+                .url(ServiceConfig.SERVICE_ROOT + UNLOCK_DYNASTY_ADD + 1 + "/" + dynastyID)
                 .build();
         Call call = okHttpClient.newCall(request);
         new Thread(() -> {
@@ -317,8 +318,9 @@ public class EventDialogActivity extends AppCompatActivity {
     private void isPass(String dynastyId) {
         //Constant.User.getUserId()
         Request request = new Request.Builder()
-                .url(ServiceConfig.SERVICE_ROOT + DYNASTY_ISPASS + 1 + "/" + dynastyId + 1)
+                .url(ServiceConfig.SERVICE_ROOT + DYNASTY_ISPASS + 1 + "/" + dynastyId)
                 .build();
+
         Call call = okHttpClient.newCall(request);
         new Thread(() -> {
             try {
