@@ -44,6 +44,8 @@ import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import me.leefeng.promptlibrary.PromptButton;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
@@ -59,7 +61,8 @@ public class EventDialogActivity extends AppCompatActivity {
     private ImageView ivDialog1Img;
     private ImageView ivDialog2Img;
     private RelativeLayout rlRelativeLayout;
-    private Button btnPre2;
+    @BindView(R.id.btn_pre2)
+    Button btnPre2;
     private String UNLOCK_DYNASTY_ADD = "/userunlockdynasty/addunlockdynasty/";
     private String DYNASTY_ISPASS = "/userunlockdynasty/ispass/";
     private String INCIDENT_DETAILS_URL = "/incident/details/";
@@ -103,8 +106,10 @@ public class EventDialogActivity extends AppCompatActivity {
                             tv.setMaxHeight(th);
                             tv.setPadding(th,tp,th,0);
                             if (count % 2 != 0) {
+                                params.setMargins(60,0,0,0);
                                 tv.setBackgroundResource(R.mipmap.conversation2);
                             } else {
+                                params.setMargins(0,0,60,0);
                                 tv.setBackgroundResource(R.mipmap.conversation1);
                             }
                             Log.e("count的值：", count + "");
@@ -184,6 +189,7 @@ public class EventDialogActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_dialog);
         findViews();
+        ButterKnife.bind(this);
         initGson();
         initOkHttp();
         catchException();
@@ -362,5 +368,6 @@ public class EventDialogActivity extends AppCompatActivity {
             }
         });
     }
-
+    @OnClick(R.id.btn_pre2)
+    void backToLastPage(){finish();}
 }

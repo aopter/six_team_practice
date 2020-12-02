@@ -101,7 +101,7 @@ public class HomepageActivity extends AppCompatActivity {
                         tv.setTypeface(typeface);
                         tv.setTextSize(25);
                         if (i % 2 == 0) {
-                            params.setMargins(80, 50, 0, 0);
+                            params.setMargins(80, 30, 0, 0);
                             tv.setLayoutParams(params);
                             llLayout1.addView(tv);
                         } else {
@@ -132,6 +132,7 @@ public class HomepageActivity extends AppCompatActivity {
                                         intent.putExtra("dynastyId", dynasties1.get(finalI).getDynastyId().toString());
                                         Log.i("cyll", dynasties1.get(finalI).toString());
                                         startActivity(intent);
+                                        overridePendingTransition(R.anim.anim_in_right,R.anim.anim_out_left);
                                         break;
                                     }else{
                                         Toast.makeText(getApplicationContext(), "该朝代未解锁", Toast.LENGTH_SHORT).show();
@@ -340,23 +341,28 @@ public class HomepageActivity extends AppCompatActivity {
                 case R.id.btn_card:
                     Intent intent3 = new Intent(HomepageActivity.this, DrawCardActivity.class);
                     startActivity(intent3);
+                    overridePendingTransition(R.anim.anim_in_right,R.anim.anim_out_left);
                     break;
                 case R.id.btn_my_card:
                     Intent intent4 = new Intent(HomepageActivity.this, MyCardActivity.class);
                     startActivity(intent4);
+                    overridePendingTransition(R.anim.anim_in_right,R.anim.anim_out_left);
                     break;
                 case R.id.btn_my_collections:
                     Intent intent2 = new Intent(HomepageActivity.this, ProblemCollectionActivity.class);
                     startActivity(intent2);
+                    overridePendingTransition(R.anim.anim_in_right,R.anim.anim_out_left);
                 break;
                 case R.id.btn_settings:
                     Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
                     startActivity(intent);
+                    overridePendingTransition(R.anim.anim_in_right,R.anim.anim_out_left);
                     break;
                 case R.id.iv_header:
 //                    跳转
                     Intent intent1 = new Intent(HomepageActivity.this, UserCenterActivity.class);
                     startActivity(intent1);
+                    overridePendingTransition(R.anim.anim_in_right,R.anim.anim_out_left);
                     break;
             }
         }

@@ -33,8 +33,14 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class DynastyIntroduceActivity extends AppCompatActivity {
 
+    @BindView(R.id.btn_pre)
+    Button btnPre;
     private TextView tvDynastyName;
     private TextView tvDynastyIntro;
     private Button btnQuestions;
@@ -65,6 +71,7 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dynasty_introduce);
         findViews();
+        ButterKnife.bind(this);
         initGson();
         initData();
         setListener();
@@ -141,6 +148,7 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
                     Intent intent = new Intent(DynastyIntroduceActivity.this, SelectProblemTypeActivity.class);
                     intent.putExtra("dynastyId1",dynastyId);//朝代
                     startActivity(intent);
+                    overridePendingTransition(R.anim.anim_in_right,R.anim.anim_out_left);
                     break;
                 case R.id.btn_details:
                     Intent intent1 = new Intent();
@@ -148,8 +156,11 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
                     intent1.putExtra("dynastyName1", tvDynastyName.getText());
                     intent1.putExtra("dynastyId1", dynastyId);
                     startActivity(intent1);
+                    overridePendingTransition(R.anim.anim_in_right,R.anim.anim_out_left);
                     break;
             }
         }
     }
+    @OnClick(R.id.btn_pre)
+    void backToLastPage(){finish();}
 }
