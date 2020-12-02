@@ -491,7 +491,6 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
 
-        //TODO：提交按钮的监听器
         btnSub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -505,8 +504,6 @@ public class SettingActivity extends AppCompatActivity {
 //                    int userId = Constant.User.getUserId();
                     UserDetails userDetails = new UserDetails();
                     userDetails.setUserId(1);
-                    int userId = Constant.User.getUserId();
-                    userDetails.setUserId(userId);
                     userDetails.setUserNickname(niName);
                     userDetails.setUserNumber(phone);
                     userDetails.setUserSex(sex);
@@ -515,7 +512,6 @@ public class SettingActivity extends AppCompatActivity {
                     Log.e("userInfo",userInfo);
                     //用户详情传给服务器
 //                    upToServer();
-                    upToServer();
                     //上传头像
                     upHeaderToServer();
 
@@ -526,28 +522,6 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
     }
-
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    /**
-     * 创建保存图片的文件
-     * @return
-     */
-
-    private File createImageFile() {
-        String imageName = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        if (!storageDir.exists()){
-            storageDir.mkdir();
-        }
-        File tempFile = new File(storageDir,imageName);
-        return tempFile;
-    }
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-
 
     /**
      * 上传头像
@@ -629,38 +603,27 @@ public class SettingActivity extends AppCompatActivity {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
             bitmapHeader = BitmapFactory.decodeFile(picturePath,options);
+
             convertBitmapToFile(bitmapHeader);
         }else if (requestCode == 2 && resultCode == RESULT_OK && null != data){
             File picture = new File(Environment.getExternalStorageDirectory()+"/temp.jpg");
             Bundle extras = data.getExtras();
             if (extras != null){
-                Bitmap photo = extras.getParcelable("data");
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                photo.compress(Bitmap.CompressFormat.JPEG,75,stream);
-//                ivHeader.setImageBitmap(photo);
-                Glide.with(getApplicationContext())
-                        .load(photo)
-                        .circleCrop()
-                        .into(ivHeader);
-                convertBitmapToFile(photo);
+                    Bitmap photo = extras.getParcelable("data");
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    photo.compress(Bitmap.CompressFormat.JPEG,75,stream);
+                    Glide.with(getApplicationContext())
+                            .load(photo)
+                            .circleCrop()
+                            .into(ivHeader);
+                    convertBitmapToFile(photo);
             }
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-//            ivHeader.setImageBitmap(bitmap);
-            convertBitmapToFile(bitmap);
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
         }
     }
-
-
 
     private File convertBitmapToFile(Bitmap bitmap) {
         try {
             file = new File(SettingActivity.this.getCacheDir(),"userHeader");
-            file = new File(SettingActivity.this.getCacheDir(),"portrait");
             file.createNewFile();
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG,0,bos);
