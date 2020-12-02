@@ -26,8 +26,12 @@ android {
 
 dependencies {
 <<<<<<< Updated upstream
-
+<<<<<<< Updated upstream
 =======
+
+>>>>>>> Stashed changes
+=======
+
 >>>>>>> Stashed changes
     implementation 'q.rorbin:badgeview:1.1.3'
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-12'

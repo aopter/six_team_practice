@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="net.onest.timestoryprj">
 
+    <uses-permission
+        android:name="android.permission.WRITE_APN_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.CAMERA"/>
@@ -11,8 +14,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission
-        android:name="android.permission.WRITE_APN_SETTINGS"
+        android:name="android.permission.WRITE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -23,7 +27,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-
         <activity
             android:name=".dialog.DialogExampleAvtivity"
             android:screenOrientation="landscape"></activity>
@@ -39,7 +42,7 @@
             android:screenOrientation="landscape"></activity>
         <activity
             android:name=".activity.problem.LinkLineTextActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape" />
 
         <activity
             android:name=".activity.problem.ProblemCollectionActivity"
@@ -47,11 +50,9 @@
         <activity
             android:name=".activity.card.ShowCardStoryActivity"
             android:screenOrientation="landscape" />
-
         <activity
             android:name=".dialog.dynasty.EventDialogActivity"
             android:screenOrientation="landscape"></activity>
-
         <activity
             android:name=".activity.dynasty.DetailsEventActivity"
             android:screenOrientation="landscape" />
@@ -64,7 +65,6 @@
         <activity
             android:name=".activity.user.SettingActivity"
             android:screenOrientation="landscape" />
-
         <activity
             android:name=".activity.user.RegisterActivity"
             android:screenOrientation="landscape" />

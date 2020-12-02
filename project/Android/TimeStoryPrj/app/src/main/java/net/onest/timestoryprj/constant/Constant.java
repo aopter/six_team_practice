@@ -21,7 +21,6 @@ public class Constant {
     public static List<HistoryDay> historyDays = new ArrayList<>();
     //当前登录用户解锁的朝代
     public static List<UserUnlockDynasty> UnlockDynasty = new ArrayList<>();
-
     //规则详情
     public static Rule rule;
 <<<<<<< HEAD
@@ -39,7 +38,10 @@ public class Constant {
 
 =======
     public static List<User> UserRankList;
+<<<<<<< HEAD
 
 
 >>>>>>> 0fbef57e1ffd0b922e72e52b62d4dc8c4e599473
+=======
+>>>>>>> 3d3c1fca602c5720aacaf877cf56a195b94440f2
 }

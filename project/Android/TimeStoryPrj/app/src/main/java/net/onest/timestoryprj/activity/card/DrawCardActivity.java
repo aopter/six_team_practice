@@ -178,7 +178,8 @@ public class DrawCardActivity extends AppCompatActivity {
                 startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this,drawCard,"ivGetCard").toBundle());
             }
             //开始下一个activity     android:transitionName="ivGetCard"
-
+            intent.putExtra("card", card);
+            startActivity(intent);
         }
     }
 

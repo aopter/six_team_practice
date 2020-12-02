@@ -129,7 +129,6 @@ public class LoginActivity extends AppCompatActivity {
             public void run() {
                 try {
                     URL url = new URL(ServiceConfig.SERVICE_ROOT+"");
-
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("POST");
                     OutputStream outputStream = connection.getOutputStream();

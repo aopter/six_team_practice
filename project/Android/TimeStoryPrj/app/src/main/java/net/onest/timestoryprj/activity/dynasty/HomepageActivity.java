@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -33,7 +34,6 @@ import net.onest.timestoryprj.activity.card.MyCardActivity;
 import net.onest.timestoryprj.activity.problem.ProblemCollectionActivity;
 import net.onest.timestoryprj.activity.user.SettingActivity;
 import net.onest.timestoryprj.activity.user.UserCenterActivity;
-import net.onest.timestoryprj.activity.user.SettingActivity;
 import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.entity.Dynasty;
@@ -52,10 +52,8 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 
 public class HomepageActivity extends AppCompatActivity {
     public static MediaPlayer mediaPlayer;
@@ -89,30 +87,41 @@ public class HomepageActivity extends AppCompatActivity {
                 case 1:
                     dynasties1 = (List<Dynasty>) msg.obj;
                     for (int i = 0;i < dynasties1.size(); i++) {
+//                        LinearLayout ll = new LinearLayout(getApplicationContext());
+//                        ImageView iv = new ImageView(getApplicationContext());
+//                        iv.setImageResource(R.mipmap.redflag);
                         TextView tv = new TextView(getApplicationContext());
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                                 300,
                                 300
                         );
+                        tv.setGravity(Gravity.CENTER);
                         tv.setText(dynasties1.get(i).getDynastyName());
                         tv.setTextColor(getColor(R.color.ourDynastyRed));
                         tv.setTypeface(typeface);
-                        tv.setTextSize(30);
-                        Log.i("cyl", dynasties1.get(i).getDynastyName());
+                        tv.setTextSize(25);
                         if (i % 2 == 0) {
                             params.setMargins(80, 50, 0, 0);
                             tv.setLayoutParams(params);
                             llLayout1.addView(tv);
                         } else {
                             if (i == 1){
-                                params.setMargins(200, 80, 0, 0);
+                                params.setMargins(200, 30, 0, 0);
                             }else{
-                                params.setMargins(90, 80, 0, 0);
+                                params.setMargins(90, 30, 0, 0);
                             }
                             tv.setLayoutParams(params);
+//                            ll.addView(iv);
+//                            ll.addView(tv);
                             llLayout2.addView(tv);
                         }
                         int finalI = i;
+                        for (int j = 0; j < Constant.UnlockDynasty.size(); j++){
+                            Log.e("cc", String.valueOf(Constant.UnlockDynasty.get(j).getDynastyId().equals(dynasties1.get(i).getDynastyId().toString())));
+                            if (Constant.UnlockDynasty.get(j).getDynastyId().equals(dynasties1.get(i).getDynastyId().toString())){
+                                tv.setBackgroundResource(R.mipmap.fff);
+                            }
+                        }
                         tv.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -169,7 +178,6 @@ public class HomepageActivity extends AppCompatActivity {
     private void initData() {
 //        getUserInfo();
         downloadUnlockDynastyList();
-        downloadDynastyList();
 //        initProgress();
     }
 
@@ -214,6 +222,7 @@ public class HomepageActivity extends AppCompatActivity {
                     List<UserUnlockDynasty> dynasties = gson.fromJson(json1, type);
                     Constant.UnlockDynasty = dynasties;
                     Log.i("cyl1", Constant.UnlockDynasty.toString());
+                    downloadDynastyList();
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (UnsupportedEncodingException e) {
@@ -357,7 +366,7 @@ public class HomepageActivity extends AppCompatActivity {
      */
     private void initMediaPlayer() {
         if (mediaPlayer == null){
-            mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.music);
+            mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.music1);
         }
         if (mediaPlayer.isPlaying()){
             btnVoice.setBackgroundResource(R.mipmap.voice);
