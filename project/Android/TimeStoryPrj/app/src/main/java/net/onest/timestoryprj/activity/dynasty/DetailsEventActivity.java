@@ -3,6 +3,7 @@ package net.onest.timestoryprj.activity.dynasty;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
@@ -75,7 +76,7 @@ public class DetailsEventActivity extends AppCompatActivity {
      * 初始化Adapter
      */
     private void initAdapter() {
-        eventListAdapter = new EventListAdapter(this, incidentList, R.layout.item_incident, dynastyId, dynastyName);
+        eventListAdapter = new EventListAdapter(this, incidentList, R.layout.item_incident, dynastyId, dynastyName, this);
         ViewGroup.LayoutParams params = hlvTimeline.getLayoutParams();
         params.width = DensityUtil.dip2px(getApplicationContext(), 110) * incidentList.size();
         hlvTimeline.setLayoutParams(params);

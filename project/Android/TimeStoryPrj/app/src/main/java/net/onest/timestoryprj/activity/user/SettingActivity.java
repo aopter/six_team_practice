@@ -523,6 +523,21 @@ public class SettingActivity extends AppCompatActivity {
         });
     }
 
+
+    /**
+     * 创建保存图片的文件
+     * @return
+     */
+    private File createImageFile() {
+        String imageName = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        if (!storageDir.exists()){
+            storageDir.mkdir();
+        }
+        File tempFile = new File(storageDir,imageName);
+        return tempFile;
+    }
+
     /**
      * 上传头像
      */

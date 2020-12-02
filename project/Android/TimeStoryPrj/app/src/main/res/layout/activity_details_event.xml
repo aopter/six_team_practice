@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/intro"
+    android:background="@mipmap/info"
     android:orientation="vertical"
     tools:context=".activity.dynasty.DetailsEventActivity">
     <LinearLayout
@@ -20,8 +20,7 @@
                 android:id="@+id/tv_big_word"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="40sp"
-                android:text="历史上的唐朝"
+                android:textSize="35sp"
                 android:layout_marginBottom="20dp"
                 android:textColor="@color/ourDynastyRed"/>
         </LinearLayout>
