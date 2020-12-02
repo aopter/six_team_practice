@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.tinytongtong.tinyutils.LogUtils;
 
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.activity.card.DrawCardActivity;
@@ -61,8 +62,8 @@ public class UserCenterActivity extends AppCompatActivity {
     @BindView(R.id.btn_set)
     Button btnSet;
 
-    @BindView(R.id.tv_name)
-    public TextView tvName;
+//    @BindView(R.id.tv_name)
+//    public TextView tvName;
 
     @BindView(R.id.tv_level)
     public TextView tvLevel;
@@ -177,14 +178,20 @@ public class UserCenterActivity extends AppCompatActivity {
 //        获取当前月份
 //        获取当前时间
         builder.url(ServiceConfig.HISTORY_TODAY + "?v=1.0&month="+month+"&day="+day+"&key=7a9cf9c5a9ff6338f5484d484ba51587");
+        LogUtils.d(ServiceConfig.HISTORY_TODAY + "?v=1.0&month="+month+"&day="+day+"&key=7a9cf9c5a9ff6338f5484d484ba51587");
         //构造请求类
         Request request = builder.build();
         final Call call = okHttpClient.newCall(request);
-        //开启线程接收
-        new Thread(() -> {
-            try {
-                Response response = call.execute();// 同步请求
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                LogUtils.d("历史上请求失败");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
                 String jsonData = response.body().string();
+                try {
                 JSONObject jsonObject = new JSONObject(jsonData);
                 JSONArray jsonArray = jsonObject.getJSONArray("result");
                 for (int i = 0; i < jsonArray.length(); ++i) {
@@ -199,12 +206,36 @@ public class UserCenterActivity extends AppCompatActivity {
                 Message message = handler.obtainMessage();
                 message.arg1 = 1;
                 handler.sendMessage(message);
-            } catch (IOException e) {
-                e.printStackTrace();
             } catch (JSONException e) {
-                e.printStackTrace();
+                    e.printStackTrace();
+                }
             }
-        }).start();
+        });
+//        //开启线程接收
+//        new Thread(() -> {
+//            try {
+//                Response response = call.execute();// 同步请求
+//                String jsonData = response.body().string();
+//                JSONObject jsonObject = new JSONObject(jsonData);
+//                JSONArray jsonArray = jsonObject.getJSONArray("result");
+//                for (int i = 0; i < jsonArray.length(); ++i) {
+//                    JSONObject his = jsonArray.getJSONObject(i);
+//                    HistoryDay historyDay = new HistoryDay();
+//                    historyDay.setDes(his.getString("des"));
+//                    historyDay.setTitle(his.getString("title"));
+//                    historyDay.setLunar(his.getString("lunar"));
+//                    historyDay.setYear(his.getInt("year"));
+//                    Constant.historyDays.add(historyDay);
+//                }
+//                Message message = handler.obtainMessage();
+//                message.arg1 = 1;
+//                handler.sendMessage(message);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }).start();
     }
 
 

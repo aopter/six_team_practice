@@ -89,7 +89,7 @@ public class SettingActivity extends AppCompatActivity {
     private PromptDialog promptDialog;
     private boolean isAndroidQ = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q;
     private Bitmap bitmap;//从相册选择的图片
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler() {
 
     };
 
@@ -107,17 +107,17 @@ public class SettingActivity extends AppCompatActivity {
         setListener();
         gson = new Gson();
 
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 try {
-                    URL url = new URL(ServiceConfig.SERVICE_ROOT+"/rule");
+                    URL url = new URL(ServiceConfig.SERVICE_ROOT + "/rule");
                     URLConnection connection = url.openConnection();
                     InputStream in = connection.getInputStream();
                     BufferedReader reader = new BufferedReader(
-                            new InputStreamReader(in,"utf-8"));
+                            new InputStreamReader(in, "utf-8"));
                     String rule = reader.readLine();
-                    Log.e("规则",rule);
+                    Log.e("规则", rule);
                     Constant.Rule.setRuleInfo(rule);
 
                 } catch (MalformedURLException e) {
@@ -149,10 +149,10 @@ public class SettingActivity extends AppCompatActivity {
         audioUtil = AudioUtil.getInstance(getApplicationContext());
     }
 
-    class MyListener implements View.OnClickListener{
+    class MyListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
-            switch (view.getId()){
+            switch (view.getId()) {
                 case R.id.btn_person://个人资料
                     rightLayout.removeAllViews();
                     setPersonAttr();
@@ -181,7 +181,7 @@ public class SettingActivity extends AppCompatActivity {
      * 退出登录布局
      */
     private void setExitLoginAttr() {
-        promptDialog.showWarnAlert("您确定退出登录吗？",new PromptButton("取消", new PromptButtonListener() {
+        promptDialog.showWarnAlert("您确定退出登录吗？", new PromptButton("取消", new PromptButtonListener() {
             @Override
             public void onClick(PromptButton button) {
                 promptDialog.dismiss();
@@ -190,7 +190,7 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(PromptButton button) {
                 Constant.User = null;
-                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
@@ -208,7 +208,7 @@ public class SettingActivity extends AppCompatActivity {
         linearLayout.setLayoutParams(params);
         //问题编辑框
         EditText etProblem = new EditText(getApplicationContext());
-        LinearLayout.LayoutParams etParam = new LinearLayout.LayoutParams(900,500);
+        LinearLayout.LayoutParams etParam = new LinearLayout.LayoutParams(900, 500);
         etParam.topMargin = 150;
         etParam.gravity = Gravity.CENTER_HORIZONTAL;
         etProblem.setText("说说你的问题吧……");
@@ -218,7 +218,7 @@ public class SettingActivity extends AppCompatActivity {
         linearLayout.addView(etProblem);
         //提交
         Button btnSub = new Button(getApplicationContext());
-        LinearLayout.LayoutParams btnParam = new LinearLayout.LayoutParams(280,160);
+        LinearLayout.LayoutParams btnParam = new LinearLayout.LayoutParams(280, 160);
         btnSub.setText("提交");
         btnSub.setTextSize(20);
         btnSub.setBackgroundResource(R.color.ourDynastyRed);
@@ -233,10 +233,10 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String content = etProblem.getText().toString().trim();
-                if (null != content && !content.equals("")){
-                    Toast.makeText(getApplicationContext(),"您的问题已反馈成功",Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(getApplicationContext(),"请填写您的问题",Toast.LENGTH_SHORT).show();
+                if (null != content && !content.equals("")) {
+                    Toast.makeText(getApplicationContext(), "您的问题已反馈成功", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "请填写您的问题", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -263,7 +263,7 @@ public class SettingActivity extends AppCompatActivity {
         linearLayout.setOrientation(LinearLayout.HORIZONTAL);
         linearLayout.setLayoutParams(params);
         ivVoice = new ImageView(getApplicationContext());
-        LinearLayout.LayoutParams ivParam = new LinearLayout.LayoutParams(150,150);
+        LinearLayout.LayoutParams ivParam = new LinearLayout.LayoutParams(150, 150);
         ivParam.leftMargin = 20;
         ivVoice.setBackgroundResource(R.mipmap.voice);
         ivVoice.setLayoutParams(ivParam);
@@ -278,10 +278,10 @@ public class SettingActivity extends AppCompatActivity {
         int mediaMax = audioUtil.getMediaMaxVolume();//最大音量
         int media = audioUtil.getMediaVolume();//当前音量
         DecimalFormat df = new DecimalFormat("0.00");
-        String stringVolume = df.format((float)media/mediaMax);
+        String stringVolume = df.format((float) media / mediaMax);
         double volume = Double.parseDouble(stringVolume);
         int progress = (int) (volume * 100);
-        if (progress == 0){
+        if (progress == 0) {
             ivVoice.setBackgroundResource(R.mipmap.novoice);
         }
         seekBar.setProgress(progress);
@@ -300,28 +300,28 @@ public class SettingActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                Log.e("进度",seekBar.getProgress()+"");
+                Log.e("进度", seekBar.getProgress() + "");
                 int progress = seekBar.getProgress();
                 int mediaMax = audioUtil.getMediaMaxVolume();
-                Log.e("多媒体最大",mediaMax+"");
+                Log.e("多媒体最大", mediaMax + "");
                 int media = audioUtil.getMediaVolume();
-                Log.e("多媒体当前",media+"");
+                Log.e("多媒体当前", media + "");
                 DecimalFormat df = new DecimalFormat("0.00");
-                String stringVolume = df.format((float)progress/100*15);
+                String stringVolume = df.format((float) progress / 100 * 15);
                 double volume = Double.parseDouble(stringVolume);
-                Log.e("double volume",volume+"");
+                Log.e("double volume", volume + "");
                 int volume1 = 0;
-                if (volume > 1){
+                if (volume > 1) {
                     volume1 = (int) Math.round(volume);
                     ivVoice.setBackgroundResource(R.mipmap.voice);
-                }else if (volume > 0){
+                } else if (volume > 0) {
                     volume1 = (int) Math.ceil(volume);
                     ivVoice.setBackgroundResource(R.mipmap.voice);
-                }else {
+                } else {
                     volume1 = 0;
                     ivVoice.setBackgroundResource(R.mipmap.novoice);
                 }
-                Log.e("int volume",volume1+"");
+                Log.e("int volume", volume1 + "");
                 audioUtil.setMediaVolume(volume1);
             }
         });
@@ -362,13 +362,13 @@ public class SettingActivity extends AppCompatActivity {
      * 设置个人资料的布局
      */
     private void setPersonAttr() {
-        LinearLayout linearLayout1  = new LinearLayout(getApplicationContext());
+        LinearLayout linearLayout1 = new LinearLayout(getApplicationContext());
         //width,height
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         linearLayout1.setOrientation(LinearLayout.HORIZONTAL);
         linearLayout1.setLayoutParams(params);
         //子TextView的属性
-        LinearLayout.LayoutParams tvParam = new LinearLayout.LayoutParams(350,LinearLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams tvParam = new LinearLayout.LayoutParams(350, LinearLayout.LayoutParams.WRAP_CONTENT);
         tvParam.leftMargin = 30;
         tvParam.topMargin = 30;
         LinearLayout.LayoutParams etParam = new LinearLayout.LayoutParams(600, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -381,7 +381,7 @@ public class SettingActivity extends AppCompatActivity {
         linearLayout1.addView(tvPhoto);
         //头像
         ivHeader = new ImageView(getApplicationContext());
-        LinearLayout.LayoutParams ivParam = new LinearLayout.LayoutParams(200,200);
+        LinearLayout.LayoutParams ivParam = new LinearLayout.LayoutParams(200, 200);
         ivParam.leftMargin = 20;
         ivParam.topMargin = 20;
         Glide.with(this)
@@ -471,22 +471,22 @@ public class SettingActivity extends AppCompatActivity {
             public void onClick(View view) {
                 PromptButton cancle = new PromptButton("取消", null);
                 cancle.setTextColor(Color.parseColor("#0076ff"));
-                promptDialog.showAlertSheet("",true,cancle,new PromptButton("从相册选择", new PromptButtonListener() {
+                promptDialog.showAlertSheet("", true, cancle, new PromptButton("从相册选择", new PromptButtonListener() {
                     @Override
                     public void onClick(PromptButton button) {
-                        Intent intent = new Intent(Intent.ACTION_PICK,null);
-                        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*");
-                        startActivityForResult(intent,1);
+                        Intent intent = new Intent(Intent.ACTION_PICK, null);
+                        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                        startActivityForResult(intent, 1);
                     }
-                }),new PromptButton("拍照", new PromptButtonListener() {
-                @Override
-                public void onClick(PromptButton button) {
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                }), new PromptButton("拍照", new PromptButtonListener() {
+                    @Override
+                    public void onClick(PromptButton button) {
+                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 //                    intent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(new File(Environment.getExternalStorageDirectory(),"temp.jpg")));
-                    startActivityForResult(intent,2);
+                        startActivityForResult(intent, 2);
 
-                }
-            }));
+                    }
+                }));
 
             }
         });
@@ -498,9 +498,9 @@ public class SettingActivity extends AppCompatActivity {
                 String signature = etSignature.getText().toString().trim();
                 String sex = etSex.getText().toString().trim();
                 String phone = etPhone.getText().toString().trim();
-                Log.e("提交",niName+signature+sex+phone);
+                Log.e("提交", niName + signature + sex + phone);
                 //判断非空
-                if (null != niName && null != signature && null != sex && null != phone){
+                if (null != niName && null != signature && null != sex && null != phone) {
 //                    int userId = Constant.User.getUserId();
                     UserDetails userDetails = new UserDetails();
                     userDetails.setUserId(1);
@@ -509,14 +509,14 @@ public class SettingActivity extends AppCompatActivity {
                     userDetails.setUserSex(sex);
                     userDetails.setUserSignature(signature);
                     userInfo = gson.toJson(userDetails);
-                    Log.e("userInfo",userInfo);
+                    Log.e("userInfo", userInfo);
                     //用户详情传给服务器
 //                    upToServer();
                     //上传头像
                     upHeaderToServer();
 
-                }else {
-                    Toast.makeText(getApplicationContext(),"请您完善用户信息后提交",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "请您完善用户信息后提交", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -526,44 +526,49 @@ public class SettingActivity extends AppCompatActivity {
 
     /**
      * 创建保存图片的文件
+     *
      * @return
      */
     private File createImageFile() {
         String imageName = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        if (!storageDir.exists()){
+        if (!storageDir.exists()) {
             storageDir.mkdir();
         }
-        File tempFile = new File(storageDir,imageName);
+        File tempFile = new File(storageDir, imageName);
         return tempFile;
     }
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 
     /**
      * 上传头像
      */
     private void upHeaderToServer() {
-        Log.e("文件名称",file.getName());
-        Log.e("文件路径",file.getAbsolutePath());
+        Log.e("文件名称", file.getName());
+        Log.e("文件路径", file.getAbsolutePath());
         OkHttpClient client = new OkHttpClient();
         MultipartBody.Builder requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM);//通过表单上传
-        RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"),file);//上传的文件以及类型
-        requestBody.addFormDataPart("file",file.getName(),fileBody)
-                .addFormDataPart("userId",1+"");
+        RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);//上传的文件以及类型
+        requestBody.addFormDataPart("file", file.getName(), fileBody)
+                .addFormDataPart("userId", 1 + "");
         Request request = new Request.Builder()
-                .url(ServiceConfig.SERVICE_ROOT+"/picture/upload")
+                .url(ServiceConfig.SERVICE_ROOT + "/picture/upload")
                 .post(requestBody.build())
                 .build();
 
         client.newBuilder().build().newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.e("no","失败");
+                Log.e("no", "失败");
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Log.e("ok","成功");
+                Log.e("ok", "成功");
             }
         });
     }
@@ -573,24 +578,24 @@ public class SettingActivity extends AppCompatActivity {
      * 向服务器上传用户更改后的信息
      */
     private void upToServer() {
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 try {
-                    URL url = new URL(ServiceConfig.SERVICE_ROOT+"/userdetails/modify");
+                    URL url = new URL(ServiceConfig.SERVICE_ROOT + "/userdetails/modify");
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("POST");
                     OutputStream outputStream = connection.getOutputStream();
                     outputStream.write(userInfo.getBytes());
                     InputStream in = connection.getInputStream();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(in,"utf-8"));
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
                     String info = reader.readLine();
                     JSONObject object = new JSONObject(info);
                     boolean flag = object.getBoolean("result");
-                    if (flag){
-                        Toast.makeText(getApplicationContext(),"保存成功",Toast.LENGTH_SHORT).show();
-                    }else {
-                        Toast.makeText(getApplicationContext(),"保存失败",Toast.LENGTH_SHORT).show();
+                    if (flag) {
+                        Toast.makeText(getApplicationContext(), "保存成功", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "保存失败", Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (MalformedURLException e) {
@@ -609,7 +614,7 @@ public class SettingActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK && null != data){
+        if (requestCode == 1 && resultCode == RESULT_OK && null != data) {
             picturePath = loadImagePath(data);
             Glide.with(getApplicationContext())
                     .load(picturePath)
@@ -617,12 +622,17 @@ public class SettingActivity extends AppCompatActivity {
                     .into(ivHeader);
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+<<<<<<< Updated upstream
             bitmapHeader = BitmapFactory.decodeFile(picturePath,options);
 
+=======
+            bitmapHeader = BitmapFactory.decodeFile(picturePath, options);
+>>>>>>> Stashed changes
             convertBitmapToFile(bitmapHeader);
-        }else if (requestCode == 2 && resultCode == RESULT_OK && null != data){
-            File picture = new File(Environment.getExternalStorageDirectory()+"/temp.jpg");
+        } else if (requestCode == 2 && resultCode == RESULT_OK && null != data) {
+            File picture = new File(Environment.getExternalStorageDirectory() + "/temp.jpg");
             Bundle extras = data.getExtras();
+<<<<<<< Updated upstream
             if (extras != null){
                     Bitmap photo = extras.getParcelable("data");
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -639,9 +649,34 @@ public class SettingActivity extends AppCompatActivity {
     private File convertBitmapToFile(Bitmap bitmap) {
         try {
             file = new File(SettingActivity.this.getCacheDir(),"userHeader");
+=======
+            if (extras != null) {
+                Bitmap photo = extras.getParcelable("data");
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                photo.compress(Bitmap.CompressFormat.JPEG, 75, stream);
+//                ivHeader.setImageBitmap(photo);
+                Glide.with(getApplicationContext())
+                        .load(photo)
+                        .circleCrop()
+                        .into(ivHeader);
+                convertBitmapToFile(photo);
+            }
+
+//            ivHeader.setImageBitmap(bitmap);
+            convertBitmapToFile(bitmap);
+
+        }
+    }
+
+
+    private File convertBitmapToFile(Bitmap bitmap) {
+        try {
+            file = new File(SettingActivity.this.getCacheDir(), "userHeader");
+            file = new File(SettingActivity.this.getCacheDir(), "portrait");
+>>>>>>> Stashed changes
             file.createNewFile();
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG,0,bos);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
             byte[] bitmapdata = bos.toByteArray();
             FileOutputStream fos = new FileOutputStream(file);
             fos.write(bitmapdata);
@@ -657,15 +692,15 @@ public class SettingActivity extends AppCompatActivity {
         //获取返回的数据，这里是android自定义的uri地址
         Uri selectedImage = data.getData();
         String[] filePathColumn = {MediaStore.Images.Media.DATA};
-        Log.e("filePathColumn的值",filePathColumn[0]);
+        Log.e("filePathColumn的值", filePathColumn[0]);
         //获取选择照片的数据视图
-        Cursor cursor = getContentResolver().query(selectedImage,filePathColumn,null,null,null);
+        Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
         cursor.moveToFirst();
         //从数据视图中获取已选择图片的路径
         int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-        Log.e("columnIndex的值",columnIndex+"");
+        Log.e("columnIndex的值", columnIndex + "");
         String path = cursor.getString(columnIndex);
-        Log.e("path的值",path);
+        Log.e("path的值", path);
         cursor.close();
         return path;
     }

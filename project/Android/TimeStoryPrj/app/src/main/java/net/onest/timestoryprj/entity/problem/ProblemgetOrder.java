@@ -22,6 +22,28 @@ public class ProblemgetOrder extends Problem implements Serializable {
     }
 
     private List<OrderBean> contents;//内容
+    private int problemType;
+    private String problemKey;
+
+    @Override
+    public String getProblemKey() {
+        return problemKey;
+    }
+
+    @Override
+    public void setProblemKey(String problemKey) {
+        this.problemKey = problemKey;
+    }
+
+    @Override
+    public int getProblemType() {
+        return problemType;
+    }
+
+    @Override
+    public void setProblemType(int problemType) {
+        this.problemType = problemType;
+    }
 
     private String problemDetails;
 
@@ -56,5 +78,18 @@ public class ProblemgetOrder extends Problem implements Serializable {
 
     public void setContents(List<OrderBean> contents) {
         this.contents = contents;
+    }
+
+    @Override
+    public String toString() {
+        return "ProblemgetOrder{" +
+                "dynastyId='" + dynastyId + '\'' +
+                ", problemId=" + problemId +
+                ", title='" + title + '\'' +
+                ", contents=" + contents +
+                ", problemType=" + problemType +
+                ", problemKey='" + problemKey + '\'' +
+                ", problemDetails='" + problemDetails + '\'' +
+                '}';
     }
 }

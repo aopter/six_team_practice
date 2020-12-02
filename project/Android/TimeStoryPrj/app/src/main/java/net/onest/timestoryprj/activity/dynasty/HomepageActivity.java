@@ -246,7 +246,7 @@ public class HomepageActivity extends AppCompatActivity {
     private void getUserInfo() {
         tvPoint.setText((int) Constant.User.getUserExperience());
         tvLevel.setText(Constant.User.getUserStatus().getStatusName());
-        tvName.setText(Constant.User.getUserNickname());
+//        tvName.setText(Constant.User.getUserNickname());
 //        user = Constant.User;
     }
 
@@ -300,7 +300,7 @@ public class HomepageActivity extends AppCompatActivity {
         ivHeader = findViewById(R.id.iv_header);
         btnVoice = findViewById(R.id.btn_voice);
         btnSettings = findViewById(R.id.btn_settings);
-        tvName = findViewById(R.id.tv_name);
+//        tvName = findViewById(R.id.tv_name);
         tvLevel = findViewById(R.id.tv_level);
         tvPoint = findViewById(R.id.tv_point);
         btnPlus = findViewById(R.id.btn_plus);

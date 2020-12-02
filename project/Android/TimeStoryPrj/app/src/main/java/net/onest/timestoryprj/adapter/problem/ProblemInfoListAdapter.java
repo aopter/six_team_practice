@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.tinytongtong.tinyutils.LogUtils;
 
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.activity.problem.ProblemInfoActivity;
@@ -46,9 +47,17 @@ public class ProblemInfoListAdapter extends RecyclerView.Adapter<ProblemInfoList
     private ProblemgetOrder problemgetOrder;
 
 
+
+
     public ProblemInfoListAdapter(Context context, List<Problem> problems) {
         this.context = context;
         this.problems = problems;
+        if(null!=Constant.userProblems){
+            Constant.userProblems.clear();
+        }else {
+            Constant.userProblems = new ArrayList<>();
+        }
+
     }
 
     @NonNull
@@ -69,6 +78,7 @@ public class ProblemInfoListAdapter extends RecyclerView.Adapter<ProblemInfoList
                 holder.linearLayouts.get(2).setVisibility(View.INVISIBLE);
                 problemSelect = new ProblemSelect();
                 problemSelect.setProblemId(problem.getProblemId());
+                problemSelect.setProblemType(1);
                 problemSelect.setTitle(contents1[0]);
                 problemSelect.setOptionA(contents1[1]);
                 problemSelect.setOptionApic(contents1[2]);
@@ -78,8 +88,9 @@ public class ProblemInfoListAdapter extends RecyclerView.Adapter<ProblemInfoList
                 problemSelect.setOptionCpic(contents1[6]);
                 problemSelect.setOptionD(contents1[7]);
                 problemSelect.setOptionDpic(contents1[8]);
-                problemSelect.setAnswer(problem.getProblemKey());
-                problemSelect.setDetails(problem.getProblemDetails());
+                problemSelect.setProblemKey(problem.getProblemKey());
+                problemSelect.setProblemDetails(problem.getProblemDetails());
+                Constant.userProblems.add(problemSelect);
 //               展示数据
                 holder.problemTitles[0].setText(problemSelect.getTitle());
                 holder.tvOptionsXuan[0].setText(problemSelect.getOptionA());
@@ -97,7 +108,7 @@ public class ProblemInfoListAdapter extends RecyclerView.Adapter<ProblemInfoList
                 holder.linearLayouts.get(0).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        jumpInfoActivity(1);
+                        jumpInfoActivity(1,position);
                     }
                 });
 
@@ -107,6 +118,8 @@ public class ProblemInfoListAdapter extends RecyclerView.Adapter<ProblemInfoList
                 holder.linearLayouts.get(0).setVisibility(View.INVISIBLE);
 //                展示数据
                 problemLinkLine  = new ProblemLinkLine();
+                problemLinkLine.setDynastyId(problem.getDynastyId());
+                problemLinkLine.setProblemId(problem.getProblemId());
                 problemLinkLine.setTitle(contents1[0]);
                 problemLinkLine.setOptionA(contents1[1]);
                 problemLinkLine.setOptionB(contents1[2]);
@@ -117,6 +130,12 @@ public class ProblemInfoListAdapter extends RecyclerView.Adapter<ProblemInfoList
                 problemLinkLine.setOptionCdes(contents1[7]);
                 problemLinkLine.setOptionDdes(contents1[8]);
                 String problemKey = problem.getProblemKey();
+                problemLinkLine.setProblemKey(problemKey);
+                problemLinkLine.setProblemType(2);
+                problemLinkLine.setProblemDetails(problem.getProblemDetails());
+
+                LogUtils.d("原始排序题",problemLinkLine.toString());
+                Constant.userProblems.add(problemLinkLine);
                 String[] qNum = problemKey.split(Constant.DELIMITER);
                 List<LinkDataBean> linkDataBeans = new ArrayList<>();
                 for(int i=0;i<4;i++){
@@ -145,12 +164,12 @@ public class ProblemInfoListAdapter extends RecyclerView.Adapter<ProblemInfoList
                     public void onClick(View view) {
 
                         Intent intent = new Intent(context, ProblemInfoActivity.class);
-
                         intent.putExtra("type", "lian");
                         intent.putExtra("dynastyId", problemLinkLine.getDynastyId());
                         intent.putExtra("problem", problemLinkLine);
                         intent.putExtra("linkDataBeans", (Serializable) linkDataBeans);
                         intent.putExtra("before", "info");
+                        intent.putExtra("position",position);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
                         context.startActivity(intent);
                     }
@@ -162,6 +181,9 @@ public class ProblemInfoListAdapter extends RecyclerView.Adapter<ProblemInfoList
 //                展示数据
                 problemgetOrder = new ProblemgetOrder();
                 problemgetOrder.setTitle(contents1[0]);
+                problemgetOrder.setProblemType(3);
+                problemgetOrder.setProblemKey(problem.getProblemKey());
+                problemgetOrder.setProblemDetails(problem.getProblemDetails());
                 String key = problem.getProblemKey();
                 List<OrderBean> orderBeans = new ArrayList<>();
                 for(int i=0;i<key.length();i++){
@@ -172,6 +194,9 @@ public class ProblemInfoListAdapter extends RecyclerView.Adapter<ProblemInfoList
                     orderBeans.add(orderBean);
                 }
                 problemgetOrder.setContents(orderBeans);
+
+                Constant.userProblems.add(problemgetOrder);
+
                 holder.problemTitles[2].setText(problemgetOrder.getTitle());
                 holder.rePai.setLayoutManager(new GridLayoutManager(context, 3));
 //        rv.setLayoutManager(new LinearLayoutManager(this));
@@ -180,21 +205,21 @@ public class ProblemInfoListAdapter extends RecyclerView.Adapter<ProblemInfoList
                 holder.rePai.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        jumpInfoActivity(3);
+                        jumpInfoActivity(3,position);
                     }
                 });
 //                点击liner 跳转activity 携带数据
                 holder.linearLayouts.get(2).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        jumpInfoActivity(3);
+                        jumpInfoActivity(3,position);
                     }
                 });
                 break;
         }
     }
 
-    private void jumpInfoActivity(int type) {
+    private void jumpInfoActivity(int type,int position) {
 
         Intent intent = new Intent(context, ProblemInfoActivity.class);
         switch (type){
@@ -203,16 +228,13 @@ public class ProblemInfoListAdapter extends RecyclerView.Adapter<ProblemInfoList
                 intent.putExtra("dynastyId", problemSelect.getDynastyId());
                 intent.putExtra("problem", problemSelect);
                 break;
-            case 2:
-
-                break;
             case 3:
                 intent.putExtra("type", "pai");
                 intent.putExtra("dynastyId", problemgetOrder.getDynastyId());
                 intent.putExtra("problem", problemgetOrder);
                 break;
         }
-
+        intent.putExtra("position",position);
         intent.putExtra("before", "info");
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
         context.startActivity(intent);

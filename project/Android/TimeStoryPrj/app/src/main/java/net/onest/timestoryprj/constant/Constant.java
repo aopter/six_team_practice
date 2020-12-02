@@ -1,6 +1,7 @@
 package net.onest.timestoryprj.constant;
 
 import net.onest.timestoryprj.entity.HistoryDay;
+import net.onest.timestoryprj.entity.Problem;
 import net.onest.timestoryprj.entity.Rule;
 import net.onest.timestoryprj.entity.User;
 import net.onest.timestoryprj.entity.UserUnlockDynasty;
@@ -29,4 +30,8 @@ public class Constant {
     public static Rule Rule = new Rule();
 
     public static List<User> UserRankList;
+
+    public static  List<Problem> userProblems;//题目列表
+
+
 }

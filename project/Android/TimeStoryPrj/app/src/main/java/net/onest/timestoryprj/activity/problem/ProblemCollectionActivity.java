@@ -54,9 +54,7 @@ public class ProblemCollectionActivity extends AppCompatActivity {
     ExpandableListView elvListView;
     @BindView(R.id.re_problems)
     RecyclerView recyclerView;
-
 //    刷新
-
     @BindView(R.id.refreshLayout_collction)
     SmartRefreshLayout refreshLayout;
 
