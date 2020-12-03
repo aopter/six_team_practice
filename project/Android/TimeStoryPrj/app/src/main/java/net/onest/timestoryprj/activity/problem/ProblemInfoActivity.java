@@ -442,7 +442,8 @@ public class ProblemInfoActivity extends AppCompatActivity {
      */
     private void getProblem(int type) {
         btnAnswer.setVisibility(View.INVISIBLE);
-        LogUtils.d("长度suoyou",myProblems.size()+"");
+        btnProblemSave.setText("收藏");
+        LogUtils.d("长度suoyou", myProblems.size() + "");
         isGetAnswer = false;
         String url = ServiceConfig.SERVICE_ROOT + "/problem/replenish/" + type + "/" + dynastyId + "";
         Request.Builder builder = new Request.Builder();
@@ -764,7 +765,7 @@ public class ProblemInfoActivity extends AppCompatActivity {
         Problem problem = myProblems.get(cIndex);
         switch (problem.getProblemType()) {
             case 1://选择
-                if(cType==4){
+                if (cType == 4) {
                     llTypeLian.setVisibility(View.INVISIBLE);
                     llTypePai.setVisibility(View.INVISIBLE);
                     llTypeXuan.setVisibility(View.VISIBLE);
@@ -775,12 +776,11 @@ public class ProblemInfoActivity extends AppCompatActivity {
                 handler.sendMessage(message);
                 break;
             case 2:
-                if(cType==4){
+                if (cType == 4) {
                     llTypeLian.setVisibility(View.VISIBLE);
                     llTypePai.setVisibility(View.INVISIBLE);
                     llTypeXuan.setVisibility(View.INVISIBLE);
-                }
-                else {
+                } else {
                     llTypeLian.setVisibility(View.INVISIBLE);
                     llTypeLian.setVisibility(View.VISIBLE);
                 }
@@ -839,7 +839,7 @@ public class ProblemInfoActivity extends AppCompatActivity {
                 handler.sendMessage(message2);
                 break;
             case 3:
-                if(cType==4){
+                if (cType == 4) {
                     llTypeLian.setVisibility(View.INVISIBLE);
                     llTypePai.setVisibility(View.VISIBLE);
                     llTypeXuan.setVisibility(View.INVISIBLE);

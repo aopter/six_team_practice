@@ -1,4 +1,6 @@
 package net.onest.timestoryprj.entity;
+import androidx.annotation.NonNull;
+
 import net.onest.timestoryprj.entity.card.UserCard;
 
 import java.util.HashSet;
@@ -131,5 +133,25 @@ public class User {
 
     public void setProblems(Set<UserProblem> problems) {
         this.problems = problems;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", userAccount='" + userAccount + '\'' +
+                ", userPassword='" + userPassword + '\'' +
+                ", userHeader='" + userHeader + '\'' +
+                ", userNickname='" + userNickname + '\'' +
+                ", userExperience=" + userExperience +
+                ", userCount=" + userCount +
+                ", userSignature='" + userSignature + '\'' +
+                ", userStatus=" + userStatus +
+                ", userCards=" + userCards +
+                ", userRecharges=" + userRecharges +
+                ", userUnlockDynasties=" + userUnlockDynasties +
+                ", userUnlockDynastyIncidents=" + userUnlockDynastyIncidents +
+                ", problems=" + problems +
+                '}';
     }
 }

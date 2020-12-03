@@ -135,17 +135,17 @@ public class SettingActivity extends AppCompatActivity {
             }
         }.start();
 
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 try {
-                    URL url = new URL(ServiceConfig.SERVICE_ROOT+"/userdetails/details/"+userId);
+                    URL url = new URL(ServiceConfig.SERVICE_ROOT + "/userdetails/details/" + userId);
                     URLConnection connection = url.openConnection();
                     InputStream in = connection.getInputStream();
                     BufferedReader reader = new BufferedReader(
                             new InputStreamReader(in, "utf-8"));
-                    String detail= reader.readLine();
-                    Constant.UserDetails = gson.fromJson(detail,UserDetails.class);
+                    String detail = reader.readLine();
+                    Constant.UserDetails = gson.fromJson(detail, UserDetails.class);
 
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
@@ -242,7 +242,7 @@ public class SettingActivity extends AppCompatActivity {
         etParam.topMargin = 150;
         etParam.gravity = Gravity.CENTER_HORIZONTAL;
         etProblem.setHint("说说你的问题吧……");
-        etProblem.setPadding(20,10,20,450);
+        etProblem.setPadding(20, 10, 20, 450);
         etProblem.setTextSize(20);
         etProblem.setBackgroundResource(R.drawable.edit_style);
         etProblem.setLayoutParams(etParam);
@@ -417,7 +417,7 @@ public class SettingActivity extends AppCompatActivity {
         ivParam.leftMargin = 20;
         ivParam.topMargin = 20;
         Glide.with(this)
-                .load(ServiceConfig.SERVICE_ROOT+"/picture/download/user/"+Constant.User.getUserHeader())
+                .load(ServiceConfig.SERVICE_ROOT + "/picture/download/user/" + Constant.User.getUserHeader())
                 .circleCrop()
                 .into(ivHeader);
         ivHeader.setLayoutParams(ivParam);
@@ -577,10 +577,6 @@ public class SettingActivity extends AppCompatActivity {
         File tempFile = new File(storageDir, imageName);
         return tempFile;
     }
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 
     /**
      * 上传头像
@@ -593,7 +589,7 @@ public class SettingActivity extends AppCompatActivity {
                 .setType(MultipartBody.FORM);//通过表单上传
         RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);//上传的文件以及类型
         requestBody.addFormDataPart("file", file.getName(), fileBody)
-                .addFormDataPart("userId", Constant.User.getUserId()+"");
+                .addFormDataPart("userId", Constant.User.getUserId() + "");
         Request request = new Request.Builder()
                 .url(ServiceConfig.SERVICE_ROOT + "/picture/upload")
                 .post(requestBody.build())
@@ -604,7 +600,7 @@ public class SettingActivity extends AppCompatActivity {
             public void onFailure(Call call, IOException e) {
                 Log.e("no", "失败");
                 Looper.prepare();
-                Toast.makeText(getApplicationContext(),"头像上传失败",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "头像上传失败", Toast.LENGTH_SHORT).show();
                 Looper.loop();
             }
 
@@ -612,7 +608,7 @@ public class SettingActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 Log.e("ok", "成功");
                 Looper.prepare();
-                Toast.makeText(getApplicationContext(),"头像上传成功",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "头像上传成功", Toast.LENGTH_SHORT).show();
                 Looper.loop();
             }
         });
@@ -636,7 +632,7 @@ public class SettingActivity extends AppCompatActivity {
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
                     String info = reader.readLine();
                     JSONObject object = new JSONObject(info);
-                    Log.e("object",object.toString());
+                    Log.e("object", object.toString());
                     boolean flag = object.getBoolean("result");
                     if (flag) {
                         Looper.prepare();
@@ -672,18 +668,11 @@ public class SettingActivity extends AppCompatActivity {
                     .into(ivHeader);
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-<<<<<<< Updated upstream
             bitmapHeader = BitmapFactory.decodeFile(picturePath, options);
-
-=======
-
-            bitmapHeader = BitmapFactory.decodeFile(picturePath, options);
->>>>>>> Stashed changes
             convertBitmapToFile(bitmapHeader);
         } else if (requestCode == 2 && resultCode == RESULT_OK && null != data) {
             File picture = new File(Environment.getExternalStorageDirectory() + "/temp.jpg");
             Bundle extras = data.getExtras();
-<<<<<<< Updated upstream
             if (extras != null) {
                 Bitmap photo = extras.getParcelable("data");
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -696,30 +685,11 @@ public class SettingActivity extends AppCompatActivity {
             }
         }
     }
-=======
-            if (extras != null){
-                    Bitmap photo = extras.getParcelable("data");
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    photo.compress(Bitmap.CompressFormat.JPEG,75,stream);
-                    Glide.with(getApplicationContext())
-                            .load(photo)
-                            .circleCrop()
-                            .into(ivHeader);
-                    convertBitmapToFile(photo);
-            }
-        }
-    }
 
-
->>>>>>> Stashed changes
 
     private File convertBitmapToFile(Bitmap bitmap) {
         try {
             file = new File(SettingActivity.this.getCacheDir(), "userHeader");
-<<<<<<< Updated upstream
-=======
-            file = new File(SettingActivity.this.getCacheDir(), "portrait");
->>>>>>> Stashed changes
             file.createNewFile();
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);

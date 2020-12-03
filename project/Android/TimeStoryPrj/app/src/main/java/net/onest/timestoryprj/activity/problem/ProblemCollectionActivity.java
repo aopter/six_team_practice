@@ -75,20 +75,28 @@ public class ProblemCollectionActivity extends AppCompatActivity {
 //                    初始化adapter
                     if (cPageCount == 1) {
                         initAdapter();
-                        Log.e("handleMessage: ", "初始化完毕");
                         refreshLayout.finishRefresh();
                     } else {
-
-                        ProblemCollectionActivity.this.runOnUiThread(new Runnable() {
-                            public void run() {
-                                RecyclerView.Adapter adapter = recyclerView.getAdapter();
-                                adapter.notifyDataSetChanged();
-                                LogUtils.d("加载后长度："+problems.size()+"");
-                                refreshLayout.finishLoadMore();//加载完毕
-                            }
-                        });
-
+                        initAdapter();
+                        refreshLayout.finishLoadMore();//加载完毕
                     }
+
+//                    if (cPageCount == 1) {
+//                        initAdapter();
+//                        Log.e("handleMessage: ", "初始化完毕");
+//                        refreshLayout.finishRefresh();
+//                    } else {
+//
+//                        ProblemCollectionActivity.this.runOnUiThread(new Runnable() {
+//                            public void run() {
+//                                RecyclerView.Adapter adapter = recyclerView.getAdapter();
+//                                adapter.notifyDataSetChanged();
+//                                LogUtils.d("加载后长度："+problems.size()+"");
+//                                refreshLayout.finishLoadMore();//加载完毕
+//                            }
+//                        });
+//
+//                    }
                     break;
             }
         }
