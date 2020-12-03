@@ -16,7 +16,6 @@
         android:layout_marginLeft="30dp"
         android:background="@mipmap/back"/>
     <RelativeLayout
-        android:padding="10dp"
         android:layout_below="@+id/btn_pre"
         android:paddingBottom="15dp"
         android:layout_width="match_parent"
@@ -47,6 +46,7 @@
         </LinearLayout>
 
         <ScrollView
+            android:layout_marginRight="10dp"
             android:id="@+id/sv_intro_word"
             android:layout_toRightOf="@+id/ll_intro_word"
             android:layout_width="match_parent"
