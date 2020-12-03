@@ -106,7 +106,7 @@ public class DetailsEventActivity extends AppCompatActivity {
     private void downloadUnlockIncidentList(String dynastyId) {
         //Constant.User.getUserId()
         Request request = new Request.Builder()
-                .url(ServiceConfig.SERVICE_ROOT + UNLOCK_INCIDENT_URL + 1 + "/" + dynastyId)
+                .url(ServiceConfig.SERVICE_ROOT + UNLOCK_INCIDENT_URL + Constant.User.getUserId() + "/" + dynastyId)
                 .build();
         Call call = okHttpClient.newCall(request);
         new Thread(() -> {

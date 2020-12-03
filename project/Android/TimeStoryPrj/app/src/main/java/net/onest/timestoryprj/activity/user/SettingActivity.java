@@ -155,21 +155,26 @@ public class SettingActivity extends AppCompatActivity {
             }
         }.start();
 
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 try {
-                    URL url = new URL(ServiceConfig.SERVICE_ROOT+"/userdetails/details/"+userId);
+                    URL url = new URL(ServiceConfig.SERVICE_ROOT + "/userdetails/details/" + userId);
                     URLConnection connection = url.openConnection();
                     InputStream in = connection.getInputStream();
                     BufferedReader reader = new BufferedReader(
                             new InputStreamReader(in, "utf-8"));
+<<<<<<< HEAD
                     String detail= reader.readLine();
                     Constant.UserDetails = gson.fromJson(detail,UserDetails.class);
                     Message message = handler.obtainMessage();
                     message.what = 1;
                     message.obj = Constant.UserDetails;
                     handler.sendMessage(message);
+=======
+                    String detail = reader.readLine();
+                    Constant.UserDetails = gson.fromJson(detail, UserDetails.class);
+>>>>>>> 8eb3ad1ec1b03f777f9c61e51f735195c2b71374
 
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
@@ -266,7 +271,7 @@ public class SettingActivity extends AppCompatActivity {
         etParam.topMargin = 150;
         etParam.gravity = Gravity.CENTER_HORIZONTAL;
         etProblem.setHint("说说你的问题吧……");
-        etProblem.setPadding(20,10,20,450);
+        etProblem.setPadding(20, 10, 20, 450);
         etProblem.setTextSize(20);
         etProblem.setBackgroundResource(R.drawable.edit_style);
         etProblem.setLayoutParams(etParam);
@@ -440,6 +445,7 @@ public class SettingActivity extends AppCompatActivity {
         LinearLayout.LayoutParams ivParam = new LinearLayout.LayoutParams(200, 200);
         ivParam.leftMargin = 20;
         ivParam.topMargin = 20;
+<<<<<<< HEAD
         if (Constant.User.getUserHeader()==null){
             Glide.with(this)
                     .load(R.mipmap.bg_man)
@@ -452,6 +458,12 @@ public class SettingActivity extends AppCompatActivity {
                     .into(ivHeader);
         }
 
+=======
+        Glide.with(this)
+                .load(ServiceConfig.SERVICE_ROOT + "/picture/download/user/" + Constant.User.getUserHeader())
+                .circleCrop()
+                .into(ivHeader);
+>>>>>>> 8eb3ad1ec1b03f777f9c61e51f735195c2b71374
         ivHeader.setLayoutParams(ivParam);
         linearLayout1.addView(ivHeader);
         rightLayout.addView(linearLayout1);
@@ -615,7 +627,7 @@ public class SettingActivity extends AppCompatActivity {
                 .setType(MultipartBody.FORM);//通过表单上传
         RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);//上传的文件以及类型
         requestBody.addFormDataPart("file", file.getName(), fileBody)
-                .addFormDataPart("userId", Constant.User.getUserId()+"");
+                .addFormDataPart("userId", Constant.User.getUserId() + "");
         Request request = new Request.Builder()
                 .url(ServiceConfig.SERVICE_ROOT + "/picture/upload")
                 .post(requestBody.build())
@@ -626,7 +638,7 @@ public class SettingActivity extends AppCompatActivity {
             public void onFailure(Call call, IOException e) {
                 Log.e("no", "失败");
                 Looper.prepare();
-                Toast.makeText(getApplicationContext(),"头像上传失败",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "头像上传失败", Toast.LENGTH_SHORT).show();
                 Looper.loop();
             }
 
@@ -635,7 +647,7 @@ public class SettingActivity extends AppCompatActivity {
                 Log.e("ok", "成功");
                 Constant.User.setUserHeader("us-"+Constant.User.getUserId()+".jpg");
                 Looper.prepare();
-                Toast.makeText(getApplicationContext(),"头像上传成功",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "头像上传成功", Toast.LENGTH_SHORT).show();
                 Looper.loop();
             }
         });
@@ -658,7 +670,7 @@ public class SettingActivity extends AppCompatActivity {
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
                     String info = reader.readLine();
                     JSONObject object = new JSONObject(info);
-                    Log.e("object",object.toString());
+                    Log.e("object", object.toString());
                     boolean flag = object.getBoolean("result");
                     if (flag) {
                         Looper.prepare();
@@ -697,7 +709,10 @@ public class SettingActivity extends AppCompatActivity {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
             bitmapHeader = BitmapFactory.decodeFile(picturePath, options);
+<<<<<<< HEAD
             bitmapHeader = BitmapFactory.decodeFile(picturePath);
+=======
+>>>>>>> 8eb3ad1ec1b03f777f9c61e51f735195c2b71374
             convertBitmapToFile(bitmapHeader);
         } else if (requestCode == 2 && resultCode == RESULT_OK && null != data) {
             File picture = new File(Environment.getExternalStorageDirectory() + "/temp.jpg");
@@ -731,6 +746,7 @@ public class SettingActivity extends AppCompatActivity {
             }
         }
     }
+
 
     private File convertBitmapToFile(Bitmap bitmap) {
         try {

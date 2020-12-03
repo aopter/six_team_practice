@@ -16,7 +16,6 @@
         android:layout_marginLeft="30dp"
         android:background="@mipmap/back"/>
     <RelativeLayout
-        android:padding="10dp"
         android:layout_below="@+id/btn_pre"
         android:paddingBottom="15dp"
         android:layout_width="match_parent"
@@ -47,10 +46,13 @@
         </LinearLayout>
 
         <ScrollView
+            android:layout_marginRight="20dp"
             android:id="@+id/sv_intro_word"
             android:layout_toRightOf="@+id/ll_intro_word"
+            android:layout_above="@+id/rl_below"
             android:layout_width="match_parent"
-            android:layout_height="260dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/corner"
             android:alpha="0.7">
             <LinearLayout
@@ -67,6 +69,7 @@
 
         </ScrollView>
         <RelativeLayout
+            android:id="@+id/rl_below"
             android:paddingBottom="15dp"
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"

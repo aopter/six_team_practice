@@ -16,9 +16,15 @@
         android:textColor="@color/ourDynastyRed"
         android:textSize="24sp" />
     <LinearLayout
+        android:layout_marginBottom="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_gravity="center_vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:orientation="horizontal"
         android:paddingLeft="15dp"
         android:paddingRight="15dp">
@@ -97,5 +103,7 @@
                 style="@style/tvSelectProblemType"
                 android:text="快速开始" />
         </LinearLayout>
+    </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>

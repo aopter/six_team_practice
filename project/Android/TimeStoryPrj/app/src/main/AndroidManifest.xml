@@ -29,6 +29,8 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
+        <uses-library android:name="org.apache.http.legacy"
+            android:required="false"/>
         <activity android:name=".activity.problem.ProblemClooectionInfoActivity"></activity>
         <activity
             android:name=".dialog.DialogExampleAvtivity"
@@ -71,7 +73,13 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".activity.user.LoginActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activity.card.SpectficCardDetailActivity"
             android:screenOrientation="landscape" />
@@ -99,13 +107,7 @@
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="landscape">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:screenOrientation="landscape"></activity>
 
         <activity
             android:name="com.tencent.tauth.AuthActivity"

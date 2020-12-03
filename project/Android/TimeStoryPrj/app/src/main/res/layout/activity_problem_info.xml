@@ -47,6 +47,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:layout_marginRight="80dp"
                     android:id="@+id/problem_xuan_info_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -74,6 +75,8 @@
                             android:src="@mipmap/select_lian" />
 
                         <LinearLayout
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
@@ -110,6 +113,8 @@
                             android:src="@mipmap/select_lian" />
 
                         <LinearLayout
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
@@ -146,6 +151,8 @@
                             android:src="@mipmap/select_lian" />
 
                         <LinearLayout
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
@@ -181,6 +188,8 @@
                             android:src="@mipmap/select_lian" />
 
                         <LinearLayout
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
@@ -373,7 +382,7 @@
                 android:id="@+id/re_pai"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:gravity="center"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="10dp"
                 android:padding="5dp" />
