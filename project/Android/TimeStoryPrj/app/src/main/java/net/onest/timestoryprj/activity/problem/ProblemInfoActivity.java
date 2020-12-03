@@ -322,7 +322,6 @@ public class ProblemInfoActivity extends AppCompatActivity {
         dynastyId = intent.getStringExtra("dynastyId");
 //        Log.e("朝代id: ", dynastyId);
         before = intent.getStringExtra("before");
-        LogUtils.d("获得页：", before);
 
         if (before.equals("types"))//类型页
         {
@@ -356,6 +355,7 @@ public class ProblemInfoActivity extends AppCompatActivity {
                     llTypeXuan.setVisibility(View.INVISIBLE);
                     llTypePai.setVisibility(View.INVISIBLE);
                     if (before.equals("info")) {
+                        btnProblemSave.setText("已收藏");
                         cIndex = intent.getIntExtra("position", 0);
                         problemLinkLine = (ProblemLinkLine) intent.getSerializableExtra("problem");
                         cProblem.setProblemId(problemLinkLine.getProblemId());
@@ -381,6 +381,7 @@ public class ProblemInfoActivity extends AppCompatActivity {
                     llTypeXuan.setVisibility(View.INVISIBLE);
                     llTypeLian.setVisibility(View.INVISIBLE);
                     if (before.equals("info")) {
+                        btnProblemSave.setText("已收藏");
                         cIndex = intent.getIntExtra("position", 0);
                         problemgetOrder = (ProblemgetOrder) intent.getSerializableExtra("problem");
                         cProblem.setProblemId(problemgetOrder.getProblemId());
@@ -440,6 +441,7 @@ public class ProblemInfoActivity extends AppCompatActivity {
      * @param type
      */
     private void getProblem(int type) {
+        btnAnswer.setVisibility(View.INVISIBLE);
         LogUtils.d("长度suoyou",myProblems.size()+"");
         isGetAnswer = false;
         String url = ServiceConfig.SERVICE_ROOT + "/problem/replenish/" + type + "/" + dynastyId + "";
