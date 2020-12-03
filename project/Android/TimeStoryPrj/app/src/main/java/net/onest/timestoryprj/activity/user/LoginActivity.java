@@ -186,9 +186,9 @@ public class LoginActivity extends AppCompatActivity {
                         handler.sendMessage(message);
                         Constant.User = gson.fromJson(result, User.class);
                         Log.e("user信息",Constant.User.getUserCount()+"");
-                        if (Constant.User.getUserHeader() == null){
-                            Constant.User.setUserHeader("su-1.jpg");
-                        }
+//                        if (Constant.User.getUserHeader() == null){
+//                            Constant.User.setUserHeader("su-1.jpg");
+//                        }
                         //跳转到主页
                         Intent intent = new Intent();
                         intent.setClass(getApplicationContext(), HomepageActivity.class);
