@@ -15,10 +15,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Looper;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -47,6 +49,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -87,6 +90,7 @@ public class SettingActivity extends AppCompatActivity {
     private Bitmap bitmapHeader;//从相册选择的图片
     private File file;
     private PromptDialog promptDialog;
+    private int userId;
     private boolean isAndroidQ = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q;
     private Bitmap bitmap;//从相册选择的图片
     private Handler handler = new Handler() {
@@ -103,18 +107,18 @@ public class SettingActivity extends AppCompatActivity {
         //设置自定义属性
         promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
 
+        userId = Constant.User.getUserId();
         findViews();
         setListener();
         gson = new Gson();
+        rightLayout.removeAllViews();
+        setPersonAttr();
 
         new Thread() {
             @Override
             public void run() {
                 try {
-
-
                     URL url = new URL(ServiceConfig.SERVICE_ROOT + "/rule");
-
                     URLConnection connection = url.openConnection();
                     InputStream in = connection.getInputStream();
                     BufferedReader reader = new BufferedReader(
@@ -131,7 +135,31 @@ public class SettingActivity extends AppCompatActivity {
             }
         }.start();
 
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL(ServiceConfig.SERVICE_ROOT+"/userdetails/details/"+userId);
+                    URLConnection connection = url.openConnection();
+                    InputStream in = connection.getInputStream();
+                    BufferedReader reader = new BufferedReader(
+                            new InputStreamReader(in, "utf-8"));
+                    String detail= reader.readLine();
+                    Constant.UserDetails = gson.fromJson(detail,UserDetails.class);
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }.start();
+
     }
+
 
     private void setListener() {
         MyListener myListener = new MyListener();
@@ -198,7 +226,6 @@ public class SettingActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         }));
-
     }
 
     /**
@@ -211,23 +238,26 @@ public class SettingActivity extends AppCompatActivity {
         linearLayout.setLayoutParams(params);
         //问题编辑框
         EditText etProblem = new EditText(getApplicationContext());
-        LinearLayout.LayoutParams etParam = new LinearLayout.LayoutParams(900, 500);
+        LinearLayout.LayoutParams etParam = new LinearLayout.LayoutParams(1200, 700);
         etParam.topMargin = 150;
         etParam.gravity = Gravity.CENTER_HORIZONTAL;
-        etProblem.setText("说说你的问题吧……");
+        etProblem.setHint("说说你的问题吧……");
+        etProblem.setPadding(20,10,20,450);
         etProblem.setTextSize(20);
         etProblem.setBackgroundResource(R.drawable.edit_style);
         etProblem.setLayoutParams(etParam);
+        etProblem.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_ACTION_DONE);
         linearLayout.addView(etProblem);
         //提交
         Button btnSub = new Button(getApplicationContext());
-        LinearLayout.LayoutParams btnParam = new LinearLayout.LayoutParams(280, 160);
+        LinearLayout.LayoutParams btnParam = new LinearLayout.LayoutParams(280, 150);
         btnSub.setText("提交");
         btnSub.setTextSize(20);
         btnSub.setBackgroundResource(R.color.ourDynastyRed);
         btnParam.gravity = Gravity.RIGHT;
         btnParam.rightMargin = 30;
-        btnParam.topMargin = 120;
+        btnParam.topMargin = 50;
+
         btnSub.setLayoutParams(btnParam);
         linearLayout.addView(btnSub);
         rightLayout.addView(linearLayout);
@@ -328,7 +358,6 @@ public class SettingActivity extends AppCompatActivity {
                 audioUtil.setMediaVolume(volume1);
             }
         });
-
     }
 
     /**
@@ -358,7 +387,6 @@ public class SettingActivity extends AppCompatActivity {
         tvRule.setLayoutParams(ruleParam);
         linearLayout.addView(tvRule);
         rightLayout.addView(linearLayout);
-
     }
 
     /**
@@ -374,9 +402,10 @@ public class SettingActivity extends AppCompatActivity {
         LinearLayout.LayoutParams tvParam = new LinearLayout.LayoutParams(350, LinearLayout.LayoutParams.WRAP_CONTENT);
         tvParam.leftMargin = 30;
         tvParam.topMargin = 30;
-        LinearLayout.LayoutParams etParam = new LinearLayout.LayoutParams(600, LinearLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams etParam = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         etParam.leftMargin = 20;
         etParam.topMargin = 30;
+
         TextView tvPhoto = new TextView(getApplicationContext());
         tvPhoto.setText("头像:");
         tvPhoto.setTextSize(20);
@@ -388,7 +417,7 @@ public class SettingActivity extends AppCompatActivity {
         ivParam.leftMargin = 20;
         ivParam.topMargin = 20;
         Glide.with(this)
-                .load(R.mipmap.man)
+                .load(ServiceConfig.SERVICE_ROOT+"/picture/download/user/"+Constant.User.getUserHeader())
                 .circleCrop()
                 .into(ivHeader);
         ivHeader.setLayoutParams(ivParam);
@@ -404,9 +433,11 @@ public class SettingActivity extends AppCompatActivity {
         tvNiName.setLayoutParams(tvParam);
         linearLayout2.addView(tvNiName);
         EditText etNiName = new EditText(getApplicationContext());
-        etNiName.setText("小美");
+//        etNiName.setText("小美");
+        etNiName.setText(Constant.UserDetails.getUserNickname());
         etNiName.setTextSize(20);
         etNiName.setLayoutParams(etParam);
+        etNiName.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_ACTION_DONE);
         linearLayout2.addView(etNiName);
         rightLayout.addView(linearLayout2);
         //个性签名
@@ -419,9 +450,10 @@ public class SettingActivity extends AppCompatActivity {
         tvSignature.setLayoutParams(tvParam);
         linearLayout3.addView(tvSignature);
         EditText etSignature = new EditText(getApplicationContext());
-
-        etSignature.setText("第五美女");
+        etSignature.setText(Constant.UserDetails.getUserSignature());
+//        etSignature.setText("第五美女");
         etSignature.setTextSize(20);
+        etSignature.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_ACTION_DONE);
         etSignature.setLayoutParams(etParam);
         linearLayout3.addView(etSignature);
         rightLayout.addView(linearLayout3);
@@ -435,7 +467,9 @@ public class SettingActivity extends AppCompatActivity {
         tvSex.setLayoutParams(tvParam);
         linearLayout4.addView(tvSex);
         EditText etSex = new EditText(getApplicationContext());
-        etSex.setText("女");
+//        etSex.setText("女");
+        etSex.setText(Constant.UserDetails.getUserSex());
+        etSex.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_ACTION_DONE);
         etSex.setTextSize(20);
         etSex.setLayoutParams(etParam);
         linearLayout4.addView(etSex);
@@ -450,7 +484,9 @@ public class SettingActivity extends AppCompatActivity {
         tvPhone.setLayoutParams(tvParam);
         linearLayout5.addView(tvPhone);
         EditText etPhone = new EditText(getApplicationContext());
-        etPhone.setText("123456");
+        etPhone.setImeOptions(EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_ACTION_DONE);
+//        etPhone.setText("123456");
+        etPhone.setText(Constant.UserDetails.getUserNumber());
         etPhone.setTextSize(20);
         etPhone.setLayoutParams(etParam);
         linearLayout5.addView(etPhone);
@@ -504,9 +540,9 @@ public class SettingActivity extends AppCompatActivity {
                 Log.e("提交", niName + signature + sex + phone);
                 //判断非空
                 if (null != niName && null != signature && null != sex && null != phone) {
-//                    int userId = Constant.User.getUserId();
-                    UserDetails userDetails = new UserDetails();
-                    userDetails.setUserId(1);
+                    int userId = Constant.User.getUserId();
+                    UserDetails userDetails = Constant.UserDetails;
+                    userDetails.setUserId(userId);
                     userDetails.setUserNickname(niName);
                     userDetails.setUserNumber(phone);
                     userDetails.setUserSex(sex);
@@ -514,7 +550,7 @@ public class SettingActivity extends AppCompatActivity {
                     userInfo = gson.toJson(userDetails);
                     Log.e("userInfo", userInfo);
                     //用户详情传给服务器
-//                    upToServer();
+                    upToServer();
                     //上传头像
                     upHeaderToServer();
 
@@ -553,7 +589,7 @@ public class SettingActivity extends AppCompatActivity {
                 .setType(MultipartBody.FORM);//通过表单上传
         RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);//上传的文件以及类型
         requestBody.addFormDataPart("file", file.getName(), fileBody)
-                .addFormDataPart("userId", 1 + "");
+                .addFormDataPart("userId", Constant.User.getUserId()+"");
         Request request = new Request.Builder()
                 .url(ServiceConfig.SERVICE_ROOT + "/picture/upload")
                 .post(requestBody.build())
@@ -563,11 +599,17 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.e("no", "失败");
+                Looper.prepare();
+                Toast.makeText(getApplicationContext(),"头像上传失败",Toast.LENGTH_SHORT).show();
+                Looper.loop();
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 Log.e("ok", "成功");
+                Looper.prepare();
+                Toast.makeText(getApplicationContext(),"头像上传成功",Toast.LENGTH_SHORT).show();
+                Looper.loop();
             }
         });
     }
@@ -590,11 +632,16 @@ public class SettingActivity extends AppCompatActivity {
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
                     String info = reader.readLine();
                     JSONObject object = new JSONObject(info);
+                    Log.e("object",object.toString());
                     boolean flag = object.getBoolean("result");
                     if (flag) {
+                        Looper.prepare();
                         Toast.makeText(getApplicationContext(), "保存成功", Toast.LENGTH_SHORT).show();
+                        Looper.loop();
                     } else {
+                        Looper.prepare();
                         Toast.makeText(getApplicationContext(), "保存失败", Toast.LENGTH_SHORT).show();
+                        Looper.loop();
                     }
 
                 } catch (MalformedURLException e) {

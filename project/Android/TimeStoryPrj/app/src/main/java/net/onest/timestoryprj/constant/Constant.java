@@ -4,6 +4,7 @@ import net.onest.timestoryprj.entity.HistoryDay;
 import net.onest.timestoryprj.entity.Problem;
 import net.onest.timestoryprj.entity.Rule;
 import net.onest.timestoryprj.entity.User;
+import net.onest.timestoryprj.entity.UserDetails;
 import net.onest.timestoryprj.entity.UserUnlockDynasty;
 import net.onest.timestoryprj.entity.UserUnlockDynastyIncident;
 
@@ -32,6 +33,8 @@ public class Constant {
     public static List<User> UserRankList;
 
     public static  List<Problem> userProblems;//题目列表
+
+    public static UserDetails UserDetails = new UserDetails();
 
 
 }
