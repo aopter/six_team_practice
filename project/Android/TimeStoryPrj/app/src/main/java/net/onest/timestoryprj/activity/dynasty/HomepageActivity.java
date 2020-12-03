@@ -317,6 +317,7 @@ public class HomepageActivity extends AppCompatActivity {
      */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void loadImgWithPlaceHolders() {
+//        ServiceConfig.SERVICE_ROOT + Constant.User.getUserHeader();
         Glide.with(this)
                 .load(getDrawable(R.mipmap.man))
                 .circleCrop()
