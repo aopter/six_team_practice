@@ -83,6 +83,7 @@ public class ProblemCollectionActivity extends AppCompatActivity {
                             public void run() {
                                 RecyclerView.Adapter adapter = recyclerView.getAdapter();
                                 adapter.notifyDataSetChanged();
+                                LogUtils.d("加载后长度："+problems.size()+"");
                                 refreshLayout.finishLoadMore();//加载完毕
                             }
                         });
@@ -180,7 +181,6 @@ public class ProblemCollectionActivity extends AppCompatActivity {
                     problemCollections.add(pcs.get(i));
                     problems.add(pcs.get(i).getProblem());
                 }
-                Log.e("problemCollections ", problemCollections.size() + "");
                 LogUtils.d(problems.size()+"数量");
                 Message message = new Message();
                 message.arg1 = 1;
@@ -252,7 +252,7 @@ public class ProblemCollectionActivity extends AppCompatActivity {
 
                             problemCollections = gson.fromJson(problemJson, new TypeToken<List<ProblemCollection>>() {
                             }.getType());
-                            Log.e("problemCollections ", problemCollections.size() + "");
+                            Log.e("problemCollections数目 ", problemCollections.size() + "");
                             for (int i = 0; i < problemCollections.size(); ++i) {
                                 problems.add(problemCollections.get(i).getProblem());
 

@@ -9,7 +9,7 @@ import java.util.Objects;
  */
 public class LinkLineBean {
     public static final String COLOR_BLACK = "#ff000000";
-    public static final String COLOR_BLUE = "#1391EB";
+    public static final String COLOR_BLUE = "#e6b800";
     public static final String COLOR_RIGHT = "#ff00deab";
     public static final String COLOR_WRONG = "#ffff7c64";
 

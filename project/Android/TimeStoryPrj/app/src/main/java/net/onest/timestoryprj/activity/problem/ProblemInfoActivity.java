@@ -1,6 +1,8 @@
 package net.onest.timestoryprj.activity.problem;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -27,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.tinytongtong.tinyutils.LogUtils;
+import com.tinytongtong.tinyutils.ScreenUtils;
 
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.adapter.problem.OnStartDragListener;
@@ -36,6 +39,7 @@ import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.customview.LinkLineView;
 import net.onest.timestoryprj.dialog.problem.ProblemAnswerDialog;
 import net.onest.timestoryprj.entity.LinkDataBean;
+import net.onest.timestoryprj.entity.LinkLineBean;
 import net.onest.timestoryprj.entity.Problem;
 import net.onest.timestoryprj.entity.problem.OrderBean;
 import net.onest.timestoryprj.entity.problem.ProblemLinkLine;
@@ -43,6 +47,8 @@ import net.onest.timestoryprj.entity.problem.ProblemSelect;
 import net.onest.timestoryprj.entity.problem.ProblemgetOrder;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -53,6 +59,7 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.leefeng.promptlibrary.PromptDialog;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -124,6 +131,7 @@ public class ProblemInfoActivity extends AppCompatActivity {
     ProblemLinkLine problemLinkLine;
     private int cType;
     private int cIndex = 0;//当前索引
+    private PromptDialog promptDialog;
 
     //    左右屏幕的滑动事件
     final int RIGHT = 0;
@@ -148,15 +156,23 @@ public class ProblemInfoActivity extends AppCompatActivity {
                     tvOptionsXuan[1].setText(problemSelect.getOptionB());
                     tvOptionsXuan[2].setText(problemSelect.getOptionC());
                     tvOptionsXuan[3].setText(problemSelect.getOptionD());
-                    String url = ServiceConfig.SERVICE_ROOT + "/picture/download/problem/";
-                    Glide.with(ProblemInfoActivity.this).load(url + problemSelect.getOptionApic()).into(ivOptionsXuan[0]);
-                    Glide.with(ProblemInfoActivity.this).load(url + problemSelect.getOptionBpic()).into(ivOptionsXuan[1]);
-                    Glide.with(ProblemInfoActivity.this).load(url + problemSelect.getOptionCpic()).into(ivOptionsXuan[2]);
-                    Glide.with(ProblemInfoActivity.this).load(url + problemSelect.getOptionDpic()).into(ivOptionsXuan[3]);
+                    String url = ServiceConfig.SERVICE_ROOT + "/picture/download/";
+                    LogUtils.d(url + problemSelect.getOptionApic());
+                    try {
+                        Glide.with(ProblemInfoActivity.this).load(new URL(url + problemSelect.getOptionApic())).into(ivOptionsXuan[0]);
+                        Glide.with(ProblemInfoActivity.this).load(new URL(url + problemSelect.getOptionBpic())).into(ivOptionsXuan[1]);
+                        Glide.with(ProblemInfoActivity.this).load(new URL(url + problemSelect.getOptionCpic())).into(ivOptionsXuan[2]);
+                        Glide.with(ProblemInfoActivity.this).load(new URL(url + problemSelect.getOptionDpic())).into(ivOptionsXuan[3]);
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }
+
                     break;
                 case 2://连线
+//                    linkLineView = new LinkLineView(ProblemInfoActivity.this);
                     tvLianTitle.setText(problemLinkLine.getTitle());
                     List<LinkDataBean> linkDataBeans = (List<LinkDataBean>) msg.obj;
+                    // 先清除掉原有绘制的线
                     Log.e("handleMessage收到: ", problemLinkLine.toString());
                     linkLineView.setData(linkDataBeans);
                     linkLineView.setOnChoiceResultListener((correct, yourAnswer) -> {
@@ -174,7 +190,12 @@ public class ProblemInfoActivity extends AppCompatActivity {
                 case 3://排序
                     tvPaiTitle.setText(problemgetOrder.getTitle());
 //                    {"李白乘舟将欲行", "不及汪伦送我情", "忽闻岸上踏歌声", "桃花潭水深千尺"};
-                    rePai.setLayoutManager(new GridLayoutManager(ProblemInfoActivity.this, 3));
+                    int colnum = 2;
+                    if (problemgetOrder.getContents().size() > 4)
+                        colnum = 3;
+                    if (problemgetOrder.getContents().size() > 6)
+                        colnum = 4;
+                    rePai.setLayoutManager(new GridLayoutManager(ProblemInfoActivity.this, colnum));
 //        rv.setLayoutManager(new LinearLayoutManager(this));
                     OptionLianAdapter adapter = new OptionLianAdapter(problemgetOrder.getContents());
                     rePai.setAdapter(adapter);
@@ -240,11 +261,11 @@ public class ProblemInfoActivity extends AppCompatActivity {
                     break;
                 case 4://收藏
                     btnProblemSave.setText("已收藏");
-                    Toast.makeText(getApplicationContext(), "收藏成功", Toast.LENGTH_SHORT).show();
+                    promptDialog.showSuccess("收藏成功");
                     break;
                 case 5://取消收藏
                     btnProblemSave.setText("收藏");
-                    Toast.makeText(getApplicationContext(), "取消收藏成功", Toast.LENGTH_SHORT).show();
+                    promptDialog.showSuccess("取消收藏成功");
                     break;
             }
         }
@@ -278,6 +299,8 @@ public class ProblemInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_problem_info);
         ButterKnife.bind(this);
 
+        promptDialog = new PromptDialog(this);
+        promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
 //        动画
         animationin = AnimationUtils.loadAnimation(
                 ProblemInfoActivity.this, R.anim.anim_in_right);
@@ -299,11 +322,11 @@ public class ProblemInfoActivity extends AppCompatActivity {
         dynastyId = intent.getStringExtra("dynastyId");
 //        Log.e("朝代id: ", dynastyId);
         before = intent.getStringExtra("before");
-        LogUtils.d("获得页：",before);
+        LogUtils.d("获得页：", before);
 
         if (before.equals("types"))//类型页
         {
-            btnAnswer.setVisibility(View.INVISIBLE);
+            btnAnswer.setVisibility(View.INVISIBLE);//解析
         }
         if (null != type) {
             switch (type) {
@@ -311,7 +334,8 @@ public class ProblemInfoActivity extends AppCompatActivity {
                     cType = 1;
                     llTypeLian.setVisibility(View.INVISIBLE);
                     llTypePai.setVisibility(View.INVISIBLE);
-                    if (before.equals("info")) {
+                    if (before.equals("info")) {//收藏页
+                        btnProblemSave.setText("已收藏");
                         cIndex = intent.getIntExtra("position", 0);
                         problemSelect = (ProblemSelect) intent.getSerializableExtra("problem");
                         cProblem.setProblemId(problemSelect.getProblemId());
@@ -361,8 +385,6 @@ public class ProblemInfoActivity extends AppCompatActivity {
                         problemgetOrder = (ProblemgetOrder) intent.getSerializableExtra("problem");
                         cProblem.setProblemId(problemgetOrder.getProblemId());
                         cProblem.setProblemDetails(problemgetOrder.getProblemDetails());
-
-
                         //跳转显示
                         Message message = new Message();
                         message.arg1 = 3;
@@ -418,6 +440,7 @@ public class ProblemInfoActivity extends AppCompatActivity {
      * @param type
      */
     private void getProblem(int type) {
+        LogUtils.d("长度suoyou",myProblems.size()+"");
         isGetAnswer = false;
         String url = ServiceConfig.SERVICE_ROOT + "/problem/replenish/" + type + "/" + dynastyId + "";
         Request.Builder builder = new Request.Builder();
@@ -429,7 +452,8 @@ public class ProblemInfoActivity extends AppCompatActivity {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.e("onFailure: ", "下载排行榜失败");
+
+                promptDialog.showError("网络较差，请稍后");
             }
 
             @Override
@@ -560,7 +584,7 @@ public class ProblemInfoActivity extends AppCompatActivity {
                         public void onFailure(Call call, IOException e) {
                             Log.e("onFailure: ", "收藏失败");
                             //稍后再试
-                            //
+                            promptDialog.showError("网络较差，请稍后");
                         }
 
                         @Override
@@ -586,6 +610,8 @@ public class ProblemInfoActivity extends AppCompatActivity {
                             Log.e("onFailure: ", "取消收藏失败");
                             //稍后再试
                             //
+                            promptDialog.showError("网络较差，请稍后");
+
                         }
 
                         @Override
@@ -596,7 +622,7 @@ public class ProblemInfoActivity extends AppCompatActivity {
                             handler.sendMessage(message);
                         }
                     });
-                    btnProblemSave.setText("收藏");
+
 
                 }
                 break;
@@ -618,7 +644,6 @@ public class ProblemInfoActivity extends AppCompatActivity {
                 checkUserXuanAnswer(problemSelect.getOptionD());
                 break;
             case R.id.btn_pai_to_check:
-                Log.e("onViewClicked: ", isGetAnswer + "");
                 if (isGetAnswer) {
                     return;
                 }
@@ -631,12 +656,14 @@ public class ProblemInfoActivity extends AppCompatActivity {
                     int postion = i + 1;
                     if (orderBeans.get(i).getOrder() != postion) {
                         //错误
-                        Toast.makeText(getApplicationContext(), "回答错误", Toast.LENGTH_SHORT).show();
+                        promptDialog.showInfo("很遗憾，回答错误~");
+                        //Toast.makeText(getApplicationContext(), "回答错误", Toast.LENGTH_SHORT).show();
                         btnAnswer.setVisibility(View.VISIBLE);
                         return;
                     }
                 }
-                Toast.makeText(getApplicationContext(), "回答正确", Toast.LENGTH_SHORT).show();
+                promptDialog.showInfo("恭喜你，回答正确喽！");
+                // Toast.makeText(getApplicationContext(), "回答正确", Toast.LENGTH_SHORT).show();
                 btnAnswer.setVisibility(View.VISIBLE);
                 break;
         }
@@ -650,13 +677,17 @@ public class ProblemInfoActivity extends AppCompatActivity {
         if (problemSelect.getProblemKey().equals(option) && !isGetAnswer) {
             isGetAnswer = true;
 //          正确 加积分加经验
-            Toast.makeText(getApplicationContext(), "回答正确", Toast.LENGTH_SHORT).show();
-//          /problem/answer/{userId}/{dynastyId}/{problemId}/{result}
+            //Toast.makeText(getApplicationContext(), "回答正确", Toast.LENGTH_SHORT).show();
+            promptDialog.showInfo("恭喜你，回答正确喽！");
+
+            //          /problem/answer/{userId}/{dynastyId}/{problemId}/{result}
             //显示查看解析
             btnAnswer.setVisibility(View.VISIBLE);
         } else {
             isGetAnswer = true;
-            Toast.makeText(getApplicationContext(), "回答错误", Toast.LENGTH_SHORT).show();
+            promptDialog.showInfo("很遗憾，回答错误~");
+
+            //Toast.makeText(getApplicationContext(), "回答错误", Toast.LENGTH_SHORT).show();
             btnAnswer.setVisibility(View.VISIBLE);
         }
     }
@@ -679,264 +710,139 @@ public class ProblemInfoActivity extends AppCompatActivity {
         return gestureDetector.onTouchEvent(event);
     }
 
+
+    //手势滑动
     private void doResult(int action) {
+        LogUtils.d("长度", myProblems.size() + "");
         switch (action) {
             case LEFT:
-                LogUtils.d("before",before);
                 cIndex += 1;
-                switch (before) {
-                    case "types":
-                        if (myProblems.size() > cIndex) {
-                            Problem problem = myProblems.get(cIndex);
-                            getBeforeOrNextProblem(problem);//显示
-                            return;
-                        } else {
-                            LogUtils.d("获取题目");
-                            LogUtils.d(cType + "aaa");
-                            if (cType == 4) {
-                                getRandomProblem();
-                            } else {
-                                getProblem(cProblem.getProblemType());
-                            }
-                        }
-                        animationin.setDuration(600);
-                        reContainer.startAnimation(animationin);
-                        break;
-                    case "info":
-                        LogUtils.d(Constant.userProblems.size()+"长度");
-                        LogUtils.d(cIndex+"index");
-                        if (Constant.userProblems.size() > cIndex) {
-                            Problem problem = Constant.userProblems.get(cIndex);
-                            LogUtils.d(problem.toString());
-                            llTypeLian.setVisibility(View.INVISIBLE);
-                            llTypePai.setVisibility(View.INVISIBLE);
-                            llTypeXuan.setVisibility(View.INVISIBLE);
-                            switch (problem.getProblemType()){//显示题目 下一道
-                                case 1:
-                                    llTypeXuan.setVisibility(View.VISIBLE);
-                                    problemSelect = (ProblemSelect) problem;
-                                    Message message = new Message();
-                                    message.arg1 = 1;
-                                    handler.sendMessage(message);
-                                    break;
-                                case 2:
-                                    llTypeLian.setVisibility(View.VISIBLE);
-                                    LogUtils.d("zhuanhuanqian:",problem.toString());
-                                    problemLinkLine = (ProblemLinkLine) problem;
-                                    LogUtils.d("zhuanhuan后:",problem.toString());
-
-                                    String problemKey = problemLinkLine.getProblemKey();
-                                    String[] qNum = problemKey.split(Constant.DELIMITER);
-                                    List<LinkDataBean> linkDataBeans = new ArrayList<>();
-                                    for (int i = 0; i < 4; i++) {
-                                        LinkDataBean linkDataBean = new LinkDataBean();
-                                        switch (i){
-                                            case 0:
-                                                linkDataBean.setContent(problemLinkLine.getOptionA());
-                                                break;
-                                            case 1:
-                                                linkDataBean.setContent(problemLinkLine.getOptionB());
-
-                                                break;
-                                            case 2:
-                                                linkDataBean.setContent(problemLinkLine.getOptionC());
-
-                                                break;
-                                            case 3:
-                                                linkDataBean.setContent(problemLinkLine.getOptionD());
-
-                                                break;
-                                        }
-                                        linkDataBean.setQ_num(Integer.parseInt(qNum[i]));
-                                        linkDataBean.setRow(i + 1);
-                                        linkDataBean.setCol(0);
-                                        linkDataBeans.add(linkDataBean);
-                                    }
-
-                                    for (int i = 0; i < 4; i++) {
-                                        LinkDataBean linkDataBean = new LinkDataBean();
-                                        switch (i){
-                                            case 0:
-                                                linkDataBean.setContent(problemLinkLine.getOptionAdes());
-                                                break;
-                                            case 1:
-                                                linkDataBean.setContent(problemLinkLine.getOptionBdes());
-
-                                                break;
-                                            case 2:
-                                                linkDataBean.setContent(problemLinkLine.getOptionCdes());
-
-                                                break;
-                                            case 3:
-                                                linkDataBean.setContent(problemLinkLine.getOptionDdes());
-
-                                                break;
-                                        }
-                                        linkDataBean.setQ_num(Integer.parseInt(qNum[i + 4]));
-                                        linkDataBean.setRow(i + 1);
-                                        linkDataBean.setCol(1);
-                                        linkDataBeans.add(linkDataBean);
-                                    }
-                                    LogUtils.d("zhuanhuan后:",problemLinkLine.toString());
-                                    Message message2 = new Message();
-                                    message2.arg1 = 2;
-                                    message2.obj = linkDataBeans;
-                                    handler.sendMessage(message2);
-                                    break;
-                                case 3:
-                                    llTypePai.setVisibility(View.VISIBLE);
-                                    problemgetOrder = new ProblemgetOrder();
-                                    problemgetOrder = (ProblemgetOrder) problem;
-                                    Message message1 = new Message();
-                                    message1.arg1 = 3;
-                                    handler.sendMessage(message1);
-                                    break;
-                            }
-                            animationin.setDuration(600);
-                            reContainer.startAnimation(animationin);
-                            return;
-                        } else {
-                            LogUtils.d("获取题目");
-                            LogUtils.d(cType + "aaa");
-                            //获取收藏的题目
-                        }
-                        break;
+                if (before.equals("info")) {
+                    return;
                 }
+                if (myProblems.size() > cIndex) {//下一道
+                    getBeforeOrNextProblem();//显示
+                    animationin.setDuration(600);
+                    reContainer.startAnimation(animationin);
+                    return;
+                } else {
+                    LogUtils.d("获取题目");
+                    LogUtils.d(cType + "aaa");
+                    if (cType == 4) {//随机
+                        getRandomProblem();
+                    } else {
+                        getProblem(cProblem.getProblemType());
+                    }
+                }
+                animationin.setDuration(600);
+                reContainer.startAnimation(animationin);
                 break;
-
-            case RIGHT://shang一道题目
+            case RIGHT:
                 cIndex -= 1;
-                switch (before) {
-                    case "types":
-                        if (cIndex < 0) {
-//                    提示不能滑动
-                            Toast.makeText(getApplicationContext(), "不能再滑啦", Toast.LENGTH_SHORT).show();
-                            return;
-                        } else {
-//                    显示
-                            Problem problem = myProblems.get(cIndex);
-                            getBeforeOrNextProblem(problem);
-                            animationout.setDuration(600);
-                            reContainer.startAnimation(animationout);
-                        }
-                        break;
-                    case "info":
-                        if (cIndex < 0) {
-//                    提示不能滑动
-                            Toast.makeText(getApplicationContext(), "不能再滑啦", Toast.LENGTH_SHORT).show();
-                            return;
-                        } else {
-//                    显示
-                            llTypeLian.setVisibility(View.INVISIBLE);
-                            llTypePai.setVisibility(View.INVISIBLE);
-                            llTypeXuan.setVisibility(View.INVISIBLE);
-                            Problem problem = Constant.userProblems.get(cIndex);
-                            switch (problem.getProblemType()){
-                                case 1:
-                                    llTypeXuan.setVisibility(View.VISIBLE);
-                                    problemSelect = (ProblemSelect) problem;
-                                    Message message = new Message();
-                                    message.arg1 = 1;
-                                    handler.sendMessage(message);
-                                    break;
-                                case 2:
-                                    llTypeLian.setVisibility(View.VISIBLE);
-                                    problemLinkLine = (ProblemLinkLine) problem;
-                                    String problemKey = problemLinkLine.getProblemKey();
-                                    String[] qNum = problemKey.split(Constant.DELIMITER);
-                                    List<LinkDataBean> linkDataBeans = new ArrayList<>();
-                                    for (int i = 0; i < 4; i++) {
-                                        LinkDataBean linkDataBean = new LinkDataBean();
-                                        switch (i){
-                                            case 0:
-                                                linkDataBean.setContent(problemLinkLine.getOptionA());
-                                                break;
-                                            case 1:
-                                                linkDataBean.setContent(problemLinkLine.getOptionB());
-
-                                                break;
-                                            case 2:
-                                                linkDataBean.setContent(problemLinkLine.getOptionC());
-
-                                                break;
-                                            case 3:
-                                                linkDataBean.setContent(problemLinkLine.getOptionD());
-
-                                                break;
-                                        }
-                                        linkDataBean.setQ_num(Integer.parseInt(qNum[i]));
-                                        linkDataBean.setRow(i + 1);
-                                        linkDataBean.setCol(0);
-                                        linkDataBeans.add(linkDataBean);
-                                    }
-
-                                    for (int i = 0; i < 4; i++) {
-                                        LinkDataBean linkDataBean = new LinkDataBean();
-                                        switch (i){
-                                            case 0:
-                                                linkDataBean.setContent(problemLinkLine.getOptionAdes());
-                                                break;
-                                            case 1:
-                                                linkDataBean.setContent(problemLinkLine.getOptionBdes());
-
-                                                break;
-                                            case 2:
-                                                linkDataBean.setContent(problemLinkLine.getOptionCdes());
-
-                                                break;
-                                            case 3:
-                                                linkDataBean.setContent(problemLinkLine.getOptionDdes());
-                                                break;
-                                        }
-                                        linkDataBean.setQ_num(Integer.parseInt(qNum[i + 4]));
-                                        linkDataBean.setRow(i + 1);
-                                        linkDataBean.setCol(1);
-                                        linkDataBeans.add(linkDataBean);
-                                    }
-                                    Message message2 = new Message();
-                                    message2.arg1 = 2;
-                                    message2.obj = linkDataBeans;
-                                    handler.sendMessage(message2);
-                                    break;
-                                case 3:
-                                    llTypePai.setVisibility(View.VISIBLE);
-                                    problemgetOrder = (ProblemgetOrder) problem;
-                                    Message message1 = new Message();
-                                    message1.arg1 = 3;
-                                    handler.sendMessage(message1);
-                                    break;
-                            }
-                            getBeforeOrNextProblem(problem);
-                            animationout.setDuration(600);
-                            reContainer.startAnimation(animationout);
-                        }
-                        break;
+                if (before.equals("info")) {
+                    return;
                 }
+                if (cIndex < 0) {//上一道
+//                    提示不能滑动
+                    cIndex = 0;
+                    Toast.makeText(getApplicationContext(), "不能再滑啦", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+//                    显示
+                    getBeforeOrNextProblem();//显示上一道题目
+                }
+                animationout.setDuration(600);
+                reContainer.startAnimation(animationout);
                 break;
         }
     }
 
-    private void getBeforeOrNextProblem(Problem problem) {
-        LogUtils.d("类型",problem.getProblemType()+"");
+    private void getBeforeOrNextProblem() {
+        LogUtils.d("类型", "");
+        Problem problem = myProblems.get(cIndex);
         switch (problem.getProblemType()) {
             case 1://选择
-                LogUtils.d("收到的选择");
-                if(null == problemSelect){
-                    problemSelect = new ProblemSelect();
+                if(cType==4){
+                    llTypeLian.setVisibility(View.INVISIBLE);
+                    llTypePai.setVisibility(View.INVISIBLE);
+                    llTypeXuan.setVisibility(View.VISIBLE);
                 }
                 problemSelect = (ProblemSelect) problem;
-                LogUtils.d("收到的选择",problemSelect.toString());
-
                 Message message = new Message();
                 message.arg1 = 1;
                 handler.sendMessage(message);
                 break;
             case 2:
+                if(cType==4){
+                    llTypeLian.setVisibility(View.VISIBLE);
+                    llTypePai.setVisibility(View.INVISIBLE);
+                    llTypeXuan.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    llTypeLian.setVisibility(View.INVISIBLE);
+                    llTypeLian.setVisibility(View.VISIBLE);
+                }
+
                 problemLinkLine = (ProblemLinkLine) problem;
+                String[] qNum = problemLinkLine.getProblemKey().split(Constant.DELIMITER);
+
+                List<LinkDataBean> linkDataBeans = new ArrayList<>();
+                for (int i = 0; i < 4; i++) {
+                    LinkDataBean linkDataBean = new LinkDataBean();
+                    switch (i) {
+                        case 0:
+                            linkDataBean.setContent(problemLinkLine.getOptionA());
+                            break;
+                        case 1:
+                            linkDataBean.setContent(problemLinkLine.getOptionB());
+                            break;
+                        case 2:
+                            linkDataBean.setContent(problemLinkLine.getOptionC());
+                            break;
+                        case 3:
+                            linkDataBean.setContent(problemLinkLine.getOptionD());
+                            break;
+                    }
+                    linkDataBean.setQ_num(Integer.parseInt(qNum[i]));
+                    linkDataBean.setRow(i + 1);
+                    linkDataBean.setCol(0);
+                    linkDataBeans.add(linkDataBean);
+                }
+
+                for (int i = 0; i < 4; i++) {
+                    LinkDataBean linkDataBean = new LinkDataBean();
+                    switch (i) {
+                        case 0:
+                            linkDataBean.setContent(problemLinkLine.getOptionAdes());
+                            break;
+                        case 1:
+                            linkDataBean.setContent(problemLinkLine.getOptionBdes());
+                            break;
+                        case 2:
+                            linkDataBean.setContent(problemLinkLine.getOptionCdes());
+                            break;
+                        case 3:
+                            linkDataBean.setContent(problemLinkLine.getOptionDdes());
+                            break;
+                    }
+                    linkDataBean.setQ_num(Integer.parseInt(qNum[i + 4]));
+                    linkDataBean.setRow(i + 1);
+                    linkDataBean.setCol(1);
+                    linkDataBeans.add(linkDataBean);
+                }
+
+                Message message2 = new Message();
+                message2.arg1 = 2;
+                message2.obj = linkDataBeans;
+                handler.sendMessage(message2);
                 break;
             case 3:
+                if(cType==4){
+                    llTypeLian.setVisibility(View.INVISIBLE);
+                    llTypePai.setVisibility(View.VISIBLE);
+                    llTypeXuan.setVisibility(View.INVISIBLE);
+                }
                 problemgetOrder = (ProblemgetOrder) problem;
-                LogUtils.d("排序接收到的",problemgetOrder.toString());
                 Message message1 = new Message();
                 message1.arg1 = 3;
                 handler.sendMessage(message1);
@@ -945,4 +851,275 @@ public class ProblemInfoActivity extends AppCompatActivity {
     }
 
 
+//    private void getBeforeOrNextProblem(Problem problem) {
+//        LogUtils.d("类型", problem.getProblemType() + "");
+//        switch (problem.getProblemType()) {
+//            case 1://选择
+//                LogUtils.d("收到的选择");
+//                if (null == problemSelect) {
+//                    problemSelect = new ProblemSelect();
+//                }
+//                problemSelect = (ProblemSelect) problem;
+//                LogUtils.d("收到的选择", problemSelect.toString());
+//
+//                Message message = new Message();
+//                message.arg1 = 1;
+//                handler.sendMessage(message);
+//                break;
+//            case 2:
+//                problemLinkLine = (ProblemLinkLine) problem;
+//                Message message2 = new Message();
+//                message2.arg1 = 2;
+//                handler.sendMessage(message2);
+//                break;
+//            case 3:
+//                problemgetOrder = (ProblemgetOrder) problem;
+//                LogUtils.d("排序接收到的", problemgetOrder.toString());
+//                Message message1 = new Message();
+//                message1.arg1 = 3;
+//                handler.sendMessage(message1);
+//                break;
+//        }
+//    }
+
+
+    //    private void doResult(int action) {
+//        switch (action) {
+//            case LEFT:
+//                LogUtils.d("before",before);
+//                cIndex += 1;
+//                switch (before) {
+//                    case "types":
+//                        if (myProblems.size() > cIndex) {
+//                            Problem problem = myProblems.get(cIndex);
+//                            getBeforeOrNextProblem(problem);//显示
+//                            return;
+//                        } else {
+//                            LogUtils.d("获取题目");
+//                            LogUtils.d(cType + "aaa");
+//                            if (cType == 4) {
+//                                getRandomProblem();
+//                            } else {
+//                                getProblem(cProblem.getProblemType());
+//                            }
+//                        }
+//                        animationin.setDuration(600);
+//                        reContainer.startAnimation(animationin);
+//                        break;
+//                    case "info":
+//                        LogUtils.d(Constant.userProblems.size()+"长度");
+//                        LogUtils.d(cIndex+"index");
+//                        if (Constant.userProblems.size() > cIndex) {
+//                            Problem problem = Constant.userProblems.get(cIndex);
+//                            LogUtils.d(problem.toString());
+//                            llTypeLian.setVisibility(View.INVISIBLE);
+//                            llTypePai.setVisibility(View.INVISIBLE);
+//                            llTypeXuan.setVisibility(View.INVISIBLE);
+//                            switch (problem.getProblemType()){//显示题目 下一道
+//                                case 1:
+//                                    llTypeXuan.setVisibility(View.VISIBLE);
+//                                    problemSelect = (ProblemSelect) problem;
+//                                    Message message = new Message();
+//                                    message.arg1 = 1;
+//                                    handler.sendMessage(message);
+//                                    break;
+//                                case 2:
+//                                    llTypeLian.setVisibility(View.VISIBLE);
+//                                    LogUtils.d("zhuanhuanqian:",problem.toString());
+//                                    problemLinkLine = (ProblemLinkLine) problem;
+//                                    LogUtils.d("zhuanhuan后:",problem.toString());
+//
+//                                    String problemKey = problemLinkLine.getProblemKey();
+//                                    String[] qNum = problemKey.split(Constant.DELIMITER);
+//                                    List<LinkDataBean> linkDataBeans = new ArrayList<>();
+//                                    for (int i = 0; i < 4; i++) {
+//                                        LinkDataBean linkDataBean = new LinkDataBean();
+//                                        switch (i){
+//                                            case 0:
+//                                                linkDataBean.setContent(problemLinkLine.getOptionA());
+//                                                break;
+//                                            case 1:
+//                                                linkDataBean.setContent(problemLinkLine.getOptionB());
+//
+//                                                break;
+//                                            case 2:
+//                                                linkDataBean.setContent(problemLinkLine.getOptionC());
+//
+//                                                break;
+//                                            case 3:
+//                                                linkDataBean.setContent(problemLinkLine.getOptionD());
+//
+//                                                break;
+//                                        }
+//                                        linkDataBean.setQ_num(Integer.parseInt(qNum[i]));
+//                                        linkDataBean.setRow(i + 1);
+//                                        linkDataBean.setCol(0);
+//                                        linkDataBeans.add(linkDataBean);
+//                                    }
+//
+//                                    for (int i = 0; i < 4; i++) {
+//                                        LinkDataBean linkDataBean = new LinkDataBean();
+//                                        switch (i){
+//                                            case 0:
+//                                                linkDataBean.setContent(problemLinkLine.getOptionAdes());
+//                                                break;
+//                                            case 1:
+//                                                linkDataBean.setContent(problemLinkLine.getOptionBdes());
+//
+//                                                break;
+//                                            case 2:
+//                                                linkDataBean.setContent(problemLinkLine.getOptionCdes());
+//
+//                                                break;
+//                                            case 3:
+//                                                linkDataBean.setContent(problemLinkLine.getOptionDdes());
+//
+//                                                break;
+//                                        }
+//                                        linkDataBean.setQ_num(Integer.parseInt(qNum[i + 4]));
+//                                        linkDataBean.setRow(i + 1);
+//                                        linkDataBean.setCol(1);
+//                                        linkDataBeans.add(linkDataBean);
+//                                    }
+//                                    LogUtils.d("zhuanhuan后:",problemLinkLine.toString());
+//                                    Message message2 = new Message();
+//                                    message2.arg1 = 2;
+//                                    message2.obj = linkDataBeans;
+//                                    handler.sendMessage(message2);
+//                                    break;
+//                                case 3:
+//                                    llTypePai.setVisibility(View.VISIBLE);
+//                                    problemgetOrder = new ProblemgetOrder();
+//                                    problemgetOrder = (ProblemgetOrder) problem;
+//                                    Message message1 = new Message();
+//                                    message1.arg1 = 3;
+//                                    handler.sendMessage(message1);
+//                                    break;
+//                            }
+//                            animationin.setDuration(600);
+//                            reContainer.startAnimation(animationin);
+//                            return;
+//                        } else {
+//                            LogUtils.d("获取题目");
+//                            LogUtils.d(cType + "aaa");
+//                            //获取收藏的题目
+//                        }
+//                        break;
+//                }
+//                break;
+//
+//            case RIGHT://shang一道题目
+//                cIndex -= 1;
+//                switch (before) {
+//                    case "types":
+//                        if (cIndex < 0) {
+////                    提示不能滑动
+//                            Toast.makeText(getApplicationContext(), "不能再滑啦", Toast.LENGTH_SHORT).show();
+//                            return;
+//                        } else {
+////                    显示
+//                            Problem problem = myProblems.get(cIndex);
+//                            getBeforeOrNextProblem(problem);
+//                            animationout.setDuration(600);
+//                            reContainer.startAnimation(animationout);
+//                        }
+//                        break;
+//                    case "info":
+//                        if (cIndex < 0) {
+////                    提示不能滑动
+//                            Toast.makeText(getApplicationContext(), "不能再滑啦", Toast.LENGTH_SHORT).show();
+//                            return;
+//                        } else {
+////                    显示
+//                            llTypeLian.setVisibility(View.INVISIBLE);
+//                            llTypePai.setVisibility(View.INVISIBLE);
+//                            llTypeXuan.setVisibility(View.INVISIBLE);
+//                            Problem problem = Constant.userProblems.get(cIndex);
+//                            switch (problem.getProblemType()){
+//                                case 1:
+//                                    llTypeXuan.setVisibility(View.VISIBLE);
+//                                    problemSelect = (ProblemSelect) problem;
+//                                    Message message = new Message();
+//                                    message.arg1 = 1;
+//                                    handler.sendMessage(message);
+//                                    break;
+//                                case 2:
+//                                    llTypeLian.setVisibility(View.VISIBLE);
+//                                    problemLinkLine = (ProblemLinkLine) problem;
+//                                    String problemKey = problemLinkLine.getProblemKey();
+//                                    String[] qNum = problemKey.split(Constant.DELIMITER);
+//                                    List<LinkDataBean> linkDataBeans = new ArrayList<>();
+//                                    for (int i = 0; i < 4; i++) {
+//                                        LinkDataBean linkDataBean = new LinkDataBean();
+//                                        switch (i){
+//                                            case 0:
+//                                                linkDataBean.setContent(problemLinkLine.getOptionA());
+//                                                break;
+//                                            case 1:
+//                                                linkDataBean.setContent(problemLinkLine.getOptionB());
+//
+//                                                break;
+//                                            case 2:
+//                                                linkDataBean.setContent(problemLinkLine.getOptionC());
+//
+//                                                break;
+//                                            case 3:
+//                                                linkDataBean.setContent(problemLinkLine.getOptionD());
+//
+//                                                break;
+//                                        }
+//                                        linkDataBean.setQ_num(Integer.parseInt(qNum[i]));
+//                                        linkDataBean.setRow(i + 1);
+//                                        linkDataBean.setCol(0);
+//                                        linkDataBeans.add(linkDataBean);
+//                                    }
+//
+//                                    for (int i = 0; i < 4; i++) {
+//                                        LinkDataBean linkDataBean = new LinkDataBean();
+//                                        switch (i){
+//                                            case 0:
+//                                                linkDataBean.setContent(problemLinkLine.getOptionAdes());
+//                                                break;
+//                                            case 1:
+//                                                linkDataBean.setContent(problemLinkLine.getOptionBdes());
+//
+//                                                break;
+//                                            case 2:
+//                                                linkDataBean.setContent(problemLinkLine.getOptionCdes());
+//
+//                                                break;
+//                                            case 3:
+//                                                linkDataBean.setContent(problemLinkLine.getOptionDdes());
+//                                                break;
+//                                        }
+//                                        linkDataBean.setQ_num(Integer.parseInt(qNum[i + 4]));
+//                                        linkDataBean.setRow(i + 1);
+//                                        linkDataBean.setCol(1);
+//                                        linkDataBeans.add(linkDataBean);
+//                                    }
+//                                    Message message2 = new Message();
+//                                    message2.arg1 = 2;
+//                                    message2.obj = linkDataBeans;
+//                                    handler.sendMessage(message2);
+//                                    break;
+//                                case 3:
+//                                    llTypePai.setVisibility(View.VISIBLE);
+//                                    problemgetOrder = (ProblemgetOrder) problem;
+//                                    Message message1 = new Message();
+//                                    message1.arg1 = 3;
+//                                    handler.sendMessage(message1);
+//                                    break;
+//                            }
+//                            getBeforeOrNextProblem(problem);
+//                            animationout.setDuration(600);
+//                            reContainer.startAnimation(animationout);
+//                        }
+//                        break;
+//                }
+//                break;
+//        }
+//    }
+
+
 }
+

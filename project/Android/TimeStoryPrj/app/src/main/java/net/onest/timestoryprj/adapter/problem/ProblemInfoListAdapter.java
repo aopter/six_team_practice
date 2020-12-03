@@ -37,6 +37,7 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.leefeng.promptlibrary.PromptDialog;
 
 public class ProblemInfoListAdapter extends RecyclerView.Adapter<ProblemInfoListAdapter.MyHolder> {
 
@@ -48,15 +49,14 @@ public class ProblemInfoListAdapter extends RecyclerView.Adapter<ProblemInfoList
 
 
 
-
     public ProblemInfoListAdapter(Context context, List<Problem> problems) {
         this.context = context;
         this.problems = problems;
-        if(null!=Constant.userProblems){
-            Constant.userProblems.clear();
-        }else {
-            Constant.userProblems = new ArrayList<>();
-        }
+//        if(null!=Constant.userProblems){
+//            Constant.userProblems.clear();
+//        }else {
+//            Constant.userProblems = new ArrayList<>();
+//        }
 
     }
 
@@ -74,6 +74,7 @@ public class ProblemInfoListAdapter extends RecyclerView.Adapter<ProblemInfoList
         String[] contents1 = problem.getProblemContent().split(Constant.DELIMITER);
         switch (problem.getProblemType()) {
             case 1://选
+                LogUtils.d("adapter测试收到的"+problem.toString());
                 holder.linearLayouts.get(1).setVisibility(View.INVISIBLE);
                 holder.linearLayouts.get(2).setVisibility(View.INVISIBLE);
                 problemSelect = new ProblemSelect();
@@ -90,20 +91,19 @@ public class ProblemInfoListAdapter extends RecyclerView.Adapter<ProblemInfoList
                 problemSelect.setOptionDpic(contents1[8]);
                 problemSelect.setProblemKey(problem.getProblemKey());
                 problemSelect.setProblemDetails(problem.getProblemDetails());
-                Constant.userProblems.add(problemSelect);
+                LogUtils.d("测试收到的选择题",problemSelect.toString());
+//                Constant.userProblems.add(problemSelect);
 //               展示数据
                 holder.problemTitles[0].setText(problemSelect.getTitle());
                 holder.tvOptionsXuan[0].setText(problemSelect.getOptionA());
                 holder.tvOptionsXuan[1].setText(problemSelect.getOptionB());
                 holder.tvOptionsXuan[2].setText(problemSelect.getOptionC());
                 holder.tvOptionsXuan[3].setText(problemSelect.getOptionD());
-                String url = ServiceConfig.SERVICE_ROOT + "/picture/download/problem/";
+                String url = ServiceConfig.SERVICE_ROOT + "/picture/download/";
                 Glide.with(context).load(url + problemSelect.getOptionApic()).into(holder.ivOptionsXuan[0]);
                 Glide.with(context).load(url + problemSelect.getOptionBpic()).into(holder.ivOptionsXuan[1]);
                 Glide.with(context).load(url + problemSelect.getOptionCpic()).into(holder.ivOptionsXuan[2]);
                 Glide.with(context).load(url + problemSelect.getOptionDpic()).into(holder.ivOptionsXuan[3]);
-
-
 //                点击liner 跳转activity 携带数据
                 holder.linearLayouts.get(0).setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -135,7 +135,7 @@ public class ProblemInfoListAdapter extends RecyclerView.Adapter<ProblemInfoList
                 problemLinkLine.setProblemDetails(problem.getProblemDetails());
 
                 LogUtils.d("原始排序题",problemLinkLine.toString());
-                Constant.userProblems.add(problemLinkLine);
+//                Constant.userProblems.add(problemLinkLine);
                 String[] qNum = problemKey.split(Constant.DELIMITER);
                 List<LinkDataBean> linkDataBeans = new ArrayList<>();
                 for(int i=0;i<4;i++){
@@ -195,10 +195,16 @@ public class ProblemInfoListAdapter extends RecyclerView.Adapter<ProblemInfoList
                 }
                 problemgetOrder.setContents(orderBeans);
 
-                Constant.userProblems.add(problemgetOrder);
+//                Constant.userProblems.add(problemgetOrder);
 
                 holder.problemTitles[2].setText(problemgetOrder.getTitle());
-                holder.rePai.setLayoutManager(new GridLayoutManager(context, 3));
+                int colnum = 2;
+                if(problemgetOrder.getContents().size()>4)
+                    colnum=3;
+                if(problemgetOrder.getContents().size()>6)
+                    colnum=4;
+
+                holder.rePai.setLayoutManager(new GridLayoutManager(context, colnum));
 //        rv.setLayoutManager(new LinearLayoutManager(this));
                 OptionLianAdapter adapter = new OptionLianAdapter(problemgetOrder.getContents());
                 holder.rePai.setAdapter(adapter);

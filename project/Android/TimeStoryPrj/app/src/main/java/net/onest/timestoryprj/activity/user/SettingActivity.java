@@ -577,6 +577,10 @@ public class SettingActivity extends AppCompatActivity {
         File tempFile = new File(storageDir, imageName);
         return tempFile;
     }
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 
     /**
      * 上传头像
@@ -668,12 +672,18 @@ public class SettingActivity extends AppCompatActivity {
                     .into(ivHeader);
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+<<<<<<< Updated upstream
             bitmapHeader = BitmapFactory.decodeFile(picturePath, options);
 
+=======
+
+            bitmapHeader = BitmapFactory.decodeFile(picturePath, options);
+>>>>>>> Stashed changes
             convertBitmapToFile(bitmapHeader);
         } else if (requestCode == 2 && resultCode == RESULT_OK && null != data) {
             File picture = new File(Environment.getExternalStorageDirectory() + "/temp.jpg");
             Bundle extras = data.getExtras();
+<<<<<<< Updated upstream
             if (extras != null) {
                 Bitmap photo = extras.getParcelable("data");
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -686,10 +696,30 @@ public class SettingActivity extends AppCompatActivity {
             }
         }
     }
+=======
+            if (extras != null){
+                    Bitmap photo = extras.getParcelable("data");
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    photo.compress(Bitmap.CompressFormat.JPEG,75,stream);
+                    Glide.with(getApplicationContext())
+                            .load(photo)
+                            .circleCrop()
+                            .into(ivHeader);
+                    convertBitmapToFile(photo);
+            }
+        }
+    }
+
+
+>>>>>>> Stashed changes
 
     private File convertBitmapToFile(Bitmap bitmap) {
         try {
             file = new File(SettingActivity.this.getCacheDir(), "userHeader");
+<<<<<<< Updated upstream
+=======
+            file = new File(SettingActivity.this.getCacheDir(), "portrait");
+>>>>>>> Stashed changes
             file.createNewFile();
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);

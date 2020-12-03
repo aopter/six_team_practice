@@ -25,10 +25,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
+<<<<<<< Updated upstream
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
 
+=======
+        <uses-library android:name="org.apache.http.legacy"
+            android:required="false"/>
+>>>>>>> Stashed changes
         <activity android:name=".activity.problem.ProblemClooectionInfoActivity"></activity>
         <activity
             android:name=".dialog.DialogExampleAvtivity"
