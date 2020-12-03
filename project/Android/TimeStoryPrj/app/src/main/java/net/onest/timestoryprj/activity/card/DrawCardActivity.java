@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 //抽卡
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.animation.AnimatorSet;
@@ -20,23 +20,21 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,13 +47,11 @@ import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.adapter.card.ShareAdapter;
 import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
-import net.onest.timestoryprj.entity.Card;
+import net.onest.timestoryprj.entity.card.Card;
 import net.onest.timestoryprj.entity.User;
-import net.onest.timestoryprj.util.GridSpacingItemDecoration;
+import net.onest.timestoryprj.entity.card.Icon;
 import net.onest.timestoryprj.util.ScreenUtil;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -96,7 +92,7 @@ public class DrawCardActivity extends AppCompatActivity {
     @BindView(R.id.share)
     ImageView btnShare;
     @BindView(R.id.icon_view)
-    RecyclerView iconView;
+    ListView iconView;
     @BindView(R.id.share_container)
     RelativeLayout shareContainer;
     @BindView(R.id.e_r_code)
@@ -105,7 +101,7 @@ public class DrawCardActivity extends AppCompatActivity {
     TextView join;
     //    @BindView(R.id.man)
 //    ImageView man;
-    private List<Integer> icons;
+    private List<Icon> icons;
     private boolean flag = false;
     private boolean isFlag = false;
     // 获取卡片
@@ -167,13 +163,23 @@ public class DrawCardActivity extends AppCompatActivity {
 
     private void initShareView() {
         icons = new ArrayList<>();
-        icons.add(R.mipmap.qq);
-        icons.add(R.mipmap.weixin);
-        icons.add(R.mipmap.frend_circle);
+        Icon icon1 = new Icon();
+        icon1.setIconId(R.mipmap.qq);
+        icon1.setName("分享到qq");
+        icons.add(icon1);
+        Icon icon2 = new Icon();
+        icon2.setIconId(R.mipmap.weixin);
+        icon2.setName("分享到微信");
+        icons.add(icon2);
+        Icon icon3 = new Icon();
+        icon3.setIconId(R.mipmap.frend_circle);
+        icon3.setName("分享到朋友圈");
+        icons.add(icon3);
         ShareAdapter shareAdapter = new ShareAdapter(getApplicationContext(), icons);
-        shareAdapter.setOnItemClickLitener(new ShareAdapter.OnItemClickLitener() {
+        iconView.setAdapter(shareAdapter);
+        iconView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 if (position == 0) {
                     // TODO 分享到qq
                     Log.e("d", "点击了qq");
@@ -213,10 +219,6 @@ public class DrawCardActivity extends AppCompatActivity {
                 }
             }
         });
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
-        iconView.addItemDecoration(new GridSpacingItemDecoration(3, 10, true));
-        iconView.setLayoutManager(layoutManager);
-        iconView.setAdapter(shareAdapter);
     }
 
     private void getDrawCard() {
@@ -357,6 +359,16 @@ public class DrawCardActivity extends AppCompatActivity {
             shareBitmap = view.getDrawingCache();
         }
     }
+
+    /**
+     * 保存机制
+     */
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+    }
+
 
     /**
      * 分享到QQ好友或群组

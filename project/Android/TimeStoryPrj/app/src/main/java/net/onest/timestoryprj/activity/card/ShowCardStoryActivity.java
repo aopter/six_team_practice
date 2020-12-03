@@ -3,19 +3,13 @@ package net.onest.timestoryprj.activity.card;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.animation.ObjectAnimator;
 import android.content.Intent;
-import android.graphics.Matrix;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
-import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -28,7 +22,7 @@ import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.customview.StoryNodeView;
-import net.onest.timestoryprj.entity.Card;
+import net.onest.timestoryprj.entity.card.Card;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package net.onest.timestoryprj.entity;
+package net.onest.timestoryprj.entity.card;
 
 import java.io.Serializable;
 

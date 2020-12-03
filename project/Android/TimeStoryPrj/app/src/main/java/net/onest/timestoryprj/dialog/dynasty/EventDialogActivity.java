@@ -95,7 +95,6 @@ public class EventDialogActivity extends AppCompatActivity {
                     ViewGroup.LayoutParams pp = rlRelativeLayout.getLayoutParams();
                     pp.height = DensityUtil.dip2px(getApplicationContext(), 110) * txtList.length;
                     rlRelativeLayout.setLayoutParams(pp);
-//                    svScroll.fullScroll(ScrollView.FOCUS_DOWN);
                     svScroll.post(new Runnable(){
                         @Override
                         public void run() {
@@ -116,6 +115,7 @@ public class EventDialogActivity extends AppCompatActivity {
                             int ml = DensityUtil.dip2px(getApplicationContext(), 30);
                             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
                             tv.setText(txtList[count]);
+                            tv.setTextColor(Color.BLACK);
                             tv.setTypeface(typeface1);
                             tv.setMaxHeight(th);
                             tv.setPadding(th,tp,th,0);
