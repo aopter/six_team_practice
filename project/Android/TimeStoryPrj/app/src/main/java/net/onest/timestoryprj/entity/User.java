@@ -1,4 +1,6 @@
 package net.onest.timestoryprj.entity;
+import net.onest.timestoryprj.entity.card.UserCard;
+
 import java.util.HashSet;
 import java.util.Set;
 

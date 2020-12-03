@@ -4,69 +4,62 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import net.onest.timestoryprj.R;
+import net.onest.timestoryprj.entity.card.Icon;
 import net.onest.timestoryprj.util.AdapterMeasureHelper;
 
 import java.util.List;
 
-public class ShareAdapter extends RecyclerView.Adapter<ShareAdapter.ViewHolder> {
-    private List<Integer> icons;
+public class ShareAdapter extends BaseAdapter {
+    private List<Icon> icons;
     private Context mContext;
-    private ShareAdapter.OnItemClickLitener mOnItemClickLitener;
 
-    //设置回调接口
-    public interface OnItemClickLitener {
-        void onItemClick(View view, int position);
+    @Override
+    public int getCount() {
+        return icons.size();
     }
 
-    public void setOnItemClickLitener(ShareAdapter.OnItemClickLitener mOnItemClickLitener) {
-        this.mOnItemClickLitener = mOnItemClickLitener;
+    @Override
+    public Object getItem(int i) {
+        return icons.get(i);
     }
 
-    private AdapterMeasureHelper mCardAdapterHelper = new AdapterMeasureHelper();
+    @Override
+    public long getItemId(int i) {
+        return i;
+    }
 
-    public ShareAdapter(Context context, List<Integer> icons) {
+    @Override
+    public View getView(int position, View view, ViewGroup viewGroup) {
+        ViewHolder holder = null;
+        if (null == view){
+            view = LayoutInflater.from(mContext).inflate(R.layout.share_icon_item, null);
+            holder = new ViewHolder();
+            holder.share = view.findViewById(R.id.share_icon);
+            holder.shareName = view.findViewById(R.id.share_name);
+            view.setTag(holder);
+        } else {
+            holder = (ViewHolder) view.getTag();
+        }
+        holder.share.setImageDrawable(mContext.getResources().getDrawable(icons.get(position).getIconId()));
+        holder.shareName.setText(icons.get(position).getName());
+        return view;
+    }
+
+    public ShareAdapter(Context context, List<Icon> icons) {
         this.icons = icons;
         this.mContext = context;
     }
 
-    @Override
-    public ShareAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.share_icon_item, parent, false);
-        mCardAdapterHelper.onCreateViewHolder(parent, itemView);
-        return new ShareAdapter.ViewHolder(itemView);
-    }
-
-    @Override
-    public void onBindViewHolder(final ShareAdapter.ViewHolder holder, final int position) {
-        mCardAdapterHelper.onBindViewHolder(holder.itemView, position, getItemCount());
-
-        holder.share.setImageDrawable(mContext.getResources().getDrawable(icons.get(position)));
-        if (mOnItemClickLitener != null) {
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mOnItemClickLitener.onItemClick(view, position);
-                }
-            });
-        }
-    }
-
-    @Override
-    public int getItemCount() {
-        return icons.size();
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder{
         private ImageView share;
-
-        public ViewHolder(final View view) {
-            super(view);
-            share = view.findViewById(R.id.share_icon);
-        }
+        private TextView shareName;
     }
 }

@@ -14,8 +14,7 @@ import com.bumptech.glide.Glide;
 
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.constant.ServiceConfig;
-import net.onest.timestoryprj.entity.Card;
-import net.onest.timestoryprj.entity.UserCard;
+import net.onest.timestoryprj.entity.card.UserCard;
 
 import java.util.List;
 
