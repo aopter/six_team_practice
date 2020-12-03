@@ -111,7 +111,10 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
+
+
                     URL url = new URL(ServiceConfig.SERVICE_ROOT + "/rule");
+
                     URLConnection connection = url.openConnection();
                     InputStream in = connection.getInputStream();
                     BufferedReader reader = new BufferedReader(
@@ -538,10 +541,6 @@ public class SettingActivity extends AppCompatActivity {
         File tempFile = new File(storageDir, imageName);
         return tempFile;
     }
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 
     /**
      * 上传头像
@@ -622,58 +621,28 @@ public class SettingActivity extends AppCompatActivity {
                     .into(ivHeader);
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-<<<<<<< Updated upstream
-            bitmapHeader = BitmapFactory.decodeFile(picturePath,options);
-
-=======
             bitmapHeader = BitmapFactory.decodeFile(picturePath, options);
->>>>>>> Stashed changes
+
             convertBitmapToFile(bitmapHeader);
         } else if (requestCode == 2 && resultCode == RESULT_OK && null != data) {
             File picture = new File(Environment.getExternalStorageDirectory() + "/temp.jpg");
             Bundle extras = data.getExtras();
-<<<<<<< Updated upstream
-            if (extras != null){
-                    Bitmap photo = extras.getParcelable("data");
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    photo.compress(Bitmap.CompressFormat.JPEG,75,stream);
-                    Glide.with(getApplicationContext())
-                            .load(photo)
-                            .circleCrop()
-                            .into(ivHeader);
-                    convertBitmapToFile(photo);
-            }
-        }
-    }
-
-    private File convertBitmapToFile(Bitmap bitmap) {
-        try {
-            file = new File(SettingActivity.this.getCacheDir(),"userHeader");
-=======
             if (extras != null) {
                 Bitmap photo = extras.getParcelable("data");
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 photo.compress(Bitmap.CompressFormat.JPEG, 75, stream);
-//                ivHeader.setImageBitmap(photo);
                 Glide.with(getApplicationContext())
                         .load(photo)
                         .circleCrop()
                         .into(ivHeader);
                 convertBitmapToFile(photo);
             }
-
-//            ivHeader.setImageBitmap(bitmap);
-            convertBitmapToFile(bitmap);
-
         }
     }
-
 
     private File convertBitmapToFile(Bitmap bitmap) {
         try {
             file = new File(SettingActivity.this.getCacheDir(), "userHeader");
-            file = new File(SettingActivity.this.getCacheDir(), "portrait");
->>>>>>> Stashed changes
             file.createNewFile();
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
@@ -687,6 +656,7 @@ public class SettingActivity extends AppCompatActivity {
         }
         return file;
     }
+
 
     private String loadImagePath(Intent data) {
         //获取返回的数据，这里是android自定义的uri地址

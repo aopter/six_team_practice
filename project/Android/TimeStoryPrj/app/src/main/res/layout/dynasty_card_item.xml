@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/card_pic"
             android:gravity="center"
-            android:padding="8dp"
+            android:padding="10dp"
             android:textColor="@android:color/black" />
     </RelativeLayout>
 </LinearLayout>
