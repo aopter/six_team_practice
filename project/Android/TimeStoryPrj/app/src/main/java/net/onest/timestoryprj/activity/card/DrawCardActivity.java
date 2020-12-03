@@ -19,6 +19,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
@@ -102,7 +103,9 @@ public class DrawCardActivity extends AppCompatActivity {
     //    @BindView(R.id.man)
 //    ImageView man;
     private List<Icon> icons;
+    // 是否已点击
     private boolean flag = false;
+
     private boolean isFlag = false;
     // 获取卡片
     private Card card;
@@ -111,6 +114,7 @@ public class DrawCardActivity extends AppCompatActivity {
     private OkHttpClient client;
     private Gson gson;
     private Bitmap shareBitmap;
+    // 是否在分享状态
     private boolean isShareing = false;
 
     /**
@@ -159,6 +163,36 @@ public class DrawCardActivity extends AppCompatActivity {
                 .serializeNulls()//允许输出Null值属性
                 .create();//创建Gson对象
         initShareView();
+//        if (null != savedInstanceState) {
+//            Log.e("onsave", "初始化了");
+//            // 状态1：抽卡界面（已选取卡片）
+//            // 状态2：抽卡卡片已显示
+//            // 状态3：分享界面
+//            isFlag = savedInstanceState.getBoolean("isFlag");
+//            flag = savedInstanceState.getBoolean("flag");
+//            isShareing = savedInstanceState.getBoolean("isShareing");
+//            card = (Card) savedInstanceState.getSerializable("card");
+//            tip.setText(savedInstanceState.getString("tip"));
+//            // 已点击4张卡片
+//            if (isFlag) {
+//                frontContainer.setAlpha(0);
+//                cardContainer.setAlpha(0.8f);
+//                // 如果已点击图片，获得卡片展示(默认)
+//                if (flag) {
+//                    drawCard.setBackground(getResources().getDrawable(R.mipmap.card_bg));
+//                    Glide.with(getApplicationContext())
+//                            .load(ServiceConfig.SERVICE_ROOT + "/picture/download/" + card.getCardPicture())
+//                            .into(drawCard);
+//                } else {
+//                    drawCard.setBackground(getResources().getDrawable(R.mipmap.card_back));
+//                }
+//            }
+//            toLastView.setVisibility(savedInstanceState.getInt("toLastView"));
+//            btnShare.setVisibility(savedInstanceState.getInt("btnShare"));
+//            ERCode.setVisibility(savedInstanceState.getInt("ERCode"));
+//            join.setVisibility(savedInstanceState.getInt("join"));
+//            shareContainer.setVisibility(savedInstanceState.getInt("shareContainer"));
+//        }
     }
 
     private void initShareView() {
@@ -181,7 +215,6 @@ public class DrawCardActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 if (position == 0) {
-                    // TODO 分享到qq
                     Log.e("d", "点击了qq");
                     shareContainer.setVisibility(View.INVISIBLE);
                     ScreenShot sh = new ScreenShot();
@@ -191,10 +224,8 @@ public class DrawCardActivity extends AppCompatActivity {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    Log.e("d", "已截图");
                     shareQQFriend("卡片分享", "您的好友向你分享了卡片", DrawCardActivity.DRAWABLE, shareBitmap);
                 } else if (position == 1) {
-                    // TODO 分享到微信
                     Log.e("d", "点击了wechat");
                     shareContainer.setVisibility(View.INVISIBLE);
                     ScreenShot sh = new ScreenShot();
@@ -207,6 +238,7 @@ public class DrawCardActivity extends AppCompatActivity {
                     shareWeChatFriend("卡片分享", "您的好友向你分享了卡片", DrawCardActivity.DRAWABLE, shareBitmap);
                 } else if (position == 2) {
                     // TODO 分享到朋友圈
+                    Log.e("d", "点击了朋友圈");
                     shareContainer.setVisibility(View.INVISIBLE);
                     ScreenShot sh = new ScreenShot();
                     sh.start();
@@ -295,7 +327,7 @@ public class DrawCardActivity extends AppCompatActivity {
     }
 
     @OnClick({R.id.card1, R.id.card2, R.id.card3, R.id.card4})
-    void showcardContainerPage() {
+    void showCardContainerPage() {
         if (!isFlag) {
             animatorSet = new AnimatorSet();
             ObjectAnimator alphaAnim = ObjectAnimator.ofFloat(
@@ -363,12 +395,27 @@ public class DrawCardActivity extends AppCompatActivity {
     /**
      * 保存机制
      */
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-    }
-
+//    @Override
+//    protected void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+//        Log.e("onsave", "保存了");
+//        // 保存card信息
+//        outState.putSerializable("card", card);
+//        // 是否选取了卡片
+//        outState.putBoolean("isFlag", isFlag);
+//        // 保存状态：以实现动画/为实现动画
+//        outState.putBoolean("flag", flag);
+//        // 保存状态：分享/不分享
+//        outState.putBoolean("isShareing", isShareing);
+//        // 保存各个container的状态
+//        outState.putInt("toLastView", toLastView.getVisibility());
+//        outState.putInt("shareContainer", shareContainer.getVisibility());
+//        outState.putInt("btnShare", btnShare.getVisibility());
+//        outState.putInt("ERCode", ERCode.getVisibility());
+//        outState.putInt("join", join.getVisibility());
+//        String text = tip.getText().toString();
+//        outState.putString("tip", text);
+//    }
 
     /**
      * 分享到QQ好友或群组
@@ -434,7 +481,6 @@ public class DrawCardActivity extends AppCompatActivity {
         } else if (type == DrawCardActivity.DRAWABLE) {
             intent.setType("image/*");
             final Uri uri = Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(), drawable, "IMG" + Calendar.getInstance().getTime(), null));
-
             intent.putExtra(Intent.EXTRA_STREAM, uri);
         }
         intent.putExtra(Intent.EXTRA_SUBJECT, msgTitle);
