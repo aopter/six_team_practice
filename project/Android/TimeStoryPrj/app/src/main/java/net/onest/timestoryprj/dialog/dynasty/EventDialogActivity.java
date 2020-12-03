@@ -106,51 +106,108 @@ public class EventDialogActivity extends AppCompatActivity {
                     llDialogLayout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            int count = rlRelativeLayout.getChildCount();
-                            TextView tv = new TextView(getApplicationContext());
-                            int width = DensityUtil.dip2px(getApplicationContext(), 150);
-                            int height = DensityUtil.dip2px(getApplicationContext(), 100);
-                            int th = DensityUtil.dip2px(getApplicationContext(), 20);
-                            int tp = DensityUtil.dip2px(getApplicationContext(), 10);
-                            int ml = DensityUtil.dip2px(getApplicationContext(), 30);
-                            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
-                            tv.setText(txtList[count]);
-                            tv.setTextColor(Color.BLACK);
-                            tv.setTypeface(typeface1);
-                            tv.setMaxHeight(th);
-                            tv.setPadding(th,tp,th,0);
-                            if (count % 2 != 0) {
-                                params.setMargins(ml,0,0,0);
-                                tv.setBackgroundResource(R.mipmap.conversation2);
-                            } else {
-                                params.setMargins(0,0,ml,0);
-                                tv.setBackgroundResource(R.mipmap.conversation1);
-                            }
-                            Log.e("count的值：", count + "");
-                            for (int j = 0; j < count; j++) {
-                                View view1 = rlRelativeLayout.getChildAt(j);
-                                Log.e("view1", view1.toString());
-                                float curTranslationY = view1.getTranslationY();
-                                Log.e("curTranslationY:" + j, curTranslationY + "");
-                                objectAnimator = ObjectAnimator.ofFloat(view1, "translationY",
-                                        curTranslationY, curTranslationY - 210);
-                                objectAnimator.setDuration(1000);
-                                objectAnimator.start();
-                            }
+                            if (prelongTim == 0){
+                                prelongTim = new Date().getTime();
+                                int count = rlRelativeLayout.getChildCount();
+                                TextView tv = new TextView(getApplicationContext());
+                                int width = DensityUtil.dip2px(getApplicationContext(), 150);
+                                int height = DensityUtil.dip2px(getApplicationContext(), 100);
+                                int th = DensityUtil.dip2px(getApplicationContext(), 20);
+                                int tp = DensityUtil.dip2px(getApplicationContext(), 10);
+                                int ml = DensityUtil.dip2px(getApplicationContext(), 30);
+                                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
+                                tv.setText(txtList[count]);
+                                tv.setTextColor(Color.BLACK);
+                                tv.setTypeface(typeface1);
+                                tv.setMaxHeight(th);
+                                tv.setPadding(th,tp,th,0);
+                                if (count % 2 != 0) {
+                                    params.setMargins(ml,0,0,0);
+                                    tv.setBackgroundResource(R.mipmap.conversation2);
+                                } else {
+                                    params.setMargins(0,0,ml,0);
+                                    tv.setBackgroundResource(R.mipmap.conversation1);
+                                }
+                                Log.e("count的值：", count + "");
+                                for (int j = 0; j < count; j++) {
+                                    View view1 = rlRelativeLayout.getChildAt(j);
+                                    Log.e("view1", view1.toString());
+                                    float curTranslationY = view1.getTranslationY();
+                                    Log.e("curTranslationY:" + j, curTranslationY + "");
+                                    objectAnimator = ObjectAnimator.ofFloat(view1, "translationY",
+                                            curTranslationY, curTranslationY - 210);
+                                    objectAnimator.setDuration(1000);
+                                    objectAnimator.start();
+                                }
 //
-                            params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-                            tv.setLayoutParams(params);
+                                params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                                tv.setLayoutParams(params);
 
-                            rlRelativeLayout.addView(tv);
-                            if (count == txtList.length-1) {
-                                llDialogLayout.setOnClickListener(null);
-                                long experience = Constant.User.getUserExperience();
-                                Log.i("ex1", String.valueOf(Constant.User.getUserExperience()));
-                                experience = experience + 15;
-                                Constant.User.setUserExperience(experience);
-                                Log.i("ex", String.valueOf(Constant.User.getUserExperience()));
-                                addUnlockIncidents();
-                                isPass(dynastyId);
+                                rlRelativeLayout.addView(tv);
+                                if (count == txtList.length-1) {
+                                    llDialogLayout.setOnClickListener(null);
+                                    long experience = Constant.User.getUserExperience();
+                                    Log.i("ex1", String.valueOf(Constant.User.getUserExperience()));
+                                    experience = experience + 15;
+                                    Constant.User.setUserExperience(experience);
+                                    Log.i("ex", String.valueOf(Constant.User.getUserExperience()));
+                                    addUnlockIncidents();
+                                    isPass(dynastyId);
+                                }
+                            }else{
+                                curTime = new Date().getTime();
+                                if ((curTime-prelongTim) < 1000){
+                                    Log.e("iii", curTime-prelongTim + "");
+                                }else{
+                                    Log.e("iiie", curTime-prelongTim + "");
+                                    int count = rlRelativeLayout.getChildCount();
+                                    TextView tv = new TextView(getApplicationContext());
+                                    int width = DensityUtil.dip2px(getApplicationContext(), 150);
+                                    int height = DensityUtil.dip2px(getApplicationContext(), 100);
+                                    int th = DensityUtil.dip2px(getApplicationContext(), 20);
+                                    int tp = DensityUtil.dip2px(getApplicationContext(), 10);
+                                    int ml = DensityUtil.dip2px(getApplicationContext(), 30);
+                                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
+                                    tv.setText(txtList[count]);
+                                    tv.setTextColor(Color.BLACK);
+                                    tv.setTypeface(typeface1);
+                                    tv.setMaxHeight(th);
+                                    tv.setPadding(th,tp,th,0);
+                                    if (count % 2 != 0) {
+                                        params.setMargins(ml,0,0,0);
+                                        tv.setBackgroundResource(R.mipmap.conversation2);
+                                    } else {
+                                        params.setMargins(0,0,ml,0);
+                                        tv.setBackgroundResource(R.mipmap.conversation1);
+                                    }
+                                    Log.e("count的值：", count + "");
+                                    for (int j = 0; j < count; j++) {
+                                        View view1 = rlRelativeLayout.getChildAt(j);
+                                        Log.e("view1", view1.toString());
+                                        float curTranslationY = view1.getTranslationY();
+                                        Log.e("curTranslationY:" + j, curTranslationY + "");
+                                        objectAnimator = ObjectAnimator.ofFloat(view1, "translationY",
+                                                curTranslationY, curTranslationY - 210);
+                                        objectAnimator.setDuration(1000);
+                                        objectAnimator.start();
+                                    }
+//
+                                    params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                                    tv.setLayoutParams(params);
+
+                                    rlRelativeLayout.addView(tv);
+                                    if (count == txtList.length-1) {
+                                        llDialogLayout.setOnClickListener(null);
+                                        long experience = Constant.User.getUserExperience();
+                                        Log.i("ex1", String.valueOf(Constant.User.getUserExperience()));
+                                        experience = experience + 15;
+                                        Constant.User.setUserExperience(experience);
+                                        Log.i("ex", String.valueOf(Constant.User.getUserExperience()));
+                                        addUnlockIncidents();
+                                        isPass(dynastyId);
+                                    }
+                                }
+                                prelongTim = curTime;
                             }
                         }
                     });

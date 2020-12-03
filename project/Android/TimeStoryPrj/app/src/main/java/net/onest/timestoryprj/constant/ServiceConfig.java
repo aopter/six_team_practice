@@ -7,13 +7,5 @@ public class ServiceConfig {
     //历史上的今天接口
     public static String HISTORY_TODAY = "http://api.juheapi.com/japi/toh";
 
-<<<<<<< Updated upstream
     public static String SERVICE_ROOT = "http://47.101.157.246:8889";
 }
-=======
-
-    public static String SERVICE_ROOT = "http://47.101.157.246:8889";
-
-
-}
->>>>>>> Stashed changes
