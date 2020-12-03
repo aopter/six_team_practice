@@ -144,9 +144,10 @@ public class EventDialogActivity extends AppCompatActivity {
                             rlRelativeLayout.addView(tv);
                             if (count == txtList.length-1) {
                                 llDialogLayout.setOnClickListener(null);
-//                                long experience = Constant.User.getUserExperience();
-//                                experience = experience + 15;
-//                                Constant.User.setUserExperience(experience);
+                                long experience = Constant.User.getUserExperience();
+                                Log.i("ex1", String.valueOf(Constant.User.getUserExperience()));
+                                experience = experience + 15;
+                                Constant.User.setUserExperience(experience);
                                 Log.i("ex", String.valueOf(Constant.User.getUserExperience()));
                                 addUnlockIncidents();
                                 isPass(dynastyId);
@@ -163,7 +164,7 @@ public class EventDialogActivity extends AppCompatActivity {
      */
     private void addUnlockIncidents() {
         Request request = new Request.Builder()
-                .url(ServiceConfig.SERVICE_ROOT + UNLOCK_INCIDENT_ADD + "1/" + dynastyId + "/" + incidentId)
+                .url(ServiceConfig.SERVICE_ROOT + UNLOCK_INCIDENT_ADD + Constant.User.getUserId() + "/" + dynastyId + "/" + incidentId)
                 .build();
         Call call = okHttpClient.newCall(request);
         new Thread(){
@@ -179,11 +180,11 @@ public class EventDialogActivity extends AppCompatActivity {
                         Looper.prepare();
                         Toast.makeText(getApplicationContext(), "您已看完此事件", Toast.LENGTH_LONG).show();
                         Looper.loop();
-//                        UserUnlockDynastyIncident unlockIncident = new UserUnlockDynastyIncident();
-//                        unlockIncident.setIncidentId(incident.getIncidentId());
-//                        unlockIncident.setIncidentName(incident.getIncidentName());
-//                        unlockIncident.setIncidentPicture("incident/tang-" + incidentId + ".png");
-//                        Constant.UnlockDynastyIncident.add(unlockIncident);
+                        UserUnlockDynastyIncident unlockIncident = new UserUnlockDynastyIncident();
+                        unlockIncident.setIncidentId(incident.getIncidentId());
+                        unlockIncident.setIncidentName(incident.getIncidentName());
+                        unlockIncident.setIncidentPicture("incident/tang-" + incidentId + ".png");
+                        Constant.UnlockDynastyIncident.add(unlockIncident);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -279,7 +280,7 @@ public class EventDialogActivity extends AppCompatActivity {
     private void addUnlockDynasty(String dynastyId) {
         int dynastyID = Integer.parseInt(dynastyId) + 1;
         Request request = new Request.Builder()
-                .url(ServiceConfig.SERVICE_ROOT + UNLOCK_DYNASTY_ADD + 1 + "/" + dynastyID)
+                .url(ServiceConfig.SERVICE_ROOT + UNLOCK_DYNASTY_ADD + Constant.User.getUserId() + "/" + dynastyID)
                 .build();
         Call call = okHttpClient.newCall(request);
         new Thread(() -> {
@@ -294,12 +295,12 @@ public class EventDialogActivity extends AppCompatActivity {
                     //解锁成功
                     Toast.makeText(getApplicationContext(), "您已解锁下一朝代", Toast.LENGTH_SHORT).show();
                     Looper.loop();
-//                    UserUnlockDynasty unlockDynasty = new UserUnlockDynasty();
-//                    unlockDynasty.setDynastyId(dynastyId);
-//                    unlockDynasty.setDynastyName(dynastyName);
-//                    unlockDynasty.setProgress(0);
-//                    unlockDynasty.setUserId(Constant.User.getUserId());
-//                    Constant.UnlockDynasty.add(unlockDynasty);
+                    UserUnlockDynasty unlockDynasty = new UserUnlockDynasty();
+                    unlockDynasty.setDynastyId(dynastyId);
+                    unlockDynasty.setDynastyName(dynastyName);
+                    unlockDynasty.setProgress(0);
+                    unlockDynasty.setUserId(Constant.User.getUserId());
+                    Constant.UnlockDynasty.add(unlockDynasty);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -318,7 +319,7 @@ public class EventDialogActivity extends AppCompatActivity {
     private void isPass(String dynastyId) {
         //Constant.User.getUserId()
         Request request = new Request.Builder()
-                .url(ServiceConfig.SERVICE_ROOT + DYNASTY_ISPASS + 1 + "/" + dynastyId)
+                .url(ServiceConfig.SERVICE_ROOT + DYNASTY_ISPASS + Constant.User.getUserId() + "/" + dynastyId)
                 .build();
 
         Call call = okHttpClient.newCall(request);

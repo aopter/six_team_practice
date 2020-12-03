@@ -72,7 +72,7 @@ public class HomepageActivity extends AppCompatActivity {
     private LinearLayout llLayout1;
     private LinearLayout llLayout2;
     private String DYNASTY_LIST = "/dynasty/list";
-    private String UNLOCK_DYNASTY_LIST = "/userunlockdynasty/list/1";
+    private String UNLOCK_DYNASTY_LIST = "/userunlockdynasty/list/";
     private Gson gson;
     private List<Dynasty> dynasties1;
     private Typeface typeface;
@@ -161,8 +161,8 @@ public class HomepageActivity extends AppCompatActivity {
         initMediaPlayer();
         AssetManager assets = getAssets();
         typeface = Typeface.createFromAsset(assets, "fonts/custom_fontt.ttf");
-
         initData();
+        initProgress();
     }
 
     /**
@@ -189,8 +189,8 @@ public class HomepageActivity extends AppCompatActivity {
      * 初始化进度条
      */
     private void initProgress() {
-        long userExperience = user.getUserExperience();
-        UserStatus userStatus = user.getUserStatus();
+        long userExperience = Constant.User.getUserExperience();
+        UserStatus userStatus = Constant.User.getUserStatus();
         long experMax = userStatus.getStatusExperienceTop();
         long experMin = userStatus.getStatusExperienceLow();
         long experOnStatus = experMax - experMin;
@@ -210,7 +210,7 @@ public class HomepageActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    URL url = new URL(ServiceConfig.SERVICE_ROOT + UNLOCK_DYNASTY_LIST);
+                    URL url = new URL(ServiceConfig.SERVICE_ROOT + UNLOCK_DYNASTY_LIST + Constant.User.getUserId());
                     url.openStream();
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("GET");
