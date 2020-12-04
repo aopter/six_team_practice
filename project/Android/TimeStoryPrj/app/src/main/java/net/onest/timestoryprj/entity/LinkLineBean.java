@@ -12,6 +12,8 @@ public class LinkLineBean {
     public static final String COLOR_BLUE = "#e6b800";
     public static final String COLOR_RIGHT = "#ff00deab";
     public static final String COLOR_WRONG = "#ffff7c64";
+    public static final String TRANSPARENT = "#00000000";
+
 
     /**
      * 直线的横纵坐标

@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -124,6 +125,8 @@ public class ProblemInfoActivity extends AppCompatActivity {
     @BindView(R.id.tv_pai_title)
     TextView tvPaiTitle;
 
+
+
     //   三种题目
     Problem cProblem;
     ProblemSelect problemSelect;
@@ -173,8 +176,13 @@ public class ProblemInfoActivity extends AppCompatActivity {
                     tvLianTitle.setText(problemLinkLine.getTitle());
                     List<LinkDataBean> linkDataBeans = (List<LinkDataBean>) msg.obj;
                     // 先清除掉原有绘制的线
+                    linkLineView.removeAllViews();
+//                    LinkLineView linkView = getLinkView();
                     Log.e("handleMessage收到: ", problemLinkLine.toString());
                     linkLineView.setData(linkDataBeans);
+                    tvResult.setText(" ");
+
+
                     linkLineView.setOnChoiceResultListener((correct, yourAnswer) -> {
                         // 结果
                         StringBuilder sb = new StringBuilder();
@@ -256,8 +264,6 @@ public class ProblemInfoActivity extends AppCompatActivity {
                         }
                     };
                     helper.attachToRecyclerView(rePai);
-
-
                     break;
                 case 4://收藏
                     btnProblemSave.setText("已收藏");
@@ -292,6 +298,20 @@ public class ProblemInfoActivity extends AppCompatActivity {
                     return true;
                 }
             };
+
+
+    //画一个布局
+    private LinkLineView getLinkView(){
+        flLinkLine.removeView(linkLineView);
+        LinkLineView lineView = new LinkLineView(this);
+//        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.fill_parent, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT,FrameLayout.LayoutParams.WRAP_CONTENT);
+        lineView.setLayoutParams(layoutParams);
+        flLinkLine.addView(lineView);
+        LogUtils.d("加了");
+        return lineView;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -443,7 +463,11 @@ public class ProblemInfoActivity extends AppCompatActivity {
     private void getProblem(int type) {
         btnAnswer.setVisibility(View.INVISIBLE);
         btnProblemSave.setText("收藏");
+<<<<<<< Updated upstream
         LogUtils.d("长度suoyou", myProblems.size() + "");
+=======
+        LogUtils.d("长度suoyou",myProblems.size()+"");
+>>>>>>> Stashed changes
         isGetAnswer = false;
         String url = ServiceConfig.SERVICE_ROOT + "/problem/replenish/" + type + "/" + dynastyId + "";
         Request.Builder builder = new Request.Builder();

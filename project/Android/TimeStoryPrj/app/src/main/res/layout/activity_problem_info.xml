@@ -378,6 +378,7 @@
 
             </LinearLayout>
 
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/re_pai"
                 android:layout_width="match_parent"
