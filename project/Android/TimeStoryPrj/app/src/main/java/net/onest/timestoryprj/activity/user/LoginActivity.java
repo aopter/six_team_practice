@@ -1,6 +1,7 @@
 package net.onest.timestoryprj.activity.user;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -20,8 +21,16 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.tencent.connect.UserInfo;
+import com.tencent.connect.auth.QQToken;
+import com.tencent.connect.common.Constants;
+import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.Tencent;
+import com.tencent.tauth.UiError;
 
+import net.onest.timestoryprj.MainActivity;
 import net.onest.timestoryprj.R;
+import net.onest.timestoryprj.activity.dynasty.HomepageActivity;
 import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.entity.User;
@@ -55,6 +64,9 @@ public class LoginActivity extends AppCompatActivity {
     private Gson gson;
     private SharedPreferences sharedPreferences;
     private PromptDialog promptDialog;
+    private Tencent mTencent;
+    private BaseUiListener baseUiListener;
+    private UserInfo userInfo;
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -77,9 +89,12 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        mTencent = Tencent.createInstance(1111252578+"", LoginActivity.this.getApplicationContext());
+
         promptDialog = new PromptDialog(this);
         //设置自定义属性
         promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
+
 
         findViews();
         gson = new Gson();
@@ -98,12 +113,14 @@ public class LoginActivity extends AppCompatActivity {
             chRemember.setChecked(true);
         }
         setListener();
+
     }
 
     private void setListener() {
         MyListener myListener = new MyListener();
         btnLogin.setOnClickListener(myListener);
         btnRegister.setOnClickListener(myListener);
+        btnQQ.setOnClickListener(myListener);
     }
 
     /**
@@ -128,13 +145,14 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    URL url = new URL(ServiceConfig.SERVICE_ROOT+"");
+                    URL url = new URL(ServiceConfig.SERVICE_ROOT+"/user/login");
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("POST");
                     OutputStream outputStream = connection.getOutputStream();
                     JSONObject obj = new JSONObject();
                     obj.put("number", phone);
                     obj.put("password", pwd);
+                    obj.put("flag",1);
                     String str = obj.toString();
                     outputStream.write(str.getBytes());
 
@@ -164,6 +182,9 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         Constant.User = gson.fromJson(info, User.class);
                         //跳转到主页
+                        Intent intent = new Intent();
+                        intent.setClass(getApplicationContext(), HomepageActivity.class);
+                        startActivity(intent);
                     }
 
                 } catch (MalformedURLException e) {
@@ -198,8 +219,43 @@ public class LoginActivity extends AppCompatActivity {
                     intent.setClass(getApplicationContext(), RegisterActivity.class);
                     startActivity(intent);
                     break;
+                case R.id.btn_qq://QQ登录
+                    baseUiListener = new BaseUiListener();
+                    Log.e("ok","正在监听");
+                    mTencent.login(LoginActivity.this,"all",baseUiListener);
+                    break;
             }
         }
+    }
+
+    private class BaseUiListener implements IUiListener {
+        @Override
+        public void onComplete(Object o) {
+            Toast.makeText(getApplicationContext(),"授权成功",Toast.LENGTH_SHORT).show();
+            Log.e("LoginActivity",o.toString());
+        }
+        @Override
+        public void onError(UiError uiError) {
+            Toast.makeText(getApplicationContext(),"授权失败",Toast.LENGTH_SHORT).show();
+        }
+        @Override
+        public void onCancel() {
+            Toast.makeText(getApplicationContext(),"授权取消",Toast.LENGTH_SHORT).show();
+        }
+        @Override
+        public void onWarning(int i) {
+
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == Constants.REQUEST_LOGIN){
+            Log.e("ok","回调函数");
+            Tencent.onActivityResultData(requestCode,resultCode,data,baseUiListener);
+            Log.e("iii","跳过去");
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     /**

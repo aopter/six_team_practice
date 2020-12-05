@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/info1"
+    android:background="@mipmap/intro"
     android:orientation="vertical"
     tools:context=".activity.dynasty.DynastyIntroduceActivity">
 
     <Button
         android:id="@+id/btn_pre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:background="@mipmap/pre"/>
     <LinearLayout
         android:layout_marginLeft="30dp"
@@ -27,9 +27,13 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:layout_width="40dp"
-            android:layout_height="130dp"
-            android:textSize="40sp"
+            android:layout_height="wrap_content"
+            android:textSize="35sp"
             android:alpha="0.7"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:background="@drawable/corner"
             android:textColor="@android:color/white"/>
         <ScrollView
@@ -44,7 +48,7 @@
                     android:id="@+id/tv_dynasty_intro"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="30sp"
+                    android:textSize="25sp"
                     android:layout_gravity="center"
                     android:textColor="@android:color/white"/>
             </LinearLayout>

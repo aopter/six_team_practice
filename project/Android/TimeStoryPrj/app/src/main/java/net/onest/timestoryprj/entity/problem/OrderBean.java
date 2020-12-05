@@ -21,4 +21,12 @@ public class OrderBean implements Serializable {
     public void setOrder(int order) {
         this.order = order;
     }
+
+    @Override
+    public String toString() {
+        return "OrderBean{" +
+                "content='" + content + '\'' +
+                ", order=" + order +
+                '}';
+    }
 }

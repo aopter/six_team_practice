@@ -8,66 +8,74 @@
     tools:context=".activity.dynasty.HomepageActivity">
 
     <LinearLayout
-        android:background="@mipmap/bg_home_title"
+
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="horizontal">
+        android:layout_height="70dp"
+        android:background="@mipmap/bg_home_title"
+        android:orientation="horizontal"
+        android:padding="5dp">
 
         <!-- 头像、名称-->
         <LinearLayout
-            android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_marginRight="20dp"
             android:orientation="vertical">
 
             <ImageView
+                android:src="@mipmap/test_header"
                 android:id="@+id/iv_header"
-                android:layout_width="80dp"
-                android:layout_height="80dp" />
-            <TextView
-                android:id="@+id/tv_name"
-                style="@style/normalBtn"/>
+                android:layout_width="60dp"
+                android:layout_height="50dp" />
+
+            <ProgressBar
+                android:layout_marginTop="5dp"
+                android:id="@+id/experience_progress"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:max="100"
+                android:progress="20"
+                android:progressDrawable="@drawable/progressbar_style" />
         </LinearLayout>
 
         <!-- 等级、经验-->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginRight="20dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="2dp">
 
             <TextView
                 android:id="@+id/tv_level"
-                android:layout_marginTop="40dp"
-                style="@style/normalBtn"/>
+                style="@style/normalBtn"
+                android:text="秀才" />
 
-            <ProgressBar
-                android:id="@+id/experience_progress"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_marginTop="10dp"
-                android:max="100"
-                android:progress="50"
-                android:progressDrawable="@drawable/progressbar_style"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal" />
+
         </LinearLayout>
         <!-- 积分 -->
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="83dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="20dp">
-
             <TextView
+                android:drawableLeft="@mipmap/coun_icon_l"
                 android:id="@+id/tv_point"
-                style="@style/normalBtn"/>
+                android:padding="2dp"
+                style="@style/normalBtn"
+                android:text="8888" />
+
             <Button
                 android:id="@+id/btn_plus"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@mipmap/plus"/>
-        </LinearLayout>
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:background="@mipmap/plus" />
+        </RelativeLayout>
         <!-- 抽卡 -->
         <LinearLayout
             android:layout_width="wrap_content"
@@ -78,7 +86,7 @@
             <Button
                 android:id="@+id/btn_card"
                 style="@style/normalBtn"
-                android:text="抽卡"/>
+                android:text="抽卡" />
         </LinearLayout>
 
         <!-- 我的卡片 -->
@@ -91,7 +99,7 @@
             <Button
                 android:id="@+id/btn_my_card"
                 style="@style/normalBtn"
-                android:text="我的卡片"/>
+                android:text="我的卡片" />
         </LinearLayout>
 
         <!-- 我的收藏 -->
@@ -104,29 +112,30 @@
             <Button
                 android:id="@+id/btn_my_collections"
                 style="@style/normalBtn"
-                android:text="我的收藏"/>
+                android:text="我的收藏" />
         </LinearLayout>
 
         <!-- 音量-->
         <RelativeLayout
-            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
 
             <Button
-                android:layout_toLeftOf="@+id/btn_settings"
-                android:layout_marginRight="10dp"
                 android:id="@+id/btn_voice"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:background="@mipmap/novoice"/>
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/btn_settings"
+                android:background="@mipmap/novoice" />
+
             <Button
+                android:id="@+id/btn_settings"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
-                android:id="@+id/btn_settings"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@mipmap/settings"/>
+                android:background="@mipmap/settings" />
         </RelativeLayout>
 
     </LinearLayout>
@@ -136,6 +145,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@mipmap/bg_home_content">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -143,17 +153,18 @@
 
             <LinearLayout
                 android:id="@+id/ll_layout1"
-                android:layout_marginLeft="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
                 android:orientation="horizontal">
 
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/ll_layout2"
-                android:layout_marginLeft="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
                 android:orientation="horizontal">
 
             </LinearLayout>

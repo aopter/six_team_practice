@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/set"
+    android:orientation="horizontal"
+    tools:context=".activity.user.SettingActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="280dp"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/settingBtn"
+            android:gravity="center"
+            android:text="      " />
+
+        <Button
+            android:id="@+id/btn_person"
+            style="@style/settingBtn"
+            android:text="个人资料" />
+
+        <Button
+            android:id="@+id/btn_voice_set"
+            style="@style/settingBtn"
+            android:text="音量设置" />
+
+        <Button
+            android:id="@+id/btn_rule"
+            style="@style/settingBtn"
+            android:text="查看规则" />
+
+        <Button
+            android:id="@+id/btn_problem"
+            style="@style/settingBtn"
+            android:text="反馈问题" />
+
+        <Button
+            android:id="@+id/btn_exit_login"
+            style="@style/settingBtn"
+            android:text="退出登录" />
+    </LinearLayout>
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/rightlinear"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:background="#0b000000"-->
+<!--        android:orientation="vertical"-->
+<!--        android:padding="20dp">-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:orientation="horizontal">-->
+
+<!--            <TextView-->
+<!--                android:layout_width="100dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:text="头像:" />-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/iv_header"-->
+<!--                android:layout_width="60dp"-->
+<!--                android:layout_height="50dp" />-->
+<!--        </LinearLayout>-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:orientation="horizontal">-->
+
+<!--            <TextView-->
+<!--                android:layout_width="100dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:text="昵称:" />-->
+
+<!--            <EditText-->
+<!--                android:id="@+id/et_nikename"-->
+<!--                android:layout_width="60dp"-->
+<!--                android:layout_height="50dp" />-->
+<!--        </LinearLayout>-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:orientation="horizontal">-->
+
+<!--            <TextView-->
+<!--                android:layout_width="100dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:text="个性签名:" />-->
+
+<!--            <EditText-->
+<!--                android:id="@+id/et_sign"-->
+<!--                android:layout_width="60dp"-->
+<!--                android:layout_height="50dp" />-->
+
+<!--        </LinearLayout>-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:orientation="horizontal">-->
+
+<!--            <TextView-->
+<!--                android:layout_width="100dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:text="手机号:" />-->
+
+<!--            <EditText-->
+<!--                android:id="@+id/et_phone"-->
+<!--                android:layout_width="60dp"-->
+<!--                android:layout_height="50dp" />-->
+<!--        </LinearLayout>-->
+
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:orientation="horizontal">-->
+
+<!--            <TextView-->
+<!--                android:layout_width="100dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:text="性别:" />-->
+
+<!--            <EditText-->
+<!--                android:id="@+id/et_sex"-->
+<!--                android:layout_width="60dp"-->
+<!--                android:layout_height="50dp" />-->
+
+
+<!--        </LinearLayout>-->
+<!--        <Button-->
+<!--            android:layout_gravity="right"-->
+<!--            style="@style/normalBtn"-->
+<!--            android:text="保存"-->
+<!--            android:id="@+id/btn_sub"/>-->
+<!--    </LinearLayout>-->
+
+<LinearLayout
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/ll_voice"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/tv_title_lk"
+        android:text="音量设置"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/voice"/>
+<!--        <SeekBar-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_width="wrap_content">-->
+
+<!--        </SeekBar>-->
+    </LinearLayout>
+</LinearLayout>
+
+</LinearLayout>

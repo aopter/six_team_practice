@@ -11,6 +11,17 @@ public class ProblemSelect extends Problem implements Serializable {
     private int problemId;//题目标识符
     private String title;//标题
     private String problemDetails;
+    private int problemType;
+
+    @Override
+    public int getProblemType() {
+        return problemType;
+    }
+
+    @Override
+    public void setProblemType(int problemType) {
+        this.problemType = problemType;
+    }
 
     @Override
     public String getProblemDetails() {
@@ -47,22 +58,31 @@ public class ProblemSelect extends Problem implements Serializable {
     private String optionCpic;
     private String optionDpic;
 //     答案A
-    private String answer;
+    private String problemKey;
 
-    private String details;
+    @Override
+    public String getProblemKey() {
+        return problemKey;
+    }
 
+    @Override
+    public void setProblemKey(String problemKey) {
+        this.problemKey = problemKey;
+    }
+
+    @Override
     public String getDynastyId() {
         return dynastyId;
     }
-
+    @Override
     public void setDynastyId(String dynastyId) {
         this.dynastyId = dynastyId;
     }
-
+    @Override
     public int getProblemId() {
         return problemId;
     }
-
+    @Override
     public void setProblemId(int problemId) {
         this.problemId = problemId;
     }
@@ -131,19 +151,24 @@ public class ProblemSelect extends Problem implements Serializable {
         this.optionDpic = optionDpic;
     }
 
-    public String getAnswer() {
-        return answer;
-    }
 
-    public void setAnswer(String answer) {
-        this.answer = answer;
-    }
-
-    public String getDetails() {
-        return details;
-    }
-
-    public void setDetails(String details) {
-        this.details = details;
+    @Override
+    public String toString() {
+        return "ProblemSelect{" +
+                "dynastyId='" + dynastyId + '\'' +
+                ", problemId=" + problemId +
+                ", title='" + title + '\'' +
+                ", problemDetails='" + problemDetails + '\'' +
+                ", problemType=" + problemType +
+                ", optionA='" + optionA + '\'' +
+                ", optionB='" + optionB + '\'' +
+                ", optionC='" + optionC + '\'' +
+                ", optionD='" + optionD + '\'' +
+                ", optionApic='" + optionApic + '\'' +
+                ", optionBpic='" + optionBpic + '\'' +
+                ", optionCpic='" + optionCpic + '\'' +
+                ", optionDpic='" + optionDpic + '\'' +
+                ", problemKey='" + problemKey + '\'' +
+                '}';
     }
 }

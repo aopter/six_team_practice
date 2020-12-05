@@ -15,13 +15,14 @@
     </style>
 
     <style name="normalBtn">
+        <item name="android:padding">5dp</item>
         <item name="android:alpha">0.9</item>
         <item name="android:gravity">center</item>
-        <item name="android:textSize">8sp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:background">@color/ourDynastyRed</item>
         <item name="android:textColor">#fff</item>
         <item name="android:layout_width">70dp</item>
-        <item name="android:layout_height">20dp</item>
+        <item name="android:layout_height">25dp</item>
     </style>
 
     <style name="loginEtStyle">
@@ -43,13 +44,24 @@
     </style>
 
     <style name="settingBtn">
+        <item name="android:alpha">0.8</item>
         <item name="android:background">@android:color/white</item>
         <item name="android:layout_width">120dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginLeft">80dp</item>
+        <item name="android:layout_marginLeft">0dp</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">#B22222</item>
-        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginTop">0dp</item>
+    </style>
+    <style name="settingBtnChooice">
+        <item name="android:alpha">0.8</item>
+        <item name="android:background">@color/ourDynastyRed</item>
+        <item name="android:layout_width">120dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">0dp</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#B22222</item>
+        <item name="android:layout_marginTop">0dp</item>
     </style>
 
     <style name="settingContent">
@@ -72,5 +84,15 @@
     <style name="ivOptionPic">
         <item name="android:layout_width">110dp</item>
         <item name="android:layout_height">110dp</item>
+    </style>
+
+
+    <style name="tv_title_lk">
+        <item name="android:padding">10dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:gravity">center_vertical</item>
     </style>
 </resources>

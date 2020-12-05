@@ -5,11 +5,10 @@
     android:id="@+id/ll_dialog_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/dialog"
+    android:background="@mipmap/bird"
+    android:gravity="center"
     android:orientation="horizontal"
     tools:context=".dialog.dynasty.EventDialogActivity">
-
-
     <LinearLayout
         android:layout_marginLeft="15dp"
         android:layout_marginRight="20dp"
@@ -21,8 +20,8 @@
         <Button
             android:layout_marginBottom="80dp"
             android:id="@+id/btn_pre2"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:background="@mipmap/back" />
         <TextView
             android:id="@+id/tv_big_word2"
@@ -33,38 +32,40 @@
             android:textSize="35sp" />
 
     </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="280dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="40dp"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:gravity="center">
 
             <ScrollView
-                android:layout_width="260dp"
-                android:layout_height="190dp"
+                android:layout_marginTop="50dp"
+                android:id="@+id/sv_scroll1"
+                android:layout_alignParentRight="true"
+                android:layout_width="210dp"
+                android:layout_height="230dp"
+                android:layout_marginRight="15dp"
                 android:layout_gravity="center"
-                android:background="@mipmap/bg_option_pai">
+                android:background="@mipmap/pangbai">
                 <TextView
                     android:clickable="false"
                     android:scrollbars="vertical"
                     android:id="@+id/tv_dialog_intro"
-                    android:layout_width="250dp"
+                    android:layout_width="200dp"
                     android:layout_height="180dp"
                     android:textSize="20sp"
-                    android:padding="10dp"
+                    android:padding="15dp"
                     android:layout_marginBottom="20dp" />
             </ScrollView>
-
-
 
             <ImageView
                 android:layout_marginTop="20dp"
                 android:id="@+id/iv_dialog_intro_img"
-                android:layout_width="150dp"
-                android:layout_height="150dp" />
-        </LinearLayout>
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="40dp"
+                android:layout_width="130dp"
+                android:layout_height="130dp" />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -75,15 +76,16 @@
                 android:id="@+id/sv_scroll"
                 android:layout_width="match_parent"
                 android:layout_height="230dp"
-                android:layout_gravity="center_horizontal">
+                android:layout_gravity="center">
 
                 <RelativeLayout
                     android:id="@+id/rl_relativeLayout"
-                    android:layout_width="300dp"
+                    android:layout_width="match_parent"
                     android:layout_height="110dp"
                     android:gravity="center_horizontal">
 
                     <TextView
+                        android:layout_marginRight="30dp"
                         android:layout_alignParentBottom="true"
                         android:id="@+id/tv_dialog1"
                         android:layout_width="150dp"
@@ -91,12 +93,13 @@
                         android:background="@mipmap/conversation1"
                         android:paddingLeft="20dp"
                         android:paddingTop="10dp"
-                        android:paddingRight="20dp" />
+                        android:paddingRight="20dp"/>
 
                 </RelativeLayout>
             </ScrollView>
 
             <LinearLayout
+                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"

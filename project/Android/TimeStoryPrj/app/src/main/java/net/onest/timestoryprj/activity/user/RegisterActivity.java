@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import net.onest.timestoryprj.R;
+import net.onest.timestoryprj.constant.ServiceConfig;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -62,13 +63,14 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("");
+                    URL url = new URL(ServiceConfig.SERVICE_ROOT+"/user/register");
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("POST");
                     OutputStream outputStream = connection.getOutputStream();
                     JSONObject obj = new JSONObject();
                     obj.put("number",phone);
                     obj.put("password",pwd);
+                    obj.put("flag",1);
                     String str = obj.toString();
                     outputStream.write(str.getBytes());
 
@@ -99,7 +101,6 @@ public class RegisterActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
         }.start();
     }

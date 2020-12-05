@@ -1,6 +1,7 @@
 package net.onest.timestoryprj.constant;
 
 import net.onest.timestoryprj.entity.HistoryDay;
+import net.onest.timestoryprj.entity.Problem;
 import net.onest.timestoryprj.entity.Rule;
 import net.onest.timestoryprj.entity.User;
 import net.onest.timestoryprj.entity.UserUnlockDynasty;
@@ -39,9 +40,16 @@ public class Constant {
 =======
     public static List<User> UserRankList;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 >>>>>>> 0fbef57e1ffd0b922e72e52b62d4dc8c4e599473
 =======
 >>>>>>> 3d3c1fca602c5720aacaf877cf56a195b94440f2
+=======
+
+    public static  List<Problem> userProblems;//题目列表
+
+
+>>>>>>> c9081a1699ff23a39791b643a7e3d11dc21225bc
 }

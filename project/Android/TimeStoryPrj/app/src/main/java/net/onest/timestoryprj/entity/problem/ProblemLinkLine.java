@@ -11,6 +11,17 @@ public class ProblemLinkLine extends Problem implements Serializable {
     private int problemId;//题目标识符
     private String problemDetails;
     private String title;
+    private int problemType;
+
+    @Override
+    public int getProblemType() {
+        return problemType;
+    }
+
+    @Override
+    public void setProblemType(int problemType) {
+        this.problemType = problemType;
+    }
 
     public String getTitle() {
         return title;
@@ -42,9 +53,10 @@ public class ProblemLinkLine extends Problem implements Serializable {
     private String optionCdes;
     private String optionDdes;
     //     答案A
-    private String answer;
+    private String problemKey;
 
-    private String details;
+
+
 
 
     public String getDynastyId() {
@@ -127,19 +139,33 @@ public class ProblemLinkLine extends Problem implements Serializable {
         this.optionDdes = optionDdes;
     }
 
-    public String getAnswer() {
-        return answer;
+    @Override
+    public String getProblemKey() {
+        return problemKey;
     }
 
-    public void setAnswer(String answer) {
-        this.answer = answer;
+    @Override
+    public void setProblemKey(String problemKey) {
+        this.problemKey = problemKey;
     }
 
-    public String getDetails() {
-        return details;
-    }
-
-    public void setDetails(String details) {
-        this.details = details;
+    @Override
+    public String toString() {
+        return "ProblemLinkLine{" +
+                "dynastyId='" + dynastyId + '\'' +
+                ", problemId=" + problemId +
+                ", problemDetails='" + problemDetails + '\'' +
+                ", title='" + title + '\'' +
+                ", problemType=" + problemType +
+                ", optionA='" + optionA + '\'' +
+                ", optionB='" + optionB + '\'' +
+                ", optionC='" + optionC + '\'' +
+                ", optionD='" + optionD + '\'' +
+                ", optionAdes='" + optionAdes + '\'' +
+                ", optionBdes='" + optionBdes + '\'' +
+                ", optionCdes='" + optionCdes + '\'' +
+                ", optionDdes='" + optionDdes + '\'' +
+                ", problemKey='" + problemKey + '\'' +
+                '}';
     }
 }
