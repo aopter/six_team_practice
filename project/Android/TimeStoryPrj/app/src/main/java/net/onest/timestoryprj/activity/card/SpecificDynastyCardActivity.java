@@ -1,10 +1,5 @@
 package net.onest.timestoryprj.activity.card;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -23,6 +18,11 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -46,6 +46,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.leefeng.promptlibrary.PromptDialog;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -72,6 +73,7 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
     private OkHttpClient client;
     private Gson gson;
     int type = 0;
+    private PromptDialog promptDialog;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -82,6 +84,7 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
                     Type type = new TypeToken<ArrayList<UserCard>>() {
                     }.getType();
                     userCards = gson.fromJson(result, type);
+                    promptDialog.dismissImmediately();
                     initDatas();
                     break;
             }
@@ -93,6 +96,9 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_specific_dynasty_card);
         ButterKnife.bind(this);
+        promptDialog = new PromptDialog(this);
+        promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(1000);
+        promptDialog.showLoading("正在加载");
         client = new OkHttpClient();
         // TODO 记得删除
         Constant.User = new User();

@@ -1,8 +1,5 @@
 package net.onest.timestoryprj.activity.card;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -15,6 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 
@@ -79,7 +79,7 @@ public class ShowCardStoryActivity extends AppCompatActivity {
             }
         });
         Glide.with(getApplicationContext())
-                .load(ServiceConfig.SERVICE_ROOT + "/picture/download/" + card.getCardPicture())
+                .load(ServiceConfig.SERVICE_ROOT + "/img/" + card.getCardPicture())
                 .into(cardImg);
         defineViewAndAnimation();
     }
