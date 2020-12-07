@@ -541,7 +541,6 @@ public class SettingActivity extends AppCompatActivity {
         File tempFile = new File(storageDir, imageName);
         return tempFile;
     }
-
     /**
      * 上传头像
      */
@@ -622,12 +621,11 @@ public class SettingActivity extends AppCompatActivity {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
             bitmapHeader = BitmapFactory.decodeFile(picturePath,options);
-
             convertBitmapToFile(bitmapHeader);
         }else if (requestCode == 2 && resultCode == RESULT_OK && null != data){
             File picture = new File(Environment.getExternalStorageDirectory()+"/temp.jpg");
             Bundle extras = data.getExtras();
-            if (extras != null){
+            if (extras != null) {
                 Bitmap photo = extras.getParcelable("data");
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 photo.compress(Bitmap.CompressFormat.JPEG,75,stream);
@@ -639,10 +637,10 @@ public class SettingActivity extends AppCompatActivity {
             }
         }
     }
-
     private File convertBitmapToFile(Bitmap bitmap) {
         try {
-            file = new File(SettingActivity.this.getCacheDir(),"userHeader");
+            file = new File(SettingActivity.this.getCacheDir(), "userHeader");
+            file = new File(SettingActivity.this.getCacheDir(), "portrait");
             file.createNewFile();
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG,0,bos);
@@ -675,3 +673,7 @@ public class SettingActivity extends AppCompatActivity {
         return path;
     }
 }
+
+
+
+
