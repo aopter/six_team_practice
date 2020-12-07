@@ -80,24 +80,8 @@ public class ProblemCollectionActivity extends AppCompatActivity {
                         initAdapter();
                         refreshLayout.finishLoadMore();//加载完毕
                     }
-
-//                    if (cPageCount == 1) {
-//                        initAdapter();
-//                        Log.e("handleMessage: ", "初始化完毕");
-//                        refreshLayout.finishRefresh();
-//                    } else {
-//
-//                        ProblemCollectionActivity.this.runOnUiThread(new Runnable() {
-//                            public void run() {
-//                                RecyclerView.Adapter adapter = recyclerView.getAdapter();
-//                                adapter.notifyDataSetChanged();
-//                                LogUtils.d("加载后长度："+problems.size()+"");
-//                                refreshLayout.finishLoadMore();//加载完毕
-//                            }
-//                        });
-//
-//                    }
                     break;
+<<<<<<< HEAD
 
             }
 
@@ -126,6 +110,12 @@ public class ProblemCollectionActivity extends AppCompatActivity {
 //                    }
 
             }
+=======
+
+            }
+
+        }
+>>>>>>> 7c9b6d8448ae5af0f88e79017aaaa8f8e439e348
         };
 
         private void initAdapter() {//初始化adapter
@@ -137,10 +127,7 @@ public class ProblemCollectionActivity extends AppCompatActivity {
                     ProblemInfoListAdapter problemInfoListAdapter = new ProblemInfoListAdapter(getApplicationContext(), problems);
                     recyclerView.setAdapter(problemInfoListAdapter);
                 }
-            });
-
-
-        }
+            });}
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {

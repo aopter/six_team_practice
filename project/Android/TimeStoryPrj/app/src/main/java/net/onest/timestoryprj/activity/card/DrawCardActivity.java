@@ -1,12 +1,5 @@
 package net.onest.timestoryprj.activity.card;
 
-import androidx.annotation.NonNull;
-//抽卡
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
@@ -19,7 +12,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
@@ -40,6 +32,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -48,8 +44,8 @@ import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.adapter.card.ShareAdapter;
 import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
-import net.onest.timestoryprj.entity.card.Card;
 import net.onest.timestoryprj.entity.User;
+import net.onest.timestoryprj.entity.card.Card;
 import net.onest.timestoryprj.entity.card.Icon;
 import net.onest.timestoryprj.util.ScreenUtil;
 
@@ -66,6 +62,8 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+
+//抽卡
 
 public class DrawCardActivity extends AppCompatActivity {
     @BindView(R.id.back)
@@ -180,7 +178,7 @@ public class DrawCardActivity extends AppCompatActivity {
                 if (flag) {
                     drawCard.setBackground(getResources().getDrawable(R.mipmap.card_bg));
                     Glide.with(getApplicationContext())
-                            .load(ServiceConfig.SERVICE_ROOT + "/picture/download/" + card.getCardPicture())
+                            .load(ServiceConfig.SERVICE_ROOT + "/img/" + card.getCardPicture())
                             .into(drawCard);
                 } else {
                     drawCard.setBackground(getResources().getDrawable(R.mipmap.card_back));
@@ -305,7 +303,7 @@ public class DrawCardActivity extends AppCompatActivity {
                         animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.front);
                         drawCard.setBackground(getResources().getDrawable(R.mipmap.card_bg));
                         Glide.with(getApplicationContext())
-                                .load(ServiceConfig.SERVICE_ROOT + "/picture/download/" + card.getCardPicture())
+                                .load(ServiceConfig.SERVICE_ROOT + "/img/" + card.getCardPicture())
                                 .into(drawCard);
                         drawCard.startAnimation(animation);
                     }

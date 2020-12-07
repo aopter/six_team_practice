@@ -1,9 +1,5 @@
 package net.onest.timestoryprj.activity.card;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -13,12 +9,15 @@ import android.os.Message;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -27,6 +26,7 @@ import com.google.gson.GsonBuilder;
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.entity.card.Card;
+import net.onest.timestoryprj.util.TextUtil;
 
 import java.io.IOException;
 
@@ -56,6 +56,7 @@ public class SpectficCardDetailActivity extends AppCompatActivity {
     private Animation in;
     private Gson gson;
     int cardId;
+    private TextUtil textUtil;
     private OkHttpClient client;
     private Handler handler = new Handler() {
         @Override
@@ -72,13 +73,10 @@ public class SpectficCardDetailActivity extends AppCompatActivity {
     };
 
     private void showDatas() {
-        in = new AlphaAnimation(0.0f, 1.0f);
-        in.setDuration(1500);
-        cardInfo.setText(card.getCardInfo());
-        cardInfo.startAnimation(in);
+        textUtil = new TextUtil(cardInfo, card.getCardInfo(), 100);
         cardName.setText(card.getCardName());
         Glide.with(getApplicationContext())
-                .load(ServiceConfig.SERVICE_ROOT + "/picture/download/" + card.getCardPicture())
+                .load(ServiceConfig.SERVICE_ROOT + "/img/" + card.getCardPicture())
                 .into(cardPic);
         if (card.getCardType() == 2) {
             cardStory.setVisibility(View.GONE);
@@ -121,6 +119,15 @@ public class SpectficCardDetailActivity extends AppCompatActivity {
             }
         } else {
             showDatas();
+        }
+    }
+
+    @OnClick(R.id.card_info)
+    void stopTextUtil(){
+        if (textUtil.isFlag() == false){
+            textUtil.setFlag(true);
+        } else {
+            cardInfo.setText(card.getCardInfo());
         }
     }
 
