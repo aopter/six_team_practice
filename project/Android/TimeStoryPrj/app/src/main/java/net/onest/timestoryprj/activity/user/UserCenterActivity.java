@@ -62,6 +62,9 @@ public class UserCenterActivity extends AppCompatActivity {
     @BindView(R.id.btn_set)
     Button btnSet;
 
+    @BindView(R.id.btn_plus)
+    Button btnPlus;
+
 //    @BindView(R.id.tv_name)
 //    public TextView tvName;
 
@@ -88,14 +91,13 @@ public class UserCenterActivity extends AppCompatActivity {
 
     @BindView(R.id.btn_card)
     Button btnGetCard;
-    Gson gson ;
-
+    Gson gson;
 
 
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
-            switch (msg.arg1){
+            switch (msg.arg1) {
                 case 1:
                     //加载完毕
                     HistoryTodayAdapter historyTodayAdapter = new HistoryTodayAdapter(UserCenterActivity.this);
@@ -107,7 +109,7 @@ public class UserCenterActivity extends AppCompatActivity {
                     break;
                 case 2://排行榜
 //                    加载数据到adapter
-                    UserRankListAdapter cakeListAdapter = new UserRankListAdapter(UserCenterActivity.this,Constant.UserRankList,
+                    UserRankListAdapter cakeListAdapter = new UserRankListAdapter(UserCenterActivity.this, Constant.UserRankList,
                             R.layout.item_user_rank_list);
                     rankList.setAdapter(cakeListAdapter);
                     break;
@@ -139,7 +141,7 @@ public class UserCenterActivity extends AppCompatActivity {
     }
 
     /**
-     *获取用户排行榜列表
+     * 获取用户排行榜列表
      */
     private void getUserRank() {
         Request.Builder builder = new Request.Builder();
@@ -150,14 +152,15 @@ public class UserCenterActivity extends AppCompatActivity {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.e("onFailure: ","下载排行榜失败" );
+                Log.e("onFailure: ", "下载排行榜失败");
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String jsonData = response.body().string();
                 Log.e("onResponse: ", jsonData);
-                Constant.UserRankList = gson.fromJson(jsonData,new TypeToken<List<User>>(){}.getType());
+                Constant.UserRankList = gson.fromJson(jsonData, new TypeToken<List<User>>() {
+                }.getType());
                 Message message = new Message();
                 message.arg1 = 2;
                 handler.sendMessage(message);
@@ -171,14 +174,14 @@ public class UserCenterActivity extends AppCompatActivity {
     private void getHistoryToday() {
 
         Request.Builder builder = new Request.Builder();
-        Time t=new Time("GMT+8"); // 设置Time Zone资料。
+        Time t = new Time("GMT+8"); // 设置Time Zone资料。
         t.setToNow(); // 获得当前系统时间。
-        int month = t.month+1; //月份前面加1，是因为从0开始计算，需要加1操作
+        int month = t.month + 1; //月份前面加1，是因为从0开始计算，需要加1操作
         int day = t.monthDay;
 //        获取当前月份
 //        获取当前时间
-        builder.url(ServiceConfig.HISTORY_TODAY + "?v=1.0&month="+month+"&day="+day+"&key=7a9cf9c5a9ff6338f5484d484ba51587");
-        LogUtils.d(ServiceConfig.HISTORY_TODAY + "?v=1.0&month="+month+"&day="+day+"&key=7a9cf9c5a9ff6338f5484d484ba51587");
+        builder.url(ServiceConfig.HISTORY_TODAY + "?v=1.0&month=" + month + "&day=" + day + "&key=7a9cf9c5a9ff6338f5484d484ba51587");
+        LogUtils.d(ServiceConfig.HISTORY_TODAY + "?v=1.0&month=" + month + "&day=" + day + "&key=7a9cf9c5a9ff6338f5484d484ba51587");
         //构造请求类
         Request request = builder.build();
         final Call call = okHttpClient.newCall(request);
@@ -192,21 +195,21 @@ public class UserCenterActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 String jsonData = response.body().string();
                 try {
-                JSONObject jsonObject = new JSONObject(jsonData);
-                JSONArray jsonArray = jsonObject.getJSONArray("result");
-                for (int i = 0; i < jsonArray.length(); ++i) {
-                    JSONObject his = jsonArray.getJSONObject(i);
-                    HistoryDay historyDay = new HistoryDay();
-                    historyDay.setDes(his.getString("des"));
-                    historyDay.setTitle(his.getString("title"));
-                    historyDay.setLunar(his.getString("lunar"));
-                    historyDay.setYear(his.getInt("year"));
-                    Constant.historyDays.add(historyDay);
-                }
-                Message message = handler.obtainMessage();
-                message.arg1 = 1;
-                handler.sendMessage(message);
-            } catch (JSONException e) {
+                    JSONObject jsonObject = new JSONObject(jsonData);
+                    JSONArray jsonArray = jsonObject.getJSONArray("result");
+                    for (int i = 0; i < jsonArray.length(); ++i) {
+                        JSONObject his = jsonArray.getJSONObject(i);
+                        HistoryDay historyDay = new HistoryDay();
+                        historyDay.setDes(his.getString("des"));
+                        historyDay.setTitle(his.getString("title"));
+                        historyDay.setLunar(his.getString("lunar"));
+                        historyDay.setYear(his.getInt("year"));
+                        Constant.historyDays.add(historyDay);
+                    }
+                    Message message = handler.obtainMessage();
+                    message.arg1 = 1;
+                    handler.sendMessage(message);
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
@@ -273,20 +276,28 @@ public class UserCenterActivity extends AppCompatActivity {
 
     }
 
+    @OnClick(R.id.btn_plus)
+    void toRechargePage() {
+        Log.e("btn", "点击");
+        Intent intent = new Intent(getApplicationContext(), RechargeActivity.class);
+        startActivity(intent);
+    }
+
     @OnClick(R.id.btn_go_dynasty)
-    public void jumpDynasty(){
+    public void jumpDynasty() {
         Intent intent = new Intent(UserCenterActivity.this, HomepageActivity.class);
         startActivity(intent);
     }
+
     @OnClick(R.id.btn_my_card)
-    public void jumpMyCard(){
+    public void jumpMyCard() {
         Intent intent = new Intent(UserCenterActivity.this, MyCardActivity.class);
         startActivity(intent);
     }
 
-    @OnClick({R.id.btn_my_collections,R.id.btn_card,R.id.btn_set})
-    public void onViewClicked(View view){
-        switch (view.getId()){
+    @OnClick({R.id.btn_my_collections, R.id.btn_card, R.id.btn_set})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
             case R.id.btn_my_collections:
                 Intent intent = new Intent(UserCenterActivity.this, ProblemCollectionActivity.class);
                 startActivity(intent);

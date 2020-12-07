@@ -81,41 +81,10 @@ public class ProblemCollectionActivity extends AppCompatActivity {
                         refreshLayout.finishLoadMore();//加载完毕
                     }
                     break;
-<<<<<<< HEAD
-
-            }
-
-//                    if (cPageCount == 1) {
-//                        initAdapter();
-//                        Log.e("handleMessage: ", "初始化完毕");
-//                        refreshLayout.finishRefresh();
-//                    } else {
-//
-//                        ProblemCollectionActivity.this.runOnUiThread(new Runnable() {
-//                            public void run() {
-//                                RecyclerView.Adapter adapter = recyclerView.getAdapter();
-//                                //打印
-//                                for(int i=0;i<problems.size();++i){
-//                                    LogUtils.d("加载shuju：" + problems.get(i).toString() + "");
-//
-//                                }
-//                                adapter.notifyDataSetChanged();
-//                                LogUtils.d("加载后长度：" + problems.size() + "");
-//                                refreshLayout.finishLoadMore();//加载完毕
-//                            }
-//                        });
-//
-//                    }
-//                        break;
-//                    }
-
-            }
-=======
 
             }
 
         }
->>>>>>> 7c9b6d8448ae5af0f88e79017aaaa8f8e439e348
         };
 
         private void initAdapter() {//初始化adapter

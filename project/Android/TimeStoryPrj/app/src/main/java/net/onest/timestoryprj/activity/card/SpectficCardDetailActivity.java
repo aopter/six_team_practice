@@ -33,6 +33,7 @@ import java.io.IOException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.leefeng.promptlibrary.PromptDialog;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -53,11 +54,11 @@ public class SpectficCardDetailActivity extends AppCompatActivity {
     ImageView back;
     @BindView(R.id.text)
     TextView tip;
-    private Animation in;
     private Gson gson;
     int cardId;
     private TextUtil textUtil;
     private OkHttpClient client;
+    private PromptDialog promptDialog;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -66,6 +67,7 @@ public class SpectficCardDetailActivity extends AppCompatActivity {
                     String result = (String) msg.obj;
                     Log.e("info", result);
                     card = gson.fromJson(result, Card.class);
+                    promptDialog.dismissImmediately();
                     showDatas();
                     break;
             }
@@ -78,10 +80,10 @@ public class SpectficCardDetailActivity extends AppCompatActivity {
         Glide.with(getApplicationContext())
                 .load(ServiceConfig.SERVICE_ROOT + "/img/" + card.getCardPicture())
                 .into(cardPic);
-        if (card.getCardType() == 2) {
-            cardStory.setVisibility(View.GONE);
-        } else {
+        if (card.getCardType() == 1) {
             cardStory.setVisibility(View.VISIBLE);
+        } else {
+            cardStory.setVisibility(View.GONE);
         }
     }
 
@@ -91,6 +93,9 @@ public class SpectficCardDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spectfic_card_detail);
         ButterKnife.bind(this);
+        promptDialog = new PromptDialog(this);
+        promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(1000);
+        promptDialog.showLoading("正在加载");
         client = new OkHttpClient();
         cardInfo.setMovementMethod(ScrollingMovementMethod.getInstance());
         final Typeface typeface = Typeface.createFromAsset(getResources().getAssets(), "fonts/custom_font.ttf");
@@ -114,7 +119,6 @@ public class SpectficCardDetailActivity extends AppCompatActivity {
                 // TODO 弹窗提示获取卡片信息失败
             } else {
                 cardName.setVisibility(View.VISIBLE);
-                cardStory.setVisibility(View.VISIBLE);
                 getCardData();
             }
         } else {
@@ -123,11 +127,37 @@ public class SpectficCardDetailActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.card_info)
-    void stopTextUtil(){
-        if (textUtil.isFlag() == false){
-            textUtil.setFlag(true);
-        } else {
-            cardInfo.setText(card.getCardInfo());
+    void stopTextUtil() {
+        if (textUtil != null) {
+            if (textUtil.isFlag() == false) {
+                textUtil.setFlag(true);
+            } else {
+                cardInfo.setText(card.getCardInfo());
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (textUtil != null) {
+            if (textUtil.isFlag() == false) {
+                textUtil.setFlag(true);
+            } else {
+                cardInfo.setText(card.getCardInfo());
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (textUtil != null) {
+            if (textUtil.isFlag() == false) {
+                textUtil.setFlag(true);
+            } else {
+                cardInfo.setText(card.getCardInfo());
+            }
         }
     }
 

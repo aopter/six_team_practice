@@ -1,9 +1,11 @@
 package net.onest.timestoryprj.activity.user;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -15,6 +17,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
@@ -42,11 +46,13 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -90,8 +96,17 @@ public class SettingActivity extends AppCompatActivity {
     private PromptDialog promptDialog;
     private boolean isAndroidQ = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q;
     private Bitmap bitmap;//从相册选择的图片
+    private EditText etNiName;
+    private EditText etSignature;
+    private EditText etPhone;
+    private EditText etSex;
+    private int userId;
+    private String niName;
+    private String signature;
+    private String sex;
+    private String phone;
+    private OkHttpClient okHttpClient;
     private Handler handler = new Handler() {
-<<<<<<< HEAD
         @Override
         public void handleMessage(@NonNull Message msg) {
             switch (msg.what) {
@@ -104,9 +119,6 @@ public class SettingActivity extends AppCompatActivity {
                     break;
             }
         }
-=======
-
->>>>>>> 7c9b6d8448ae5af0f88e79017aaaa8f8e439e348
     };
 
     @Override
@@ -122,15 +134,13 @@ public class SettingActivity extends AppCompatActivity {
         findViews();
         setListener();
         gson = new Gson();
-
+        userId = Constant.User.getUserId();
+        setPersonAttr();
         new Thread() {
             @Override
             public void run() {
                 try {
-
-
                     URL url = new URL(ServiceConfig.SERVICE_ROOT + "/rule");
-
                     URLConnection connection = url.openConnection();
                     InputStream in = connection.getInputStream();
                     BufferedReader reader = new BufferedReader(
@@ -147,7 +157,6 @@ public class SettingActivity extends AppCompatActivity {
             }
         }.start();
 
-<<<<<<< HEAD
         new Thread() {
             @Override
             public void run() {
@@ -171,12 +180,9 @@ public class SettingActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
             }
         }.start();
 
-=======
->>>>>>> 7c9b6d8448ae5af0f88e79017aaaa8f8e439e348
     }
 
     private void setListener() {
@@ -244,7 +250,6 @@ public class SettingActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         }));
-
     }
 
     /**
@@ -257,10 +262,11 @@ public class SettingActivity extends AppCompatActivity {
         linearLayout.setLayoutParams(params);
         //问题编辑框
         EditText etProblem = new EditText(getApplicationContext());
-        LinearLayout.LayoutParams etParam = new LinearLayout.LayoutParams(900, 500);
+        LinearLayout.LayoutParams etParam = new LinearLayout.LayoutParams(1200, 700);
         etParam.topMargin = 150;
         etParam.gravity = Gravity.CENTER_HORIZONTAL;
         etProblem.setText("说说你的问题吧……");
+        etProblem.setPadding(20,10,20,200);
         etProblem.setTextSize(20);
         etProblem.setBackgroundResource(R.drawable.edit_style);
         etProblem.setLayoutParams(etParam);
@@ -273,7 +279,7 @@ public class SettingActivity extends AppCompatActivity {
         btnSub.setBackgroundResource(R.color.ourDynastyRed);
         btnParam.gravity = Gravity.RIGHT;
         btnParam.rightMargin = 30;
-        btnParam.topMargin = 120;
+        btnParam.topMargin = 80;
         btnSub.setLayoutParams(btnParam);
         linearLayout.addView(btnSub);
         rightLayout.addView(linearLayout);
@@ -420,7 +426,7 @@ public class SettingActivity extends AppCompatActivity {
         LinearLayout.LayoutParams tvParam = new LinearLayout.LayoutParams(350, LinearLayout.LayoutParams.WRAP_CONTENT);
         tvParam.leftMargin = 30;
         tvParam.topMargin = 30;
-        LinearLayout.LayoutParams etParam = new LinearLayout.LayoutParams(600, LinearLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams etParam = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         etParam.leftMargin = 20;
         etParam.topMargin = 30;
         TextView tvPhoto = new TextView(getApplicationContext());
@@ -433,7 +439,6 @@ public class SettingActivity extends AppCompatActivity {
         LinearLayout.LayoutParams ivParam = new LinearLayout.LayoutParams(200, 200);
         ivParam.leftMargin = 20;
         ivParam.topMargin = 20;
-<<<<<<< HEAD
         if (Constant.User.getUserHeader() == null) {
             Glide.with(this)
                     .load(R.mipmap.bg_man)
@@ -442,17 +447,11 @@ public class SettingActivity extends AppCompatActivity {
         } else {
             Glide.with(this)
                     .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
+//                    .load(Constant.User.getUserHeader())
                     .circleCrop()
                     .into(ivHeader);
         }
 
-
-=======
-        Glide.with(this)
-                .load(R.mipmap.man)
-                .circleCrop()
-                .into(ivHeader);
->>>>>>> 7c9b6d8448ae5af0f88e79017aaaa8f8e439e348
         ivHeader.setLayoutParams(ivParam);
         linearLayout1.addView(ivHeader);
         rightLayout.addView(linearLayout1);
@@ -465,8 +464,8 @@ public class SettingActivity extends AppCompatActivity {
         tvNiName.setTextSize(20);
         tvNiName.setLayoutParams(tvParam);
         linearLayout2.addView(tvNiName);
-        EditText etNiName = new EditText(getApplicationContext());
-        etNiName.setText("小美");
+        etNiName = new EditText(getApplicationContext());
+        etNiName.setText(Constant.UserDetails.getUserNickname());
         etNiName.setTextSize(20);
         etNiName.setLayoutParams(etParam);
         linearLayout2.addView(etNiName);
@@ -480,9 +479,8 @@ public class SettingActivity extends AppCompatActivity {
         tvSignature.setTextSize(20);
         tvSignature.setLayoutParams(tvParam);
         linearLayout3.addView(tvSignature);
-        EditText etSignature = new EditText(getApplicationContext());
-
-        etSignature.setText("第五美女");
+        etSignature = new EditText(getApplicationContext());
+        etSignature.setText(Constant.UserDetails.getUserSignature());
         etSignature.setTextSize(20);
         etSignature.setLayoutParams(etParam);
         linearLayout3.addView(etSignature);
@@ -496,8 +494,8 @@ public class SettingActivity extends AppCompatActivity {
         tvSex.setTextSize(20);
         tvSex.setLayoutParams(tvParam);
         linearLayout4.addView(tvSex);
-        EditText etSex = new EditText(getApplicationContext());
-        etSex.setText("女");
+        etSex = new EditText(getApplicationContext());
+        etSex.setText(Constant.UserDetails.getUserSex());
         etSex.setTextSize(20);
         etSex.setLayoutParams(etParam);
         linearLayout4.addView(etSex);
@@ -511,8 +509,8 @@ public class SettingActivity extends AppCompatActivity {
         tvPhone.setTextSize(20);
         tvPhone.setLayoutParams(tvParam);
         linearLayout5.addView(tvPhone);
-        EditText etPhone = new EditText(getApplicationContext());
-        etPhone.setText("123456");
+        etPhone = new EditText(getApplicationContext());
+        etPhone.setText(Constant.UserDetails.getUserNumber());
         etPhone.setTextSize(20);
         etPhone.setLayoutParams(etParam);
         linearLayout5.addView(etPhone);
@@ -559,16 +557,15 @@ public class SettingActivity extends AppCompatActivity {
         btnSub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String niName = etNiName.getText().toString().trim();
-                String signature = etSignature.getText().toString().trim();
-                String sex = etSex.getText().toString().trim();
-                String phone = etPhone.getText().toString().trim();
+                niName = etNiName.getText().toString().trim();
+                signature = etSignature.getText().toString().trim();
+                sex = etSex.getText().toString().trim();
+                phone = etPhone.getText().toString().trim();
                 Log.e("提交", niName + signature + sex + phone);
                 //判断非空
                 if (null != niName && null != signature && null != sex && null != phone) {
-//                    int userId = Constant.User.getUserId();
                     UserDetails userDetails = new UserDetails();
-                    userDetails.setUserId(1);
+                    userDetails.setUserId(userId);
                     userDetails.setUserNickname(niName);
                     userDetails.setUserNumber(phone);
                     userDetails.setUserSex(sex);
@@ -576,18 +573,16 @@ public class SettingActivity extends AppCompatActivity {
                     userInfo = gson.toJson(userDetails);
                     Log.e("userInfo", userInfo);
                     //用户详情传给服务器
-//                    upToServer();
+                    upToServer();
                     //上传头像
 //                    upHeaderToServer();
 
                 } else {
                     Toast.makeText(getApplicationContext(), "请您完善用户信息后提交", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
     }
-
 
     /**
      * 创建保存图片的文件
@@ -615,7 +610,7 @@ public class SettingActivity extends AppCompatActivity {
                 .setType(MultipartBody.FORM);//通过表单上传
         RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);//上传的文件以及类型
         requestBody.addFormDataPart("file", file.getName(), fileBody)
-                .addFormDataPart("userId", 1 + "");
+                .addFormDataPart("userId", userId+ "");
         Request request = new Request.Builder()
                 .url(ServiceConfig.SERVICE_ROOT + "/picture/upload")
                 .post(requestBody.build())
@@ -625,27 +620,21 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.e("no", "失败");
-<<<<<<< HEAD
                 Looper.prepare();
                 Toast.makeText(getApplicationContext(), "头像上传失败", Toast.LENGTH_SHORT).show();
                 Looper.loop();
 
-=======
->>>>>>> 7c9b6d8448ae5af0f88e79017aaaa8f8e439e348
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
 
                 Log.e("ok", "成功");
-<<<<<<< HEAD
                 Constant.User.setUserHeader("us-" + Constant.User.getUserId() + ".jpg");
                 Looper.prepare();
                 Toast.makeText(getApplicationContext(), "头像上传成功", Toast.LENGTH_SHORT).show();
                 Looper.loop();
 
-=======
->>>>>>> 7c9b6d8448ae5af0f88e79017aaaa8f8e439e348
             }
         });
     }
@@ -659,6 +648,22 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
+//                    FormBody.Builder formBuilder = new FormBody.Builder();
+//                    FormBody formBody = formBuilder.add("userId",userId+"")
+//                            .add("userNickname",niName)
+//                            .add("userSignature",signature)
+//                            .add("userSex",sex)
+//                            .add("userNumber",phone)
+//                            .build();
+//                    Request request = new Request.Builder()
+//                            .url(ServiceConfig.SERVICE_ROOT + "/userdetails/modify")
+//                            .method("POST", formBody)
+//                            .post(formBody)
+//                            .build();
+//                    Call call = okHttpClient.newCall(request);
+//                    Response response = call.execute();
+//                    String info = response.body().string();
+//                    Log.e("result", info);
 
                     URL url = new URL(ServiceConfig.SERVICE_ROOT + "/userdetails/modify");
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -694,34 +699,21 @@ public class SettingActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK && null != data){
             picturePath = loadImagePath(data);
-<<<<<<< HEAD
             Log.e("picturePath", picturePath);
-=======
->>>>>>> 7c9b6d8448ae5af0f88e79017aaaa8f8e439e348
             Glide.with(getApplicationContext())
                     .load(picturePath)
                     .circleCrop()
                     .into(ivHeader);
-<<<<<<< HEAD
             Log.e("ok", "显示出啦");
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
             bitmapHeader = BitmapFactory.decodeFile(picturePath, options);
-=======
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-            bitmapHeader = BitmapFactory.decodeFile(picturePath,options);
-
->>>>>>> 7c9b6d8448ae5af0f88e79017aaaa8f8e439e348
             convertBitmapToFile(bitmapHeader);
         }else if (requestCode == 2 && resultCode == RESULT_OK && null != data){
             File picture = new File(Environment.getExternalStorageDirectory()+"/temp.jpg");
             Bundle extras = data.getExtras();
-<<<<<<< HEAD
-            if (extras != null) {
-=======
+
             if (extras != null){
->>>>>>> 7c9b6d8448ae5af0f88e79017aaaa8f8e439e348
                 Bitmap photo = extras.getParcelable("data");
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 photo.compress(Bitmap.CompressFormat.JPEG,75,stream);
@@ -731,14 +723,12 @@ public class SettingActivity extends AppCompatActivity {
                         .into(ivHeader);
                 convertBitmapToFile(photo);
             }
-<<<<<<< HEAD
         } else if (requestCode == 100) {
             //从相册返回数据
             if (data != null) {
                 //得到图片全路径
-                uri = data.getData();
+                Uri uri = data.getData();
                 ivHeader.setImageURI(uri);
-
                 ContentResolver contentResolver = getContentResolver();
                 InputStream in = null;
                 try {
@@ -748,23 +738,14 @@ public class SettingActivity extends AppCompatActivity {
                 }
                 Bitmap bitmapTemp = BitmapFactory.decodeStream(in);
                 convertBitmapToFile(bitmapTemp);
-
             }
         }
     }
 
 
-    private File convertBitmapToFile (Bitmap bitmap){
-        try {
-            file = new File(SettingActivity.this.getCacheDir(), "userHeader");
-=======
-        }
-    }
-
     private File convertBitmapToFile(Bitmap bitmap) {
         try {
             file = new File(SettingActivity.this.getCacheDir(),"userHeader");
->>>>>>> 7c9b6d8448ae5af0f88e79017aaaa8f8e439e348
             file.createNewFile();
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG,0,bos);
@@ -779,12 +760,7 @@ public class SettingActivity extends AppCompatActivity {
         return file;
     }
 
-<<<<<<< HEAD
-    private String loadImagePath (Intent data){
-=======
-
     private String loadImagePath(Intent data) {
->>>>>>> 7c9b6d8448ae5af0f88e79017aaaa8f8e439e348
         //获取返回的数据，这里是android自定义的uri地址
         Uri selectedImage = data.getData();
         String[] filePathColumn = {MediaStore.Images.Media.DATA};

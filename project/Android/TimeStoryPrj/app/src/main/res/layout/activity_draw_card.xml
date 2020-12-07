@@ -15,11 +15,12 @@
         android:clickable="true"
         android:visibility="gone">
 
-        <ListView
+        <GridView
             android:id="@+id/icon_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white" />
+            android:background="@android:color/white"
+            android:numColumns="4" />
     </RelativeLayout>
 
     <FrameLayout

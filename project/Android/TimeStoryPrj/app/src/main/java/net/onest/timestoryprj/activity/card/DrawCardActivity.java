@@ -25,6 +25,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -91,7 +92,7 @@ public class DrawCardActivity extends AppCompatActivity {
     @BindView(R.id.share)
     ImageView btnShare;
     @BindView(R.id.icon_view)
-    ListView iconView;
+    GridView iconView;
     @BindView(R.id.share_container)
     RelativeLayout shareContainer;
     @BindView(R.id.e_r_code)
@@ -144,53 +145,53 @@ public class DrawCardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_draw_card);
         ButterKnife.bind(this);
-        // TODO 记得删除
-        Constant.User = new User();
-        Constant.User.setUserId(1);
-        back.setVisibility(View.VISIBLE);
-        width = ScreenUtil.dip2px(getApplicationContext(), 120);
-        height = ScreenUtil.dip2px(getApplicationContext(), 180);
-        final Typeface typeface = Typeface.createFromAsset(getResources().getAssets(), "fonts/custom_font.ttf");
-        tip.setTypeface(typeface);
-        text.setTypeface(typeface);
-        client = new OkHttpClient();
-        frontContainer.bringToFront();
-        cardAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.back);
-        gson = new GsonBuilder()//创建GsonBuilder对象
-                .serializeNulls()//允许输出Null值属性
-                .create();//创建Gson对象
-        initShareView();
         if (null != savedInstanceState) {
-            Log.e("onsave", "初始化了");
-            // 状态1：抽卡界面（已选取卡片）
-            // 状态2：抽卡卡片已显示
-            // 状态3：分享界面
-            isFlag = savedInstanceState.getBoolean("isFlag");
-            flag = savedInstanceState.getBoolean("flag");
-            isShareing = savedInstanceState.getBoolean("isShareing");
-            card = (Card) savedInstanceState.getSerializable("card");
-            tip.setText(savedInstanceState.getString("tip"));
-            // 已点击4张卡片
-            if (isFlag) {
-                frontContainer.setAlpha(0);
-                cardContainer.setAlpha(0.8f);
-                // 如果已点击图片，获得卡片展示(默认)
-                if (flag) {
-                    drawCard.setBackground(getResources().getDrawable(R.mipmap.card_bg));
-                    Glide.with(getApplicationContext())
-                            .load(ServiceConfig.SERVICE_ROOT + "/img/" + card.getCardPicture())
-                            .into(drawCard);
-                } else {
-                    drawCard.setBackground(getResources().getDrawable(R.mipmap.card_back));
-                }
-            }
-            toLastView.setVisibility(savedInstanceState.getInt("toLastView"));
-            btnShare.setVisibility(savedInstanceState.getInt("btnShare"));
-            ERCode.setVisibility(savedInstanceState.getInt("ERCode"));
-            join.setVisibility(savedInstanceState.getInt("join"));
-            shareContainer.setVisibility(savedInstanceState.getInt("shareContainer"));
+//            Log.e("onsave", "初始化了");
+//            // 状态1：抽卡界面（已选取卡片）
+//            // 状态2：抽卡卡片已显示
+//            // 状态3：分享界面
+//            isFlag = savedInstanceState.getBoolean("isFlag");
+//            flag = savedInstanceState.getBoolean("flag");
+//            isShareing = savedInstanceState.getBoolean("isShareing");
+//            card = (Card) savedInstanceState.getSerializable("card");
+//            tip.setText(savedInstanceState.getString("tip"));
+//            // 已点击4张卡片
+//            if (isFlag) {
+//                frontContainer.setAlpha(0);
+//                cardContainer.setAlpha(0.8f);
+//                // 如果已点击图片，获得卡片展示(默认)
+//                if (flag) {
+//                    drawCard.setBackground(getResources().getDrawable(R.mipmap.card_bg));
+//                    Glide.with(getApplicationContext())
+//                            .load(ServiceConfig.SERVICE_ROOT + "/img/" + card.getCardPicture())
+//                            .into(drawCard);
+//                } else {
+//                    drawCard.setBackground(getResources().getDrawable(R.mipmap.card_back));
+//                }
+//            }
+//            toLastView.setVisibility(savedInstanceState.getInt("toLastView"));
+//            btnShare.setVisibility(savedInstanceState.getInt("btnShare"));
+//            ERCode.setVisibility(savedInstanceState.getInt("ERCode"));
+//            join.setVisibility(savedInstanceState.getInt("join"));
+//            shareContainer.setVisibility(savedInstanceState.getInt("shareContainer"));
         } else {
+            // TODO 记得删除
+            Constant.User = new User();
+            Constant.User.setUserId(1);
+            back.setVisibility(View.VISIBLE);
+            width = ScreenUtil.dip2px(getApplicationContext(), 120);
+            height = ScreenUtil.dip2px(getApplicationContext(), 180);
+            final Typeface typeface = Typeface.createFromAsset(getResources().getAssets(), "fonts/custom_font.ttf");
+            tip.setTypeface(typeface);
+            text.setTypeface(typeface);
+            client = new OkHttpClient();
+            frontContainer.bringToFront();
+            cardAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.back);
+            gson = new GsonBuilder()//创建GsonBuilder对象
+                    .serializeNulls()//允许输出Null值属性
+                    .create();//创建Gson对象
             getDrawCard();
+            initShareView();
         }
     }
 
@@ -362,7 +363,6 @@ public class DrawCardActivity extends AppCompatActivity {
         toLastView.setVisibility(View.INVISIBLE);
         join.setVisibility(View.VISIBLE);
         ERCode.setVisibility(View.VISIBLE);
-//        man.setVisibility(View.VISIBLE);
         shareContainer.bringToFront();
         isShareing = true;
     }
@@ -374,7 +374,6 @@ public class DrawCardActivity extends AppCompatActivity {
             toLastView.setVisibility(View.VISIBLE);
             join.setVisibility(View.INVISIBLE);
             ERCode.setVisibility(View.INVISIBLE);
-//            man.setVisibility(View.INVISIBLE);
             shareContainer.bringToFront();
             isShareing = false;
         }

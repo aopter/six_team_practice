@@ -33,8 +33,10 @@ import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.activity.card.DrawCardActivity;
 import net.onest.timestoryprj.activity.card.MyCardActivity;
 import net.onest.timestoryprj.activity.problem.ProblemCollectionActivity;
+import net.onest.timestoryprj.activity.user.RechargeActivity;
 import net.onest.timestoryprj.activity.user.SettingActivity;
 import net.onest.timestoryprj.activity.user.UserCenterActivity;
+import net.onest.timestoryprj.adapter.user.RechargeAdapter;
 import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.entity.Dynasty;
@@ -340,6 +342,9 @@ public class HomepageActivity extends AppCompatActivity {
                     }
                     break;
                 case R.id.btn_plus:
+                    Intent intent5 = new Intent(HomepageActivity.this, RechargeActivity.class);
+                    startActivity(intent5);
+                    overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
                     break;
                 case R.id.btn_card:
                     Intent intent3 = new Intent(HomepageActivity.this, DrawCardActivity.class);

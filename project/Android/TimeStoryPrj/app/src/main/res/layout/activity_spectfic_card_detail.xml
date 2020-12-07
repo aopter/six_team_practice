@@ -44,11 +44,11 @@
             android:orientation="vertical">
 
             <ImageView
-                android:transitionName="ivGetCard"
                 android:id="@+id/card_img"
                 android:layout_width="120dp"
                 android:layout_height="260dp"
-                android:layout_above="@+id/card_name_container" />
+                android:layout_above="@+id/card_name_container"
+                android:transitionName="ivGetCard" />
 
             <LinearLayout
                 android:id="@id/card_name_container"
@@ -103,7 +103,8 @@
                 android:background="@android:color/holo_red_dark"
                 android:text="查看生平"
                 android:textColor="@android:color/white"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone" />
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>
