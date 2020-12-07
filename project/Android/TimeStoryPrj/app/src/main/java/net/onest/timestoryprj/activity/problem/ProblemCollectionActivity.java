@@ -79,7 +79,6 @@ public class ProblemCollectionActivity extends AppCompatActivity {
                     } else {
                         initAdapter();
                         refreshLayout.finishLoadMore();//加载完毕
-<<<<<<< Updated upstream
                     }
 
 //                    if (cPageCount == 1) {
@@ -99,8 +98,8 @@ public class ProblemCollectionActivity extends AppCompatActivity {
 //
 //                    }
                     break;
-=======
-                    }
+
+            }
 
 //                    if (cPageCount == 1) {
 //                        initAdapter();
@@ -123,13 +122,11 @@ public class ProblemCollectionActivity extends AppCompatActivity {
 //                        });
 //
 //                    }
-                        break;
-                    }
->>>>>>> Stashed changes
-            }
-        }
+//                        break;
+//                    }
 
-        ;
+            }
+        };
 
         private void initAdapter() {//初始化adapter
             ProblemCollectionActivity.this.runOnUiThread(new Runnable() {

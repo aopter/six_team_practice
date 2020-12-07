@@ -78,8 +78,7 @@ public class HomepageActivity extends AppCompatActivity {
     private Typeface typeface;
     private ProgressBar progressBar;
     private User user;
-
-//
+    private LinearLayout linearProgress;
 
     private Handler handler = new Handler() {
         @RequiresApi(api = Build.VERSION_CODES.M)
@@ -182,7 +181,7 @@ public class HomepageActivity extends AppCompatActivity {
     private void initData() {
 //        getUserInfo();
         downloadUnlockDynastyList();
-//        initProgress();
+        initProgress();
     }
 
     /**
@@ -294,6 +293,7 @@ public class HomepageActivity extends AppCompatActivity {
         btnCard.setOnClickListener(myListener);
         btnPlus.setOnClickListener(myListener);
         ivHeader.setOnClickListener(myListener);
+        tvLevel.setOnClickListener(myListener);
     }
 
     private void findViews() {
@@ -310,6 +310,7 @@ public class HomepageActivity extends AppCompatActivity {
         llLayout1 = findViewById(R.id.ll_layout1);
         llLayout2 = findViewById(R.id.ll_layout2);
         progressBar = findViewById(R.id.experience_progress);
+        linearProgress = findViewById(R.id.linear_progress);
     }
 
     /**
@@ -365,6 +366,24 @@ public class HomepageActivity extends AppCompatActivity {
                     Intent intent1 = new Intent(HomepageActivity.this, UserCenterActivity.class);
                     startActivity(intent1);
                     overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
+                    break;
+                case R.id.tv_level:
+                    int count = linearProgress.getChildCount();
+                    Log.e("元素个数",count+"");
+                    if (count == 1){
+                        TextView tvExerperience = new TextView(getApplicationContext());
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(210,420);
+                        params.topMargin = 10;
+                        tvExerperience.setPadding(20,0,20,0);
+                        tvExerperience.setText("玩家经验:"+'\n'+Constant.User.getUserExperience()+"/"+Constant.User.getUserStatus().getStatusExperienceTop());
+                        tvExerperience.setTextColor(getResources().getColor(R.color.whrite));
+                        tvExerperience.setTextSize(12);
+                        tvExerperience.setBackgroundResource(R.color.ourDynastyRed);
+                        tvExerperience.setLayoutParams(params);
+                        linearProgress.addView(tvExerperience);
+                    }else if (count == 2){
+                        linearProgress.removeViewAt(1);
+                    }
                     break;
             }
         }

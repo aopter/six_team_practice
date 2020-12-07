@@ -69,6 +69,7 @@ import me.leefeng.promptlibrary.PromptButtonListener;
 import me.leefeng.promptlibrary.PromptDialog;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -105,7 +106,7 @@ public class SettingActivity extends AppCompatActivity {
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case 1:
                     UserDetails userDetails = (UserDetails) msg.obj;
                     etNiName.setText(userDetails.getUserNickname());
@@ -164,17 +165,12 @@ public class SettingActivity extends AppCompatActivity {
                     InputStream in = connection.getInputStream();
                     BufferedReader reader = new BufferedReader(
                             new InputStreamReader(in, "utf-8"));
-<<<<<<< HEAD
-                    String detail= reader.readLine();
-                    Constant.UserDetails = gson.fromJson(detail,UserDetails.class);
+                    String detail = reader.readLine();
+                    Constant.UserDetails = gson.fromJson(detail, UserDetails.class);
                     Message message = handler.obtainMessage();
                     message.what = 1;
                     message.obj = Constant.UserDetails;
                     handler.sendMessage(message);
-=======
-                    String detail = reader.readLine();
-                    Constant.UserDetails = gson.fromJson(detail, UserDetails.class);
->>>>>>> 8eb3ad1ec1b03f777f9c61e51f735195c2b71374
 
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
@@ -445,25 +441,19 @@ public class SettingActivity extends AppCompatActivity {
         LinearLayout.LayoutParams ivParam = new LinearLayout.LayoutParams(200, 200);
         ivParam.leftMargin = 20;
         ivParam.topMargin = 20;
-<<<<<<< HEAD
-        if (Constant.User.getUserHeader()==null){
+        if (Constant.User.getUserHeader() == null) {
             Glide.with(this)
                     .load(R.mipmap.bg_man)
                     .circleCrop()
                     .into(ivHeader);
-        }else {
+        } else {
             Glide.with(this)
-                    .load(ServiceConfig.SERVICE_ROOT+"/picture/download/user/"+Constant.User.getUserHeader())
+                    .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
                     .circleCrop()
                     .into(ivHeader);
         }
 
-=======
-        Glide.with(this)
-                .load(ServiceConfig.SERVICE_ROOT + "/picture/download/user/" + Constant.User.getUserHeader())
-                .circleCrop()
-                .into(ivHeader);
->>>>>>> 8eb3ad1ec1b03f777f9c61e51f735195c2b71374
+
         ivHeader.setLayoutParams(ivParam);
         linearLayout1.addView(ivHeader);
         rightLayout.addView(linearLayout1);
@@ -590,7 +580,7 @@ public class SettingActivity extends AppCompatActivity {
                     //用户详情传给服务器
                     upToServer();
                     //上传头像
-                    upHeaderToServer();
+//                    upHeaderToServer();
 
                 } else {
                     Toast.makeText(getApplicationContext(), "请您完善用户信息后提交", Toast.LENGTH_SHORT).show();
@@ -640,15 +630,18 @@ public class SettingActivity extends AppCompatActivity {
                 Looper.prepare();
                 Toast.makeText(getApplicationContext(), "头像上传失败", Toast.LENGTH_SHORT).show();
                 Looper.loop();
+
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+
                 Log.e("ok", "成功");
-                Constant.User.setUserHeader("us-"+Constant.User.getUserId()+".jpg");
+                Constant.User.setUserHeader("us-" + Constant.User.getUserId() + ".jpg");
                 Looper.prepare();
                 Toast.makeText(getApplicationContext(), "头像上传成功", Toast.LENGTH_SHORT).show();
                 Looper.loop();
+
             }
         });
     }
@@ -661,6 +654,7 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
+
                     URL url = new URL(ServiceConfig.SERVICE_ROOT + "/userdetails/modify");
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("POST");
@@ -700,30 +694,19 @@ public class SettingActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK && null != data) {
             picturePath = loadImagePath(data);
-            Log.e("picturePath",picturePath);
+            Log.e("picturePath", picturePath);
             Glide.with(getApplicationContext())
                     .load(picturePath)
                     .circleCrop()
                     .into(ivHeader);
-            Log.e("ok","显示出啦");
+            Log.e("ok", "显示出啦");
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-<<<<<<< Updated upstream
             bitmapHeader = BitmapFactory.decodeFile(picturePath, options);
-<<<<<<< HEAD
-            bitmapHeader = BitmapFactory.decodeFile(picturePath);
-=======
->>>>>>> 8eb3ad1ec1b03f777f9c61e51f735195c2b71374
-=======
-
-
-            bitmapHeader = BitmapFactory.decodeFile(picturePath, options);
->>>>>>> Stashed changes
             convertBitmapToFile(bitmapHeader);
         } else if (requestCode == 2 && resultCode == RESULT_OK && null != data) {
             File picture = new File(Environment.getExternalStorageDirectory() + "/temp.jpg");
             Bundle extras = data.getExtras();
-<<<<<<< Updated upstream
             if (extras != null) {
                 Bitmap photo = extras.getParcelable("data");
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -734,9 +717,9 @@ public class SettingActivity extends AppCompatActivity {
                         .into(ivHeader);
                 convertBitmapToFile(photo);
             }
-        }else if(requestCode == 100){
+        } else if (requestCode == 100) {
             //从相册返回数据
-            if(data != null){
+            if (data != null) {
                 //得到图片全路径
                 uri = data.getData();
                 ivHeader.setImageURI(uri);
@@ -750,34 +733,15 @@ public class SettingActivity extends AppCompatActivity {
                 }
                 Bitmap bitmapTemp = BitmapFactory.decodeStream(in);
                 convertBitmapToFile(bitmapTemp);
-=======
 
-            if (extras != null){
-                    Bitmap photo = extras.getParcelable("data");
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    photo.compress(Bitmap.CompressFormat.JPEG,75,stream);
-                    Glide.with(getApplicationContext())
-                            .load(photo)
-                            .circleCrop()
-                            .into(ivHeader);
-                    convertBitmapToFile(photo);
->>>>>>> Stashed changes
             }
         }
     }
 
 
-<<<<<<< Updated upstream
-    private File convertBitmapToFile(Bitmap bitmap) {
+    private File convertBitmapToFile (Bitmap bitmap){
         try {
             file = new File(SettingActivity.this.getCacheDir(), "userHeader");
-=======
-
-    private File convertBitmapToFile(Bitmap bitmap) {
-        try {
-
-            file = new File(SettingActivity.this.getCacheDir(), "portrait");
->>>>>>> Stashed changes
             file.createNewFile();
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
@@ -792,7 +756,7 @@ public class SettingActivity extends AppCompatActivity {
         return file;
     }
 
-    private String loadImagePath(Intent data) {
+    private String loadImagePath (Intent data){
         //获取返回的数据，这里是android自定义的uri地址
         Uri selectedImage = data.getData();
         String[] filePathColumn = {MediaStore.Images.Media.DATA};
@@ -808,4 +772,5 @@ public class SettingActivity extends AppCompatActivity {
         cursor.close();
         return path;
     }
+
 }
