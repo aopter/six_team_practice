@@ -28,6 +28,7 @@
 >>>>>>> 0fbef57e1ffd0b922e72e52b62d4dc8c4e599473
 =======
             android:orientation="vertical">
+
             <Button
                 android:id="@+id/btn_homepage"
                 android:layout_width="match_parent"
@@ -38,7 +39,8 @@
                 android:id="@+id/btn_history"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"/>
+                android:orientation="vertical" />
+
             <net.onest.timestoryprj.customview.CusTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -46,6 +48,7 @@
                 android:text="自定义字体"
                 android:textColor="@android:color/black"
                 android:textSize="20dp" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -63,38 +66,44 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <Button
                 android:id="@+id/login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="登录"/>
+                android:text="登录" />
+
             <Button
                 android:id="@+id/btn_set"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="个人设置"/>
+                android:text="个人设置" />
         </LinearLayout>
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
             <Button
                 android:id="@+id/btn_user_center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="回家" />
+
             <Button
                 android:id="@+id/btn_problem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="我的题" />
+
             <Button
                 android:id="@+id/btn_lkl_lian"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="连线题" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -118,6 +127,7 @@
                 android:layout_height="wrap_content"
                 android:text="相关弹出框" />
         </LinearLayout>
+
         <Button
             android:id="@+id/btn_link_details"
             android:layout_width="wrap_content"

@@ -49,6 +49,11 @@ import java.net.ProtocolException;
 import java.net.URL;
 
 import me.leefeng.promptlibrary.PromptDialog;
+import okhttp3.Call;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText etPhone;
@@ -67,6 +72,7 @@ public class LoginActivity extends AppCompatActivity {
     private Tencent mTencent;
     private BaseUiListener baseUiListener;
     private UserInfo userInfo;
+    private OkHttpClient okHttpClient;
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -91,6 +97,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mTencent = Tencent.createInstance(1111252578+"", LoginActivity.this.getApplicationContext());
 
+        okHttpClient = new OkHttpClient();
         promptDialog = new PromptDialog(this);
         //设置自定义属性
         promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
@@ -145,59 +152,53 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    URL url = new URL(ServiceConfig.SERVICE_ROOT+"/user/login");
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setRequestMethod("POST");
-                    OutputStream outputStream = connection.getOutputStream();
-                    JSONObject obj = new JSONObject();
-                    obj.put("number", phone);
-                    obj.put("password", pwd);
-                    obj.put("flag",1);
-                    String str = obj.toString();
-                    outputStream.write(str.getBytes());
-
-                    InputStream in = connection.getInputStream();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
-                    String info = reader.readLine();
-                    Log.e("info", info);
-                    if (info.contains("false")) {
+                    FormBody.Builder formBuilder = new FormBody.Builder();
+                    FormBody formBody = formBuilder.add("userAccount", phone)
+                            .add("userPassword", pwd)
+                            .add("flag", 1 + "")
+                            .build();
+                    Request request = new Request.Builder()
+                            .url(ServiceConfig.SERVICE_ROOT + "/user/login")
+                            .method("POST", formBody)
+                            .post(formBody)
+                            .build();
+                    Call call = okHttpClient.newCall(request);
+                    Response response = call.execute();
+                    String result = response.body().string();
+                    Log.e("result", result);
+                    if (result.contains("false")){
                         //登录失败
                         Message message = handler.obtainMessage();
                         message.what = 2;
                         message.obj = promptDialog;
                         handler.sendMessage(message);
-
-                    } else {
-                        Message message = handler.obtainMessage();
-                        message.what = 1;
-                        message.obj = promptDialog;
-                        handler.sendMessage(message);
-                        Log.e("ok", "可以跳转");
-                        //判断是否记住密码
+                    }else {
+                        //登录成功
                         boolean isSave = chRemember.isChecked();
                         if (isSave) {
                             saveUser();
                         } else {
                             deleteUser();
                         }
-                        Constant.User = gson.fromJson(info, User.class);
+                        Message message = handler.obtainMessage();
+                        message.what = 1;
+                        message.obj = promptDialog;
+                        handler.sendMessage(message);
+                        Constant.User = gson.fromJson(result, User.class);
+                        Log.e("user信息",Constant.User.getUserCount()+"");
+//                        if (Constant.User.getUserHeader() == null){
+//                            Constant.User.setUserHeader("su-1.jpg");
+//                        }
                         //跳转到主页
                         Intent intent = new Intent();
                         intent.setClass(getApplicationContext(), HomepageActivity.class);
                         startActivity(intent);
                     }
-
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (ProtocolException e) {
-                    e.printStackTrace();
                 } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
-        }.start();
+            }.start();
     }
 
     class MyListener implements View.OnClickListener {

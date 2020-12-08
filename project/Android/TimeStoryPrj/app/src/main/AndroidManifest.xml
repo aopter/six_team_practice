@@ -25,12 +25,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-<<<<<<< Updated upstream
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
         <uses-library android:name="org.apache.http.legacy"
             android:required="false"/>
-=======
         <activity android:name=".activity.problem.ProblemClooectionInfoActivity"></activity>
->>>>>>> Stashed changes
         <activity
             android:name=".dialog.DialogExampleAvtivity"
             android:screenOrientation="landscape" />
@@ -72,7 +73,13 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".activity.user.LoginActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activity.card.SpectficCardDetailActivity"
             android:screenOrientation="landscape" />
@@ -87,8 +94,6 @@
             android:launchMode="singleTask"
             android:screenOrientation="landscape" />
 
-<<<<<<< Updated upstream
-=======
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="net.onest.timestoryprj.fileprovider"
@@ -99,17 +104,10 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
->>>>>>> Stashed changes
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="landscape">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:screenOrientation="landscape"></activity>
 
         <activity
             android:name="com.tencent.tauth.AuthActivity"

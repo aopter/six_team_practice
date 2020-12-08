@@ -1,5 +1,4 @@
-package net.onest.timestoryprj.entity;
-
+package net.onest.timestoryprj.entity.card;
 
 public class UserCard {
     private Integer userCardId;//用户卡片标识符

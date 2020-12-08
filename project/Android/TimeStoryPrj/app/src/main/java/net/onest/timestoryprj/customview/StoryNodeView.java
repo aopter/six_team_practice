@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 import net.onest.timestoryprj.util.SizeUtils;
@@ -33,12 +34,13 @@ public class StoryNodeView extends View {
     /**
      * 背景颜色
      */
-    private int bgColor = Color.parseColor("#FFDEAD");
+    private int bgColor = Color.parseColor("#D3D3D3");
     /**
      * 前景颜色
      */
-    private int foreColor = Color.parseColor("#90EE90");
-
+    private int foreColor = Color.parseColor("#FFFFF0");
+//    private int co = Color.parseColor("#FFFFFF");
+//    private Paint mPaint;
     /**
      * 默认高度
      */
@@ -47,6 +49,7 @@ public class StoryNodeView extends View {
      * 节点文字
      */
     private List<String> nodeList;
+    private List<String> nodeProcess;
     private List<Rect> mBounds;
     /**
      * 节点圆的半径
@@ -87,8 +90,12 @@ public class StoryNodeView extends View {
         unselectPaint.setColor(bgColor);
         unselectPaint.setTextSize(SizeUtils.sp2px(context, 10));
 
+//        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+//        mPaint.setColor(co);
+
         selectPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        selectPaint.setColor(foreColor);
+        selectPaint.setColor(Color.RED);
+        selectPaint.setTextSize(20);
         selectPaint.setTextSize(SizeUtils.sp2px(context, 10));
     }
 
@@ -102,8 +109,14 @@ public class StoryNodeView extends View {
         if (nodeDatas != null) {
             nodeList = nodeDatas;
         }
+        nodeProcess = new ArrayList<>();
+        int percent = 100 / nodeDatas.size();
+        for (int i = 0; i < nodeDatas.size() - 1; i++) {
+            nodeProcess.add((i + 1) * percent + " %");
+        }
+        nodeProcess.add("100%");
         //测量文字所占用的空间
-//        measureText();
+        measureText();
     }
 
     /**
@@ -123,7 +136,7 @@ public class StoryNodeView extends View {
         mBounds = new ArrayList<>();
         for (int i = 0; i < nodeList.size(); i++) {
             Rect mBound = new Rect();
-            unselectPaint.getTextBounds(nodeList.get(i), 0, nodeList.get(i).length(), mBound);
+            unselectPaint.getTextBounds(nodeProcess.get(i), 0, nodeProcess.get(i).length(), mBound);
             mBounds.add(mBound);
         }
     }
@@ -135,20 +148,36 @@ public class StoryNodeView extends View {
         if (nodeList == null || nodeList.isEmpty()) {
             return;
         }
-        bgPaint.setStrokeWidth(radius / 3);
+        bgPaint.setStrokeWidth(SizeUtils.dp2px(getContext(), 8));
         //绘制后置的背景线条
         canvas.drawLine(radius, getHeight() / 2, getWidth() - radius, getHeight() / 2, bgPaint);
 
         //画节点圆
         //每个圆相隔的距离
         dividWidth = (getWidth() - radius * 2) / (nodeList.size() - 1);
-        forePaint.setStrokeWidth(radius / 2);
+        forePaint.setStrokeWidth(SizeUtils.dp2px(getContext(), 9));
         for (int i = 0; i < nodeList.size(); i++) {
             if (i <= selectIndex) {
                 canvas.drawCircle(radius + i * dividWidth, getHeight() / 2, radius, forePaint);
                 canvas.drawLine(radius, getHeight() / 2, radius + i * dividWidth, getHeight() / 2, forePaint);
             } else {
                 canvas.drawCircle(radius + i * dividWidth, getHeight() / 2, radius, bgPaint);
+            }
+        }
+        for (int i = 0; i < nodeList.size(); i++) {
+            int currentTextWidth = mBounds.get(i).width();
+            if (i == 0) {
+                if (i == selectIndex) {
+                    canvas.drawText(nodeProcess.get(i), radius - currentTextWidth / 2, getHeight() / 2 - mBounds.get(i).height() / 2 - radius, selectPaint);
+                }
+            } else if (i == nodeProcess.size() - 1) {
+                if (i == selectIndex) {
+                    canvas.drawText(nodeProcess.get(i), getWidth() - radius - currentTextWidth / 2, getHeight() / 2 - mBounds.get(i).height() / 2 - radius, selectPaint);
+                }
+            } else {
+                if (i == selectIndex) {
+                    canvas.drawText(nodeProcess.get(i), radius + i * dividWidth - currentTextWidth / 2, getHeight() / 2 - mBounds.get(i).height() / 2 - radius, selectPaint);
+                }
             }
         }
     }
@@ -178,5 +207,24 @@ public class StoryNodeView extends View {
 
     public interface OnClickListener {
         void onCircleClick(int postion);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        float eventX;
+        float eventY;
+        int i = event.getAction();
+        if (i == MotionEvent.ACTION_DOWN) {
+        } else if (i == MotionEvent.ACTION_MOVE) {
+        } else if (i == MotionEvent.ACTION_UP) {
+            eventX = event.getX();
+            eventY = event.getY();
+            float select = eventX / dividWidth; //计算选中的index
+            float xs = select - (int) (select);
+            selectIndex = (int) select + (xs > 0.5 ? 1 : 0);
+            onClickListener.onCircleClick(selectIndex);
+        }
+        invalidate();
+        return true;
     }
 }

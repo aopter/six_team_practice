@@ -26,6 +26,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:paddingRight="80dp"
                 android:id="@+id/problem_xuan_info_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -300,6 +301,7 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:clickable="false"
             android:id="@+id/re_pai"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

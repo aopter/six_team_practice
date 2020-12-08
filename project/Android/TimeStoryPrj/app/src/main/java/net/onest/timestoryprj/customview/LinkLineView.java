@@ -56,8 +56,8 @@ public class LinkLineView extends RelativeLayout {
     private int marginRight;
     private int marginBottom;
 
-    private List<View> leftTvs = new ArrayList<>();
-    private List<View> rightTvs = new ArrayList<>();
+    private List<View> leftTvs ;
+    private List<View> rightTvs ;
 
     boolean leftSelected;
     boolean rightSelected;
@@ -115,6 +115,21 @@ public class LinkLineView extends RelativeLayout {
         this.allList.clear();
         leftList.clear();
         rightList.clear();
+
+        newLinkLineBeanList.clear();
+        invalidate();
+        isEnabled = true;
+//        List<LinkLineBean> resultList = getResultList();
+//        if(null!=resultList){
+//            for (int i = 0; i < resultList.size(); i++) {
+//                // 改变连线的颜色
+//                resultList.get(i).setColorString(LinkLineBean.TRANSPARENT);
+//
+//            }
+//            invalidate();
+//        }
+
+
         this.allList = linkDataBeanList;
         LogUtils.e(TAG, "leftList:" + this.allList);
 
@@ -135,6 +150,7 @@ public class LinkLineView extends RelativeLayout {
         LogUtils.e(TAG, "rightList:" + rightList);
 
         size = Math.min(leftList.size(), rightList.size());
+        LogUtils.e(TAG, "List长:" + size+"");
 
         float ratioW = 400 / 1080.0f;
             cellWidth = (int) (ScreenUtils.getScreenW(context) * ratioW);
@@ -145,6 +161,35 @@ public class LinkLineView extends RelativeLayout {
         addLeftView();
         addRightView();
     }
+
+
+//    public void ShowNext(List<LinkDataBean> linkDataBeanList) {
+//        this.analysisMode = true;
+//        setData(linkDataBeanList);
+//
+//        // view绘制完成后才能获取到宽高
+//        this.post(() -> {
+//            List<LinkLineBean> resultList = getResultList();
+//            // 禁止点击事件
+//            isEnabled = true;
+//
+//            newLinkLineBeanList = new ArrayList<>();
+//
+//            for (int i = 0; i < resultList.size(); i++) {
+//                // 改变连线的颜色
+//                resultList.get(i).setColorString(LinkLineBean.TRANSPARENT);
+//                // 改变边框的颜色
+//                leftTvs.get(i).setBackground(context.getResources().getDrawable(R.drawable.bg_black_round_10dp));
+//
+//                rightTvs.get(i).setBackground(context.getResources().getDrawable(R.drawable.bg_black_round_10dp));
+//
+//                newLinkLineBeanList.add(resultList.get(i));
+//            }
+//
+//            invalidate();
+//        });
+//    }
+
 
     /**
      * 练习
@@ -180,6 +225,7 @@ public class LinkLineView extends RelativeLayout {
     }
 
     private void addLeftView() {
+        leftTvs= new ArrayList<>();
         for (int i = 0; i < leftList.size(); i++) {
             LinkDataBean bean = leftList.get(i);
             View view;
@@ -205,7 +251,6 @@ public class LinkLineView extends RelativeLayout {
                 }
             };
             view.setOnClickListener(onClickListener);
-
             // 布局
             LayoutParams lp = new LayoutParams(cellWidth, cellHeight);
             lp.leftMargin = marginLeft;
@@ -216,6 +261,7 @@ public class LinkLineView extends RelativeLayout {
     }
 
     private void addRightView() {
+        rightTvs= new ArrayList<>();
         for (int i = 0; i < rightList.size(); i++) {
             LinkDataBean bean = rightList.get(i);
             View view= generateTextView(bean);
@@ -385,7 +431,7 @@ public class LinkLineView extends RelativeLayout {
     private void drawSelectedLinkLine() {
         List<LinkLineBean> resultList = getResultList();
 
-        LogUtils.e(TAG, "resultList:" + resultList);
+        LogUtils.e(TAG, "resultList结果:" + resultList);
         for (int i = 0; i < newLinkLineBeanList.size(); i++) {
             newLinkLineBeanList.get(i).setRight(resultList.contains(newLinkLineBeanList.get(i)));
             // 改变连线的颜色
@@ -412,6 +458,7 @@ public class LinkLineView extends RelativeLayout {
     private List<LinkLineBean> getResultList() {
         List<LinkLineBean> resultList = new ArrayList<>(size);
         for (int i = 0; i < leftTvs.size(); i++) {
+
             // 从TextView上获取对应的起点坐标
             float startX = leftTvs.get(i).getRight();
             float startY = (leftTvs.get(i).getTop() + leftTvs.get(i).getBottom()) / 2.0f;

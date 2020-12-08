@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/intro"
+    android:background="@mipmap/intro2"
     android:orientation="vertical"
     tools:context=".activity.dynasty.DynastyIntroduceActivity">
 
@@ -12,33 +12,47 @@
         android:id="@+id/btn_pre"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:background="@mipmap/pre"/>
-    <LinearLayout
+        android:layout_marginTop="30dp"
         android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginBottom="30dp"
+        android:background="@mipmap/back"/>
+    <RelativeLayout
+        android:layout_below="@+id/btn_pre"
+        android:paddingBottom="15dp"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:gravity="center">
 
-        <TextView
-            android:id="@+id/tv_dynasty_name"
-            android:layout_margin="20dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:textSize="35sp"
-            android:alpha="0.7"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:background="@drawable/corner"
-            android:textColor="@android:color/white"/>
-        <ScrollView
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_alignParentLeft="true"
+            android:id="@+id/ll_intro_word"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginBottom="60dp">
+            <TextView
+                android:id="@+id/tv_dynasty_name"
+                android:layout_margin="20dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:textSize="35sp"
+                android:alpha="0.7"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:background="@drawable/corner"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_marginRight="20dp"
+            android:id="@+id/sv_intro_word"
+            android:layout_toRightOf="@+id/ll_intro_word"
+            android:layout_above="@+id/rl_below"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/corner"
             android:alpha="0.7">
             <LinearLayout
@@ -54,32 +68,33 @@
             </LinearLayout>
 
         </ScrollView>
+        <RelativeLayout
+            android:id="@+id/rl_below"
+            android:paddingBottom="15dp"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:layout_toLeftOf="@+id/btn_details"
-            android:layout_marginRight="30dp"
-            android:id="@+id/btn_questions"
-            android:layout_width="130dp"
-            android:layout_height="35dp"
-            android:textSize="20sp"
-            android:text="朝代知多少"
-            android:background="@drawable/corner"
-            android:textColor="@android:color/white"/>
-        <Button
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="30dp"
-            android:id="@+id/btn_details"
-            android:layout_width="130dp"
-            android:layout_height="35dp"
-            android:textSize="20sp"
-            android:text="进入详情"
-            android:background="@drawable/corner"
-            android:textColor="@android:color/white"/>
+            <Button
+                android:layout_toLeftOf="@+id/btn_details"
+                android:layout_marginRight="30dp"
+                android:id="@+id/btn_questions"
+                android:layout_width="130dp"
+                android:layout_height="35dp"
+                android:textSize="20sp"
+                android:text="朝代知多少"
+                android:background="@drawable/corner"
+                android:textColor="@android:color/white"/>
+            <Button
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="30dp"
+                android:id="@+id/btn_details"
+                android:layout_width="130dp"
+                android:layout_height="35dp"
+                android:textSize="20sp"
+                android:text="进入详情"
+                android:background="@drawable/corner"
+                android:textColor="@android:color/white"/>
+        </RelativeLayout>
     </RelativeLayout>
-</LinearLayout>
+</RelativeLayout>

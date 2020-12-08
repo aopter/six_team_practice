@@ -54,7 +54,7 @@ public class ProblemCollectionActivity extends AppCompatActivity {
     ExpandableListView elvListView;
     @BindView(R.id.re_problems)
     RecyclerView recyclerView;
-//    刷新
+    //    刷新
     @BindView(R.id.refreshLayout_collction)
     SmartRefreshLayout refreshLayout;
 
@@ -75,123 +75,161 @@ public class ProblemCollectionActivity extends AppCompatActivity {
 //                    初始化adapter
                     if (cPageCount == 1) {
                         initAdapter();
-                        Log.e("handleMessage: ", "初始化完毕");
                         refreshLayout.finishRefresh();
                     } else {
-
-                        ProblemCollectionActivity.this.runOnUiThread(new Runnable() {
-                            public void run() {
-                                RecyclerView.Adapter adapter = recyclerView.getAdapter();
-                                adapter.notifyDataSetChanged();
-                                refreshLayout.finishLoadMore();//加载完毕
-                            }
-                        });
-
+                        initAdapter();
+                        refreshLayout.finishLoadMore();//加载完毕
+<<<<<<< Updated upstream
                     }
+
+//                    if (cPageCount == 1) {
+//                        initAdapter();
+//                        Log.e("handleMessage: ", "初始化完毕");
+//                        refreshLayout.finishRefresh();
+//                    } else {
+//
+//                        ProblemCollectionActivity.this.runOnUiThread(new Runnable() {
+//                            public void run() {
+//                                RecyclerView.Adapter adapter = recyclerView.getAdapter();
+//                                adapter.notifyDataSetChanged();
+//                                LogUtils.d("加载后长度："+problems.size()+"");
+//                                refreshLayout.finishLoadMore();//加载完毕
+//                            }
+//                        });
+//
+//                    }
                     break;
+=======
+                    }
+
+//                    if (cPageCount == 1) {
+//                        initAdapter();
+//                        Log.e("handleMessage: ", "初始化完毕");
+//                        refreshLayout.finishRefresh();
+//                    } else {
+//
+//                        ProblemCollectionActivity.this.runOnUiThread(new Runnable() {
+//                            public void run() {
+//                                RecyclerView.Adapter adapter = recyclerView.getAdapter();
+//                                //打印
+//                                for(int i=0;i<problems.size();++i){
+//                                    LogUtils.d("加载shuju：" + problems.get(i).toString() + "");
+//
+//                                }
+//                                adapter.notifyDataSetChanged();
+//                                LogUtils.d("加载后长度：" + problems.size() + "");
+//                                refreshLayout.finishLoadMore();//加载完毕
+//                            }
+//                        });
+//
+//                    }
+                        break;
+                    }
+>>>>>>> Stashed changes
             }
         }
-    };
 
-    private void initAdapter() {//初始化adapter
-        ProblemCollectionActivity.this.runOnUiThread(new Runnable() {
-            public void run() {
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ProblemCollectionActivity.this);
-                linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                recyclerView.setLayoutManager(linearLayoutManager);
-                ProblemInfoListAdapter problemInfoListAdapter = new ProblemInfoListAdapter(getApplicationContext(), problems);
-                recyclerView.setAdapter(problemInfoListAdapter);
-            }
-        });
+        ;
+
+        private void initAdapter() {//初始化adapter
+            ProblemCollectionActivity.this.runOnUiThread(new Runnable() {
+                public void run() {
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ProblemCollectionActivity.this);
+                    linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                    recyclerView.setLayoutManager(linearLayoutManager);
+                    ProblemInfoListAdapter problemInfoListAdapter = new ProblemInfoListAdapter(getApplicationContext(), problems);
+                    recyclerView.setAdapter(problemInfoListAdapter);
+                }
+            });
 
 
-    }
+        }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_problem_collection);
-        ButterKnife.bind(this);
-        okHttpClient = new OkHttpClient();
-        problems = new ArrayList<>();
-        problemCollections = new ArrayList<>();
-        cPageCount = 1;
-        gson = new Gson();
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_problem_collection);
+            ButterKnife.bind(this);
+            okHttpClient = new OkHttpClient();
+            problems = new ArrayList<>();
+            problemCollections = new ArrayList<>();
+            cPageCount = 1;
+            gson = new Gson();
 
 //        初始化数据
-        init();//所有朝代
-        initLeftMenu();//初始化左边
+            init();//所有朝代
+            initLeftMenu();//初始化左边
 
-        refreshLayout.setReboundDuration(300);//回弹动画时常
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                //刷新
-                cPageCount = 1;
-                init();
-                LogUtils.d(cDynastyId+"朝代id");
-            }
-        });
-
-        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                //加载更多
-                //获得当前页 获得最大页 ++
-                if (cPageCount < Integer.parseInt(pageCount)) {
-                    //加载
-                    cPageCount++;
-                    Log.e("onLoadMore: ", cPageCount + "");
-                    //请求 通知数据更新
-                    loadMore();
-
-                } else {
-                    refreshLayout.finishLoadMoreWithNoMoreData();
+            refreshLayout.setReboundDuration(300);//回弹动画时常
+            refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+                @Override
+                public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                    //刷新
+                    cPageCount = 1;
+                    init();
+                    LogUtils.d(cDynastyId + "朝代id");
                 }
-            }
-        });
-    }
-    private void loadMore() {//加载更多
+            });
 
-        String pUrl = ServiceConfig.SERVICE_ROOT + "/userproblem/search/1/" + cPageCount + "/" + pageSize + "";
-        if (!cDynastyId.equals("0")) {//按朝代分
-            pUrl = ServiceConfig.SERVICE_ROOT + "/userproblem/search/1/" + cDynastyId + "/" + cPageCount + "/" + pageSize + "";
-            Log.e("run:pUrl ", pUrl);
+            refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+                @Override
+                public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                    //加载更多
+                    //获得当前页 获得最大页 ++
+                    if (cPageCount < Integer.parseInt(pageCount)) {
+                        //加载
+                        cPageCount += 1;
+                        Log.e("onLoadMore: ", cPageCount + "");
+                        //请求 通知数据更新
+                        loadMore();
+
+                    } else {
+                        refreshLayout.finishLoadMoreWithNoMoreData();
+                    }
+                }
+            });
         }
-        Request.Builder builder = new Request.Builder();
-        builder.url(pUrl);
-        //构造请求类
-        Request request = builder.build();
-        final Call call = okHttpClient.newCall(request);
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.e("onFailure: ", "获取失败");
+
+        private void loadMore() {//加载更多
+
+            String pUrl = ServiceConfig.SERVICE_ROOT + "/userproblem/search/1/" + cPageCount + "/" + pageSize + "";
+            if (!cDynastyId.equals("0")) {//按朝代分
+                pUrl = ServiceConfig.SERVICE_ROOT + "/userproblem/search/1/" + cDynastyId + "/" + cPageCount + "/" + pageSize + "";
+                Log.e("run:pUrl ", pUrl);
             }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String problemJson = response.body().string();
-
-                List<ProblemCollection> pcs = new ArrayList<>();
-                pcs = gson.fromJson(problemJson, new TypeToken<List<ProblemCollection>>() {
-                }.getType());
-                for(int i=0;i<pcs.size();i++){
-                    problemCollections.add(pcs.get(i));
-                    problems.add(pcs.get(i).getProblem());
+            Request.Builder builder = new Request.Builder();
+            builder.url(pUrl);
+            //构造请求类
+            Request request = builder.build();
+            final Call call = okHttpClient.newCall(request);
+            call.enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.e("onFailure: ", "获取失败");
                 }
-                Log.e("problemCollections ", problemCollections.size() + "");
-                LogUtils.d(problems.size()+"数量");
-                Message message = new Message();
-                message.arg1 = 1;
-                message.obj = problemJson;
-                handler.handleMessage(message);
-            }
-        });
-    }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String problemJson = response.body().string();
+                    List<ProblemCollection> pcs1 = new ArrayList<>();
+                    pcs1 = gson.fromJson(problemJson, new TypeToken<List<ProblemCollection>>() {
+                    }.getType());
+                    LogUtils.d("pcs1", pcs1.size() + "");
+                    for (int i = 0; i < pcs1.size(); i++) {
+                        problemCollections.add(pcs1.get(i));
+                        problems.add(pcs1.get(i).getProblem());
+                    }
+                    LogUtils.d(problems.size() + "数量");
+                    Message message = new Message();
+                    message.arg1 = 1;
+                    message.obj = problemJson;
+                    handler.handleMessage(message);
+                }
+            });
+        }
 
 
-    private void init() {//获得用户收藏的题目
+        private void init() {//获得用户收藏的题目
 
 //        用户分页查询自己全部收藏的题目：
 // /userproblem/search/{userId}/{pageNum}/{pageSize}
@@ -201,154 +239,154 @@ public class ProblemCollectionActivity extends AppCompatActivity {
 //          /userproblem/count/{userId}/{pageSize}
 //        用户获取自己收藏的某个朝代题目可分的最大的页数：
 //    /userproblem/count/{userId}/{dynastyId}/{pageSize}
-        String url = "";//路径
-        if (cDynastyId.equals("0")) {//所有题目
-            url = ServiceConfig.SERVICE_ROOT + "/userproblem/count/1/" + pageSize + "";
-            Log.e("initurl: ", url);
-        } else {
+            String url = "";//路径
+            if (cDynastyId.equals("0")) {//所有题目
+                url = ServiceConfig.SERVICE_ROOT + "/userproblem/count/1/" + pageSize + "";
+                Log.e("initurl: ", url);
+            } else {
 //        okHttpClient
-            url = ServiceConfig.SERVICE_ROOT + "/userproblem/count/1/" + cDynastyId + "/" + pageSize + "";
-            Log.e("init:朝代题目 ", url);
-        }
-        Request.Builder builder = new Request.Builder();
-        builder.url(url);
-        //构造请求类
-        Request request = builder.build();
-        final Call call = okHttpClient.newCall(request);
-        new Thread() {
-            @Override
-            public void run() {
-                try {
-                    Response execute = call.execute();
-                    String data = execute.body().string();
-                    Log.e("init分页数: ", data);
-                    JSONObject count = new JSONObject(data);
-                    pageCount = count.getString("count");//分页数
+                url = ServiceConfig.SERVICE_ROOT + "/userproblem/count/1/" + cDynastyId + "/" + pageSize + "";
+                Log.e("init:朝代题目 ", url);
+            }
+            Request.Builder builder = new Request.Builder();
+            builder.url(url);
+            //构造请求类
+            Request request = builder.build();
+            final Call call = okHttpClient.newCall(request);
+            new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        Response execute = call.execute();
+                        String data = execute.body().string();
+                        Log.e("init分页数: ", data);
+                        JSONObject count = new JSONObject(data);
+                        pageCount = count.getString("count");//分页数
 //                   获取题目
 //        用户分页查询自己全部收藏的题目：
 
-                    String pUrl = ServiceConfig.SERVICE_ROOT + "/userproblem/search/1/" + cPageCount + "/" + pageSize + "";
-                    if (!cDynastyId.equals("0")) {//按朝代分
-                        pUrl = ServiceConfig.SERVICE_ROOT + "/userproblem/search/1/" + cDynastyId + "/" + cPageCount + "/" + pageSize + "";
-                        Log.e("run:pUrl ", pUrl);
-                    }
-                    Request.Builder builder = new Request.Builder();
-                    builder.url(pUrl);
-                    //构造请求类
-                    Request request = builder.build();
-                    final Call call = okHttpClient.newCall(request);
-                    call.enqueue(new Callback() {
-                        @Override
-                        public void onFailure(Call call, IOException e) {
-                            Log.e("onFailure: ", "获取失败");
+                        String pUrl = ServiceConfig.SERVICE_ROOT + "/userproblem/search/1/" + cPageCount + "/" + pageSize + "";
+                        if (!cDynastyId.equals("0")) {//按朝代分
+                            pUrl = ServiceConfig.SERVICE_ROOT + "/userproblem/search/1/" + cDynastyId + "/" + cPageCount + "/" + pageSize + "";
+                            Log.e("run:pUrl ", pUrl);
                         }
-
-                        @Override
-                        public void onResponse(Call call, Response response) throws IOException {
-                            String problemJson = response.body().string();
-
-                            problemCollections.clear();//清空
-                            problems.clear();
-
-                            problemCollections = gson.fromJson(problemJson, new TypeToken<List<ProblemCollection>>() {
-                            }.getType());
-                            Log.e("problemCollections ", problemCollections.size() + "");
-                            for (int i = 0; i < problemCollections.size(); ++i) {
-                                problems.add(problemCollections.get(i).getProblem());
-
+                        Request.Builder builder = new Request.Builder();
+                        builder.url(pUrl);
+                        //构造请求类
+                        Request request = builder.build();
+                        final Call call = okHttpClient.newCall(request);
+                        call.enqueue(new Callback() {
+                            @Override
+                            public void onFailure(Call call, IOException e) {
+                                Log.e("onFailure: ", "获取失败");
                             }
-                            Message message = new Message();
-                            message.arg1 = 1;
-                            message.obj = problemJson;
-                            handler.handleMessage(message);
-                        }
-                    });
+
+                            @Override
+                            public void onResponse(Call call, Response response) throws IOException {
+                                String problemJson = response.body().string();
+
+                                problemCollections.clear();//清空
+                                problems.clear();
+
+                                problemCollections = gson.fromJson(problemJson, new TypeToken<List<ProblemCollection>>() {
+                                }.getType());
+                                Log.e("problemCollections数目 ", problemCollections.size() + "");
+                                for (int i = 0; i < problemCollections.size(); ++i) {
+                                    problems.add(problemCollections.get(i).getProblem());
+
+                                }
+                                Message message = new Message();
+                                message.arg1 = 1;
+                                message.obj = problemJson;
+                                handler.handleMessage(message);
+                            }
+                        });
 
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
-        }.start();
-    }
+            }.start();
+        }
 
-    private void initLeftMenu() {
+        private void initLeftMenu() {
 
 
 //模拟数据（数组，集合都可以，这里使用数组）
-        final String[] groups = new String[]{"题目类型", "朝代"};
+            final String[] groups = new String[]{"题目类型", "朝代"};
 
-        String[] dynastyName = new String[Constant.UnlockDynasty.size()];
-        Log.e("init: ", dynastyName.length + "");
-        for (int i = 0; i < dynastyName.length; i++) {
+            String[] dynastyName = new String[Constant.UnlockDynasty.size()];
+            Log.e("init: ", dynastyName.length + "");
+            for (int i = 0; i < dynastyName.length; i++) {
 //            dynastyName[i]=Constant.UnlockDynasty.get(i).getDynastyName();
-            dynastyName[i] = "唐朝";
-        }
-        final String[][] infos =
-                new String[][]{{"选择", "连线", "排序"}, dynastyName};
+                dynastyName[i] = "唐朝";
+            }
+            final String[][] infos =
+                    new String[][]{{"选择", "连线", "排序"}, dynastyName};
 
-        //创建并设置适配器
-        MyExpandableListAdapter adapter = new MyExpandableListAdapter(groups, infos, this);
-        elvListView.setAdapter(adapter);
+            //创建并设置适配器
+            MyExpandableListAdapter adapter = new MyExpandableListAdapter(groups, infos, this);
+            elvListView.setAdapter(adapter);
 
 //        //默认展开第一个分组
 //        elvListView.expandGroup(0);
 
-        //展开某个分组时，并关闭其他分组。注意这里设置的是 ExpandListener
-        elvListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-            @Override
-            public void onGroupExpand(int groupPosition) {
-                //遍历 group 的数组（或集合），判断当前被点击的位置与哪个组索引一致，不一致就合并起来。
-                for (int i = 0; i < groups.length; i++) {
-                    if (i != groupPosition) {
-                        elvListView.collapseGroup(i); //收起某个指定的组
+            //展开某个分组时，并关闭其他分组。注意这里设置的是 ExpandListener
+            elvListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+                @Override
+                public void onGroupExpand(int groupPosition) {
+                    //遍历 group 的数组（或集合），判断当前被点击的位置与哪个组索引一致，不一致就合并起来。
+                    for (int i = 0; i < groups.length; i++) {
+                        if (i != groupPosition) {
+                            elvListView.collapseGroup(i); //收起某个指定的组
+                        }
                     }
                 }
-            }
-        });
+            });
 
-        //点击某个分组时，展开
-        elvListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+            //点击某个分组时，展开
+            elvListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+                @Override
+                public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
 //                Toast.makeText(ExpandableListViewActivity.this, "组被点击了，跳转到具体的Activity", Toast.LENGTH_SHORT).show();
-                {
-                    boolean isExpand = elvListView.isGroupExpanded(groupPosition);//判断分组是否展开
-                    if (isExpand) {
-                        elvListView.collapseGroup(groupPosition);
-                    } else {
-                        elvListView.expandGroup(groupPosition);
+                    {
+                        boolean isExpand = elvListView.isGroupExpanded(groupPosition);//判断分组是否展开
+                        if (isExpand) {
+                            elvListView.collapseGroup(groupPosition);
+                        } else {
+                            elvListView.expandGroup(groupPosition);
+                        }
                     }
+                    return true;    //拦截点击事件，不再处理展开或者收起
                 }
-                return true;    //拦截点击事件，不再处理展开或者收起
-            }
-        });
+            });
 
-        //某个分组中的子View被点击时的事件
-        elvListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition,
-                                        long id) {
+            //某个分组中的子View被点击时的事件
+            elvListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+                @Override
+                public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition,
+                                            long id) {
 //                Toast.makeText(ProblemCollectionActivity.this, "组中的条目被点击：" + groups[groupPosition] + "的" +
 //                        infos[groupPosition][childPosition] + "放学后到校长办公室", Toast.LENGTH_SHORT).show();
 //
 //                解锁的朝代
-                switch (groupPosition) {
-                    case 0://类型
+                    switch (groupPosition) {
+                        case 0://类型
 
-                        break;
-                    case 1://朝代
-                        cDynastyId = Constant.UnlockDynasty.get(childPosition).getDynastyId();
-                        Log.e("onChildClick:dynastyId ", cDynastyId);
-                        init();//加载
-                        break;
-                }
+                            break;
+                        case 1://朝代
+                            cDynastyId = Constant.UnlockDynasty.get(childPosition).getDynastyId();
+                            Log.e("onChildClick:dynastyId ", cDynastyId);
+                            init();//加载
+                            break;
+                    }
 //                点击
-                return false;
-            }
-        });
+                    return false;
+                }
+            });
 
+        }
     }
-}

@@ -95,7 +95,6 @@ public class EventDialogActivity extends AppCompatActivity {
                     ViewGroup.LayoutParams pp = rlRelativeLayout.getLayoutParams();
                     pp.height = DensityUtil.dip2px(getApplicationContext(), 110) * txtList.length;
                     rlRelativeLayout.setLayoutParams(pp);
-//                    svScroll.fullScroll(ScrollView.FOCUS_DOWN);
                     svScroll.post(new Runnable(){
                         @Override
                         public void run() {
@@ -107,49 +106,108 @@ public class EventDialogActivity extends AppCompatActivity {
                     llDialogLayout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            int count = rlRelativeLayout.getChildCount();
-                            TextView tv = new TextView(getApplicationContext());
-                            int width = DensityUtil.dip2px(getApplicationContext(), 150);
-                            int height = DensityUtil.dip2px(getApplicationContext(), 100);
-                            int th = DensityUtil.dip2px(getApplicationContext(), 20);
-                            int tp = DensityUtil.dip2px(getApplicationContext(), 10);
-                            int ml = DensityUtil.dip2px(getApplicationContext(), 30);
-                            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
-                            tv.setText(txtList[count]);
-                            tv.setTypeface(typeface1);
-                            tv.setMaxHeight(th);
-                            tv.setPadding(th,tp,th,0);
-                            if (count % 2 != 0) {
-                                params.setMargins(ml,0,0,0);
-                                tv.setBackgroundResource(R.mipmap.conversation2);
-                            } else {
-                                params.setMargins(0,0,ml,0);
-                                tv.setBackgroundResource(R.mipmap.conversation1);
-                            }
-                            Log.e("count的值：", count + "");
-                            for (int j = 0; j < count; j++) {
-                                View view1 = rlRelativeLayout.getChildAt(j);
-                                Log.e("view1", view1.toString());
-                                float curTranslationY = view1.getTranslationY();
-                                Log.e("curTranslationY:" + j, curTranslationY + "");
-                                objectAnimator = ObjectAnimator.ofFloat(view1, "translationY",
-                                        curTranslationY, curTranslationY - 210);
-                                objectAnimator.setDuration(1000);
-                                objectAnimator.start();
-                            }
+                            if (prelongTim == 0){
+                                prelongTim = new Date().getTime();
+                                int count = rlRelativeLayout.getChildCount();
+                                TextView tv = new TextView(getApplicationContext());
+                                int width = DensityUtil.dip2px(getApplicationContext(), 150);
+                                int height = DensityUtil.dip2px(getApplicationContext(), 100);
+                                int th = DensityUtil.dip2px(getApplicationContext(), 20);
+                                int tp = DensityUtil.dip2px(getApplicationContext(), 10);
+                                int ml = DensityUtil.dip2px(getApplicationContext(), 30);
+                                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
+                                tv.setText(txtList[count]);
+                                tv.setTextColor(Color.BLACK);
+                                tv.setTypeface(typeface1);
+                                tv.setMaxHeight(th);
+                                tv.setPadding(th,tp,th,0);
+                                if (count % 2 != 0) {
+                                    params.setMargins(ml,0,0,0);
+                                    tv.setBackgroundResource(R.mipmap.conversation2);
+                                } else {
+                                    params.setMargins(0,0,ml,0);
+                                    tv.setBackgroundResource(R.mipmap.conversation1);
+                                }
+                                Log.e("count的值：", count + "");
+                                for (int j = 0; j < count; j++) {
+                                    View view1 = rlRelativeLayout.getChildAt(j);
+                                    Log.e("view1", view1.toString());
+                                    float curTranslationY = view1.getTranslationY();
+                                    Log.e("curTranslationY:" + j, curTranslationY + "");
+                                    objectAnimator = ObjectAnimator.ofFloat(view1, "translationY",
+                                            curTranslationY, curTranslationY - 210);
+                                    objectAnimator.setDuration(1000);
+                                    objectAnimator.start();
+                                }
 //
-                            params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-                            tv.setLayoutParams(params);
+                                params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                                tv.setLayoutParams(params);
 
-                            rlRelativeLayout.addView(tv);
-                            if (count == txtList.length-1) {
-                                llDialogLayout.setOnClickListener(null);
-//                                long experience = Constant.User.getUserExperience();
-//                                experience = experience + 15;
-//                                Constant.User.setUserExperience(experience);
-                                Log.i("ex", String.valueOf(Constant.User.getUserExperience()));
-                                addUnlockIncidents();
-                                isPass(dynastyId);
+                                rlRelativeLayout.addView(tv);
+                                if (count == txtList.length-1) {
+                                    llDialogLayout.setOnClickListener(null);
+                                    long experience = Constant.User.getUserExperience();
+                                    Log.i("ex1", String.valueOf(Constant.User.getUserExperience()));
+                                    experience = experience + 15;
+                                    Constant.User.setUserExperience(experience);
+                                    Log.i("ex", String.valueOf(Constant.User.getUserExperience()));
+                                    addUnlockIncidents();
+                                    isPass(dynastyId);
+                                }
+                            }else{
+                                curTime = new Date().getTime();
+                                if ((curTime-prelongTim) < 1000){
+                                    Log.e("iii", curTime-prelongTim + "");
+                                }else{
+                                    Log.e("iiie", curTime-prelongTim + "");
+                                    int count = rlRelativeLayout.getChildCount();
+                                    TextView tv = new TextView(getApplicationContext());
+                                    int width = DensityUtil.dip2px(getApplicationContext(), 150);
+                                    int height = DensityUtil.dip2px(getApplicationContext(), 100);
+                                    int th = DensityUtil.dip2px(getApplicationContext(), 20);
+                                    int tp = DensityUtil.dip2px(getApplicationContext(), 10);
+                                    int ml = DensityUtil.dip2px(getApplicationContext(), 30);
+                                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
+                                    tv.setText(txtList[count]);
+                                    tv.setTextColor(Color.BLACK);
+                                    tv.setTypeface(typeface1);
+                                    tv.setMaxHeight(th);
+                                    tv.setPadding(th,tp,th,0);
+                                    if (count % 2 != 0) {
+                                        params.setMargins(ml,0,0,0);
+                                        tv.setBackgroundResource(R.mipmap.conversation2);
+                                    } else {
+                                        params.setMargins(0,0,ml,0);
+                                        tv.setBackgroundResource(R.mipmap.conversation1);
+                                    }
+                                    Log.e("count的值：", count + "");
+                                    for (int j = 0; j < count; j++) {
+                                        View view1 = rlRelativeLayout.getChildAt(j);
+                                        Log.e("view1", view1.toString());
+                                        float curTranslationY = view1.getTranslationY();
+                                        Log.e("curTranslationY:" + j, curTranslationY + "");
+                                        objectAnimator = ObjectAnimator.ofFloat(view1, "translationY",
+                                                curTranslationY, curTranslationY - 210);
+                                        objectAnimator.setDuration(1000);
+                                        objectAnimator.start();
+                                    }
+//
+                                    params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                                    tv.setLayoutParams(params);
+
+                                    rlRelativeLayout.addView(tv);
+                                    if (count == txtList.length-1) {
+                                        llDialogLayout.setOnClickListener(null);
+                                        long experience = Constant.User.getUserExperience();
+                                        Log.i("ex1", String.valueOf(Constant.User.getUserExperience()));
+                                        experience = experience + 15;
+                                        Constant.User.setUserExperience(experience);
+                                        Log.i("ex", String.valueOf(Constant.User.getUserExperience()));
+                                        addUnlockIncidents();
+                                        isPass(dynastyId);
+                                    }
+                                }
+                                prelongTim = curTime;
                             }
                         }
                     });
@@ -163,7 +221,7 @@ public class EventDialogActivity extends AppCompatActivity {
      */
     private void addUnlockIncidents() {
         Request request = new Request.Builder()
-                .url(ServiceConfig.SERVICE_ROOT + UNLOCK_INCIDENT_ADD + "1/" + dynastyId + "/" + incidentId)
+                .url(ServiceConfig.SERVICE_ROOT + UNLOCK_INCIDENT_ADD + Constant.User.getUserId() + "/" + dynastyId + "/" + incidentId)
                 .build();
         Call call = okHttpClient.newCall(request);
         new Thread(){
@@ -179,11 +237,11 @@ public class EventDialogActivity extends AppCompatActivity {
                         Looper.prepare();
                         Toast.makeText(getApplicationContext(), "您已看完此事件", Toast.LENGTH_LONG).show();
                         Looper.loop();
-//                        UserUnlockDynastyIncident unlockIncident = new UserUnlockDynastyIncident();
-//                        unlockIncident.setIncidentId(incident.getIncidentId());
-//                        unlockIncident.setIncidentName(incident.getIncidentName());
-//                        unlockIncident.setIncidentPicture("incident/tang-" + incidentId + ".png");
-//                        Constant.UnlockDynastyIncident.add(unlockIncident);
+                        UserUnlockDynastyIncident unlockIncident = new UserUnlockDynastyIncident();
+                        unlockIncident.setIncidentId(incident.getIncidentId());
+                        unlockIncident.setIncidentName(incident.getIncidentName());
+                        unlockIncident.setIncidentPicture("incident/tang-" + incidentId + ".png");
+                        Constant.UnlockDynastyIncident.add(unlockIncident);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -279,7 +337,7 @@ public class EventDialogActivity extends AppCompatActivity {
     private void addUnlockDynasty(String dynastyId) {
         int dynastyID = Integer.parseInt(dynastyId) + 1;
         Request request = new Request.Builder()
-                .url(ServiceConfig.SERVICE_ROOT + UNLOCK_DYNASTY_ADD + 1 + "/" + dynastyID)
+                .url(ServiceConfig.SERVICE_ROOT + UNLOCK_DYNASTY_ADD + Constant.User.getUserId() + "/" + dynastyID)
                 .build();
         Call call = okHttpClient.newCall(request);
         new Thread(() -> {
@@ -294,12 +352,12 @@ public class EventDialogActivity extends AppCompatActivity {
                     //解锁成功
                     Toast.makeText(getApplicationContext(), "您已解锁下一朝代", Toast.LENGTH_SHORT).show();
                     Looper.loop();
-//                    UserUnlockDynasty unlockDynasty = new UserUnlockDynasty();
-//                    unlockDynasty.setDynastyId(dynastyId);
-//                    unlockDynasty.setDynastyName(dynastyName);
-//                    unlockDynasty.setProgress(0);
-//                    unlockDynasty.setUserId(Constant.User.getUserId());
-//                    Constant.UnlockDynasty.add(unlockDynasty);
+                    UserUnlockDynasty unlockDynasty = new UserUnlockDynasty();
+                    unlockDynasty.setDynastyId(dynastyId);
+                    unlockDynasty.setDynastyName(dynastyName);
+                    unlockDynasty.setProgress(0);
+                    unlockDynasty.setUserId(Constant.User.getUserId());
+                    Constant.UnlockDynasty.add(unlockDynasty);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -318,7 +376,7 @@ public class EventDialogActivity extends AppCompatActivity {
     private void isPass(String dynastyId) {
         //Constant.User.getUserId()
         Request request = new Request.Builder()
-                .url(ServiceConfig.SERVICE_ROOT + DYNASTY_ISPASS + 1 + "/" + dynastyId)
+                .url(ServiceConfig.SERVICE_ROOT + DYNASTY_ISPASS + Constant.User.getUserId() + "/" + dynastyId)
                 .build();
 
         Call call = okHttpClient.newCall(request);

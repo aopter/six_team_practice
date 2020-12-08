@@ -1,9 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/bg_drawcard"
     android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/share_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:alpha="0.8"
+        android:clickable="true"
+        android:visibility="gone">
+
+        <ListView
+            android:id="@+id/icon_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white" />
+    </RelativeLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -21,6 +38,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <net.onest.timestoryprj.customview.CusTextView
+                    android:id="@+id/join"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:text="您的好友已经获得很多卡片啦\n赶快加入我们吧"
+                    android:textColor="@android:color/white"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/e_r_code"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_above="@+id/join"
+                    android:background="@mipmap/e_r_code"
+                    android:visibility="gone" />
+
                 <TextView
                     android:id="@+id/tip"
                     android:layout_width="match_parent"
@@ -30,6 +66,15 @@
                     android:textColor="@android:color/white"
                     android:textSize="17sp" />
 
+                <ImageView
+                    android:id="@+id/share"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:padding="5dp"
+                    android:src="@mipmap/share"
+                    android:visibility="gone" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -38,14 +83,23 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:transitionName="ivGetCard"
                         android:id="@+id/draw_card_show"
-                        android:layout_width="190dp"
-                        android:layout_height="match_parent"
+                        android:layout_width="160dp"
+                        android:layout_height="256dp"
                         android:layout_gravity="center_vertical"
-                        android:background="@mipmap/examplecard"
-                        android:padding="15dp" />
+                        android:background="@color/ourDynastyRed"
+                        android:src="@mipmap/card_back"
+                        android:transitionName="ivGetCard" />
                 </LinearLayout>
+
+                <!--                <ImageView-->
+                <!--                    android:id="@+id/man"-->
+                <!--                    android:layout_width="150dp"-->
+                <!--                    android:layout_height="200dp"-->
+                <!--                    android:layout_alignBottom="@+id/to_last_view"-->
+                <!--                    android:layout_alignParentRight="true"-->
+                <!--                    android:src="@mipmap/bg_man"-->
+                <!--                    android:visibility="gone" />-->
 
                 <Button
                     android:id="@+id/to_last_view"
@@ -109,6 +163,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:alpha="0.9"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:paddingLeft="20dp"
@@ -117,37 +172,41 @@
                         <ImageView
                             android:id="@+id/card1"
                             android:layout_width="0dp"
-                            android:layout_height="250dp"
+                            android:layout_height="210dp"
+                            android:layout_margin="15dp"
                             android:layout_weight="1"
-                            android:padding="15dp"
-                            android:src="@mipmap/examplecard" />
+                            android:background="@color/ourDynastyRed"
+                            android:src="@mipmap/card_back" />
 
                         <ImageView
                             android:id="@+id/card2"
                             android:layout_width="0dp"
-                            android:layout_height="250dp"
+                            android:layout_height="210dp"
+                            android:layout_margin="15dp"
                             android:layout_weight="1"
-                            android:padding="15dp"
-                            android:src="@mipmap/examplecard" />
+                            android:background="@color/ourDynastyRed"
+                            android:src="@mipmap/card_back" />
 
                         <ImageView
                             android:id="@+id/card3"
                             android:layout_width="0dp"
-                            android:layout_height="250dp"
+                            android:layout_height="210dp"
+                            android:layout_margin="15dp"
                             android:layout_weight="1"
-                            android:padding="15dp"
-                            android:src="@mipmap/examplecard" />
+                            android:background="@color/ourDynastyRed"
+                            android:src="@mipmap/card_back" />
 
                         <ImageView
                             android:id="@+id/card4"
                             android:layout_width="0dp"
-                            android:layout_height="250dp"
+                            android:layout_height="210dp"
+                            android:layout_margin="15dp"
                             android:layout_weight="1"
-                            android:padding="15dp"
-                            android:src="@mipmap/examplecard" />
+                            android:background="@color/ourDynastyRed"
+                            android:src="@mipmap/card_back" />
                     </LinearLayout>
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>
     </FrameLayout>
-</LinearLayout>
+</RelativeLayout>

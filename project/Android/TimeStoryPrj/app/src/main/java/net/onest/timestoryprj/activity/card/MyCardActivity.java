@@ -9,20 +9,15 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.adapter.card.CardAdapter;
-import net.onest.timestoryprj.constant.Constant;
-import net.onest.timestoryprj.entity.Card;
 import net.onest.timestoryprj.entity.Dynasty;
-import net.onest.timestoryprj.entity.UserUnlockDynasty;
 import net.onest.timestoryprj.util.CardScaleHelper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

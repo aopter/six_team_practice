@@ -9,7 +9,6 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.HandlerThread;
 import android.os.Message;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -27,7 +26,7 @@ import com.google.gson.GsonBuilder;
 
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.constant.ServiceConfig;
-import net.onest.timestoryprj.entity.Card;
+import net.onest.timestoryprj.entity.card.Card;
 
 import java.io.IOException;
 

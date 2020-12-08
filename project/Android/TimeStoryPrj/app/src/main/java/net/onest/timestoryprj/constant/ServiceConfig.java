@@ -8,6 +8,7 @@ public class ServiceConfig {
     public static String HISTORY_TODAY = "http://api.juheapi.com/japi/toh";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     //    public static String SERVICE_ROOT = "";
 =======
 <<<<<<< Updated upstream
@@ -28,4 +29,16 @@ public class ServiceConfig {
 
 
     public static String SERVICE_ROOT = "http://192.168.43.116:8888";
+=======
+<<<<<<< HEAD
+
+//    public static String SERVICE_ROOT = "http://47.101.157.246:8889";
+
+    public static String SERVICE_ROOT = "http://192.168.0.102:8889";
+
+
+=======
+    public static String SERVICE_ROOT = "http://47.101.157.246:8889";
+>>>>>>> 8eb3ad1ec1b03f777f9c61e51f735195c2b71374
+>>>>>>> dad0d295bbd8f3d66000d06a148f37354222adb6
 }

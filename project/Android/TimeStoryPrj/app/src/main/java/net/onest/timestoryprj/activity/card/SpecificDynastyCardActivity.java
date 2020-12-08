@@ -16,8 +16,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -37,9 +35,8 @@ import net.onest.timestoryprj.adapter.card.SpecificDynastyCardAdapter;
 import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.customview.DropdownListView;
-import net.onest.timestoryprj.entity.Card;
 import net.onest.timestoryprj.entity.User;
-import net.onest.timestoryprj.entity.UserCard;
+import net.onest.timestoryprj.entity.card.UserCard;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -74,6 +71,7 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
     TextView searchBtn;
     private OkHttpClient client;
     private Gson gson;
+    int type = 0;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -161,7 +159,7 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
         if (dynastyId == -1) {
             Toast.makeText(getApplicationContext(), "获取卡片出错啦，请重新获取", Toast.LENGTH_SHORT).show();
         } else {
-            getDynastyCards();
+            getCardsByType(type);
         }
     }
 
@@ -181,35 +179,6 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
         GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
         dyanstyCardView.setLayoutManager(layoutManager);
         dyanstyCardView.setAdapter(cardAdapter);
-    }
-
-    private void getDynastyCards() {
-        new Thread() {
-            @Override
-            public void run() {
-                Log.e("draw", ServiceConfig.SERVICE_ROOT + "/usercard/list/" + Constant.User.getUserId() + "/" + dynastyId);
-                Request request = new Request.Builder()
-                        .url(ServiceConfig.SERVICE_ROOT + "/usercard/list/" + Constant.User.getUserId() + "/" + dynastyId)
-                        .build();
-                Call call = client.newCall(request);
-                call.enqueue(new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-                        // TODO获取卡片内容失败
-//                        Toast.makeText(getApplicationContext(), "获取朝代卡片失败", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        String result = response.body().string();
-                        Message message = new Message();
-                        message.what = 1;
-                        message.obj = result;
-                        handler.sendMessage(message);
-                    }
-                });
-            }
-        }.start();
     }
 
     @OnClick(R.id.back)
@@ -238,19 +207,17 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
         if ("".equals(key)) {
             Toast.makeText(getApplicationContext(), "请输入搜索关键字", Toast.LENGTH_SHORT).show();
         } else {
-            // TODO 根据服务端数据请求，参数user_id、search_keyword、dynasty
-            getCardsByKey();
+            getCardsByKey(key);
         }
     }
 
-    private void getCardsByKey() {
+    private void getCardsByKey(String key) {
         new Thread() {
             @Override
             public void run() {
-                String key = searchCardName.getText().toString();
-                Log.e("key", ServiceConfig.SERVICE_ROOT + "/usercard/fuzzy/" + Constant.User.getUserId() + "/" + dynastyId + "/" + key);
+                Log.e("key", ServiceConfig.SERVICE_ROOT + "/usercard/list/" + Constant.User.getUserId() + "/" + +dynastyId + "/" + type + "/" + key);
                 Request request = new Request.Builder()
-                        .url(ServiceConfig.SERVICE_ROOT + "/usercard/fuzzy/" + Constant.User.getUserId() + "/" + dynastyId + "/" + key)
+                        .url(ServiceConfig.SERVICE_ROOT + "/usercard/list/" + Constant.User.getUserId() + "/" + +dynastyId + "/" + type + "/" + key)
                         .build();
                 Call call = client.newCall(request);
                 call.enqueue(new Callback() {
@@ -285,25 +252,36 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 String text = typeView.cardTypes.get(position);
-                if (!typeView.textView.getText().toString().equals(text)) {
-                    typeView.textView.setText(text);
-                    typeView.popupWindow.dismiss();
-                    typeView.popupWindow = null;
-                    if ("全部卡片".equals(typeView.textView.getText().toString().trim())) {
-                        userCards.clear();
-                        // TODO 从客户端获取数据, 参数为 user_id 与 dynasty
-                        showCards();
-                    } else if ("人物卡片".equals(typeView.textView.getText().toString().trim())) {
-                        userCards.clear();
-                        // TODO 从客户端获取数据, 参数为 user_id 与 dynasty 与type
-                        showCards();
-                    } else if ("文物卡片".equals(typeView.textView.getText().toString().trim())) {
-                        userCards.clear();
-                        // TODO 从客户端获取数据, 参数为 user_id 与 dynasty
-                        showCards();
+                typeView.textView.setText(text);
+                typeView.popupWindow.dismiss();
+                typeView.popupWindow = null;
+                if ("全部卡片".equals(typeView.textView.getText().toString().trim())) {
+                    userCards.clear();
+                    type = 0;
+                    String key = searchCardName.getText().toString().trim();
+                    if ("".equals(key)) {
+                        getCardsByType(type);
+                    } else {
+                        getCardsByKey(key);
                     }
-                } else {
-                    typeView.popupWindow.dismiss();
+                } else if ("人物卡片".equals(typeView.textView.getText().toString().trim())) {
+                    userCards.clear();
+                    type = 1;
+                    String key = searchCardName.getText().toString().trim();
+                    if ("".equals(key)) {
+                        getCardsByType(type);
+                    } else {
+                        getCardsByKey(key);
+                    }
+                } else if ("文物卡片".equals(typeView.textView.getText().toString().trim())) {
+                    userCards.clear();
+                    type = 2;
+                    String key = searchCardName.getText().toString().trim();
+                    if ("".equals(key)) {
+                        getCardsByType(type);
+                    } else {
+                        getCardsByKey(key);
+                    }
                 }
             }
         });
@@ -313,6 +291,36 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
         typeView.popupWindow.setOutsideTouchable(true);
         typeView.popupWindow.showAsDropDown(typeView);
     }
+
+    private void getCardsByType(int type) {
+        new Thread() {
+            @Override
+            public void run() {
+                Log.e("key", ServiceConfig.SERVICE_ROOT + "/usercard/list/" + Constant.User.getUserId() + "/" + dynastyId + "/" + type);
+                Request request = new Request.Builder()
+                        .url(ServiceConfig.SERVICE_ROOT + "/usercard/list/" + Constant.User.getUserId() + "/" + dynastyId + "/" + type)
+                        .build();
+                Call call = client.newCall(request);
+                call.enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        // TODO 错误提示
+                        Toast.makeText(getApplicationContext(), "获取相关卡片失败", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        String result = response.body().string();
+                        Message message = new Message();
+                        message.what = 1;
+                        message.obj = result;
+                        handler.sendMessage(message);
+                    }
+                });
+            }
+        }.start();
+    }
+
 
     private void showCards() {
         if (userCards.size() == 0) {

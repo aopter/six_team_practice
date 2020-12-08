@@ -3,7 +3,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,13 +14,17 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
+
 import com.bumptech.glide.Glide;
 
 import net.onest.timestoryprj.R;
+import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.dialog.dynasty.EventDialogActivity;
 import net.onest.timestoryprj.entity.Incident;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
@@ -55,6 +61,7 @@ public class EventListAdapter extends BaseAdapter {
         return position;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (null == convertView) {
@@ -64,9 +71,21 @@ public class EventListAdapter extends BaseAdapter {
         }
         AssetManager assets = context.getAssets();
         final Typeface typeface = Typeface.createFromAsset(assets, "fonts/custom_font.ttf");
-        Glide.with(context).load(ServiceConfig.SERVICE_ROOT + "/picture/download/incident/inc-" + (position + 1) + ".png").into(ivIncidentImg);
+        String[] pics = incidents.get(position).getIncidentPicture().split(Constant.DELIMITER);
+        Glide.with(context).load(ServiceConfig.SERVICE_ROOT + "/picture/download/" + pics[3]).into(ivIncidentImg);
         tvIncidentName.setTypeface(typeface);
         tvIncidentName.setText(incidents.get(position).getIncidentName());
+        List<Integer> unlockDynastyIncident = new ArrayList<>();
+        for (int j = 0; j < Constant.UnlockDynastyIncident.size();j++){
+            Log.e("size", String.valueOf(Constant.UnlockDynastyIncident.size()));
+//            Constant.UnlockDynastyIncident
+            unlockDynastyIncident.add(Constant.UnlockDynastyIncident.get(j).getIncidentId());
+        }
+        for (int j = 0; j < unlockDynastyIncident.size();j++){
+            if (position == getItemId(unlockDynastyIncident.get(j)-1)){
+                tvIncidentName.setTextColor(Color.BLACK);
+            }
+        }
         tvIncidentName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
