@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="net.onest.timestoryprj">
 
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission
         android:name="android.permission.WRITE_APN_SETTINGS"
         tools:ignore="ProtectedPermissions" />
@@ -111,10 +112,6 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity
-            android:name=".MainActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="landscape" />
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"

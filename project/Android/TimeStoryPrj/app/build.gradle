@@ -49,5 +49,4 @@ dependencies {
     implementation 'com.tinytongtong:tinyutils:0.0.7'
     implementation fileTree(dir: 'libs', include: ['*.aar', '*.jar'], exclude: [])
 
-
 }

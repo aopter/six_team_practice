@@ -140,15 +140,7 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    URL url = new URL("http://192.168.42.160:8888/rule");
-=======
-                    URL url = new URL(ServiceConfig.SERVICE_ROOT+"/rule");
->>>>>>> 0fbef57e1ffd0b922e72e52b62d4dc8c4e599473
-=======
                     URL url = new URL(ServiceConfig.SERVICE_ROOT + "/rule");
->>>>>>> c9081a1699ff23a39791b643a7e3d11dc21225bc
                     URLConnection connection = url.openConnection();
                     InputStream in = connection.getInputStream();
                     BufferedReader reader = new BufferedReader(

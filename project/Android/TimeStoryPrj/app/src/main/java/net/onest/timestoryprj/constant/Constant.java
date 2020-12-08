@@ -27,29 +27,12 @@ public class Constant {
     public static List<UserUnlockDynasty> UnlockDynasty = new ArrayList<>();
     //规则详情
     public static Rule rule;
-<<<<<<< HEAD
-
-=======
->>>>>>> 0fbef57e1ffd0b922e72e52b62d4dc8c4e599473
     //当前登录用户解锁的某朝代的事件
     public static List<UserUnlockDynastyIncident> UnlockDynastyIncident = new ArrayList<>();
     //规则详情
     public static Rule Rule = new Rule();
 
-<<<<<<< HEAD
-
     public static List<User> UserRankList;
-
-=======
-    public static List<User> UserRankList;
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-
->>>>>>> 0fbef57e1ffd0b922e72e52b62d4dc8c4e599473
-=======
->>>>>>> 3d3c1fca602c5720aacaf877cf56a195b94440f2
-=======
 
     public static List<Problem> userProblems;//题目列表
 
@@ -57,5 +40,4 @@ public class Constant {
 
     public static Bitmap shareBitmap;
 
->>>>>>> c9081a1699ff23a39791b643a7e3d11dc21225bc
 }

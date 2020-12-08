@@ -28,7 +28,7 @@ import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 
-import net.onest.timestoryprj.MainActivity;
+
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.activity.dynasty.HomepageActivity;
 import net.onest.timestoryprj.constant.Constant;
