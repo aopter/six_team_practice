@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import net.onest.timestoryprj.R;
@@ -48,6 +49,13 @@ public class RechargeAdapter extends BaseAdapter {
         }
         holder.rechargeIntegral.setText(pricings.get(position).getPricingCount() + "积分");
         holder.rechargeMoney.setText(pricings.get(position).getPricingMoney() + "元");
+        holder.btnRecharge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO 调用支付宝接口充值
+                Toast.makeText(mContext, "您要充值" + pricings.get(position).getPricingMoney() + "元", Toast.LENGTH_SHORT).show();
+            }
+        });
         return view;
     }
 

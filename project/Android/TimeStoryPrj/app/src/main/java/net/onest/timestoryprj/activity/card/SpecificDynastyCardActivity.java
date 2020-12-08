@@ -96,25 +96,13 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_specific_dynasty_card);
         ButterKnife.bind(this);
-<<<<<<< Updated upstream
-=======
-
-        client = new OkHttpClient();
-        // TODO 记得删除
-        Constant.User = new User();
-        Constant.User.setUserId(1);
-
->>>>>>> Stashed changes
         promptDialog = new PromptDialog(this);
         promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(1000);
         promptDialog.showLoading("正在加载");
         client = new OkHttpClient();
-<<<<<<< Updated upstream
-=======
 //        // TODO 记得删除
 //        Constant.User = new User();
 //        Constant.User.setUserId(1);
->>>>>>> Stashed changes
         initTypes();
         initDynastyCards();
         gson = new GsonBuilder()//创建GsonBuilder对象
@@ -127,7 +115,7 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (!"".equals(searchCardName.getText().toString())) {
+                if (!"" .equals(searchCardName.getText().toString())) {
                     searchDelete.setVisibility(View.VISIBLE);
                 } else {
                     searchDelete.setVisibility(View.INVISIBLE);
@@ -136,7 +124,7 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (!"".equals(searchCardName.getText().toString())) {
+                if (!"" .equals(searchCardName.getText().toString())) {
                     searchDelete.setVisibility(View.VISIBLE);
                 } else {
                     searchDelete.setVisibility(View.INVISIBLE);
@@ -215,7 +203,7 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
     @OnClick(R.id.search_btn)
     void showSearchCards() {
         String key = searchCardName.getText().toString().trim();
-        if ("".equals(key)) {
+        if ("" .equals(key)) {
             Toast.makeText(getApplicationContext(), "请输入搜索关键字", Toast.LENGTH_SHORT).show();
         } else {
             getCardsByKey(key);
@@ -266,29 +254,29 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
                 typeView.textView.setText(text);
                 typeView.popupWindow.dismiss();
                 typeView.popupWindow = null;
-                if ("全部卡片".equals(typeView.textView.getText().toString().trim())) {
+                if ("全部卡片" .equals(typeView.textView.getText().toString().trim())) {
                     userCards.clear();
                     type = 0;
                     String key = searchCardName.getText().toString().trim();
-                    if ("".equals(key)) {
+                    if ("" .equals(key)) {
                         getCardsByType(type);
                     } else {
                         getCardsByKey(key);
                     }
-                } else if ("人物卡片".equals(typeView.textView.getText().toString().trim())) {
+                } else if ("人物卡片" .equals(typeView.textView.getText().toString().trim())) {
                     userCards.clear();
                     type = 1;
                     String key = searchCardName.getText().toString().trim();
-                    if ("".equals(key)) {
+                    if ("" .equals(key)) {
                         getCardsByType(type);
                     } else {
                         getCardsByKey(key);
                     }
-                } else if ("文物卡片".equals(typeView.textView.getText().toString().trim())) {
+                } else if ("文物卡片" .equals(typeView.textView.getText().toString().trim())) {
                     userCards.clear();
                     type = 2;
                     String key = searchCardName.getText().toString().trim();
-                    if ("".equals(key)) {
+                    if ("" .equals(key)) {
                         getCardsByType(type);
                     } else {
                         getCardsByKey(key);

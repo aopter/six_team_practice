@@ -140,11 +140,6 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-<<<<<<< Updated upstream
-=======
-
-
->>>>>>> Stashed changes
                     URL url = new URL(ServiceConfig.SERVICE_ROOT + "/rule");
                     URLConnection connection = url.openConnection();
                     InputStream in = connection.getInputStream();
