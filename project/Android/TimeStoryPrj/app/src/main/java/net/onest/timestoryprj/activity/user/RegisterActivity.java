@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,12 +27,19 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
+import okhttp3.Call;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 public class RegisterActivity extends AppCompatActivity {
     private EditText etPhone;
     private EditText etPwd;
     private Button btnRes;
     private String phone;
     private String pwd;
+    private OkHttpClient okHttpClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         findViews();
+        okHttpClient = new OkHttpClient();
         //注册按钮的监听
         btnRes.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +59,6 @@ public class RegisterActivity extends AppCompatActivity {
                 }else {
                     Toast.makeText(getApplicationContext(),"请检查您的信息格式",Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
     }
@@ -63,21 +71,21 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    URL url = new URL(ServiceConfig.SERVICE_ROOT+"/user/register");
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setRequestMethod("POST");
-                    OutputStream outputStream = connection.getOutputStream();
-                    JSONObject obj = new JSONObject();
-                    obj.put("number",phone);
-                    obj.put("password",pwd);
-                    obj.put("flag",1);
-                    String str = obj.toString();
-                    outputStream.write(str.getBytes());
-
-                    InputStream in = connection.getInputStream();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(in,"utf-8"));
-                    String info = reader.readLine();
-                    JSONObject object = new JSONObject(info);
+                    FormBody.Builder formBuilder = new FormBody.Builder();
+                    FormBody formBody = formBuilder.add("userAccount", phone)
+                            .add("userPassword", pwd)
+                            .add("flag", 1 + "")
+                            .build();
+                    Request request = new Request.Builder()
+                            .url(ServiceConfig.SERVICE_ROOT + "/user/register")
+                            .method("POST", formBody)
+                            .post(formBody)
+                            .build();
+                    Call call = okHttpClient.newCall(request);
+                    Response response = call.execute();
+                    String result = response.body().string();
+                    Log.e("result", result);
+                    JSONObject object = new JSONObject(result);
                     if (object.getBoolean("result") == true){
                         Looper.prepare();
                         Toast.makeText(getApplicationContext(),"注册成功",Toast.LENGTH_SHORT).show();

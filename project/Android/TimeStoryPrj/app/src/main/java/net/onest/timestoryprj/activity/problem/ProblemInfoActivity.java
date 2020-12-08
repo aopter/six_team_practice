@@ -463,11 +463,8 @@ public class ProblemInfoActivity extends AppCompatActivity {
     private void getProblem(int type) {
         btnAnswer.setVisibility(View.INVISIBLE);
         btnProblemSave.setText("收藏");
-<<<<<<< Updated upstream
-        LogUtils.d("长度suoyou", myProblems.size() + "");
-=======
+
         LogUtils.d("长度suoyou",myProblems.size()+"");
->>>>>>> Stashed changes
         isGetAnswer = false;
         String url = ServiceConfig.SERVICE_ROOT + "/problem/replenish/" + type + "/" + dynastyId + "";
         Request.Builder builder = new Request.Builder();

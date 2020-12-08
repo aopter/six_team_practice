@@ -79,57 +79,13 @@ public class ProblemCollectionActivity extends AppCompatActivity {
                     } else {
                         initAdapter();
                         refreshLayout.finishLoadMore();//加载完毕
-<<<<<<< Updated upstream
                     }
-
-//                    if (cPageCount == 1) {
-//                        initAdapter();
-//                        Log.e("handleMessage: ", "初始化完毕");
-//                        refreshLayout.finishRefresh();
-//                    } else {
-//
-//                        ProblemCollectionActivity.this.runOnUiThread(new Runnable() {
-//                            public void run() {
-//                                RecyclerView.Adapter adapter = recyclerView.getAdapter();
-//                                adapter.notifyDataSetChanged();
-//                                LogUtils.d("加载后长度："+problems.size()+"");
-//                                refreshLayout.finishLoadMore();//加载完毕
-//                            }
-//                        });
-//
-//                    }
                     break;
-=======
-                    }
 
-//                    if (cPageCount == 1) {
-//                        initAdapter();
-//                        Log.e("handleMessage: ", "初始化完毕");
-//                        refreshLayout.finishRefresh();
-//                    } else {
-//
-//                        ProblemCollectionActivity.this.runOnUiThread(new Runnable() {
-//                            public void run() {
-//                                RecyclerView.Adapter adapter = recyclerView.getAdapter();
-//                                //打印
-//                                for(int i=0;i<problems.size();++i){
-//                                    LogUtils.d("加载shuju：" + problems.get(i).toString() + "");
-//
-//                                }
-//                                adapter.notifyDataSetChanged();
-//                                LogUtils.d("加载后长度：" + problems.size() + "");
-//                                refreshLayout.finishLoadMore();//加载完毕
-//                            }
-//                        });
-//
-//                    }
-                        break;
-                    }
->>>>>>> Stashed changes
             }
-        }
 
-        ;
+        }
+        };
 
         private void initAdapter() {//初始化adapter
             ProblemCollectionActivity.this.runOnUiThread(new Runnable() {
@@ -140,10 +96,7 @@ public class ProblemCollectionActivity extends AppCompatActivity {
                     ProblemInfoListAdapter problemInfoListAdapter = new ProblemInfoListAdapter(getApplicationContext(), problems);
                     recyclerView.setAdapter(problemInfoListAdapter);
                 }
-            });
-
-
-        }
+            });}
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {

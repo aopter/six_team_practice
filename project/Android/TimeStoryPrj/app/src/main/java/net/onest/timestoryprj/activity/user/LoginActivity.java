@@ -73,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
     private BaseUiListener baseUiListener;
     private UserInfo userInfo;
     private OkHttpClient okHttpClient;
+    private String openId;
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -186,9 +187,7 @@ public class LoginActivity extends AppCompatActivity {
                         handler.sendMessage(message);
                         Constant.User = gson.fromJson(result, User.class);
                         Log.e("user信息",Constant.User.getUserCount()+"");
-//                        if (Constant.User.getUserHeader() == null){
-//                            Constant.User.setUserHeader("su-1.jpg");
-//                        }
+
                         //跳转到主页
                         Intent intent = new Intent();
                         intent.setClass(getApplicationContext(), HomepageActivity.class);
@@ -234,6 +233,42 @@ public class LoginActivity extends AppCompatActivity {
         public void onComplete(Object o) {
             Toast.makeText(getApplicationContext(),"授权成功",Toast.LENGTH_SHORT).show();
             Log.e("LoginActivity",o.toString());
+            String info = o.toString();
+            try {
+                JSONObject object = new JSONObject(info);
+                openId = object.getString("openid");
+                String accessToken = object.getString("access_token");
+                String expires = object.getString("expires_in");
+                mTencent.setOpenId(openId);
+                mTencent.setAccessToken(accessToken,expires);
+                QQToken qqToken = mTencent.getQQToken();
+                userInfo = new UserInfo(getApplicationContext(),qqToken);
+                //上传服务器
+                upInfoToServer();
+                userInfo.getUserInfo(new IUiListener() {
+                    @Override
+                    public void onComplete(Object o) {
+                        Log.e("信息",o.toString());
+                    }
+
+                    @Override
+                    public void onError(UiError uiError) {
+
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+
+                    @Override
+                    public void onWarning(int i) {
+
+                    }
+                });
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
         @Override
         public void onError(UiError uiError) {
@@ -247,6 +282,46 @@ public class LoginActivity extends AppCompatActivity {
         public void onWarning(int i) {
 
         }
+    }
+
+    /**
+     * QQ授权登录
+     */
+    private void upInfoToServer() {
+        new Thread(){
+            @Override
+            public void run() {
+                FormBody.Builder formBuilder = new FormBody.Builder();
+                FormBody formBody = formBuilder.add("userAccount", openId)
+                        .add("flag", 2 + "")
+                        .build();
+                Request request = new Request.Builder()
+                        .url(ServiceConfig.SERVICE_ROOT + "/user/register")
+                        .method("POST", formBody)
+                        .post(formBody)
+                        .build();
+                Log.e("ok","发过去了");
+                Call call = okHttpClient.newCall(request);
+                try {
+                    Response response = call.execute();
+                    String result = response.body().string();
+                    Log.e("result", result);
+                    if (result.contains("false")){
+                        Looper.prepare();
+                        Toast.makeText(getApplicationContext(),"登录失败",Toast.LENGTH_SHORT).show();
+                        Looper.loop();
+                    }else {
+                        Intent intent = new Intent();
+                        intent.setClass(getApplicationContext(),HomepageActivity.class);
+                        startActivity(intent);
+                        Constant.User = gson.fromJson(result,User.class);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }.start();
     }
 
     @Override

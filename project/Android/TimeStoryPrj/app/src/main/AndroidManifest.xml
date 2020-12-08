@@ -15,7 +15,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -25,13 +24,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".activity.card.ShareCardActivity"
+            android:screenOrientation="landscape"></activity>
+        <activity
+            android:name=".activity.user.RechargeActivity"
+            android:screenOrientation="landscape" />
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <uses-library android:name="org.apache.http.legacy"
-            android:required="false"/>
-        <activity android:name=".activity.problem.ProblemClooectionInfoActivity"></activity>
+        <activity android:name=".activity.problem.ProblemClooectionInfoActivity" />
         <activity
             android:name=".dialog.DialogExampleAvtivity"
             android:screenOrientation="landscape" />
@@ -107,8 +114,7 @@
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="landscape"></activity>
-
+            android:screenOrientation="landscape" />
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
