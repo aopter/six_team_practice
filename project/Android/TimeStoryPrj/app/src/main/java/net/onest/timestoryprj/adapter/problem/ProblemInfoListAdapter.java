@@ -21,6 +21,7 @@ import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.activity.problem.ProblemInfoActivity;
 import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
+import net.onest.timestoryprj.customview.CusLinearLayout;
 import net.onest.timestoryprj.customview.LinkLineView;
 import net.onest.timestoryprj.entity.LinkDataBean;
 import net.onest.timestoryprj.entity.Problem;
@@ -36,8 +37,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import me.leefeng.promptlibrary.PromptDialog;
 
 public class ProblemInfoListAdapter extends RecyclerView.Adapter<ProblemInfoListAdapter.MyHolder> {
 
@@ -79,6 +78,7 @@ public class ProblemInfoListAdapter extends RecyclerView.Adapter<ProblemInfoList
                 holder.linearLayouts.get(2).setVisibility(View.INVISIBLE);
                 problemSelect = new ProblemSelect();
                 problemSelect.setProblemId(problem.getProblemId());
+                problemSelect.setDynastyId(problem.getDynastyId());
                 problemSelect.setProblemType(1);
                 problemSelect.setTitle(contents1[0]);
                 problemSelect.setOptionA(contents1[1]);
@@ -182,6 +182,7 @@ public class ProblemInfoListAdapter extends RecyclerView.Adapter<ProblemInfoList
                 problemgetOrder = new ProblemgetOrder();
                 problemgetOrder.setTitle(contents1[0]);
                 problemgetOrder.setProblemType(3);
+                problemgetOrder.setDynastyId(problem.getDynastyId());
                 problemgetOrder.setProblemKey(problem.getProblemKey());
                 problemgetOrder.setProblemDetails(problem.getProblemDetails());
                 String key = problem.getProblemKey();
@@ -254,7 +255,7 @@ public class ProblemInfoListAdapter extends RecyclerView.Adapter<ProblemInfoList
     public class MyHolder extends RecyclerView.ViewHolder {
 
         @BindViews({R.id.type_xuan, R.id.type_lian, R.id.type_pai})
-        List<LinearLayout> linearLayouts;
+        List<CusLinearLayout> linearLayouts;
 
         @BindViews({R.id.problem_xuan_info_title, R.id.problem_lian_info_title, R.id.problem_pai_info_title})
         TextView[] problemTitles;
@@ -277,6 +278,10 @@ public class ProblemInfoListAdapter extends RecyclerView.Adapter<ProblemInfoList
         public MyHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            for(int i=0;i<linearLayouts.size();i++){
+//                不能点击
+                linearLayouts.get(i).setChildClickable(false);
+            }
 
         }
     }

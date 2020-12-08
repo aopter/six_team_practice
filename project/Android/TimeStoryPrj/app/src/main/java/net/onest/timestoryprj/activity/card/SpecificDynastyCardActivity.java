@@ -96,10 +96,25 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_specific_dynasty_card);
         ButterKnife.bind(this);
+<<<<<<< Updated upstream
+=======
+
+        client = new OkHttpClient();
+        // TODO 记得删除
+        Constant.User = new User();
+        Constant.User.setUserId(1);
+
+>>>>>>> Stashed changes
         promptDialog = new PromptDialog(this);
         promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(1000);
         promptDialog.showLoading("正在加载");
         client = new OkHttpClient();
+<<<<<<< Updated upstream
+=======
+//        // TODO 记得删除
+//        Constant.User = new User();
+//        Constant.User.setUserId(1);
+>>>>>>> Stashed changes
         initTypes();
         initDynastyCards();
         gson = new GsonBuilder()//创建GsonBuilder对象

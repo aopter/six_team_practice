@@ -10,7 +10,7 @@
         android:layout_height="5dp"
         android:background="@mipmap/problem_title_bgg" />
     <!--    选择题-->
-    <LinearLayout
+    <net.onest.timestoryprj.customview.CusLinearLayout
         android:id="@+id/type_xuan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -136,10 +136,10 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </net.onest.timestoryprj.customview.CusLinearLayout>
 
     <!--            连线题-->
-    <LinearLayout
+    <net.onest.timestoryprj.customview.CusLinearLayout
         android:id="@+id/type_lian"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -271,11 +271,11 @@
 
         <!--        </LinearLayout>-->
 
-    </LinearLayout>
+    </net.onest.timestoryprj.customview.CusLinearLayout>
 
     <!--排序题-->
     <!--    题干-->
-    <LinearLayout
+    <net.onest.timestoryprj.customview.CusLinearLayout
         android:id="@+id/type_pai"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -350,7 +350,7 @@
         <!--                android:layout_weight="1"-->
         <!--                android:text="忽闻岸上踏歌声" />-->
         <!--        </LinearLayout>-->
-    </LinearLayout>
+    </net.onest.timestoryprj.customview.CusLinearLayout>
     <!--        答案区-->
     <LinearLayout
         android:layout_width="match_parent"

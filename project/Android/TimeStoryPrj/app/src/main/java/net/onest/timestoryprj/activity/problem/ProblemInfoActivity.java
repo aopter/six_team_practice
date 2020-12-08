@@ -1,14 +1,11 @@
 package net.onest.timestoryprj.activity.problem;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.GestureDetector;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -30,7 +27,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.tinytongtong.tinyutils.LogUtils;
-import com.tinytongtong.tinyutils.ScreenUtils;
 
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.adapter.problem.OnStartDragListener;
@@ -40,9 +36,10 @@ import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.customview.LinkLineView;
 import net.onest.timestoryprj.dialog.problem.ProblemAnswerDialog;
 import net.onest.timestoryprj.entity.LinkDataBean;
-import net.onest.timestoryprj.entity.LinkLineBean;
 import net.onest.timestoryprj.entity.Problem;
+import net.onest.timestoryprj.entity.UserUnlockDynasty;
 import net.onest.timestoryprj.entity.problem.OrderBean;
+import net.onest.timestoryprj.entity.problem.ProblemCheckAnswer;
 import net.onest.timestoryprj.entity.problem.ProblemLinkLine;
 import net.onest.timestoryprj.entity.problem.ProblemSelect;
 import net.onest.timestoryprj.entity.problem.ProblemgetOrder;
@@ -52,7 +49,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -77,8 +73,6 @@ public class ProblemInfoActivity extends AppCompatActivity {
     LinkLineView linkLineView;
     @BindView(R.id.fl_link_line)
     FrameLayout flLinkLine;
-    @BindView(R.id.tv_result)
-    TextView tvResult;
 
     @BindView(R.id.type_xuan)
     LinearLayout llTypeXuan;
@@ -126,7 +120,6 @@ public class ProblemInfoActivity extends AppCompatActivity {
     TextView tvPaiTitle;
 
 
-
     //   三种题目
     Problem cProblem;
     ProblemSelect problemSelect;
@@ -154,6 +147,7 @@ public class ProblemInfoActivity extends AppCompatActivity {
         public void handleMessage(@NonNull Message msg) {
             switch (msg.arg1) {
                 case 1://选择
+                    btnToCheck.setVisibility(View.GONE);
                     tv_problem_xuan_info_title.setText(problemSelect.getTitle());
                     tvOptionsXuan[0].setText(problemSelect.getOptionA());
                     tvOptionsXuan[1].setText(problemSelect.getOptionB());
@@ -172,6 +166,7 @@ public class ProblemInfoActivity extends AppCompatActivity {
 
                     break;
                 case 2://连线
+                    btnToCheck.setVisibility(View.GONE);
 //                    linkLineView = new LinkLineView(ProblemInfoActivity.this);
                     tvLianTitle.setText(problemLinkLine.getTitle());
                     List<LinkDataBean> linkDataBeans = (List<LinkDataBean>) msg.obj;
@@ -180,22 +175,17 @@ public class ProblemInfoActivity extends AppCompatActivity {
 //                    LinkLineView linkView = getLinkView();
                     Log.e("handleMessage收到: ", problemLinkLine.toString());
                     linkLineView.setData(linkDataBeans);
-                    tvResult.setText(" ");
-
-
                     linkLineView.setOnChoiceResultListener((correct, yourAnswer) -> {
-                        // 结果
-                        StringBuilder sb = new StringBuilder();
-                        sb.append("正确与否：");
-                        sb.append(correct);
-                        sb.append("\n");
-                        tvResult.setText(sb.toString());
-//                        显示解析
-                        btnAnswer.setVisibility(View.VISIBLE);
+                        if (correct) {
+                            UpProblemAnwer(problemLinkLine.getProblemId(), 1);
+                        } else {
+                            UpProblemAnwer(problemLinkLine.getProblemId(), 2);
+                        }
 
                     });
                     break;
                 case 3://排序
+                    btnToCheck.setVisibility(View.VISIBLE);
                     tvPaiTitle.setText(problemgetOrder.getTitle());
 //                    {"李白乘舟将欲行", "不及汪伦送我情", "忽闻岸上踏歌声", "桃花潭水深千尺"};
                     int colnum = 2;
@@ -273,6 +263,31 @@ public class ProblemInfoActivity extends AppCompatActivity {
                     btnProblemSave.setText("收藏");
                     promptDialog.showSuccess("取消收藏成功");
                     break;
+                case 6://是否收藏
+                    String isCollection = (String) msg.obj;
+                    if (isCollection.equals("true")) {
+                        btnProblemSave.setText("已收藏");
+                    } else {
+                        btnProblemSave.setText("收藏");
+                    }
+                    break;
+
+                case 7:
+                    String re = (String) msg.obj;
+                    ProblemCheckAnswer problemCheckAnswer = gson.fromJson(re, ProblemCheckAnswer.class);
+
+                    LogUtils.d("结果", problemCheckAnswer.toString());
+                    Constant.User.setUserExperience(problemCheckAnswer.getUserExperience());
+                    Constant.User.setUserCount(problemCheckAnswer.getUserCount());
+                   if(problemCheckAnswer.getUnlock().equals("true")){
+                       //成功
+                       UserUnlockDynasty userUnlockDynasty = new UserUnlockDynasty();
+                       userUnlockDynasty.setUserId(Constant.User.getUserId());
+                       userUnlockDynasty.setDynastyId(dynastyId);
+                       userUnlockDynasty.setDynastyName("秦朝");//
+                       Constant.UnlockDynasty.add(userUnlockDynasty);
+                   }
+                    break;
             }
         }
     };
@@ -299,19 +314,6 @@ public class ProblemInfoActivity extends AppCompatActivity {
                 }
             };
 
-
-    //画一个布局
-    private LinkLineView getLinkView(){
-        flLinkLine.removeView(linkLineView);
-        LinkLineView lineView = new LinkLineView(this);
-//        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.fill_parent, LinearLayout.LayoutParams.WRAP_CONTENT);
-
-        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT,FrameLayout.LayoutParams.WRAP_CONTENT);
-        lineView.setLayoutParams(layoutParams);
-        flLinkLine.addView(lineView);
-        LogUtils.d("加了");
-        return lineView;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -462,9 +464,8 @@ public class ProblemInfoActivity extends AppCompatActivity {
      */
     private void getProblem(int type) {
         btnAnswer.setVisibility(View.INVISIBLE);
-        btnProblemSave.setText("收藏");
 
-        LogUtils.d("长度suoyou",myProblems.size()+"");
+        LogUtils.d("长度suoyou", myProblems.size() + "");
         isGetAnswer = false;
         String url = ServiceConfig.SERVICE_ROOT + "/problem/replenish/" + type + "/" + dynastyId + "";
         Request.Builder builder = new Request.Builder();
@@ -484,6 +485,8 @@ public class ProblemInfoActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 String jsonData = response.body().string();
                 Problem problem = gson.fromJson(jsonData, Problem.class);
+//                查看是否已经收藏
+                checkIsUserCollection(problem.getProblemId());
                 cProblem = problem;
                 String[] contents1 = problem.getProblemContent().split(Constant.DELIMITER);
                 switch (type) {
@@ -584,6 +587,40 @@ public class ProblemInfoActivity extends AppCompatActivity {
 //
     }
 
+    /**
+     * 查看是否已经收藏
+     *
+     * @param problemId
+     */
+    private void checkIsUserCollection(int problemId) {
+        String url = ServiceConfig.SERVICE_ROOT + "/userproblem/iscollection/" + Constant.User.getUserId() + "/" + dynastyId + "/" + problemId;
+        LogUtils.d("查看是否已经收藏", url);
+        Request.Builder builder = new Request.Builder();
+        builder.url(url);
+        //构造请求类
+        Request request = builder.build();
+        final Call call = okHttpClient.newCall(request);
+//        请求
+        call.enqueue(new Callback() {
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                //失败
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                String string = response.body().string();
+                Message message = new Message();
+                message.arg1 = 6;
+                message.obj = string;
+                handler.sendMessage(message);
+
+            }
+        });
+    }
+
 
     //    选择题点击事件
     @OnClick({R.id.problem_save, R.id.problem_answer,
@@ -594,9 +631,8 @@ public class ProblemInfoActivity extends AppCompatActivity {
                 Log.e("当先题目: ", cProblem.toString());
                 String s = btnProblemSave.getText().toString();
                 if (s.equals("收藏")) {//取消收藏
-//                    /userproblem/collect/{userId}/{dynastyId}/{problemId}
                     String urlSaveProblem = ServiceConfig.SERVICE_ROOT + "/userproblem/collect/" +
-                            1 + "/" + dynastyId + "/" + cProblem.getProblemId() + "";
+                            Constant.User.getUserId() + "/" + dynastyId + "/" + cProblem.getProblemId() + "";
                     Log.e("urlSaveProblem: ", urlSaveProblem);
                     Request.Builder builder = new Request.Builder();
                     builder.url(urlSaveProblem);
@@ -622,7 +658,9 @@ public class ProblemInfoActivity extends AppCompatActivity {
                 } else {
 //                    /userproblem/uncollect/{userId}/{dynastyId}/{problemId}
                     String urlSaveProblem = ServiceConfig.SERVICE_ROOT + "/userproblem/uncollect/" +
-                            1 + "/" + dynastyId + "/" + cProblem.getProblemId() + "";
+                            Constant.User.getUserId() + "/" + dynastyId + "/" + cProblem.getProblemId() + "";
+
+                    LogUtils.d("取消收藏路径", urlSaveProblem);
                     Request.Builder builder = new Request.Builder();
                     builder.url(urlSaveProblem);
                     //构造请求类
@@ -640,7 +678,6 @@ public class ProblemInfoActivity extends AppCompatActivity {
 
                         @Override
                         public void onResponse(Call call, Response response) throws IOException {
-//
                             Message message = new Message();
                             message.arg1 = 5;
                             handler.sendMessage(message);
@@ -675,20 +712,17 @@ public class ProblemInfoActivity extends AppCompatActivity {
                 List<OrderBean> orderBeans = problemgetOrder.getContents();
                 isGetAnswer = true;
                 for (int i = 0; i < orderBeans.size(); i++) {
-
 //                    检查
                     int postion = i + 1;
                     if (orderBeans.get(i).getOrder() != postion) {
                         //错误
-                        promptDialog.showInfo("很遗憾，回答错误~");
+                        UpProblemAnwer(problemgetOrder.getProblemId(), 2);
+
                         //Toast.makeText(getApplicationContext(), "回答错误", Toast.LENGTH_SHORT).show();
-                        btnAnswer.setVisibility(View.VISIBLE);
                         return;
                     }
                 }
-                promptDialog.showInfo("恭喜你，回答正确喽！");
-                // Toast.makeText(getApplicationContext(), "回答正确", Toast.LENGTH_SHORT).show();
-                btnAnswer.setVisibility(View.VISIBLE);
+                UpProblemAnwer(problemgetOrder.getProblemId(), 1);
                 break;
         }
     }
@@ -698,21 +732,11 @@ public class ProblemInfoActivity extends AppCompatActivity {
         if (isGetAnswer) {
             return;
         }
+        isGetAnswer = true;
         if (problemSelect.getProblemKey().equals(option) && !isGetAnswer) {
-            isGetAnswer = true;
-//          正确 加积分加经验
-            //Toast.makeText(getApplicationContext(), "回答正确", Toast.LENGTH_SHORT).show();
-            promptDialog.showInfo("恭喜你，回答正确喽！");
-
-            //          /problem/answer/{userId}/{dynastyId}/{problemId}/{result}
-            //显示查看解析
-            btnAnswer.setVisibility(View.VISIBLE);
+            UpProblemAnwer(problemSelect.getProblemId(), 1);
         } else {
-            isGetAnswer = true;
-            promptDialog.showInfo("很遗憾，回答错误~");
-
-            //Toast.makeText(getApplicationContext(), "回答错误", Toast.LENGTH_SHORT).show();
-            btnAnswer.setVisibility(View.VISIBLE);
+            UpProblemAnwer(problemSelect.getProblemId(), 2);
         }
     }
 
@@ -781,6 +805,9 @@ public class ProblemInfoActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 获取上一个 or 下一个题目
+     */
     private void getBeforeOrNextProblem() {
         LogUtils.d("类型", "");
         Problem problem = myProblems.get(cIndex);
@@ -873,6 +900,55 @@ public class ProblemInfoActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 结算
+     */
+
+    public void UpProblemAnwer(int problemId, int result) {
+///problem/answer/{userId}/{dynastyId}/{problemId}/{result}
+//备注：result中1，表示正确，2表示错误
+        btnAnswer.setVisibility(View.VISIBLE);
+        switch (result) {
+            case 1:
+                promptDialog.showInfo("恭喜你，回答正确喽！");
+                break;
+            case 2:
+                promptDialog.showInfo("很遗憾，回答错误~");
+                break;
+        }
+        if(before.equals("info")){
+            return;//收藏页不上传
+        }
+//        上传服务器
+//        /problem/answer/{userId}/{dynastyId}/{problemId}/{result}
+        String url = ServiceConfig.SERVICE_ROOT + "/problem/answer/" +
+                Constant.User.getUserId() + "/" + dynastyId + "/" + cProblem.getProblemId() + "/" + result;
+        Log.e("urlSaveProblem: ", url);
+        Request.Builder builder = new Request.Builder();
+        builder.url(url);
+        //构造请求类
+        Request request = builder.build();
+        final Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                String string = response.body().string();
+                Message message = new Message();
+                message.arg1 = 7;
+                message.obj = string;
+                handler.sendMessage(message);
+
+            }
+        });
+
+
+    }
 
 //    private void getBeforeOrNextProblem(Problem problem) {
 //        LogUtils.d("类型", problem.getProblemType() + "");
