@@ -25,8 +25,11 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".activity.user.RechargeActivity"
+            android:name=".activity.card.ShareCardActivity"
             android:screenOrientation="landscape"></activity>
+        <activity
+            android:name=".activity.user.RechargeActivity"
+            android:screenOrientation="landscape" />
 
         <uses-library
             android:name="org.apache.http.legacy"

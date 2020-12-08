@@ -100,9 +100,9 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
         promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(1000);
         promptDialog.showLoading("正在加载");
         client = new OkHttpClient();
-        // TODO 记得删除
-        Constant.User = new User();
-        Constant.User.setUserId(1);
+//        // TODO 记得删除
+//        Constant.User = new User();
+//        Constant.User.setUserId(1);
         initTypes();
         initDynastyCards();
         gson = new GsonBuilder()//创建GsonBuilder对象
