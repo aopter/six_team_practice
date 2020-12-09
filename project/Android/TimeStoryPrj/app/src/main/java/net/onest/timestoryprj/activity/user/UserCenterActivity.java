@@ -126,6 +126,7 @@ public class UserCenterActivity extends AppCompatActivity {
 //      绑定初始化ButterKnife
         ButterKnife.bind(this);
 
+        tvLevel.setText(Constant.User.getUserStatus().getStatusName());
         gson = new Gson();
         Glide.with(this)
                 .load((R.mipmap.man))

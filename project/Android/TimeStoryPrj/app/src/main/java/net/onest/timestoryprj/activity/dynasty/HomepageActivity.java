@@ -11,7 +11,6 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
@@ -20,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +43,7 @@ import net.onest.timestoryprj.entity.Dynasty;
 import net.onest.timestoryprj.entity.User;
 import net.onest.timestoryprj.entity.UserStatus;
 import net.onest.timestoryprj.entity.UserUnlockDynasty;
+import net.onest.timestoryprj.util.DensityUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -80,7 +81,7 @@ public class HomepageActivity extends AppCompatActivity {
     private Typeface typeface;
     private ProgressBar progressBar;
     private User user;
-    private LinearLayout linearProgress;
+    private RelativeLayout relativeProgress;
 
     private Handler handler = new Handler() {
         @RequiresApi(api = Build.VERSION_CODES.M)
@@ -181,7 +182,7 @@ public class HomepageActivity extends AppCompatActivity {
      * 初始化首页数据
      */
     private void initData() {
-//        getUserInfo();
+        getUserInfo();
         downloadUnlockDynastyList();
 //        initProgress();
     }
@@ -245,10 +246,9 @@ public class HomepageActivity extends AppCompatActivity {
      * 通过跳转获得用户信息
      */
     private void getUserInfo() {
-        tvPoint.setText((int) Constant.User.getUserExperience());
+//        tvPoint.setText((int) Constant.User.getUserExperience());
         tvLevel.setText(Constant.User.getUserStatus().getStatusName());
 //        tvName.setText(Constant.User.getUserNickname());
-//        user = Constant.User;
     }
 
     /**
@@ -302,7 +302,7 @@ public class HomepageActivity extends AppCompatActivity {
         ivHeader = findViewById(R.id.iv_header);
         btnVoice = findViewById(R.id.btn_voice);
         btnSettings = findViewById(R.id.btn_settings);
-//        tvName = findViewById(R.id.tv_name);
+//        tvName = findViewById(R.id.tv);
         tvLevel = findViewById(R.id.tv_level);
         tvPoint = findViewById(R.id.tv_point);
         btnPlus = findViewById(R.id.btn_plus);
@@ -312,7 +312,7 @@ public class HomepageActivity extends AppCompatActivity {
         llLayout1 = findViewById(R.id.ll_layout1);
         llLayout2 = findViewById(R.id.ll_layout2);
         progressBar = findViewById(R.id.experience_progress);
-        linearProgress = findViewById(R.id.linear_progress);
+        relativeProgress = findViewById(R.id.relative_progress);
     }
 
     /**
@@ -373,21 +373,25 @@ public class HomepageActivity extends AppCompatActivity {
                     overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
                     break;
                 case R.id.tv_level:
-                    int count = linearProgress.getChildCount();
+                    int count = relativeProgress.getChildCount();
                     Log.e("元素个数",count+"");
                     if (count == 1){
                         TextView tvExerperience = new TextView(getApplicationContext());
-                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(210,420);
-                        params.topMargin = 10;
+                        int we = DensityUtil.dip2px(getApplicationContext(), 70);
+                        int he = DensityUtil.dip2px(getApplicationContext(), 33);
+                        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(we, he);
+                        params.topMargin = 5;
                         tvExerperience.setPadding(20,0,20,0);
                         tvExerperience.setText("玩家经验:"+'\n'+Constant.User.getUserExperience()+"/"+Constant.User.getUserStatus().getStatusExperienceTop());
-                        tvExerperience.setTextColor(getResources().getColor(R.color.whrite));
+                        tvExerperience.setTextColor(getResources().getColor(R.color.white));
                         tvExerperience.setTextSize(12);
                         tvExerperience.setBackgroundResource(R.color.ourDynastyRed);
+                        params.addRule(RelativeLayout.BELOW, R.id.tv_level);
+//                        params.addRule(RelativeLayout.RIGHT_OF, R.id.tv_level);
                         tvExerperience.setLayoutParams(params);
-                        linearProgress.addView(tvExerperience);
+                        relativeProgress.addView(tvExerperience);
                     }else if (count == 2){
-                        linearProgress.removeViewAt(1);
+                        relativeProgress.removeViewAt(1);
                     }
                     break;
             }

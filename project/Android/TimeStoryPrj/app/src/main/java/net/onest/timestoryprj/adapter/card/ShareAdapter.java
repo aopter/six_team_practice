@@ -6,14 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import androidx.recyclerview.widget.RecyclerView;
 
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.entity.card.Icon;
-import net.onest.timestoryprj.util.AdapterMeasureHelper;
 
 import java.util.List;
 

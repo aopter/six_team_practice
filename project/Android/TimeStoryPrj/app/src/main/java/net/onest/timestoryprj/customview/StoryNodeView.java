@@ -34,13 +34,11 @@ public class StoryNodeView extends View {
     /**
      * 背景颜色
      */
-    private int bgColor = Color.parseColor("#D3D3D3");
+    private int bgColor = Color.parseColor("#FFFFF0");
     /**
      * 前景颜色
      */
-    private int foreColor = Color.parseColor("#FFFFF0");
-//    private int co = Color.parseColor("#FFFFFF");
-//    private Paint mPaint;
+    private int foreColor = Color.parseColor("#FFE4C4");
     /**
      * 默认高度
      */
@@ -89,9 +87,6 @@ public class StoryNodeView extends View {
         unselectPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         unselectPaint.setColor(bgColor);
         unselectPaint.setTextSize(SizeUtils.sp2px(context, 10));
-
-//        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-//        mPaint.setColor(co);
 
         selectPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         selectPaint.setColor(Color.RED);

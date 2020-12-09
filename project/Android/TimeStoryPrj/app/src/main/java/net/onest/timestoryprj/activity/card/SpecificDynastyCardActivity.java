@@ -35,7 +35,6 @@ import net.onest.timestoryprj.adapter.card.SpecificDynastyCardAdapter;
 import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.customview.DropdownListView;
-import net.onest.timestoryprj.entity.User;
 import net.onest.timestoryprj.entity.card.UserCard;
 
 import java.io.IOException;
@@ -97,17 +96,14 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_specific_dynasty_card);
         ButterKnife.bind(this);
         promptDialog = new PromptDialog(this);
-        promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(1000);
+        promptDialog.getDefaultBuilder().touchAble(false).round(3).loadingDuration(1000);
         promptDialog.showLoading("正在加载");
         client = new OkHttpClient();
-//        // TODO 记得删除
-//        Constant.User = new User();
-//        Constant.User.setUserId(1);
-        initTypes();
-        initDynastyCards();
         gson = new GsonBuilder()//创建GsonBuilder对象
                 .serializeNulls()//允许输出Null值属性
                 .create();//创建Gson对象
+        initDynastyCards();
+        initTypes();
         searchCardName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -115,7 +111,7 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (!"" .equals(searchCardName.getText().toString())) {
+                if (!"".equals(searchCardName.getText().toString())) {
                     searchDelete.setVisibility(View.VISIBLE);
                 } else {
                     searchDelete.setVisibility(View.INVISIBLE);
@@ -124,7 +120,7 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (!"" .equals(searchCardName.getText().toString())) {
+                if (!"".equals(searchCardName.getText().toString())) {
                     searchDelete.setVisibility(View.VISIBLE);
                 } else {
                     searchDelete.setVisibility(View.INVISIBLE);
@@ -154,12 +150,9 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
 
     private void initDynastyCards() {
         Intent intent = getIntent();
-        dynastyId = intent.getIntExtra("dynasty", -1);
-        if (dynastyId == -1) {
-            Toast.makeText(getApplicationContext(), "获取卡片出错啦，请重新获取", Toast.LENGTH_SHORT).show();
-        } else {
-            getCardsByType(type);
-        }
+        String id = intent.getStringExtra("dynastyId");
+        dynastyId = Integer.parseInt(id);
+        getCardsByType(type);
     }
 
     private void initDatas() {
@@ -203,7 +196,7 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
     @OnClick(R.id.search_btn)
     void showSearchCards() {
         String key = searchCardName.getText().toString().trim();
-        if ("" .equals(key)) {
+        if ("".equals(key)) {
             Toast.makeText(getApplicationContext(), "请输入搜索关键字", Toast.LENGTH_SHORT).show();
         } else {
             getCardsByKey(key);
@@ -254,29 +247,29 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
                 typeView.textView.setText(text);
                 typeView.popupWindow.dismiss();
                 typeView.popupWindow = null;
-                if ("全部卡片" .equals(typeView.textView.getText().toString().trim())) {
+                if ("全部卡片".equals(typeView.textView.getText().toString().trim())) {
                     userCards.clear();
                     type = 0;
                     String key = searchCardName.getText().toString().trim();
-                    if ("" .equals(key)) {
+                    if ("".equals(key)) {
                         getCardsByType(type);
                     } else {
                         getCardsByKey(key);
                     }
-                } else if ("人物卡片" .equals(typeView.textView.getText().toString().trim())) {
+                } else if ("人物卡片".equals(typeView.textView.getText().toString().trim())) {
                     userCards.clear();
                     type = 1;
                     String key = searchCardName.getText().toString().trim();
-                    if ("" .equals(key)) {
+                    if ("".equals(key)) {
                         getCardsByType(type);
                     } else {
                         getCardsByKey(key);
                     }
-                } else if ("文物卡片" .equals(typeView.textView.getText().toString().trim())) {
+                } else if ("文物卡片".equals(typeView.textView.getText().toString().trim())) {
                     userCards.clear();
                     type = 2;
                     String key = searchCardName.getText().toString().trim();
-                    if ("" .equals(key)) {
+                    if ("".equals(key)) {
                         getCardsByType(type);
                     } else {
                         getCardsByKey(key);

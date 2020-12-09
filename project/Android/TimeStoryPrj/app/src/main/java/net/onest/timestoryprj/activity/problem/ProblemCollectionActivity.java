@@ -101,11 +101,14 @@ public class ProblemCollectionActivity extends AppCompatActivity {
         cPageCount = 1;
         gson = new Gson();
 
+<<<<<<< HEAD
 
 //        初始化数据
+=======
+        //        初始化数据
+>>>>>>> 448ff3d7afecb563062a07150c09e3b876310d8e
         init();//所有朝代
         initLeftMenu();//初始化左边
-
         refreshLayout.setReboundDuration(300);//回弹动画时常
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override

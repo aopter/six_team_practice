@@ -35,6 +35,7 @@ import net.onest.timestoryprj.entity.Incident;
 import net.onest.timestoryprj.entity.UserUnlockDynasty;
 import net.onest.timestoryprj.entity.UserUnlockDynastyIncident;
 import net.onest.timestoryprj.util.DensityUtil;
+import net.onest.timestoryprj.util.TextUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -81,6 +82,7 @@ public class EventDialogActivity extends AppCompatActivity {
     private Typeface typeface;
     private long prelongTim = 0;
     private long curTime = 0;
+    private TextUtil textUtil;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -101,7 +103,8 @@ public class EventDialogActivity extends AppCompatActivity {
                             svScroll.fullScroll(ScrollView.FOCUS_DOWN);
                         }
                     });
-                    tvDialog1.setText(txtList[0]);
+//                    tvDialog1.setText(txtList[0]);
+                    textUtil = new TextUtil(tvDialog1, txtList[0], 50);
                     tvDialog1.setTypeface(typeface1);
                     llDialogLayout.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -116,7 +119,9 @@ public class EventDialogActivity extends AppCompatActivity {
                                 int tp = DensityUtil.dip2px(getApplicationContext(), 10);
                                 int ml = DensityUtil.dip2px(getApplicationContext(), 30);
                                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
-                                tv.setText(txtList[count]);
+//                                tv.setText(txtList[count]);
+                                TextUtil textUtil1 = new TextUtil(tv, txtList[count], 50);
+                                Log.e("text", textUtil1.toString());
                                 tv.setTextColor(Color.BLACK);
                                 tv.setTypeface(typeface1);
                                 tv.setMaxHeight(th);
@@ -158,6 +163,7 @@ public class EventDialogActivity extends AppCompatActivity {
                                 curTime = new Date().getTime();
                                 if ((curTime-prelongTim) < 1000){
                                     Log.e("iii", curTime-prelongTim + "");
+                                    Toast.makeText(getApplicationContext(), "点击太快了，慢一些把！",Toast.LENGTH_LONG).show();
                                 }else{
                                     Log.e("iiie", curTime-prelongTim + "");
                                     int count = rlRelativeLayout.getChildCount();
@@ -168,7 +174,8 @@ public class EventDialogActivity extends AppCompatActivity {
                                     int tp = DensityUtil.dip2px(getApplicationContext(), 10);
                                     int ml = DensityUtil.dip2px(getApplicationContext(), 30);
                                     RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
-                                    tv.setText(txtList[count]);
+//                                    tv.setText(txtList[count]);
+                                    TextUtil textUtil1 = new TextUtil(tv, txtList[count], 50);
                                     tv.setTextColor(Color.BLACK);
                                     tv.setTypeface(typeface1);
                                     tv.setMaxHeight(th);

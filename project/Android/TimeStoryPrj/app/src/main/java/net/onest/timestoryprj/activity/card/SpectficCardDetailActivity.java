@@ -9,7 +9,6 @@ import android.os.Message;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -94,7 +93,7 @@ public class SpectficCardDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_spectfic_card_detail);
         ButterKnife.bind(this);
         promptDialog = new PromptDialog(this);
-        promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(1000);
+        promptDialog.getDefaultBuilder().touchAble(false).round(3).loadingDuration(1000);
         promptDialog.showLoading("正在加载");
         client = new OkHttpClient();
         cardInfo.setMovementMethod(ScrollingMovementMethod.getInstance());

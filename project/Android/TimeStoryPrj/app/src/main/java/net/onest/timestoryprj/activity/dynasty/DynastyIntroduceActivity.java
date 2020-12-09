@@ -12,6 +12,8 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -21,6 +23,7 @@ import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.activity.problem.SelectProblemTypeActivity;
 import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.entity.Dynasty;
+import net.onest.timestoryprj.util.TextUtil;
 
 import org.json.JSONObject;
 
@@ -41,26 +44,31 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
 
     @BindView(R.id.btn_pre)
     Button btnPre;
+    private RelativeLayout rlBack;
     private TextView tvDynastyName;
     private TextView tvDynastyIntro;
+    private Button btnImg;
     private Button btnQuestions;
     private Button btnDetails;
     private String dynastyId;
     private String DYNASTY_INFO = "/dynasty/details/";
     private Gson gson;
+    private TextUtil textUtil;
+    private Dynasty dynasty1;
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(@NonNull Message msg) {
             switch (msg.what){
                 case 1:
-                    Dynasty dynasty1 = (Dynasty) msg.obj;
+                    dynasty1 = (Dynasty) msg.obj;
                     AssetManager assets = getAssets();
                     final Typeface typeface = Typeface.createFromAsset(assets, "fonts/custom_fontt.ttf");
                     final Typeface typeface1 = Typeface.createFromAsset(assets, "fonts/custom_font.ttf");
                     tvDynastyName.setTypeface(typeface);
                     tvDynastyIntro.setTypeface(typeface1);
                     tvDynastyName.setText(dynasty1.getDynastyName());
-                    tvDynastyIntro.setText(dynasty1.getDynastyInfo());
+//                    tvDynastyIntro.setText(dynasty1.getDynastyInfo());
+                    textUtil = new TextUtil(tvDynastyIntro, dynasty1.getDynastyInfo(), 100);
                     break;
             }
         }
@@ -82,6 +90,8 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
         MyListener myListener = new MyListener();
         btnDetails.setOnClickListener(myListener);
         btnQuestions.setOnClickListener(myListener);
+        rlBack.setOnClickListener(myListener);
+//        btnImg.setOnClickListener(myListener);
     }
 
     /**
@@ -135,6 +145,8 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
         tvDynastyName = findViewById(R.id.tv_dynasty_name);
         btnQuestions = findViewById(R.id.btn_questions);
         btnDetails = findViewById(R.id.btn_details);
+        rlBack = findViewById(R.id.rl_back);
+//        btnImg = findViewById(R.id.btn_img);
     }
 
     class MyListener implements View.OnClickListener {
@@ -143,12 +155,26 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.btn_questions:
+                    if (textUtil.isFlag() == false){
+                        Log.e("false", "false");
+                        textUtil.setFlag(true);
+                    }else{
+                        Log.e("true", "true");
+                        tvDynastyIntro.setText(dynasty1.getDynastyInfo());
+                    }
                     Intent intent = new Intent(DynastyIntroduceActivity.this, SelectProblemTypeActivity.class);
                     intent.putExtra("dynastyId1",dynastyId);//朝代
                     startActivity(intent);
                     overridePendingTransition(R.anim.anim_in_right,R.anim.anim_out_left);
                     break;
                 case R.id.btn_details:
+                    if (textUtil.isFlag() == false){
+                        Log.e("false", "false");
+                        textUtil.setFlag(true);
+                    }else{
+                        Log.e("true", "true");
+                        tvDynastyIntro.setText(dynasty1.getDynastyInfo());
+                    }
                     Intent intent1 = new Intent();
                     intent1.setClass(DynastyIntroduceActivity.this, DetailsEventActivity.class);
                     intent1.putExtra("dynastyName1", tvDynastyName.getText());
@@ -156,9 +182,28 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
                     startActivity(intent1);
                     overridePendingTransition(R.anim.anim_in_right,R.anim.anim_out_left);
                     break;
+                case R.id.rl_back:
+                    if (textUtil.isFlag() == false){
+                        Log.e("false", "false");
+                        textUtil.setFlag(true);
+                    }else{
+                        Log.e("true", "true");
+                        tvDynastyIntro.setText(dynasty1.getDynastyInfo());
+                    }
+                    break;
+//                case R.id.btn_img:
+//                    Intent intent2 = new Intent();
+//                    intent2.setClass(DynastyIntroduceActivity.this, AllScreenImgActivity.class);
+//                    startActivity(intent2);
+//                    break;
             }
         }
     }
     @OnClick(R.id.btn_pre)
     void backToLastPage(){finish();}
+
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//    }
 }

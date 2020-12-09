@@ -65,6 +65,7 @@ import java.net.HttpURLConnection;
 >>>>>>> Stashed changes
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.DecimalFormat;
@@ -86,6 +87,11 @@ import okhttp3.Response;
 
 public class SettingActivity extends AppCompatActivity {
 
+    private int userId = Constant.User.getUserId();
+    private EditText etNiName;
+    private EditText etSignature;
+    private EditText etPhone;
+    private EditText etSex;
     private Button btnPerson;
     private Button btnVoice;
     private Button btnRule;
@@ -103,11 +109,6 @@ public class SettingActivity extends AppCompatActivity {
     private PromptDialog promptDialog;
     private boolean isAndroidQ = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q;
     private Bitmap bitmap;//从相册选择的图片
-    private EditText etNiName;
-    private EditText etSignature;
-    private EditText etPhone;
-    private EditText etSex;
-    private int userId;
     private String niName;
     private String signature;
     private String sex;
@@ -190,7 +191,6 @@ public class SettingActivity extends AppCompatActivity {
                 }
             }
         }.start();
-
     }
 
     private void setListener() {
@@ -553,7 +553,10 @@ public class SettingActivity extends AppCompatActivity {
                     .circleCrop()
                     .into(ivHeader);
         }
-
+        Glide.with(this)
+                .load(R.mipmap.man)
+                .circleCrop()
+                .into(ivHeader);
         ivHeader.setLayoutParams(ivParam);
         linearLayout1.addView(ivHeader);
         rightLayout.addView(linearLayout1);
@@ -699,7 +702,6 @@ public class SettingActivity extends AppCompatActivity {
         File tempFile = new File(storageDir, imageName);
         return tempFile;
     }
-
     /**
      * 上传头像
      */
@@ -724,10 +726,13 @@ public class SettingActivity extends AppCompatActivity {
                 Looper.prepare();
                 Toast.makeText(getApplicationContext(), "头像上传失败", Toast.LENGTH_SHORT).show();
                 Looper.loop();
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
 
 >>>>>>> Stashed changes
+=======
+>>>>>>> 448ff3d7afecb563062a07150c09e3b876310d8e
             }
 
             @Override
@@ -737,10 +742,13 @@ public class SettingActivity extends AppCompatActivity {
                 Looper.prepare();
                 Toast.makeText(getApplicationContext(), "头像上传成功", Toast.LENGTH_SHORT).show();
                 Looper.loop();
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
 
 >>>>>>> Stashed changes
+=======
+>>>>>>> 448ff3d7afecb563062a07150c09e3b876310d8e
             }
         });
     }
@@ -816,8 +824,7 @@ public class SettingActivity extends AppCompatActivity {
         }else if (requestCode == 2 && resultCode == RESULT_OK && null != data){
             File picture = new File(Environment.getExternalStorageDirectory()+"/temp.jpg");
             Bundle extras = data.getExtras();
-
-            if (extras != null){
+            if (extras != null) {
                 Bitmap photo = extras.getParcelable("data");
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 photo.compress(Bitmap.CompressFormat.JPEG,75,stream);
@@ -830,6 +837,7 @@ public class SettingActivity extends AppCompatActivity {
         } else if (requestCode == 100) {
             //从相册返回数据
             if (data != null) {
+
                 //得到图片全路径
                 Uri uri = data.getData();
                 ivHeader.setImageURI(uri);
@@ -848,7 +856,8 @@ public class SettingActivity extends AppCompatActivity {
 
     private File convertBitmapToFile(Bitmap bitmap) {
         try {
-            file = new File(SettingActivity.this.getCacheDir(),"userHeader");
+            file = new File(SettingActivity.this.getCacheDir(), "userHeader");
+            file = new File(SettingActivity.this.getCacheDir(), "portrait");
             file.createNewFile();
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG,0,bos);
@@ -881,3 +890,7 @@ public class SettingActivity extends AppCompatActivity {
     }
 
 }
+
+
+
+
