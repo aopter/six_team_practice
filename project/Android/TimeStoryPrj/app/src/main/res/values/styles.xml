@@ -35,12 +35,12 @@
     </style>
 
     <style name="loginBtn">
-        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_width">110dp</item>
         <item name="android:layout_height">40dp</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:textSize">23sp</item>
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:background">@android:color/holo_orange_light</item>
+        <item name="android:textColor">@color/ourDynastyRed</item>
+        <item name="android:background">@mipmap/bg_login_kl</item>
     </style>
 
     <style name="settingBtn">
