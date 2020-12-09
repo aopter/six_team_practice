@@ -91,7 +91,7 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
         btnDetails.setOnClickListener(myListener);
         btnQuestions.setOnClickListener(myListener);
         rlBack.setOnClickListener(myListener);
-//        btnImg.setOnClickListener(myListener);
+        btnImg.setOnClickListener(myListener);
     }
 
     /**
@@ -146,7 +146,7 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
         btnQuestions = findViewById(R.id.btn_questions);
         btnDetails = findViewById(R.id.btn_details);
         rlBack = findViewById(R.id.rl_back);
-//        btnImg = findViewById(R.id.btn_img);
+        btnImg = findViewById(R.id.btn_img);
     }
 
     class MyListener implements View.OnClickListener {
@@ -191,11 +191,19 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
                         tvDynastyIntro.setText(dynasty1.getDynastyInfo());
                     }
                     break;
-//                case R.id.btn_img:
-//                    Intent intent2 = new Intent();
-//                    intent2.setClass(DynastyIntroduceActivity.this, AllScreenImgActivity.class);
-//                    startActivity(intent2);
-//                    break;
+                case R.id.btn_img:
+                    if (textUtil.isFlag() == false){
+                        Log.e("false", "false");
+                        textUtil.setFlag(true);
+                    }else{
+                        Log.e("true", "true");
+                        tvDynastyIntro.setText(dynasty1.getDynastyInfo());
+                    }
+                    Intent intent2 = new Intent();
+                    intent2.setClass(DynastyIntroduceActivity.this, AllScreenImgActivity.class);
+                    startActivity(intent2);
+                    overridePendingTransition(R.anim.anim_in_right,R.anim.anim_out_left);
+                    break;
             }
         }
     }

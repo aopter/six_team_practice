@@ -88,8 +88,6 @@ public class ProblemCollectionActivity extends AppCompatActivity {
         }
     };
 
-
-<<<<<<< Updated upstream
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,13 +98,6 @@ public class ProblemCollectionActivity extends AppCompatActivity {
         problemCollections = new ArrayList<>();
         cPageCount = 1;
         gson = new Gson();
-
-<<<<<<< HEAD
-
-//        初始化数据
-=======
-        //        初始化数据
->>>>>>> 448ff3d7afecb563062a07150c09e3b876310d8e
         init();//所有朝代
         initLeftMenu();//初始化左边
         refreshLayout.setReboundDuration(300);//回弹动画时常
@@ -119,11 +110,12 @@ public class ProblemCollectionActivity extends AppCompatActivity {
             }
         });
 
+
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                LogUtils.d("当前最大页数",pageCount+"");
-                LogUtils.d("当前页数",cPageCount+"");
+                LogUtils.d("当前最大页数", pageCount + "");
+                LogUtils.d("当前页数", cPageCount + "");
                 //加载更多
                 //获得当前页 获得最大页 ++
                 if (cPageCount < Integer.parseInt(pageCount)) {
@@ -135,26 +127,10 @@ public class ProblemCollectionActivity extends AppCompatActivity {
 
                 } else {//没有更多数据
                     refreshLayout.finishLoadMoreWithNoMoreData();
-=======
-//            }
-//=======
-//
-//            }
 
-        }
-        };
-
-        private void initAdapter() {//初始化adapter
-            ProblemCollectionActivity.this.runOnUiThread(new Runnable() {
-                public void run() {
-                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ProblemCollectionActivity.this);
-                    linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                    recyclerView.setLayoutManager(linearLayoutManager);
-                    ProblemInfoListAdapter problemInfoListAdapter = new ProblemInfoListAdapter(getApplicationContext(), problems);
-                    recyclerView.setAdapter(problemInfoListAdapter);
->>>>>>> Stashed changes
                 }
             }
+
         });
     }
 
@@ -199,7 +175,6 @@ public class ProblemCollectionActivity extends AppCompatActivity {
             }
         });
     }
-
 
 
     private void initAdapter() {//初始化adapter
@@ -303,7 +278,7 @@ public class ProblemCollectionActivity extends AppCompatActivity {
 
         String[] dynastyName = new String[Constant.UnlockDynasty.size()];
         Log.e("init: ", dynastyName.length + "");
-        for (int i = dynastyName.length-1; i > 0; i--) {
+        for (int i = dynastyName.length - 1; i > 0; i--) {
             dynastyName[i] = Constant.UnlockDynasty.get(i).getDynastyName();
         }
         final String[][] infos =
@@ -374,3 +349,4 @@ public class ProblemCollectionActivity extends AppCompatActivity {
         });
     }
 }
+

@@ -20,7 +20,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +35,6 @@ import net.onest.timestoryprj.activity.problem.ProblemCollectionActivity;
 import net.onest.timestoryprj.activity.user.RechargeActivity;
 import net.onest.timestoryprj.activity.user.SettingActivity;
 import net.onest.timestoryprj.activity.user.UserCenterActivity;
-import net.onest.timestoryprj.adapter.user.RechargeAdapter;
 import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.entity.Dynasty;
@@ -83,6 +81,15 @@ public class HomepageActivity extends AppCompatActivity {
     private User user;
     private RelativeLayout relativeProgress;
 
+//    /** Called when the activity is first created. */
+//    private FlowerView mFlowerView;
+//    // 屏幕宽度
+//    public static int screenWidth;
+//    // 屏幕高度
+//    public static int screenHeight;
+//    Timer myTimer = null;
+//    TimerTask mTask = null;
+//    private static final int SNOW_BLOCK = 2;
     private Handler handler = new Handler() {
         @RequiresApi(api = Build.VERSION_CODES.M)
         @Override
@@ -146,6 +153,9 @@ public class HomepageActivity extends AppCompatActivity {
                         });
                     }
                     break;
+//                case 2:
+//                    mFlowerView.inva();
+//                    break;
             }
         }
     };
@@ -158,13 +168,15 @@ public class HomepageActivity extends AppCompatActivity {
         findViews();
         loadImgWithPlaceHolders();
         setListener();
+//        initSnow();
         //初始化gson
         initGson();
         initMediaPlayer();
         AssetManager assets = getAssets();
         typeface = Typeface.createFromAsset(assets, "fonts/custom_fontt.ttf");
         initData();
-//        initProgress();
+        initProgress();
+        Log.e("user", Constant.User.toString());
     }
 
     /**
@@ -219,8 +231,6 @@ public class HomepageActivity extends AppCompatActivity {
                     InputStream in = connection.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
                     String json1 = reader.readLine();
-//                    JSONObject obj = new JSONObject(json1);
-//                    String json = obj.getJSONArray("mydynasty").toString();
                     //1.得到集合类型
                     Type type = new TypeToken<List<UserUnlockDynasty>>() {
                     }.getType();
@@ -320,11 +330,18 @@ public class HomepageActivity extends AppCompatActivity {
      */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void loadImgWithPlaceHolders() {
-//        ServiceConfig.SERVICE_ROOT + Constant.User.getUserHeader();
-        Glide.with(this)
-                .load(getDrawable(R.mipmap.man))
-                .circleCrop()
-                .into(ivHeader);
+        Log.e("ss", String.valueOf(getDrawable(R.mipmap.man)));
+        if (Constant.User.getUserHeader() == null) {
+            Glide.with(this)
+                    .load(getDrawable(R.mipmap.man))
+                    .circleCrop()
+                    .into(ivHeader);
+        }else{
+            Glide.with(this)
+                    .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
+                    .circleCrop()
+                    .into(ivHeader);
+        }
     }
 
     class MyListener implements View.OnClickListener {
@@ -374,11 +391,11 @@ public class HomepageActivity extends AppCompatActivity {
                     break;
                 case R.id.tv_level:
                     int count = relativeProgress.getChildCount();
-                    Log.e("元素个数",count+"");
-                    if (count == 1){
+                    Log.e("元素个数", count + "");
+                    if (count == 1) {
                         TextView tvExerperience = new TextView(getApplicationContext());
                         int we = DensityUtil.dip2px(getApplicationContext(), 70);
-                        int he = DensityUtil.dip2px(getApplicationContext(), 33);
+                        int he = DensityUtil.dip2px(getApplicationContext(), 70);
                         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(we, he);
                         params.topMargin = 5;
                         tvExerperience.setPadding(20,0,20,0);
@@ -387,10 +404,9 @@ public class HomepageActivity extends AppCompatActivity {
                         tvExerperience.setTextSize(12);
                         tvExerperience.setBackgroundResource(R.color.ourDynastyRed);
                         params.addRule(RelativeLayout.BELOW, R.id.tv_level);
-//                        params.addRule(RelativeLayout.RIGHT_OF, R.id.tv_level);
                         tvExerperience.setLayoutParams(params);
                         relativeProgress.addView(tvExerperience);
-                    }else if (count == 2){
+                    } else if (count == 2) {
                         relativeProgress.removeViewAt(1);
                     }
                     break;

@@ -32,18 +32,6 @@ import net.onest.timestoryprj.entity.User;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
-<<<<<<< Updated upstream
-=======
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
-import java.util.concurrent.Callable;
-
->>>>>>> Stashed changes
 import me.leefeng.promptlibrary.PromptDialog;
 import okhttp3.Call;
 import okhttp3.FormBody;
@@ -99,12 +87,7 @@ public class LoginActivity extends AppCompatActivity {
         okHttpClient = new OkHttpClient();
         promptDialog = new PromptDialog(this);
         //设置自定义属性
-<<<<<<< Updated upstream
         promptDialog.getDefaultBuilder().touchAble(false).round(3).loadingDuration(3000);
-=======
-        promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
->>>>>>> Stashed changes
-
         findViews();
         gson = new Gson();
         AssetManager assets = getAssets();

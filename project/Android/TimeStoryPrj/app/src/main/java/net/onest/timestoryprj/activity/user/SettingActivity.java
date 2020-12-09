@@ -535,10 +535,7 @@ public class SettingActivity extends AppCompatActivity {
                     .circleCrop()
                     .into(ivHeader);
         }
-        Glide.with(this)
-                .load(R.mipmap.man)
-                .circleCrop()
-                .into(ivHeader);
+
         ivHeader.setLayoutParams(ivParam);
         linearLayout1.addView(ivHeader);
         rightLayout.addView(linearLayout1);

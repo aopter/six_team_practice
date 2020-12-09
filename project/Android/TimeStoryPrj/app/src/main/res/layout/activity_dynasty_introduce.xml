@@ -113,12 +113,23 @@
                 android:id="@+id/btn_details"
                 android:layout_width="130dp"
                 android:layout_height="35dp"
-                android:layout_alignParentRight="true"
+                android:layout_toLeftOf="@+id/btn_img"
                 android:layout_marginRight="30dp"
                 android:background="@drawable/cornert"
                 android:text="进入详情"
                 android:textColor="#fff"
                 android:textSize="20sp" />
+            <Button
+                android:alpha="0.7"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="30dp"
+                android:layout_width="130dp"
+                android:layout_height="35dp"
+                android:id="@+id/btn_img"
+                android:textSize="20sp"
+                android:text="进入全景图"
+                android:background="@drawable/cornert"
+                android:textColor="#fff"/>
         </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

@@ -1,6 +1,7 @@
 package net.onest.timestoryprj.dialog.dynasty;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.ObjectAnimator;
@@ -8,6 +9,7 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -113,8 +115,8 @@ public class EventDialogActivity extends AppCompatActivity {
                                 prelongTim = new Date().getTime();
                                 int count = rlRelativeLayout.getChildCount();
                                 TextView tv = new TextView(getApplicationContext());
-                                int width = DensityUtil.dip2px(getApplicationContext(), 150);
-                                int height = DensityUtil.dip2px(getApplicationContext(), 100);
+                                int width = DensityUtil.dip2px(getApplicationContext(), 250);
+                                int height = DensityUtil.dip2px(getApplicationContext(), 80);
                                 int th = DensityUtil.dip2px(getApplicationContext(), 20);
                                 int tp = DensityUtil.dip2px(getApplicationContext(), 10);
                                 int ml = DensityUtil.dip2px(getApplicationContext(), 30);
@@ -124,13 +126,12 @@ public class EventDialogActivity extends AppCompatActivity {
                                 Log.e("text", textUtil1.toString());
                                 tv.setTextColor(Color.BLACK);
                                 tv.setTypeface(typeface1);
-                                tv.setMaxHeight(th);
                                 tv.setPadding(th,tp,th,0);
                                 if (count % 2 != 0) {
-                                    params.setMargins(ml,0,0,0);
+                                    params.setMargins(ml,th,0,0);
                                     tv.setBackgroundResource(R.mipmap.conversation2);
                                 } else {
-                                    params.setMargins(0,0,ml,0);
+                                    params.setMargins(0,th,ml,0);
                                     tv.setBackgroundResource(R.mipmap.conversation1);
                                 }
                                 Log.e("count的值：", count + "");
@@ -168,8 +169,8 @@ public class EventDialogActivity extends AppCompatActivity {
                                     Log.e("iiie", curTime-prelongTim + "");
                                     int count = rlRelativeLayout.getChildCount();
                                     TextView tv = new TextView(getApplicationContext());
-                                    int width = DensityUtil.dip2px(getApplicationContext(), 150);
-                                    int height = DensityUtil.dip2px(getApplicationContext(), 100);
+                                    int width = DensityUtil.dip2px(getApplicationContext(), 250);
+                                    int height = DensityUtil.dip2px(getApplicationContext(), 80);
                                     int th = DensityUtil.dip2px(getApplicationContext(), 20);
                                     int tp = DensityUtil.dip2px(getApplicationContext(), 10);
                                     int ml = DensityUtil.dip2px(getApplicationContext(), 30);
@@ -178,13 +179,12 @@ public class EventDialogActivity extends AppCompatActivity {
                                     TextUtil textUtil1 = new TextUtil(tv, txtList[count], 50);
                                     tv.setTextColor(Color.BLACK);
                                     tv.setTypeface(typeface1);
-                                    tv.setMaxHeight(th);
                                     tv.setPadding(th,tp,th,0);
                                     if (count % 2 != 0) {
-                                        params.setMargins(ml,0,0,0);
+                                        params.setMargins(ml,th,0,0);
                                         tv.setBackgroundResource(R.mipmap.conversation2);
                                     } else {
-                                        params.setMargins(0,0,ml,0);
+                                        params.setMargins(0,th,ml,0);
                                         tv.setBackgroundResource(R.mipmap.conversation1);
                                     }
                                     Log.e("count的值：", count + "");
@@ -259,6 +259,7 @@ public class EventDialogActivity extends AppCompatActivity {
         }.start();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -290,6 +291,7 @@ public class EventDialogActivity extends AppCompatActivity {
     /**
      * 初始化数据
      */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void initData() {
         Intent intent = getIntent();
         dynastyId = intent.getStringExtra("dynastyId2");
@@ -303,13 +305,20 @@ public class EventDialogActivity extends AppCompatActivity {
     /**
      * 下载图片
      */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void downloadIncidentImg() {
-        Glide.with(this).load(ServiceConfig.SERVICE_ROOT + "/picture/download/incident/tang-1.png")
+        Glide.with(this).load(ServiceConfig.SERVICE_ROOT + "/img/incident/tang-1.png")
                 .into(ivDialog1Img);
-        Glide.with(this).load(ServiceConfig.SERVICE_ROOT + "/picture/download/incident/tang-2.png")
+        Glide.with(this).load(ServiceConfig.SERVICE_ROOT + "/img/incident/tang-2.png")
                 .into(ivDialog2Img);
-        Glide.with(this).load(ServiceConfig.SERVICE_ROOT + "/picture/download/incident/tang-other.png")
+        Glide.with(this).load(ServiceConfig.SERVICE_ROOT + "/img/incident/tang-other.png")
                 .into(ivDialogIntroImg);
+//        Glide.with(this).load(getDrawable(R.mipmap.dialog1))
+//                .into(ivDialog1Img);
+//        Glide.with(this).load(getDrawable(R.mipmap.dialog2))
+//                .into(ivDialog2Img);
+//        Glide.with(this).load(ServiceConfig.SERVICE_ROOT + "/img/incident/tang-other.png")
+//                .into(ivDialogIntroImg);
     }
 
     /**

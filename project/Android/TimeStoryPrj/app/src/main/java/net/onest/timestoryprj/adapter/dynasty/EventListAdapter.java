@@ -72,7 +72,7 @@ public class EventListAdapter extends BaseAdapter {
         AssetManager assets = context.getAssets();
         final Typeface typeface = Typeface.createFromAsset(assets, "fonts/custom_font.ttf");
         String[] pics = incidents.get(position).getIncidentPicture().split(Constant.DELIMITER);
-        Glide.with(context).load(ServiceConfig.SERVICE_ROOT + "/picture/download/" + pics[3]).into(ivIncidentImg);
+        Glide.with(context).load(ServiceConfig.SERVICE_ROOT + "/img/" + pics[3]).into(ivIncidentImg);
         tvIncidentName.setTypeface(typeface);
         tvIncidentName.setText(incidents.get(position).getIncidentName());
         List<Integer> unlockDynastyIncident = new ArrayList<>();
