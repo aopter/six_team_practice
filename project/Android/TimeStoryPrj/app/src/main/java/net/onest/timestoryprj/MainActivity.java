@@ -34,8 +34,6 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.btn_draw_card)
     Button btnDrawCard;
 
-
-
     @BindView(R.id.btn_user_center)
     public Button btnHis;
 
