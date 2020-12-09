@@ -47,6 +47,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.concurrent.Callable;
 
 import me.leefeng.promptlibrary.PromptDialog;
 import okhttp3.Call;
@@ -74,6 +75,8 @@ public class LoginActivity extends AppCompatActivity {
     private UserInfo userInfo;
     private OkHttpClient okHttpClient;
     private String openId;
+    private String userSex;
+    private String userNickName;
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -102,7 +105,6 @@ public class LoginActivity extends AppCompatActivity {
         promptDialog = new PromptDialog(this);
         //设置自定义属性
         promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
-
 
         findViews();
         gson = new Gson();
@@ -244,11 +246,22 @@ public class LoginActivity extends AppCompatActivity {
                 QQToken qqToken = mTencent.getQQToken();
                 userInfo = new UserInfo(getApplicationContext(),qqToken);
                 //上传服务器
-                upInfoToServer();
+
                 userInfo.getUserInfo(new IUiListener() {
                     @Override
                     public void onComplete(Object o) {
                         Log.e("信息",o.toString());
+                        try {
+                            JSONObject obj = new JSONObject(o.toString());
+                            userNickName = obj.getString("nickname");
+                            userSex = obj.getString("gender");
+                            String figureurl = obj.getString("figureurl_2");
+                            Log.e("昵称",userNickName);
+                            upInfoToServer();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
                     }
 
                     @Override
@@ -293,6 +306,8 @@ public class LoginActivity extends AppCompatActivity {
             public void run() {
                 FormBody.Builder formBuilder = new FormBody.Builder();
                 FormBody formBody = formBuilder.add("userAccount", openId)
+                        .add("userSex",userSex)
+                        .add("userNickName",userNickName)
                         .add("flag", 2 + "")
                         .build();
                 Request request = new Request.Builder()
@@ -300,7 +315,6 @@ public class LoginActivity extends AppCompatActivity {
                         .method("POST", formBody)
                         .post(formBody)
                         .build();
-                Log.e("ok","发过去了");
                 Call call = okHttpClient.newCall(request);
                 try {
                     Response response = call.execute();

@@ -83,21 +83,22 @@ public class ProblemCollectionActivity extends AppCompatActivity {
                         });
                     }
                     break;
+
             }
         }
     };
 
-    private void initAdapter() {//初始化adapter
-        ProblemCollectionActivity.this.runOnUiThread(new Runnable() {
-            public void run() {
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ProblemCollectionActivity.this);
-                linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                recyclerView.setLayoutManager(linearLayoutManager);
-                ProblemInfoListAdapter problemInfoListAdapter = new ProblemInfoListAdapter(getApplicationContext(), problems);
-                recyclerView.setAdapter(problemInfoListAdapter);
-            }
-        });
-    }
+//    private void initAdapter() {//初始化adapter
+//        ProblemCollectionActivity.this.runOnUiThread(new Runnable() {
+//            public void run() {
+//                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ProblemCollectionActivity.this);
+//                linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//                recyclerView.setLayoutManager(linearLayoutManager);
+//                ProblemInfoListAdapter problemInfoListAdapter = new ProblemInfoListAdapter(getApplicationContext(), problems);
+//                recyclerView.setAdapter(problemInfoListAdapter);
+//            }
+//        });
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +110,7 @@ public class ProblemCollectionActivity extends AppCompatActivity {
         problemCollections = new ArrayList<>();
         cPageCount = 1;
         gson = new Gson();
+
 
 //        初始化数据
         init();//所有朝代
@@ -146,6 +148,21 @@ public class ProblemCollectionActivity extends AppCompatActivity {
     }
 
     private void loadMore() {//加载更多
+
+    }
+
+
+
+    private void initAdapter() {//初始化adapter
+        ProblemCollectionActivity.this.runOnUiThread(new Runnable() {
+            public void run() {
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ProblemCollectionActivity.this);
+                linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                recyclerView.setLayoutManager(linearLayoutManager);
+                ProblemInfoListAdapter problemInfoListAdapter = new ProblemInfoListAdapter(getApplicationContext(), problems);
+                recyclerView.setAdapter(problemInfoListAdapter);
+            }
+        });
 
         String pUrl = ServiceConfig.SERVICE_ROOT + "/userproblem/search/" + Constant.User.getUserId() + "/" + cPageCount + "/" + pageSize + "";
         if (!cDynastyId.equals("0")) {//按朝代分

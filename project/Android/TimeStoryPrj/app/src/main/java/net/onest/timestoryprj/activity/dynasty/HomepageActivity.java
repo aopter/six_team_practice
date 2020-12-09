@@ -163,7 +163,7 @@ public class HomepageActivity extends AppCompatActivity {
         AssetManager assets = getAssets();
         typeface = Typeface.createFromAsset(assets, "fonts/custom_fontt.ttf");
         initData();
-        initProgress();
+//        initProgress();
     }
 
     /**
@@ -183,7 +183,7 @@ public class HomepageActivity extends AppCompatActivity {
     private void initData() {
 //        getUserInfo();
         downloadUnlockDynastyList();
-        initProgress();
+//        initProgress();
     }
 
     /**

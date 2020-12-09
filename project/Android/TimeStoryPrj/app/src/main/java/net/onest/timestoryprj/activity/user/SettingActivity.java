@@ -133,6 +133,7 @@ public class SettingActivity extends AppCompatActivity {
 
         findViews();
         setListener();
+        okHttpClient = new OkHttpClient();
         gson = new Gson();
         userId = Constant.User.getUserId();
         setPersonAttr();
@@ -639,7 +640,6 @@ public class SettingActivity extends AppCompatActivity {
         });
     }
 
-
     /**
      * 向服务器上传用户更改后的信息
      */
@@ -648,37 +648,33 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-//                    FormBody.Builder formBuilder = new FormBody.Builder();
-//                    FormBody formBody = formBuilder.add("userId",userId+"")
-//                            .add("userNickname",niName)
-//                            .add("userSignature",signature)
-//                            .add("userSex",sex)
-//                            .add("userNumber",phone)
-//                            .build();
-//                    Request request = new Request.Builder()
-//                            .url(ServiceConfig.SERVICE_ROOT + "/userdetails/modify")
-//                            .method("POST", formBody)
-//                            .post(formBody)
-//                            .build();
-//                    Call call = okHttpClient.newCall(request);
-//                    Response response = call.execute();
-//                    String info = response.body().string();
-//                    Log.e("result", info);
+                    FormBody.Builder formBuilder = new FormBody.Builder();
+                    FormBody formBody = formBuilder.add("userId",userId+"")
+                            .add("userNickname",niName)
+                            .add("userSignature",signature)
+                            .add("userSex",sex)
+                            .add("userNumber",phone)
+                            .build();
+                    Request request = new Request.Builder()
+                            .url(ServiceConfig.SERVICE_ROOT + "/userdetails/modify")
+                            .method("POST", formBody)
+                            .post(formBody)
+                            .build();
+                    Call call = okHttpClient.newCall(request);
+                    Response response = call.execute();
+                    String info = response.body().string();
+                    Log.e("result", info);
 
-                    URL url = new URL(ServiceConfig.SERVICE_ROOT + "/userdetails/modify");
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setRequestMethod("POST");
-                    OutputStream outputStream = connection.getOutputStream();
-                    outputStream.write(userInfo.getBytes());
-                    InputStream in = connection.getInputStream();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
-                    String info = reader.readLine();
                     JSONObject object = new JSONObject(info);
                     boolean flag = object.getBoolean("result");
-                    if (flag) {
-                        Toast.makeText(getApplicationContext(), "保存成功", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "保存失败", Toast.LENGTH_SHORT).show();
+                    if (flag){
+                        Looper.prepare();
+                        Toast.makeText(getApplicationContext(),"保存成功",Toast.LENGTH_SHORT).show();
+                        Looper.loop();
+                    }else {
+                        Looper.prepare();
+                        Toast.makeText(getApplicationContext(),"保存失败",Toast.LENGTH_SHORT).show();
+                        Looper.loop();
                     }
 
                 } catch (MalformedURLException e) {
@@ -741,7 +737,6 @@ public class SettingActivity extends AppCompatActivity {
             }
         }
     }
-
 
     private File convertBitmapToFile(Bitmap bitmap) {
         try {
