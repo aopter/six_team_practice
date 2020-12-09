@@ -3,7 +3,14 @@ package net.onest.timestoryprj.activity.user;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+<<<<<<< Updated upstream
 import android.content.ContentResolver;
+=======
+import androidx.core.content.FileProvider;
+
+import android.content.ContentResolver;
+import android.content.ContentValues;
+>>>>>>> Stashed changes
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -49,7 +56,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+<<<<<<< Updated upstream
 import java.io.UnsupportedEncodingException;
+=======
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+>>>>>>> Stashed changes
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
@@ -126,7 +139,11 @@ public class SettingActivity extends AppCompatActivity {
         okHttpClient = new OkHttpClient();
         gson = new Gson();
         userId = Constant.User.getUserId();
+<<<<<<< Updated upstream
 
+=======
+        setPersonAttr();
+>>>>>>> Stashed changes
         new Thread() {
             @Override
             public void run() {
@@ -348,7 +365,11 @@ public class SettingActivity extends AppCompatActivity {
         etParam.topMargin = 150;
         etParam.gravity = Gravity.CENTER_HORIZONTAL;
         etProblem.setText("说说你的问题吧……");
+<<<<<<< Updated upstream
         etProblem.setPadding(20,5,20,300);
+=======
+        etProblem.setPadding(20,10,20,200);
+>>>>>>> Stashed changes
         etProblem.setTextSize(20);
         etProblem.setBackgroundResource(R.drawable.edit_style);
         etProblem.setLayoutParams(etParam);
@@ -703,6 +724,10 @@ public class SettingActivity extends AppCompatActivity {
                 Looper.prepare();
                 Toast.makeText(getApplicationContext(), "头像上传失败", Toast.LENGTH_SHORT).show();
                 Looper.loop();
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
             }
 
             @Override
@@ -712,6 +737,10 @@ public class SettingActivity extends AppCompatActivity {
                 Looper.prepare();
                 Toast.makeText(getApplicationContext(), "头像上传成功", Toast.LENGTH_SHORT).show();
                 Looper.loop();
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
             }
         });
     }
@@ -740,7 +769,10 @@ public class SettingActivity extends AppCompatActivity {
                     Response response = call.execute();
                     String info = response.body().string();
                     Log.e("result", info);
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
                     JSONObject object = new JSONObject(info);
                     boolean flag = object.getBoolean("result");
                     if (flag){

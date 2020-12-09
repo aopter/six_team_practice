@@ -89,6 +89,7 @@ public class ProblemCollectionActivity extends AppCompatActivity {
     };
 
 
+<<<<<<< Updated upstream
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,6 +132,24 @@ public class ProblemCollectionActivity extends AppCompatActivity {
 
                 } else {//没有更多数据
                     refreshLayout.finishLoadMoreWithNoMoreData();
+=======
+//            }
+//=======
+//
+//            }
+
+        }
+        };
+
+        private void initAdapter() {//初始化adapter
+            ProblemCollectionActivity.this.runOnUiThread(new Runnable() {
+                public void run() {
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ProblemCollectionActivity.this);
+                    linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                    recyclerView.setLayoutManager(linearLayoutManager);
+                    ProblemInfoListAdapter problemInfoListAdapter = new ProblemInfoListAdapter(getApplicationContext(), problems);
+                    recyclerView.setAdapter(problemInfoListAdapter);
+>>>>>>> Stashed changes
                 }
             }
         });
