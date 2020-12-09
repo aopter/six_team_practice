@@ -712,7 +712,7 @@ public class SettingActivity extends AppCompatActivity {
         }else if (requestCode == 2 && resultCode == RESULT_OK && null != data){
             File picture = new File(Environment.getExternalStorageDirectory()+"/temp.jpg");
             Bundle extras = data.getExtras();
-            if (extras != null){
+            if (extras != null) {
                 Bitmap photo = extras.getParcelable("data");
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 photo.compress(Bitmap.CompressFormat.JPEG,75,stream);
@@ -742,10 +742,10 @@ public class SettingActivity extends AppCompatActivity {
         }
     }
 
-
     private File convertBitmapToFile(Bitmap bitmap) {
         try {
-            file = new File(SettingActivity.this.getCacheDir(),"userHeader");
+            file = new File(SettingActivity.this.getCacheDir(), "userHeader");
+            file = new File(SettingActivity.this.getCacheDir(), "portrait");
             file.createNewFile();
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG,0,bos);
