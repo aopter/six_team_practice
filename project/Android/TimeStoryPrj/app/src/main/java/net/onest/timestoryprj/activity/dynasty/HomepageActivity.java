@@ -383,7 +383,7 @@ public class HomepageActivity extends AppCompatActivity {
                         params.topMargin = 5;
                         tvExerperience.setPadding(20,0,20,0);
                         tvExerperience.setText("玩家经验:"+'\n'+Constant.User.getUserExperience()+"/"+Constant.User.getUserStatus().getStatusExperienceTop());
-                        tvExerperience.setTextColor(getResources().getColor(R.color.whrite));
+                        tvExerperience.setTextColor(getResources().getColor(R.color.white));
                         tvExerperience.setTextSize(12);
                         tvExerperience.setBackgroundResource(R.color.ourDynastyRed);
                         params.addRule(RelativeLayout.BELOW, R.id.tv_level);

@@ -2,33 +2,21 @@ package net.onest.timestoryprj.activity.card;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.ActivityOptions;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,20 +30,15 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import net.onest.timestoryprj.R;
-import net.onest.timestoryprj.adapter.card.ShareAdapter;
+import net.onest.timestoryprj.activity.dynasty.HomepageActivity;
 import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
-import net.onest.timestoryprj.entity.User;
+import net.onest.timestoryprj.dialog.card.CustomDialog;
 import net.onest.timestoryprj.entity.card.Card;
 import net.onest.timestoryprj.entity.card.Icon;
 import net.onest.timestoryprj.util.ScreenUtil;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
@@ -162,8 +145,7 @@ public class DrawCardActivity extends AppCompatActivity {
                     .create();//创建Gson对象
             getDrawCard();
         } else {
-            // TODO 积分不足，应该为弹出窗
-            Toast.makeText(getApplicationContext(), "您的积分不足，无法抽取卡片", Toast.LENGTH_SHORT).show();
+            showDialog();
         }
     }
 
@@ -312,5 +294,22 @@ public class DrawCardActivity extends AppCompatActivity {
             view.buildDrawingCache();
             Constant.shareBitmap = view.getDrawingCache();
         }
+    }
+
+    private void showDialog() {
+        CustomDialog.Builder builder = new CustomDialog.Builder(this);
+        builder.setTitle("提示");
+        builder.setMessage("您的积分不足，快去选择朝代进行答题来赚取积分吧~");
+        builder.setButtonConfirm("确定", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DrawCardActivity.this, HomepageActivity.class);
+                startActivity(intent);
+            }
+        });
+        CustomDialog customDialog = builder.create();
+        customDialog.setCancelable(false);
+        customDialog.setCanceledOnTouchOutside(false);
+        customDialog.show();
     }
 }

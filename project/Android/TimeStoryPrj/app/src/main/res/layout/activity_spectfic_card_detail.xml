@@ -77,6 +77,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:lineSpacingExtra="5dp"
                 android:id="@+id/card_info"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -87,7 +88,7 @@
                 android:layout_marginBottom="10dp"
                 android:alpha="0.85"
                 android:background="@drawable/story_style"
-                android:padding="10dp"
+                android:padding="15dp"
                 android:scrollbars="vertical"
                 android:textColor="@android:color/black"
                 android:textSize="17sp" />

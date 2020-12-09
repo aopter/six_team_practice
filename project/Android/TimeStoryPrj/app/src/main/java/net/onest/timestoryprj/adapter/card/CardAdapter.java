@@ -10,12 +10,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.entity.Dynasty;
+import net.onest.timestoryprj.entity.UserUnlockDynasty;
 import net.onest.timestoryprj.util.AdapterMeasureHelper;
 
 import java.util.List;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
-    private List<Dynasty> dynasties;
+    private List<UserUnlockDynasty> dynasties;
     private Context mContext;
     private OnItemClickLitener mOnItemClickLitener;
 
@@ -30,7 +31,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
     private AdapterMeasureHelper mCardAdapterHelper = new AdapterMeasureHelper();
 
-    public CardAdapter(Context context, List<Dynasty> dynasties) {
+    public CardAdapter(Context context, List<UserUnlockDynasty> dynasties) {
         this.dynasties = dynasties;
         this.mContext = context;
     }
