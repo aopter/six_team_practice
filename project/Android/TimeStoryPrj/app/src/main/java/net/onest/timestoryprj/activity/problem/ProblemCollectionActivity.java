@@ -88,17 +88,6 @@ public class ProblemCollectionActivity extends AppCompatActivity {
         }
     };
 
-//    private void initAdapter() {//初始化adapter
-//        ProblemCollectionActivity.this.runOnUiThread(new Runnable() {
-//            public void run() {
-//                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ProblemCollectionActivity.this);
-//                linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-//                recyclerView.setLayoutManager(linearLayoutManager);
-//                ProblemInfoListAdapter problemInfoListAdapter = new ProblemInfoListAdapter(getApplicationContext(), problems);
-//                recyclerView.setAdapter(problemInfoListAdapter);
-//            }
-//        });
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,22 +137,6 @@ public class ProblemCollectionActivity extends AppCompatActivity {
     }
 
     private void loadMore() {//加载更多
-
-    }
-
-
-
-    private void initAdapter() {//初始化adapter
-        ProblemCollectionActivity.this.runOnUiThread(new Runnable() {
-            public void run() {
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ProblemCollectionActivity.this);
-                linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                recyclerView.setLayoutManager(linearLayoutManager);
-                ProblemInfoListAdapter problemInfoListAdapter = new ProblemInfoListAdapter(getApplicationContext(), problems);
-                recyclerView.setAdapter(problemInfoListAdapter);
-            }
-        });
-
         String pUrl = ServiceConfig.SERVICE_ROOT + "/userproblem/search/" + Constant.User.getUserId() + "/" + cPageCount + "/" + pageSize + "";
         if (!cDynastyId.equals("0")) {//按朝代分
             pUrl = ServiceConfig.SERVICE_ROOT + "/userproblem/search/" + Constant.User.getUserId() + "/" + cDynastyId + "/" + cPageCount + "/" + pageSize + "";
@@ -201,6 +174,20 @@ public class ProblemCollectionActivity extends AppCompatActivity {
                 message.arg2 = pcs1.size();//数量
                 message.obj = problemJson;
                 handler.handleMessage(message);
+            }
+        });
+    }
+
+
+
+    private void initAdapter() {//初始化adapter
+        ProblemCollectionActivity.this.runOnUiThread(new Runnable() {
+            public void run() {
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ProblemCollectionActivity.this);
+                linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                recyclerView.setLayoutManager(linearLayoutManager);
+                ProblemInfoListAdapter problemInfoListAdapter = new ProblemInfoListAdapter(getApplicationContext(), problems);
+                recyclerView.setAdapter(problemInfoListAdapter);
             }
         });
     }
@@ -351,7 +338,6 @@ public class ProblemCollectionActivity extends AppCompatActivity {
                         cType = childPosition + 1;
                         cDynastyId = "0";
                         init();
-
                         break;
                     case 1://朝代
                         cType = 0;
@@ -364,6 +350,5 @@ public class ProblemCollectionActivity extends AppCompatActivity {
                 return false;
             }
         });
-
     }
 }

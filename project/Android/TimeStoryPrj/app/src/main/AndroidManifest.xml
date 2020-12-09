@@ -25,9 +25,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
+        <activity android:name=".activity.user.UpdateSignatureActivity"
+            android:screenOrientation="landscape"></activity>
+        <activity
+            android:name=".activity.user.UpdateNickNameActivity"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".activity.card.ShareCardActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".activity.user.RechargeActivity"
             android:screenOrientation="landscape" />

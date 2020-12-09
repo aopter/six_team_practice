@@ -3,10 +3,7 @@ package net.onest.timestoryprj.activity.user;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
-
 import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -22,27 +19,28 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.entity.UserDetails;
 import net.onest.timestoryprj.util.AudioUtil;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -51,9 +49,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
@@ -62,7 +58,6 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-
 import me.leefeng.promptlibrary.PromptButton;
 import me.leefeng.promptlibrary.PromptButtonListener;
 import me.leefeng.promptlibrary.PromptDialog;
@@ -75,7 +70,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-
 
 public class SettingActivity extends AppCompatActivity {
 
@@ -111,11 +105,7 @@ public class SettingActivity extends AppCompatActivity {
         public void handleMessage(@NonNull Message msg) {
             switch (msg.what) {
                 case 1:
-                    UserDetails userDetails = (UserDetails) msg.obj;
-                    etNiName.setText(userDetails.getUserNickname());
-                    etSignature.setText(userDetails.getUserSignature());
-                    etPhone.setText(userDetails.getUserNumber());
-                    etSex.setText(userDetails.getUserSex());
+                    setPerson();
                     break;
             }
         }
@@ -129,14 +119,14 @@ public class SettingActivity extends AppCompatActivity {
         //创建对象
         promptDialog = new PromptDialog(this);
         //设置自定义属性
-        promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
+        promptDialog.getDefaultBuilder().touchAble(false).round(3).loadingDuration(3000);
 
         findViews();
         setListener();
         okHttpClient = new OkHttpClient();
         gson = new Gson();
         userId = Constant.User.getUserId();
-        setPersonAttr();
+
         new Thread() {
             @Override
             public void run() {
@@ -211,7 +201,7 @@ public class SettingActivity extends AppCompatActivity {
             switch (view.getId()) {
                 case R.id.btn_person://个人资料
                     rightLayout.removeAllViews();
-                    setPersonAttr();
+                    setPerson();
                     break;
                 case R.id.btn_voice_set://音量设置
                     rightLayout.removeAllViews();
@@ -231,6 +221,97 @@ public class SettingActivity extends AppCompatActivity {
                     break;
             }
         }
+    }
+
+    /**
+     * 设置个人资料
+     */
+    private void setPerson() {
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View view = inflater.inflate(R.layout.person_set,null);
+        ScrollView scrollView = view.findViewById(R.id.scrollview);
+        ImageView ivHeader = view.findViewById(R.id.iv_header_set);
+        TextView tvNickName = view.findViewById(R.id.tv_niname);
+        TextView tvSignature = view.findViewById(R.id.tv_signature);
+        TextView tvNumber = view.findViewById(R.id.tv_number);
+        RadioButton btnMan = view.findViewById(R.id.man);
+        RadioButton btnWoman = view.findViewById(R.id.woman);
+        Button btnSave = view.findViewById(R.id.btn_save);
+        RelativeLayout relaNickName = view.findViewById(R.id.rela_nickname);
+        RelativeLayout relaSignature = view.findViewById(R.id.rela_signature);
+        RelativeLayout relaNumber = view.findViewById(R.id.rela_number);
+        rightLayout.addView(scrollView);
+        //头像
+        Glide.with(this)
+                .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
+                .circleCrop()
+                .into(ivHeader);
+        //设置内容
+        tvNickName.setText(Constant.UserDetails.getUserNickname());
+        tvSignature.setText(Constant.UserDetails.getUserSignature());
+        tvNumber.setText(Constant.UserDetails.getUserNumber());
+        if (Constant.UserDetails.getUserSex().equals("男")){
+            btnMan.setChecked(true);
+            btnWoman.setChecked(false);
+        }else {
+            btnWoman.setChecked(true);
+            btnMan.setChecked(false);
+        }
+        //昵称点击事件
+        relaNickName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),UpdateNickNameActivity.class);
+                startActivity(intent);
+            }
+        });
+        //个性签名
+        relaSignature.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),UpdateSignatureActivity.class);
+                startActivity(intent);
+            }
+        });
+        //保存
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                niName = Constant.UserDetails.getUserNickname();
+                signature = Constant.UserDetails.getUserSignature();
+                if (btnMan.isChecked()){
+                    sex = "男";
+                    Constant.UserDetails.setUserSex("男");
+                }else {
+                    sex = "女";
+                    Constant.UserDetails.setUserSex("女");
+                }
+                phone = Constant.UserDetails.getUserNumber();
+                upToServer();//上传信息
+            }
+        });
+        //头像
+        ivHeader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PromptButton cancle = new PromptButton("取消", null);
+                cancle.setTextColor(Color.parseColor("#0076ff"));
+                promptDialog.showAlertSheet("", true, cancle, new PromptButton("从相册选择", new PromptButtonListener() {
+                    @Override
+                    public void onClick(PromptButton button) {
+                        Intent intent = new Intent(Intent.ACTION_PICK, null);
+                        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                        startActivityForResult(intent, 1);
+                    }
+                }), new PromptButton("拍照", new PromptButtonListener() {
+                    @Override
+                    public void onClick(PromptButton button) {
+                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(intent, 2);
+                    }
+                }));
+            }
+        });
     }
 
     /**
@@ -267,7 +348,7 @@ public class SettingActivity extends AppCompatActivity {
         etParam.topMargin = 150;
         etParam.gravity = Gravity.CENTER_HORIZONTAL;
         etProblem.setText("说说你的问题吧……");
-        etProblem.setPadding(20,10,20,200);
+        etProblem.setPadding(20,5,20,300);
         etProblem.setTextSize(20);
         etProblem.setBackgroundResource(R.drawable.edit_style);
         etProblem.setLayoutParams(etParam);
@@ -411,7 +492,6 @@ public class SettingActivity extends AppCompatActivity {
         tvRule.setLayoutParams(ruleParam);
         linearLayout.addView(tvRule);
         rightLayout.addView(linearLayout);
-
     }
 
     /**
@@ -551,7 +631,6 @@ public class SettingActivity extends AppCompatActivity {
 
                     }
                 }));
-
             }
         });
 
@@ -624,18 +703,15 @@ public class SettingActivity extends AppCompatActivity {
                 Looper.prepare();
                 Toast.makeText(getApplicationContext(), "头像上传失败", Toast.LENGTH_SHORT).show();
                 Looper.loop();
-
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-
                 Log.e("ok", "成功");
                 Constant.User.setUserHeader("us-" + Constant.User.getUserId() + ".jpg");
                 Looper.prepare();
                 Toast.makeText(getApplicationContext(), "头像上传成功", Toast.LENGTH_SHORT).show();
                 Looper.loop();
-
             }
         });
     }

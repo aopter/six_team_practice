@@ -9,4 +9,5 @@ public class ServiceConfig {
 
     public static String SERVICE_ROOT = "http://47.101.157.246:8889";
 
+
 }

@@ -3,7 +3,6 @@ package net.onest.timestoryprj.activity.user;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
@@ -18,8 +17,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.tencent.connect.UserInfo;
 import com.tencent.connect.auth.QQToken;
@@ -27,28 +24,14 @@ import com.tencent.connect.common.Constants;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
-
-
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.activity.dynasty.HomepageActivity;
 import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.entity.User;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
-import java.util.concurrent.Callable;
-
 import me.leefeng.promptlibrary.PromptDialog;
 import okhttp3.Call;
 import okhttp3.FormBody;
@@ -104,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
         okHttpClient = new OkHttpClient();
         promptDialog = new PromptDialog(this);
         //设置自定义属性
-        promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
+        promptDialog.getDefaultBuilder().touchAble(false).round(3).loadingDuration(3000);
 
         findViews();
         gson = new Gson();
