@@ -1,5 +1,7 @@
 package net.onest.timestoryprj.constant;
 
+import android.graphics.Bitmap;
+
 import net.onest.timestoryprj.entity.HistoryDay;
 import net.onest.timestoryprj.entity.Problem;
 import net.onest.timestoryprj.entity.Rule;
@@ -32,9 +34,10 @@ public class Constant {
 
     public static List<User> UserRankList;
 
-    public static  List<Problem> userProblems;//题目列表
+    public static List<Problem> userProblems;//题目列表
 
     public static UserDetails UserDetails = new UserDetails();
 
+    public static Bitmap shareBitmap;
 
 }

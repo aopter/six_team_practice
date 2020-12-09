@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import net.onest.timestoryprj.MainActivity;
+
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.activity.user.LoginActivity;
 import net.onest.timestoryprj.constant.Constant;

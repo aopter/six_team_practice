@@ -25,6 +25,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -49,6 +50,9 @@ import net.onest.timestoryprj.entity.card.Card;
 import net.onest.timestoryprj.entity.card.Icon;
 import net.onest.timestoryprj.util.ScreenUtil;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -91,16 +95,16 @@ public class DrawCardActivity extends AppCompatActivity {
     @BindView(R.id.share)
     ImageView btnShare;
     @BindView(R.id.icon_view)
-    ListView iconView;
+    GridView iconView;
     @BindView(R.id.share_container)
     RelativeLayout shareContainer;
     @BindView(R.id.e_r_code)
     ImageView ERCode;
     @BindView(R.id.join)
     TextView join;
-    //    @BindView(R.id.man)
-//    ImageView man;
     private List<Icon> icons;
+    // 抽卡所消耗积分
+    private int descCount = 60;
     // 是否已点击
     private boolean flag = false;
 
@@ -111,7 +115,6 @@ public class DrawCardActivity extends AppCompatActivity {
     private AnimatorSet animatorSet;
     private OkHttpClient client;
     private Gson gson;
-    private Bitmap shareBitmap;
     // 是否在分享状态
     private boolean isShareing = false;
 
@@ -144,112 +147,24 @@ public class DrawCardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_draw_card);
         ButterKnife.bind(this);
-        // TODO 记得删除
-        Constant.User = new User();
-        Constant.User.setUserId(1);
-        back.setVisibility(View.VISIBLE);
-        width = ScreenUtil.dip2px(getApplicationContext(), 120);
-        height = ScreenUtil.dip2px(getApplicationContext(), 180);
-        final Typeface typeface = Typeface.createFromAsset(getResources().getAssets(), "fonts/custom_font.ttf");
-        tip.setTypeface(typeface);
-        text.setTypeface(typeface);
-        client = new OkHttpClient();
-        frontContainer.bringToFront();
-        cardAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.back);
-        gson = new GsonBuilder()//创建GsonBuilder对象
-                .serializeNulls()//允许输出Null值属性
-                .create();//创建Gson对象
-        initShareView();
-        if (null != savedInstanceState) {
-            Log.e("onsave", "初始化了");
-            // 状态1：抽卡界面（已选取卡片）
-            // 状态2：抽卡卡片已显示
-            // 状态3：分享界面
-            isFlag = savedInstanceState.getBoolean("isFlag");
-            flag = savedInstanceState.getBoolean("flag");
-            isShareing = savedInstanceState.getBoolean("isShareing");
-            card = (Card) savedInstanceState.getSerializable("card");
-            tip.setText(savedInstanceState.getString("tip"));
-            // 已点击4张卡片
-            if (isFlag) {
-                frontContainer.setAlpha(0);
-                cardContainer.setAlpha(0.8f);
-                // 如果已点击图片，获得卡片展示(默认)
-                if (flag) {
-                    drawCard.setBackground(getResources().getDrawable(R.mipmap.card_bg));
-                    Glide.with(getApplicationContext())
-                            .load(ServiceConfig.SERVICE_ROOT + "/img/" + card.getCardPicture())
-                            .into(drawCard);
-                } else {
-                    drawCard.setBackground(getResources().getDrawable(R.mipmap.card_back));
-                }
-            }
-            toLastView.setVisibility(savedInstanceState.getInt("toLastView"));
-            btnShare.setVisibility(savedInstanceState.getInt("btnShare"));
-            ERCode.setVisibility(savedInstanceState.getInt("ERCode"));
-            join.setVisibility(savedInstanceState.getInt("join"));
-            shareContainer.setVisibility(savedInstanceState.getInt("shareContainer"));
-        } else {
+        if (Constant.User.getUserCount() >= descCount) {
+            back.setVisibility(View.VISIBLE);
+            width = ScreenUtil.dip2px(getApplicationContext(), 120);
+            height = ScreenUtil.dip2px(getApplicationContext(), 180);
+            final Typeface typeface = Typeface.createFromAsset(getResources().getAssets(), "fonts/custom_font.ttf");
+            tip.setTypeface(typeface);
+            text.setTypeface(typeface);
+            client = new OkHttpClient();
+            frontContainer.bringToFront();
+            cardAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.back);
+            gson = new GsonBuilder()//创建GsonBuilder对象
+                    .serializeNulls()//允许输出Null值属性
+                    .create();//创建Gson对象
             getDrawCard();
+        } else {
+            // TODO 积分不足，应该为弹出窗
+            Toast.makeText(getApplicationContext(), "您的积分不足，无法抽取卡片", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private void initShareView() {
-        icons = new ArrayList<>();
-        Icon icon1 = new Icon();
-        icon1.setIconId(R.mipmap.qq);
-        icon1.setName("分享到qq");
-        icons.add(icon1);
-        Icon icon2 = new Icon();
-        icon2.setIconId(R.mipmap.weixin);
-        icon2.setName("分享到微信");
-        icons.add(icon2);
-        Icon icon3 = new Icon();
-        icon3.setIconId(R.mipmap.frend_circle);
-        icon3.setName("分享到朋友圈");
-        icons.add(icon3);
-        ShareAdapter shareAdapter = new ShareAdapter(getApplicationContext(), icons);
-        iconView.setAdapter(shareAdapter);
-        iconView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                if (position == 0) {
-                    Log.e("d", "点击了qq");
-                    shareContainer.setVisibility(View.INVISIBLE);
-                    ScreenShot sh = new ScreenShot();
-                    sh.start();
-                    try {
-                        sh.join();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    shareQQFriend("卡片分享", "您的好友向你分享了卡片", DrawCardActivity.DRAWABLE, shareBitmap);
-                } else if (position == 1) {
-                    Log.e("d", "点击了wechat");
-                    shareContainer.setVisibility(View.INVISIBLE);
-                    ScreenShot sh = new ScreenShot();
-                    sh.start();
-                    try {
-                        sh.join();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    shareWeChatFriend("卡片分享", "您的好友向你分享了卡片", DrawCardActivity.DRAWABLE, shareBitmap);
-                } else if (position == 2) {
-                    // TODO 分享到朋友圈
-                    Log.e("d", "点击了朋友圈");
-                    shareContainer.setVisibility(View.INVISIBLE);
-                    ScreenShot sh = new ScreenShot();
-                    sh.start();
-                    try {
-                        sh.join();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    shareWeChatFriendCircle("卡片分享", "您的好友向你分享了一张卡片", shareBitmap);
-                }
-            }
-        });
     }
 
     private void getDrawCard() {
@@ -266,6 +181,7 @@ public class DrawCardActivity extends AppCompatActivity {
                     public void onFailure(Call call, IOException e) {
                         // TODO获取卡片内容失败
                     }
+
 
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
@@ -362,9 +278,17 @@ public class DrawCardActivity extends AppCompatActivity {
         toLastView.setVisibility(View.INVISIBLE);
         join.setVisibility(View.VISIBLE);
         ERCode.setVisibility(View.VISIBLE);
-//        man.setVisibility(View.VISIBLE);
         shareContainer.bringToFront();
+        ScreenShot sh = new ScreenShot();
+        sh.start();
+        try {
+            sh.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         isShareing = true;
+        Intent intent = new Intent(DrawCardActivity.this, ShareCardActivity.class);
+        startActivity(intent);
     }
 
     @OnClick({R.id.card_container, R.id.draw_card_show})
@@ -374,7 +298,6 @@ public class DrawCardActivity extends AppCompatActivity {
             toLastView.setVisibility(View.VISIBLE);
             join.setVisibility(View.INVISIBLE);
             ERCode.setVisibility(View.INVISIBLE);
-//            man.setVisibility(View.INVISIBLE);
             shareContainer.bringToFront();
             isShareing = false;
         }
@@ -387,145 +310,7 @@ public class DrawCardActivity extends AppCompatActivity {
             View view = getWindow().getDecorView();
             view.setDrawingCacheEnabled(true);
             view.buildDrawingCache();
-            shareBitmap = view.getDrawingCache();
+            Constant.shareBitmap = view.getDrawingCache();
         }
-    }
-
-    /**
-     * 保存机制
-     */
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        Log.e("onsave", "保存了");
-        // 保存card信息
-        outState.putSerializable("card", card);
-        // 是否选取了卡片
-        outState.putBoolean("isFlag", isFlag);
-        // 保存状态：以实现动画/为实现动画
-        outState.putBoolean("flag", flag);
-        // 保存状态：分享/不分享
-        outState.putBoolean("isShareing", isShareing);
-        // 保存各个container的状态
-        outState.putInt("toLastView", toLastView.getVisibility());
-        outState.putInt("shareContainer", shareContainer.getVisibility());
-        outState.putInt("btnShare", btnShare.getVisibility());
-        outState.putInt("ERCode", ERCode.getVisibility());
-        outState.putInt("join", join.getVisibility());
-        String text = tip.getText().toString();
-        outState.putString("tip", text);
-    }
-
-    /**
-     * 分享到QQ好友或群组
-     *
-     * @param msgTitle (分享标题)
-     * @param msgText  (分享内容)
-     * @param type     (分享类型)
-     * @param drawable (分享图片，若分享类型为AndroidShare.TEXT，则可以为null)
-     */
-    public void shareQQFriend(String msgTitle, String msgText, int type, Bitmap drawable) {
-        shareMsg("com.tencent.mobileqq", "com.tencent.mobileqq.activity.JumpActivity", "QQ", msgTitle,
-                msgText, type, drawable);
-    }
-
-    /**
-     * 分享到微信好友
-     *
-     * @param msgTitle (分享标题)
-     * @param msgText  (分享内容)
-     * @param type     (分享类型)
-     * @param drawable (分享图片，若分享类型为AndroidShare.TEXT，则可以为null)
-     */
-    public void shareWeChatFriend(String msgTitle, String msgText, int type, Bitmap drawable) {
-        shareMsg("com.tencent.mm", "com.tencent.mm.ui.tools.ShareImgUI", "微信",
-                msgTitle, msgText, type, drawable);
-    }
-
-    /**
-     * 分享到微信朋友圈(分享朋友圈一定需要图片)
-     *
-     * @param msgTitle (分享标题)
-     * @param msgText  (分享内容)
-     * @param drawable (分享图片)
-     */
-    public void shareWeChatFriendCircle(String msgTitle, String msgText,
-                                        Bitmap drawable) {
-        shareMsg("com.tencent.mm", "com.tencent.mm.ui.tools.ShareToTimeLineUI",
-                "微信", msgTitle, msgText, DrawCardActivity.DRAWABLE, drawable);
-    }
-
-    /**
-     * 点击分享的代码
-     *
-     * @param packageName  (包名,跳转的应用的包名)
-     * @param activityName (类名,跳转的页面名称)
-     * @param appname      (应用名,跳转到的应用名称)
-     * @param msgTitle     (标题)
-     * @param msgText      (内容)
-     * @param type         (发送类型：text or pic 微信朋友圈只支持pic)
-     */
-    @SuppressLint("NewApi")
-    private void shareMsg(String packageName, String activityName,
-                          String appname, String msgTitle, String msgText, int type,
-                          Bitmap drawable) {
-        if (!packageName.isEmpty() && !isAvilible(getApplicationContext(), packageName)) {// 判断APP是否存在
-            Toast.makeText(getApplicationContext(), "请先安装" + appname, Toast.LENGTH_SHORT)
-                    .show();
-            return;
-        }
-        Intent intent = new Intent("android.intent.action.SEND");
-        if (type == DrawCardActivity.TEXT) {
-            intent.setType("text/plain");
-        } else if (type == DrawCardActivity.DRAWABLE) {
-            intent.setType("image/*");
-            final Uri uri = Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(), drawable, "IMG" + Calendar.getInstance().getTime(), null));
-            intent.putExtra(Intent.EXTRA_STREAM, uri);
-        }
-        intent.putExtra(Intent.EXTRA_SUBJECT, msgTitle);
-        intent.putExtra(Intent.EXTRA_TEXT, msgText);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        if (!packageName.isEmpty()) {
-            intent.setComponent(new ComponentName(packageName, activityName));
-            getApplication().startActivity(intent);
-        } else {
-            getApplication().startActivity(Intent.createChooser(intent, msgTitle));
-        }
-    }
-
-    /**
-     * 判断相对应的APP是否存在
-     *
-     * @param context
-     * @param packageName
-     * @return
-     */
-    public boolean isAvilible(Context context, String packageName) {
-        PackageManager packageManager = context.getPackageManager();
-        List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);
-        for (int i = 0; i < pinfo.size(); i++) {
-            if (((PackageInfo) pinfo.get(i)).packageName
-                    .equalsIgnoreCase(packageName))
-                return true;
-        }
-        return false;
-    }
-
-    /**
-     * 指定分享到qq
-     *
-     * @param context
-     * @param bitmap
-     */
-    public void sharedQQ(Activity context, Bitmap bitmap) {
-        Uri uri = Uri.parse(MediaStore.Images.Media.insertImage(
-                context.getContentResolver(), BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher), null, null));
-        Intent imageIntent = new Intent(Intent.ACTION_SEND);
-        imageIntent.setPackage("com.tencent.mobileqq");
-        imageIntent.setType("image/*");
-        imageIntent.putExtra(Intent.EXTRA_STREAM, uri);
-        imageIntent.putExtra(Intent.EXTRA_TEXT, "您的好友向你展示了卡片");
-        imageIntent.putExtra(Intent.EXTRA_TITLE, "时光序");
-        context.startActivity(imageIntent);
     }
 }

@@ -102,6 +102,11 @@ public class SettingActivity extends AppCompatActivity {
     private PromptDialog promptDialog;
     private boolean isAndroidQ = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q;
     private Bitmap bitmap;//从相册选择的图片
+    private String niName;
+    private String signature;
+    private String sex;
+    private String phone;
+    private OkHttpClient okHttpClient;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -130,15 +135,13 @@ public class SettingActivity extends AppCompatActivity {
         findViews();
         setListener();
         gson = new Gson();
-
+        userId = Constant.User.getUserId();
+        setPersonAttr();
         new Thread() {
             @Override
             public void run() {
                 try {
-
-
                     URL url = new URL(ServiceConfig.SERVICE_ROOT + "/rule");
-
                     URLConnection connection = url.openConnection();
                     InputStream in = connection.getInputStream();
                     BufferedReader reader = new BufferedReader(
@@ -178,7 +181,6 @@ public class SettingActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
             }
         }.start();
     }
@@ -248,7 +250,6 @@ public class SettingActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         }));
-
     }
 
     /**
@@ -261,10 +262,11 @@ public class SettingActivity extends AppCompatActivity {
         linearLayout.setLayoutParams(params);
         //问题编辑框
         EditText etProblem = new EditText(getApplicationContext());
-        LinearLayout.LayoutParams etParam = new LinearLayout.LayoutParams(900, 500);
+        LinearLayout.LayoutParams etParam = new LinearLayout.LayoutParams(1200, 700);
         etParam.topMargin = 150;
         etParam.gravity = Gravity.CENTER_HORIZONTAL;
         etProblem.setText("说说你的问题吧……");
+        etProblem.setPadding(20,10,20,200);
         etProblem.setTextSize(20);
         etProblem.setBackgroundResource(R.drawable.edit_style);
         etProblem.setLayoutParams(etParam);
@@ -277,7 +279,7 @@ public class SettingActivity extends AppCompatActivity {
         btnSub.setBackgroundResource(R.color.ourDynastyRed);
         btnParam.gravity = Gravity.RIGHT;
         btnParam.rightMargin = 30;
-        btnParam.topMargin = 120;
+        btnParam.topMargin = 80;
         btnSub.setLayoutParams(btnParam);
         linearLayout.addView(btnSub);
         rightLayout.addView(linearLayout);
@@ -424,7 +426,7 @@ public class SettingActivity extends AppCompatActivity {
         LinearLayout.LayoutParams tvParam = new LinearLayout.LayoutParams(350, LinearLayout.LayoutParams.WRAP_CONTENT);
         tvParam.leftMargin = 30;
         tvParam.topMargin = 30;
-        LinearLayout.LayoutParams etParam = new LinearLayout.LayoutParams(600, LinearLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams etParam = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         etParam.leftMargin = 20;
         etParam.topMargin = 30;
         TextView tvPhoto = new TextView(getApplicationContext());
@@ -445,10 +447,10 @@ public class SettingActivity extends AppCompatActivity {
         } else {
             Glide.with(this)
                     .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
+//                    .load(Constant.User.getUserHeader())
                     .circleCrop()
                     .into(ivHeader);
         }
-
         Glide.with(this)
                 .load(R.mipmap.man)
                 .circleCrop()
@@ -466,7 +468,7 @@ public class SettingActivity extends AppCompatActivity {
         tvNiName.setLayoutParams(tvParam);
         linearLayout2.addView(tvNiName);
         etNiName = new EditText(getApplicationContext());
-        etNiName.setText("小美");
+        etNiName.setText(Constant.UserDetails.getUserNickname());
         etNiName.setTextSize(20);
         etNiName.setLayoutParams(etParam);
         linearLayout2.addView(etNiName);
@@ -481,8 +483,7 @@ public class SettingActivity extends AppCompatActivity {
         tvSignature.setLayoutParams(tvParam);
         linearLayout3.addView(tvSignature);
         etSignature = new EditText(getApplicationContext());
-
-        etSignature.setText("第五美女");
+        etSignature.setText(Constant.UserDetails.getUserSignature());
         etSignature.setTextSize(20);
         etSignature.setLayoutParams(etParam);
         linearLayout3.addView(etSignature);
@@ -497,7 +498,7 @@ public class SettingActivity extends AppCompatActivity {
         tvSex.setLayoutParams(tvParam);
         linearLayout4.addView(tvSex);
         etSex = new EditText(getApplicationContext());
-        etSex.setText("女");
+        etSex.setText(Constant.UserDetails.getUserSex());
         etSex.setTextSize(20);
         etSex.setLayoutParams(etParam);
         linearLayout4.addView(etSex);
@@ -512,7 +513,7 @@ public class SettingActivity extends AppCompatActivity {
         tvPhone.setLayoutParams(tvParam);
         linearLayout5.addView(tvPhone);
         etPhone = new EditText(getApplicationContext());
-        etPhone.setText("123456");
+        etPhone.setText(Constant.UserDetails.getUserNumber());
         etPhone.setTextSize(20);
         etPhone.setLayoutParams(etParam);
         linearLayout5.addView(etPhone);
@@ -559,16 +560,15 @@ public class SettingActivity extends AppCompatActivity {
         btnSub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String niName = etNiName.getText().toString().trim();
-                String signature = etSignature.getText().toString().trim();
-                String sex = etSex.getText().toString().trim();
-                String phone = etPhone.getText().toString().trim();
+                niName = etNiName.getText().toString().trim();
+                signature = etSignature.getText().toString().trim();
+                sex = etSex.getText().toString().trim();
+                phone = etPhone.getText().toString().trim();
                 Log.e("提交", niName + signature + sex + phone);
                 //判断非空
                 if (null != niName && null != signature && null != sex && null != phone) {
-//                    int userId = Constant.User.getUserId();
                     UserDetails userDetails = new UserDetails();
-                    userDetails.setUserId(1);
+                    userDetails.setUserId(userId);
                     userDetails.setUserNickname(niName);
                     userDetails.setUserNumber(phone);
                     userDetails.setUserSex(sex);
@@ -576,18 +576,16 @@ public class SettingActivity extends AppCompatActivity {
                     userInfo = gson.toJson(userDetails);
                     Log.e("userInfo", userInfo);
                     //用户详情传给服务器
-//                    upToServer();
+                    upToServer();
                     //上传头像
 //                    upHeaderToServer();
 
                 } else {
                     Toast.makeText(getApplicationContext(), "请您完善用户信息后提交", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
     }
-
 
     /**
      * 创建保存图片的文件
@@ -614,7 +612,7 @@ public class SettingActivity extends AppCompatActivity {
                 .setType(MultipartBody.FORM);//通过表单上传
         RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);//上传的文件以及类型
         requestBody.addFormDataPart("file", file.getName(), fileBody)
-                .addFormDataPart("userId", 1 + "");
+                .addFormDataPart("userId", userId+ "");
         Request request = new Request.Builder()
                 .url(ServiceConfig.SERVICE_ROOT + "/picture/upload")
                 .post(requestBody.build())
@@ -650,6 +648,22 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
+//                    FormBody.Builder formBuilder = new FormBody.Builder();
+//                    FormBody formBody = formBuilder.add("userId",userId+"")
+//                            .add("userNickname",niName)
+//                            .add("userSignature",signature)
+//                            .add("userSex",sex)
+//                            .add("userNumber",phone)
+//                            .build();
+//                    Request request = new Request.Builder()
+//                            .url(ServiceConfig.SERVICE_ROOT + "/userdetails/modify")
+//                            .method("POST", formBody)
+//                            .post(formBody)
+//                            .build();
+//                    Call call = okHttpClient.newCall(request);
+//                    Response response = call.execute();
+//                    String info = response.body().string();
+//                    Log.e("result", info);
 
                     URL url = new URL(ServiceConfig.SERVICE_ROOT + "/userdetails/modify");
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -715,7 +729,6 @@ public class SettingActivity extends AppCompatActivity {
                 //得到图片全路径
                 Uri uri = data.getData();
                 ivHeader.setImageURI(uri);
-
                 ContentResolver contentResolver = getContentResolver();
                 InputStream in = null;
                 try {
@@ -729,10 +742,10 @@ public class SettingActivity extends AppCompatActivity {
         }
     }
 
+
     private File convertBitmapToFile(Bitmap bitmap) {
         try {
-            file = new File(SettingActivity.this.getCacheDir(), "userHeader");
-            file = new File(SettingActivity.this.getCacheDir(), "portrait");
+            file = new File(SettingActivity.this.getCacheDir(),"userHeader");
             file.createNewFile();
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG,0,bos);
@@ -746,7 +759,6 @@ public class SettingActivity extends AppCompatActivity {
         }
         return file;
     }
-
 
     private String loadImagePath(Intent data) {
         //获取返回的数据，这里是android自定义的uri地址

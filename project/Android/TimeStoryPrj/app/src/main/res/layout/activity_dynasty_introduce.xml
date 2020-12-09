@@ -87,8 +87,8 @@
                 android:background="@drawable/corner"
                 android:textColor="@android:color/white"/>
             <Button
-                android:layout_alignParentRight="true"
                 android:layout_marginRight="30dp"
+                android:layout_toLeftOf="@+id/btn_img"
                 android:id="@+id/btn_details"
                 android:layout_width="130dp"
                 android:layout_height="35dp"
@@ -96,6 +96,16 @@
                 android:text="进入详情"
                 android:background="@drawable/corner"
                 android:textColor="@android:color/white"/>
+<!--            <Button-->
+<!--                android:layout_alignParentRight="true"-->
+<!--                android:layout_marginRight="30dp"-->
+<!--                android:layout_width="130dp"-->
+<!--                android:layout_height="35dp"-->
+<!--                android:id="@+id/btn_img"-->
+<!--                android:textSize="20sp"-->
+<!--                android:text="进入全景图"-->
+<!--                android:background="@drawable/corner"-->
+<!--                android:textColor="@android:color/white"/>-->
         </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

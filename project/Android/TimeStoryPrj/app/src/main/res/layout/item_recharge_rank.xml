@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    android:padding="10dp">
+
+    <RelativeLayout
+        android:id="@+id/recharge_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/bg_recharge"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/recharge_integral"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/recharge_img"
+            android:alpha="0.75"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="17sp" />
+
+        <ImageView
+            android:id="@+id/recharge_img"
+            android:layout_width="95dp"
+            android:layout_height="95dp"
+            android:layout_below="@+id/recharge_integral"
+            android:padding="5dp"
+            android:src="@mipmap/recharge" />
+
+        <TextView
+            android:id="@+id/recharge_money"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/recharge_img"
+            android:layout_alignRight="@+id/recharge_img"
+            android:alpha="0.75"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_recharge"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@+id/recharge_container"
+        android:layout_alignLeft="@+id/recharge_container"
+        android:layout_alignRight="@+id/recharge_container"
+        android:layout_marginTop="2dp"
+        android:alpha="0.9"
+        android:background="@drawable/corner"
+        android:focusable="false"
+        android:text="购买"
+        android:textColor="@android:color/white" />
+</RelativeLayout>

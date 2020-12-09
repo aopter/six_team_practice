@@ -33,12 +33,24 @@
             android:textSize="24sp"
             android:textStyle="bold" />
 
+
+
+
+        <RelativeLayout
+            android:layout_below="@+id/problem_title"
+            android:layout_above="@+id/bottom"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+
         <!--    选择题-->
         <LinearLayout
+
+            android:layout_centerVertical="true"
             android:id="@+id/type_xuan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/problem_title"
             android:orientation="vertical">
             <!--    题目/描述-->
             <LinearLayout
@@ -215,10 +227,10 @@
 
         <!--            连线题-->
         <LinearLayout
+            android:layout_centerVertical="true"
             android:id="@+id/type_lian"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/problem_title"
             android:orientation="vertical">
 
             <TextView
@@ -343,12 +355,6 @@
                         android:layout_height="wrap_content" />
                 </FrameLayout>
 
-                <TextView
-                    android:id="@+id/tv_result"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    app:layout_constraintTop_toBottomOf="@+id/fl_link_line" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -356,10 +362,10 @@
         <!--排序题-->
         <!--    题干-->
         <LinearLayout
+            android:layout_centerVertical="true"
             android:id="@+id/type_pai"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/problem_title"
             android:orientation="vertical">
 
             <TextView
@@ -388,12 +394,7 @@
                 android:layout_marginRight="10dp"
                 android:padding="5dp" />
 
-            <Button
-                android:id="@+id/btn_pai_to_check"
-                style="@style/normalBtn"
-                android:layout_gravity="right"
-                android:layout_marginRight="15dp"
-                android:text="提交" />
+
 
 
             <!--        <LinearLayout-->
@@ -502,9 +503,10 @@
             <!--            </LinearLayout>-->
             <!--        </LinearLayout>-->
         </LinearLayout>
-
+        </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/bottom"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_alignParentBottom="true"
@@ -523,6 +525,12 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:text="收藏" />
+            <Button
+                android:id="@+id/btn_pai_to_check"
+                style="@style/normalBtn"
+                android:layout_gravity="right"
+                android:layout_marginRight="15dp"
+                android:text="提交" />
         </LinearLayout>
     </RelativeLayout>
 

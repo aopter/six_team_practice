@@ -47,6 +47,7 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
     private RelativeLayout rlBack;
     private TextView tvDynastyName;
     private TextView tvDynastyIntro;
+    private Button btnImg;
     private Button btnQuestions;
     private Button btnDetails;
     private String dynastyId;
@@ -90,6 +91,7 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
         btnDetails.setOnClickListener(myListener);
         btnQuestions.setOnClickListener(myListener);
         rlBack.setOnClickListener(myListener);
+//        btnImg.setOnClickListener(myListener);
     }
 
     /**
@@ -144,6 +146,7 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
         btnQuestions = findViewById(R.id.btn_questions);
         btnDetails = findViewById(R.id.btn_details);
         rlBack = findViewById(R.id.rl_back);
+//        btnImg = findViewById(R.id.btn_img);
     }
 
     class MyListener implements View.OnClickListener {
@@ -188,6 +191,11 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
                         tvDynastyIntro.setText(dynasty1.getDynastyInfo());
                     }
                     break;
+//                case R.id.btn_img:
+//                    Intent intent2 = new Intent();
+//                    intent2.setClass(DynastyIntroduceActivity.this, AllScreenImgActivity.class);
+//                    startActivity(intent2);
+//                    break;
             }
         }
     }
