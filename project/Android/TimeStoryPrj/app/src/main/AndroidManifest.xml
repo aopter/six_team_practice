@@ -26,6 +26,9 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity android:name=".ShadowLayoutExample"></activity>
+        <activity android:name=".activity.user.UserCardActivity"
+            android:screenOrientation="landscape"/>
+
         <activity
             android:name=".activity.user.UpdateSignatureActivity"
             android:screenOrientation="landscape" />

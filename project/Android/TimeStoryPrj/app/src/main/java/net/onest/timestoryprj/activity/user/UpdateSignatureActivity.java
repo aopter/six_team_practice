@@ -39,6 +39,7 @@ public class UpdateSignatureActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String signature = etSignature.getText().toString().trim();
                 Constant.User.setUserSignature(signature);
+                Constant.UserDetails.setUserSignature(signature);
                 Toast.makeText(getApplicationContext(),"保存成功",Toast.LENGTH_SHORT).show();
             }
         });

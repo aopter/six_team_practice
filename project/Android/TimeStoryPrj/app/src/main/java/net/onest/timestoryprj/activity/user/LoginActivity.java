@@ -60,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
     private String openId;
     private String userSex;
     private String userNickName;
+    private String figureurl;
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -87,7 +88,9 @@ public class LoginActivity extends AppCompatActivity {
         okHttpClient = new OkHttpClient();
         promptDialog = new PromptDialog(this);
         //设置自定义属性
+
         promptDialog.getDefaultBuilder().touchAble(false).round(3).loadingDuration(3000);
+
         findViews();
         gson = new Gson();
         AssetManager assets = getAssets();
@@ -170,6 +173,7 @@ public class LoginActivity extends AppCompatActivity {
                         message.obj = promptDialog;
                         handler.sendMessage(message);
                         Constant.User = gson.fromJson(result, User.class);
+                        Constant.User.setUserAccount(phone);
                         Log.e("user信息",Constant.User.getUserCount()+"");
 
                         //跳转到主页
@@ -237,7 +241,7 @@ public class LoginActivity extends AppCompatActivity {
                             JSONObject obj = new JSONObject(o.toString());
                             userNickName = obj.getString("nickname");
                             userSex = obj.getString("gender");
-                            String figureurl = obj.getString("figureurl_2");
+                            figureurl = obj.getString("figureurl_2");
                             Log.e("昵称",userNickName);
                             upInfoToServer();
                         } catch (JSONException e) {
@@ -288,7 +292,6 @@ public class LoginActivity extends AppCompatActivity {
             public void run() {
                 FormBody.Builder formBuilder = new FormBody.Builder();
                 FormBody formBody = formBuilder.add("userAccount", openId)
-                        .add("userSex",userSex)
                         .add("userNickName",userNickName)
                         .add("flag", 2 + "")
                         .build();
@@ -311,6 +314,8 @@ public class LoginActivity extends AppCompatActivity {
                         intent.setClass(getApplicationContext(),HomepageActivity.class);
                         startActivity(intent);
                         Constant.User = gson.fromJson(result,User.class);
+                        Constant.User.setFlag(1);
+                        Constant.User.setUserHeader(figureurl);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

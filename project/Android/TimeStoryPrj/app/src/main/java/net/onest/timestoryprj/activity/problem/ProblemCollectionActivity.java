@@ -73,7 +73,6 @@ public class ProblemCollectionActivity extends AppCompatActivity {
                         initAdapter();
                         refreshLayout.finishRefresh();
                     } else {//其余是更新的
-//
                         ProblemCollectionActivity.this.runOnUiThread(new Runnable() {
                             public void run() {
                                 RecyclerView.Adapter adapter = recyclerView.getAdapter();
@@ -83,10 +82,21 @@ public class ProblemCollectionActivity extends AppCompatActivity {
                         });
                     }
                     break;
-
             }
         }
     };
+
+    private void initAdapter() {//初始化adapter
+        ProblemCollectionActivity.this.runOnUiThread(new Runnable() {
+            public void run() {
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ProblemCollectionActivity.this);
+                linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                recyclerView.setLayoutManager(linearLayoutManager);
+                ProblemInfoListAdapter problemInfoListAdapter = new ProblemInfoListAdapter(getApplicationContext(), problems);
+                recyclerView.setAdapter(problemInfoListAdapter);
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +134,6 @@ public class ProblemCollectionActivity extends AppCompatActivity {
                     Log.e("onLoadMore: ", cPageCount + "");
                     //请求 通知数据更新
                     loadMore();
-
                 } else {//没有更多数据
                     refreshLayout.finishLoadMoreWithNoMoreData();
 
@@ -177,24 +186,11 @@ public class ProblemCollectionActivity extends AppCompatActivity {
     }
 
 
-    private void initAdapter() {//初始化adapter
-        ProblemCollectionActivity.this.runOnUiThread(new Runnable() {
-            public void run() {
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ProblemCollectionActivity.this);
-                linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                recyclerView.setLayoutManager(linearLayoutManager);
-                ProblemInfoListAdapter problemInfoListAdapter = new ProblemInfoListAdapter(getApplicationContext(), problems);
-                recyclerView.setAdapter(problemInfoListAdapter);
-            }
-        });
-    }
 
 
     private void init() {//获得用户收藏的题目
-
         cPageCount = 1;
         String url = ServiceConfig.SERVICE_ROOT + "/userproblem/count/" + Constant.User.getUserId() + "/" + pageSize + "";
-
         if (!cDynastyId.equals("0")) {
             url = ServiceConfig.SERVICE_ROOT + "/userproblem/count/" + Constant.User.getUserId() + "/" + cDynastyId + "/" + pageSize + "";
         }
@@ -260,7 +256,6 @@ public class ProblemCollectionActivity extends AppCompatActivity {
                         }
                     });
 
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
@@ -271,7 +266,6 @@ public class ProblemCollectionActivity extends AppCompatActivity {
     }
 
     private void initLeftMenu() {
-
 
 //模拟数据（数组，集合都可以，这里使用数组）
         final String[] groups = new String[]{"题目类型", "朝代"};
@@ -346,7 +340,10 @@ public class ProblemCollectionActivity extends AppCompatActivity {
 //                点击
                 return false;
             }
+
         });
     }
+
 }
+
 

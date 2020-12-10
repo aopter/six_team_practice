@@ -15,6 +15,7 @@ public class User {
     private long userExperience;//用户经验点
     private int userCount;//用户积分
     private String userSignature;//用户个性签名
+    private int flag;//用于区分手机号登录和QQ登录
 
     public String getUserSignature() {
         return userSignature;
@@ -133,6 +134,14 @@ public class User {
 
     public void setProblems(Set<UserProblem> problems) {
         this.problems = problems;
+    }
+
+    public int getFlag() {
+        return flag;
+    }
+
+    public void setFlag(int flag) {
+        this.flag = flag;
     }
 
     @Override

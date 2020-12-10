@@ -9,7 +9,6 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_marginLeft="50dp"
         android:layout_height="match_parent">
         <ImageView
             android:id="@+id/iv_header_set"
@@ -22,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="5dp">
+            android:layout_marginLeft="50dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -47,7 +46,7 @@
             android:id="@+id/rela_signature"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="50dp"
             android:layout_marginTop="20dp">
             <TextView
                 android:layout_width="wrap_content"
@@ -73,7 +72,7 @@
             android:id="@+id/rela_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="50dp"
             android:layout_marginTop="20dp">
             <TextView
                 android:layout_width="wrap_content"
@@ -96,9 +95,34 @@
                 android:background="@mipmap/jiantou"/>
         </RelativeLayout>
         <RelativeLayout
+            android:id="@+id/rela_erweima"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="20dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="二维码名片"
+                android:textSize="20sp"/>
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_toLeftOf="@id/iv_jiantou4"
+                android:background="@mipmap/erweima"/>
+
+            <ImageView
+                android:id="@+id/iv_jiantou4"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="45dp"
+                android:background="@mipmap/jiantou"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
             android:layout_marginTop="20dp">
             <TextView
                 android:id="@+id/tv_sex"
@@ -130,6 +154,7 @@
             android:layout_height="50dp"
             android:background="@color/ourDynastyRed"
             android:textSize="22sp"
+            android:textColor="@color/white"
             android:layout_marginTop="20dp"
             android:layout_gravity="right"
             android:layout_marginRight="15dp"

@@ -3,8 +3,12 @@ package net.onest.timestoryprj.activity.user;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
+import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -75,7 +79,7 @@ import okhttp3.Response;
 
 public class SettingActivity extends AppCompatActivity {
 
-    private int userId = Constant.User.getUserId();
+    private int userId;
     private EditText etNiName;
     private EditText etSignature;
     private EditText etPhone;
@@ -98,9 +102,12 @@ public class SettingActivity extends AppCompatActivity {
     private boolean isAndroidQ = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q;
     private Bitmap bitmap;//从相册选择的图片
     private String niName;
-    private String signature;
+    private String signature = "";
     private String sex;
     private String phone;
+    private TextView tvNickName;
+    private TextView tvSignature;
+    private TextView tvNumber;
     private OkHttpClient okHttpClient;
     private Handler handler = new Handler() {
         @Override
@@ -128,8 +135,6 @@ public class SettingActivity extends AppCompatActivity {
         okHttpClient = new OkHttpClient();
         gson = new Gson();
         userId = Constant.User.getUserId();
-
-//        setPersonAttr();
 
         new Thread() {
             @Override
@@ -177,6 +182,7 @@ public class SettingActivity extends AppCompatActivity {
                 }
             }
         }.start();
+
     }
 
     private void setListener() {
@@ -233,26 +239,43 @@ public class SettingActivity extends AppCompatActivity {
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.person_set,null);
         ScrollView scrollView = view.findViewById(R.id.scrollview);
-        ImageView ivHeader = view.findViewById(R.id.iv_header_set);
-        TextView tvNickName = view.findViewById(R.id.tv_niname);
-        TextView tvSignature = view.findViewById(R.id.tv_signature);
-        TextView tvNumber = view.findViewById(R.id.tv_number);
+        ivHeader = view.findViewById(R.id.iv_header_set);
+        tvNickName = view.findViewById(R.id.tv_niname);
+        tvSignature = view.findViewById(R.id.tv_signature);
+        tvNumber = view.findViewById(R.id.tv_number);
         RadioButton btnMan = view.findViewById(R.id.man);
         RadioButton btnWoman = view.findViewById(R.id.woman);
         Button btnSave = view.findViewById(R.id.btn_save);
         RelativeLayout relaNickName = view.findViewById(R.id.rela_nickname);
         RelativeLayout relaSignature = view.findViewById(R.id.rela_signature);
         RelativeLayout relaNumber = view.findViewById(R.id.rela_number);
+        RelativeLayout relaErweima = view.findViewById(R.id.rela_erweima);
         rightLayout.addView(scrollView);
         //头像
-        Glide.with(this)
-                .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
-                .circleCrop()
-                .into(ivHeader);
+        if (Constant.User.getFlag() == 0){
+            if (Constant.User.getUserHeader() == null){
+                Glide.with(this)
+                        .load(R.mipmap.man)
+                        .circleCrop()
+                        .into(ivHeader);
+            }else {
+                Log.e("下载头像",ServiceConfig.SERVICE_ROOT+"/img/"+Constant.User.getUserHeader());
+                Glide.with(this)
+                        .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
+                        .circleCrop()
+                        .into(ivHeader);
+            }
+        }else if (Constant.User.getFlag() == 1){
+            Glide.with(this)
+                    .load(Constant.User.getUserHeader())
+                    .circleCrop()
+                    .into(ivHeader);
+        }
+
         //设置内容
         tvNickName.setText(Constant.UserDetails.getUserNickname());
         tvSignature.setText(Constant.UserDetails.getUserSignature());
-        tvNumber.setText(Constant.UserDetails.getUserNumber());
+        tvNumber.setText(Constant.User.getUserAccount());
         if (Constant.UserDetails.getUserSex().equals("男")){
             btnMan.setChecked(true);
             btnWoman.setChecked(false);
@@ -276,12 +299,20 @@ public class SettingActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        //二维码
+        relaErweima.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),UserCardActivity.class);
+                startActivity(intent);
+            }
+        });
         //保存
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                niName = Constant.UserDetails.getUserNickname();
-                signature = Constant.UserDetails.getUserSignature();
+                niName = Constant.UserDetails.getUserNickname()+"";
+                signature = Constant.UserDetails.getUserSignature()+"";
                 if (btnMan.isChecked()){
                     sex = "男";
                     Constant.UserDetails.setUserSex("男");
@@ -289,7 +320,7 @@ public class SettingActivity extends AppCompatActivity {
                     sex = "女";
                     Constant.UserDetails.setUserSex("女");
                 }
-                phone = Constant.UserDetails.getUserNumber();
+                phone = Constant.User.getUserAccount();
                 upToServer();//上传信息
             }
         });
@@ -297,6 +328,11 @@ public class SettingActivity extends AppCompatActivity {
         ivHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //动态申请权限
+                if(ActivityCompat.checkSelfPermission(SettingActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+                    //请求权限
+                    ActivityCompat.requestPermissions(SettingActivity.this,new String[]{Manifest.permission.CAMERA},1);
+                }
                 PromptButton cancle = new PromptButton("取消", null);
                 cancle.setTextColor(Color.parseColor("#0076ff"));
                 promptDialog.showAlertSheet("", true, cancle, new PromptButton("从相册选择", new PromptButtonListener() {
@@ -315,6 +351,17 @@ public class SettingActivity extends AppCompatActivity {
                 }));
             }
         });
+    }
+
+    /**
+     * bitmap转化为byte数组
+     * @param bm
+     * @return
+     */
+    private byte[] Bitmap2Bytes(Bitmap bm){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.PNG,100,baos);
+        return baos.toByteArray();
     }
 
     /**
@@ -360,6 +407,7 @@ public class SettingActivity extends AppCompatActivity {
         Button btnSub = new Button(getApplicationContext());
         LinearLayout.LayoutParams btnParam = new LinearLayout.LayoutParams(280, 160);
         btnSub.setText("提交");
+        btnSub.setTextColor(getResources().getColor(R.color.white));
         btnSub.setTextSize(20);
         btnSub.setBackgroundResource(R.color.ourDynastyRed);
         btnParam.gravity = Gravity.RIGHT;
@@ -465,7 +513,6 @@ public class SettingActivity extends AppCompatActivity {
                 audioUtil.setMediaVolume(volume1);
             }
         });
-
     }
 
     /**
@@ -531,7 +578,6 @@ public class SettingActivity extends AppCompatActivity {
         } else {
             Glide.with(this)
                     .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
-//                    .load(Constant.User.getUserHeader())
                     .circleCrop()
                     .into(ivHeader);
         }
@@ -604,6 +650,7 @@ public class SettingActivity extends AppCompatActivity {
         Button btnSub = new Button(getApplicationContext());
         btnSub.setText("保存");
         btnSub.setTextSize(20);
+        btnSub.setTextColor(getResources().getColor(R.color.white));
         btnSub.setBackgroundResource(R.color.ourDynastyRed);
         LinearLayout.LayoutParams btnParam = new LinearLayout.LayoutParams(280, 130);
         btnParam.gravity = Gravity.RIGHT;
@@ -629,9 +676,7 @@ public class SettingActivity extends AppCompatActivity {
                     @Override
                     public void onClick(PromptButton button) {
                         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                    intent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(new File(Environment.getExternalStorageDirectory(),"temp.jpg")));
                         startActivityForResult(intent, 2);
-
                     }
                 }));
             }
@@ -705,17 +750,15 @@ public class SettingActivity extends AppCompatActivity {
                 Looper.prepare();
                 Toast.makeText(getApplicationContext(), "头像上传失败", Toast.LENGTH_SHORT).show();
                 Looper.loop();
-
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 Log.e("ok", "成功");
-                Constant.User.setUserHeader("us-" + Constant.User.getUserId() + ".jpg");
+                Constant.User.setUserHeader("user/us-" + Constant.User.getUserId() + ".jpg");
                 Looper.prepare();
                 Toast.makeText(getApplicationContext(), "头像上传成功", Toast.LENGTH_SHORT).show();
                 Looper.loop();
-
             }
         });
     }
@@ -733,7 +776,6 @@ public class SettingActivity extends AppCompatActivity {
                             .add("userNickname",niName)
                             .add("userSignature",signature)
                             .add("userSex",sex)
-                            .add("userNumber",phone)
                             .build();
                     Request request = new Request.Builder()
                             .url(ServiceConfig.SERVICE_ROOT + "/userdetails/modify")
@@ -756,7 +798,6 @@ public class SettingActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),"保存失败",Toast.LENGTH_SHORT).show();
                         Looper.loop();
                     }
-
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (ProtocolException e) {
@@ -785,6 +826,7 @@ public class SettingActivity extends AppCompatActivity {
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
             bitmapHeader = BitmapFactory.decodeFile(picturePath, options);
             convertBitmapToFile(bitmapHeader);
+            upHeaderToServer();
         }else if (requestCode == 2 && resultCode == RESULT_OK && null != data){
             File picture = new File(Environment.getExternalStorageDirectory()+"/temp.jpg");
             Bundle extras = data.getExtras();
@@ -797,11 +839,11 @@ public class SettingActivity extends AppCompatActivity {
                         .circleCrop()
                         .into(ivHeader);
                 convertBitmapToFile(photo);
+                upHeaderToServer();
             }
         } else if (requestCode == 100) {
             //从相册返回数据
             if (data != null) {
-
                 //得到图片全路径
                 Uri uri = data.getData();
                 ivHeader.setImageURI(uri);
@@ -851,6 +893,16 @@ public class SettingActivity extends AppCompatActivity {
         Log.e("path的值", path);
         cursor.close();
         return path;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (tvNickName != null && tvNumber != null && tvSignature != null){
+            tvNickName.setText(Constant.UserDetails.getUserNickname());
+            tvSignature.setText(Constant.UserDetails.getUserSignature());
+            tvNumber.setText(Constant.User.getUserAccount());
+        }
     }
 }
 
