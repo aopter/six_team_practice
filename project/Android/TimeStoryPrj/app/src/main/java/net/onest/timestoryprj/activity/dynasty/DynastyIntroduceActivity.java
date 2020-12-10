@@ -210,8 +210,19 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
     @OnClick(R.id.btn_pre)
     void backToLastPage(){finish();}
 
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (null == textUtil){
+            return;
+        }else{
+            if (textUtil.isFlag() == false){
+                Log.e("false", "false");
+                textUtil.setFlag(true);
+            }else{
+                Log.e("true", "true");
+                tvDynastyIntro.setText(dynasty1.getDynastyInfo());
+            }
+        }
+    }
 }

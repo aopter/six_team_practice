@@ -12,8 +12,9 @@
         android:id="@+id/ll_title"
         android:layout_alignParentTop="true"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@mipmap/bg_home_title"
+        android:layout_height="80dp"
+        android:background="#fcf5e9"
+        android:alpha="0.7"
         android:orientation="horizontal"
         android:padding="5dp">
 
@@ -21,7 +22,7 @@
             android:id="@+id/rl_title"
             android:gravity="center_vertical"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="80dp"
             android:orientation="horizontal">
 
             <!-- 头像、名称-->
@@ -160,13 +161,13 @@
         android:layout_below="@+id/ll_title"
         android:id="@+id/hsv_dynasty"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@mipmap/bg_home_content">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@mipmap/timg1">
 
             <LinearLayout
                 android:id="@+id/ll_layout1"
@@ -178,6 +179,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_below="@id/ll_layout1"
                 android:id="@+id/ll_layout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -185,6 +187,12 @@
                 android:orientation="horizontal">
 
             </LinearLayout>
-        </LinearLayout>
+        </RelativeLayout>
     </HorizontalScrollView>
+    <net.onest.timestoryprj.customview.FlowerView
+        android:id="@+id/flowerview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:alpha="1">
+    </net.onest.timestoryprj.customview.FlowerView>
 </RelativeLayout>

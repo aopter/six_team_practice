@@ -182,4 +182,11 @@ public class DetailsEventActivity extends AppCompatActivity {
         hlvTimeline = findViewById(R.id.hlv_timeline);
         tvBigWord = findViewById(R.id.tv_big_word);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e("onResume", "加载");
+        initData();
+    }
 }

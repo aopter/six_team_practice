@@ -178,6 +178,7 @@ public class EventDialogActivity extends AppCompatActivity {
 //                                    tv.setText(txtList[count]);
                                     TextUtil textUtil1 = new TextUtil(tv, txtList[count], 50);
                                     tv.setTextColor(Color.BLACK);
+                                    tv.setPadding(0,10,0,0);
                                     tv.setTypeface(typeface1);
                                     tv.setPadding(th,tp,th,0);
                                     if (count % 2 != 0) {
@@ -206,10 +207,8 @@ public class EventDialogActivity extends AppCompatActivity {
                                     if (count == txtList.length-1) {
                                         llDialogLayout.setOnClickListener(null);
                                         long experience = Constant.User.getUserExperience();
-                                        Log.i("ex1", String.valueOf(Constant.User.getUserExperience()));
                                         experience = experience + 15;
                                         Constant.User.setUserExperience(experience);
-                                        Log.i("ex", String.valueOf(Constant.User.getUserExperience()));
                                         addUnlockIncidents();
                                         isPass(dynastyId);
                                     }

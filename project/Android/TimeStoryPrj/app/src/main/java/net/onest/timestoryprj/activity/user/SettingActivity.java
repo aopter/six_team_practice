@@ -249,6 +249,7 @@ public class SettingActivity extends AppCompatActivity {
         RelativeLayout relaNickName = view.findViewById(R.id.rela_nickname);
         RelativeLayout relaSignature = view.findViewById(R.id.rela_signature);
         RelativeLayout relaNumber = view.findViewById(R.id.rela_number);
+<<<<<<< Updated upstream
         RelativeLayout relaErweima = view.findViewById(R.id.rela_erweima);
         rightLayout.addView(scrollView);
         //头像
@@ -272,6 +273,22 @@ public class SettingActivity extends AppCompatActivity {
                     .into(ivHeader);
         }
 
+=======
+//        RelativeLayout relaErweima = view.findViewById(R.id.rela_erweima);
+        rightLayout.addView(scrollView);
+        //头像
+        if (Constant.User.getUserHeader() == null){
+            Glide.with(this)
+                    .load(R.mipmap.man)
+                    .circleCrop()
+                    .into(ivHeader);
+        }else {
+            Glide.with(this)
+                    .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
+                    .circleCrop()
+                    .into(ivHeader);
+        }
+>>>>>>> Stashed changes
         //设置内容
         tvNickName.setText(Constant.UserDetails.getUserNickname());
         tvSignature.setText(Constant.UserDetails.getUserSignature());
@@ -300,6 +317,7 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
         //二维码
+<<<<<<< Updated upstream
         relaErweima.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -307,6 +325,15 @@ public class SettingActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+=======
+//        relaErweima.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                Intent intent = new Intent(getApplicationContext(),UserCardActivity.class);
+//
+//            }
+//        });
+>>>>>>> Stashed changes
         //保存
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -581,7 +608,10 @@ public class SettingActivity extends AppCompatActivity {
                     .circleCrop()
                     .into(ivHeader);
         }
-
+        Glide.with(this)
+                .load(R.mipmap.man)
+                .circleCrop()
+                .into(ivHeader);
         ivHeader.setLayoutParams(ivParam);
         linearLayout1.addView(ivHeader);
         rightLayout.addView(linearLayout1);
@@ -831,14 +861,19 @@ public class SettingActivity extends AppCompatActivity {
             File picture = new File(Environment.getExternalStorageDirectory()+"/temp.jpg");
             Bundle extras = data.getExtras();
             if (extras != null) {
-                Bitmap photo = extras.getParcelable("data");
+//                Bitmap photo = extras.getParcelable("data");
+                bitmapHeader = extras.getParcelable("data");
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                photo.compress(Bitmap.CompressFormat.JPEG,75,stream);
+                bitmapHeader.compress(Bitmap.CompressFormat.JPEG,75,stream);
                 Glide.with(getApplicationContext())
-                        .load(photo)
+                        .load(bitmapHeader)
                         .circleCrop()
                         .into(ivHeader);
+<<<<<<< Updated upstream
                 convertBitmapToFile(photo);
+=======
+                convertBitmapToFile(bitmapHeader);
+>>>>>>> Stashed changes
                 upHeaderToServer();
             }
         } else if (requestCode == 100) {
@@ -866,7 +901,7 @@ public class SettingActivity extends AppCompatActivity {
             file = new File(SettingActivity.this.getCacheDir(), "portrait");
             file.createNewFile();
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG,0,bos);
+            bitmap.compress(Bitmap.CompressFormat.JPEG,0,bos);
             byte[] bitmapdata = bos.toByteArray();
             FileOutputStream fos = new FileOutputStream(file);
             fos.write(bitmapdata);
@@ -894,6 +929,7 @@ public class SettingActivity extends AppCompatActivity {
         cursor.close();
         return path;
     }
+<<<<<<< Updated upstream
 
     @Override
     protected void onResume() {
@@ -908,4 +944,16 @@ public class SettingActivity extends AppCompatActivity {
 
 
 
+=======
+>>>>>>> Stashed changes
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (tvNickName != null && tvNumber != null && tvSignature != null){
+            tvNickName.setText(Constant.UserDetails.getUserNickname());
+            tvSignature.setText(Constant.UserDetails.getUserSignature());
+            tvNumber.setText(Constant.User.getUserAccount());
+        }
+    }
+}

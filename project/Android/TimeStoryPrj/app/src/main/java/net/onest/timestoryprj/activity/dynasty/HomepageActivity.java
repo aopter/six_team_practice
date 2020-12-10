@@ -6,16 +6,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -37,6 +40,7 @@ import net.onest.timestoryprj.activity.user.SettingActivity;
 import net.onest.timestoryprj.activity.user.UserCenterActivity;
 import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
+import net.onest.timestoryprj.customview.FlowerView;
 import net.onest.timestoryprj.entity.Dynasty;
 import net.onest.timestoryprj.entity.User;
 import net.onest.timestoryprj.entity.UserStatus;
@@ -56,11 +60,10 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-
-
+import java.util.Timer;
+import java.util.TimerTask;
 public class HomepageActivity extends AppCompatActivity {
     public static MediaPlayer mediaPlayer;
-    private TextView tvName;
     private TextView tvLevel;
     private TextView tvPoint;
     private Button btnPlus;
@@ -80,16 +83,15 @@ public class HomepageActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private User user;
     private RelativeLayout relativeProgress;
-
-//    /** Called when the activity is first created. */
-//    private FlowerView mFlowerView;
-//    // 屏幕宽度
-//    public static int screenWidth;
-//    // 屏幕高度
-//    public static int screenHeight;
-//    Timer myTimer = null;
-//    TimerTask mTask = null;
-//    private static final int SNOW_BLOCK = 2;
+    private HorizontalScrollView hsvDynasty;
+    /** Called when the activity is first created. */
+    private FlowerView mFlowerView;
+    // 屏幕宽度
+    public static int screenWidth;
+    // 屏幕高度
+    public static int screenHeight;
+    Timer myTimer = null;
+    TimerTask mTask = null;
     private Handler handler = new Handler() {
         @RequiresApi(api = Build.VERSION_CODES.M)
         @Override
@@ -98,28 +100,27 @@ public class HomepageActivity extends AppCompatActivity {
                 case 1:
                     dynasties1 = (List<Dynasty>) msg.obj;
                     for (int i = 0; i < dynasties1.size(); i++) {
-//                        LinearLayout ll = new LinearLayout(getApplicationContext());
-//                        ImageView iv = new ImageView(getApplicationContext());
-//                        iv.setImageResource(R.mipmap.redflag);
                         TextView tv = new TextView(getApplicationContext());
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                                300,
-                                300
+                                400,
+                                400
                         );
+                        tv.setBackgroundResource(R.mipmap.shanhui);
                         tv.setGravity(Gravity.CENTER);
                         tv.setText(dynasties1.get(i).getDynastyName());
-                        tv.setTextColor(getColor(R.color.ourDynastyRed));
+                        tv.setTextColor(Color.argb((float) 0.7, 0, 0, 0));
                         tv.setTypeface(typeface);
-                        tv.setTextSize(25);
+                        tv.setAlpha((float) 0.7);
+                        tv.setTextSize(20);
                         if (i % 2 == 0) {
-                            params.setMargins(80, 30, 0, 0);
+                            params.setMargins(330, 0, 0, 0);
                             tv.setLayoutParams(params);
                             llLayout1.addView(tv);
                         } else {
                             if (i == 1) {
-                                params.setMargins(200, 30, 0, 0);
+                                params.setMargins(580, 0, 0, 0);
                             } else {
-                                params.setMargins(90, 30, 0, 0);
+                                params.setMargins(330, 0, 0, 0);
                             }
                             tv.setLayoutParams(params);
 //                            ll.addView(iv);
@@ -131,7 +132,7 @@ public class HomepageActivity extends AppCompatActivity {
                         for (int j = 0; j < Constant.UnlockDynasty.size(); j++) {
                             unlockDynastyIds.add(Constant.UnlockDynasty.get(j).getDynastyId());
                             if (unlockDynastyIds.contains(dynasties1.get(i).getDynastyId().toString())) {
-                                tv.setBackgroundResource(R.mipmap.fff);
+                                tv.setBackgroundResource(R.mipmap.shan);
                             }
                         }
                         tv.setOnClickListener(new View.OnClickListener() {
@@ -153,9 +154,9 @@ public class HomepageActivity extends AppCompatActivity {
                         });
                     }
                     break;
-//                case 2:
-//                    mFlowerView.inva();
-//                    break;
+                case 2:
+                    mFlowerView.inva();
+                    break;
             }
         }
     };
@@ -168,7 +169,7 @@ public class HomepageActivity extends AppCompatActivity {
         findViews();
         loadImgWithPlaceHolders();
         setListener();
-//        initSnow();
+        initSnow();
         //初始化gson
         initGson();
         initMediaPlayer();
@@ -177,6 +178,30 @@ public class HomepageActivity extends AppCompatActivity {
         initData();
         initProgress();
         Log.e("user", Constant.User.toString());
+    }
+
+    private void initSnow() {
+        mFlowerView = findViewById(R.id.flowerview);
+        screenWidth = getWindow().getWindowManager().getDefaultDisplay()
+                .getWidth();
+        screenHeight = getWindow().getWindowManager().getDefaultDisplay()
+                .getHeight();
+        DisplayMetrics dis = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dis);
+        float de = dis.density;
+        mFlowerView.setWH(screenWidth, screenHeight, de);
+        mFlowerView.loadFlower();
+        mFlowerView.addRect();
+        myTimer = new Timer();
+        mTask = new TimerTask() {
+            @Override
+            public void run() {
+                Message msg = new Message();
+                msg.what = 2;
+                handler.sendMessage(msg);
+            }
+        };
+        myTimer.schedule(mTask, 3000, 10);
     }
 
     /**
@@ -189,16 +214,13 @@ public class HomepageActivity extends AppCompatActivity {
                 .setDateFormat("yy:mm:dd")
                 .create();
     }
-
     /**
      * 初始化首页数据
      */
     private void initData() {
         getUserInfo();
         downloadUnlockDynastyList();
-//        initProgress();
     }
-
     /**
      * 初始化进度条
      */
@@ -251,16 +273,13 @@ public class HomepageActivity extends AppCompatActivity {
             }
         }.start();
     }
-
     /**
      * 通过跳转获得用户信息
      */
     private void getUserInfo() {
-//        tvPoint.setText((int) Constant.User.getUserExperience());
+        tvPoint.setText(Constant.User.getUserCount() + "");
         tvLevel.setText(Constant.User.getUserStatus().getStatusName());
-//        tvName.setText(Constant.User.getUserNickname());
     }
-
     /**
      * 从服务器端获得朝代列表
      */
@@ -294,8 +313,6 @@ public class HomepageActivity extends AppCompatActivity {
             }
         }.start();
     }
-
-
     private void setListener() {
         MyListener myListener = new MyListener();
         btnVoice.setOnClickListener(myListener);
@@ -323,6 +340,7 @@ public class HomepageActivity extends AppCompatActivity {
         llLayout2 = findViewById(R.id.ll_layout2);
         progressBar = findViewById(R.id.experience_progress);
         relativeProgress = findViewById(R.id.relative_progress);
+        hsvDynasty = findViewById(R.id.hsv_dynasty);
     }
 
     /**
@@ -395,14 +413,14 @@ public class HomepageActivity extends AppCompatActivity {
                     if (count == 1) {
                         TextView tvExerperience = new TextView(getApplicationContext());
                         int we = DensityUtil.dip2px(getApplicationContext(), 70);
-                        int he = DensityUtil.dip2px(getApplicationContext(), 70);
+                        int he = DensityUtil.dip2px(getApplicationContext(), 40);
                         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(we, he);
                         params.topMargin = 5;
                         tvExerperience.setPadding(20,0,20,0);
-                        tvExerperience.setText("玩家经验:"+'\n'+Constant.User.getUserExperience()+"/"+Constant.User.getUserStatus().getStatusExperienceTop());
-                        tvExerperience.setTextColor(getResources().getColor(R.color.white));
+                        tvExerperience.setText(""+Constant.User.getUserExperience()+"/"+Constant.User.getUserStatus().getStatusExperienceTop());
+                        tvExerperience.setTextColor(getResources().getColor(R.color.ourDynastyRed));
                         tvExerperience.setTextSize(12);
-                        tvExerperience.setBackgroundResource(R.color.ourDynastyRed);
+                        tvExerperience.setBackgroundResource(R.mipmap.button);
                         params.addRule(RelativeLayout.BELOW, R.id.tv_level);
                         tvExerperience.setLayoutParams(params);
                         relativeProgress.addView(tvExerperience);
