@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ShadowLayoutExample">
+
+    <com.lijiankun24.shadowlayout.ShadowLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        app:shadowColor="#88880000"
+        app:shadowRadius="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="嘻嘻嘻嘻" />
+    </com.lijiankun24.shadowlayout.ShadowLayout>
+
+    <com.lijiankun24.shadowlayout.ShadowLayout
+        android:id="@+id/shadowLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp"
+        app:shadowColor="#66000000"
+        app:shadowDx="0dp"
+        app:shadowDy="0dp"
+        app:shadowRadius="10dp"
+        app:shadowSide="all">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@android:color/white"
+            android:contentDescription="@null"
+            android:src="@mipmap/card_bg" />
+    </com.lijiankun24.shadowlayout.ShadowLayout>
+</LinearLayout>

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:alpha="0.8"
-    android:background="@mipmap/bird"
+    android:background="@mipmap/bg_card_story"
     android:orientation="vertical"
     android:padding="20dp">
 
