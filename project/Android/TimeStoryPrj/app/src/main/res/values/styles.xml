@@ -88,6 +88,11 @@
     </style>
 
 
+    <style name="ivOptionCheck">
+        <item name="android:layout_width">25dp</item>
+        <item name="android:layout_height">25dp</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
     <style name="tv_title_lk">
         <item name="android:padding">10dp</item>
         <item name="android:textStyle">bold</item>

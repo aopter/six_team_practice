@@ -55,9 +55,7 @@
             <TextView
                 android:text="举人"
                 android:id="@+id/tv_level"
-                style="@style/normalBtn"
-                android:textColor="@android:color/white" />
-
+                style="@style/normalBtn"/>
         </LinearLayout>
 
         <RelativeLayout
@@ -88,9 +86,7 @@
             <Button
                 android:id="@+id/btn_card"
                 style="@style/normalBtn"
-                android:text="抽卡"
-                android:textColor="@android:color/white" />
-
+                android:text="抽卡"/>
         </LinearLayout>
 
 
@@ -106,9 +102,7 @@
             <Button
                 android:id="@+id/btn_go_dynasty"
                 style="@style/normalBtn"
-                android:text="出行"
-                android:textColor="@android:color/white" />
-
+                android:text="出行"/>
         </LinearLayout>
 
 
@@ -120,21 +114,18 @@
             android:layout_marginRight="20dp">
 
 
-            <RelativeLayout
-                android:paddingRight="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center">
+<!--            <RelativeLayout-->
+<!--                android:paddingRight="10dp"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center">-->
 
 
                 <Button
                     android:id="@+id/btn_set"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="10dp"
-                    android:background="@mipmap/settings" />
-            </RelativeLayout>
+                    style="@style/normalBtn"
+                    android:text="设置" />
+<!--            </RelativeLayout>-->
         </LinearLayout>
     </LinearLayout>
 
@@ -224,12 +215,9 @@
             android:layout_marginRight="60dp">
 
             <Button
-                android:layout_width="wrap_content"
                 android:id="@+id/btn_my_card"
                 style="@style/normalBtn"
-                android:text="我的卡片"
-                android:textColor="@android:color/white" />
-
+                android:text="我的卡片"/>
         </LinearLayout>
 
         <!-- 我的收藏 -->
@@ -241,7 +229,6 @@
             android:layout_gravity="center_vertical"
             android:layout_marginRight="20dp">
             <Button
-                android:layout_width="wrap_content"
                 android:id="@+id/btn_my_collections"
                 style="@style/normalBtn"
                 android:text="我的收藏" />

@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.tinytongtong.tinyutils.LogUtils;
 
 import net.onest.timestoryprj.R;
@@ -43,6 +44,9 @@ import net.onest.timestoryprj.entity.problem.ProblemCheckAnswer;
 import net.onest.timestoryprj.entity.problem.ProblemLinkLine;
 import net.onest.timestoryprj.entity.problem.ProblemSelect;
 import net.onest.timestoryprj.entity.problem.ProblemgetOrder;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -73,6 +77,9 @@ public class ProblemInfoActivity extends AppCompatActivity {
     LinkLineView linkLineView;
     @BindView(R.id.fl_link_line)
     FrameLayout flLinkLine;
+
+    @BindViews({R.id.iv_optionA_check, R.id.iv_optionB_check, R.id.iv_optionC_check, R.id.iv_optionD_check})
+    ImageView[] imageViewsCkeck;
 
     @BindView(R.id.type_xuan)
     LinearLayout llTypeXuan;
@@ -153,17 +160,12 @@ public class ProblemInfoActivity extends AppCompatActivity {
                     tvOptionsXuan[1].setText(problemSelect.getOptionB());
                     tvOptionsXuan[2].setText(problemSelect.getOptionC());
                     tvOptionsXuan[3].setText(problemSelect.getOptionD());
-                    String url = ServiceConfig.SERVICE_ROOT + "/picture/download/";
+                    String url = ServiceConfig.SERVICE_ROOT + "/img/";
                     LogUtils.d(url + problemSelect.getOptionApic());
-                    try {
-                        Glide.with(ProblemInfoActivity.this).load(new URL(url + problemSelect.getOptionApic())).into(ivOptionsXuan[0]);
-                        Glide.with(ProblemInfoActivity.this).load(new URL(url + problemSelect.getOptionBpic())).into(ivOptionsXuan[1]);
-                        Glide.with(ProblemInfoActivity.this).load(new URL(url + problemSelect.getOptionCpic())).into(ivOptionsXuan[2]);
-                        Glide.with(ProblemInfoActivity.this).load(new URL(url + problemSelect.getOptionDpic())).into(ivOptionsXuan[3]);
-                    } catch (MalformedURLException e) {
-                        e.printStackTrace();
-                    }
-
+                    Glide.with(getApplicationContext()).load(url + problemSelect.getOptionApic()).into(ivOptionsXuan[0]);
+                    Glide.with(getApplicationContext()).load(url + problemSelect.getOptionBpic()).into(ivOptionsXuan[1]);
+                    Glide.with(getApplicationContext()).load(url + problemSelect.getOptionCpic()).into(ivOptionsXuan[2]);
+                    Glide.with(getApplicationContext()).load(url + problemSelect.getOptionDpic()).into(ivOptionsXuan[3]);
                     break;
                 case 2://连线
                     btnToCheck.setVisibility(View.GONE);
@@ -265,11 +267,18 @@ public class ProblemInfoActivity extends AppCompatActivity {
                     break;
                 case 6://是否收藏
                     String isCollection = (String) msg.obj;
-                    if (isCollection.equals("true")) {
-                        btnProblemSave.setText("已收藏");
-                    } else {
-                        btnProblemSave.setText("收藏");
+                    try {
+                        JSONObject jsonObject = new JSONObject(isCollection);
+                        String result = jsonObject.getString("result");
+                        if (isCollection.equals("true")) {
+                            btnProblemSave.setText("已收藏");
+                        } else {
+                            btnProblemSave.setText("收藏");
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
+
                     break;
 
                 case 7:
@@ -279,15 +288,23 @@ public class ProblemInfoActivity extends AppCompatActivity {
                     LogUtils.d("结果", problemCheckAnswer.toString());
                     Constant.User.setUserExperience(problemCheckAnswer.getUserExperience());
                     Constant.User.setUserCount(problemCheckAnswer.getUserCount());
-                   if(problemCheckAnswer.getUnlock().equals("true")){
-                       //成功
-                       UserUnlockDynasty userUnlockDynasty = new UserUnlockDynasty();
-                       userUnlockDynasty.setUserId(Constant.User.getUserId());
-                       userUnlockDynasty.setDynastyId(dynastyId);
-                       userUnlockDynasty.setDynastyName("秦朝");//
-                       Constant.UnlockDynasty.add(userUnlockDynasty);
-                   }
+                    if (problemCheckAnswer.getUnlock().equals("true")) {
+                        //成功
+                        UserUnlockDynasty userUnlockDynasty = new UserUnlockDynasty();
+                        userUnlockDynasty.setUserId(Constant.User.getUserId());
+                        userUnlockDynasty.setDynastyId(dynastyId);
+                        userUnlockDynasty.setDynastyName("秦朝");//
+                        Constant.UnlockDynasty.add(userUnlockDynasty);
+                    }
                     break;
+                case 8:
+                    for (int i = 0; i < 4; ++i) {//清空图片
+                        imageViewsCkeck[i].setImageResource(0);
+                    }
+                    break;
+                case 9:{
+                    promptDialog.dismissImmediately();
+                }
             }
         }
     };
@@ -322,7 +339,7 @@ public class ProblemInfoActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         promptDialog = new PromptDialog(this);
-        promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
+        promptDialog.getDefaultBuilder().touchAble(false).round(3).loadingDuration(3000);
 //        动画
         animationin = AnimationUtils.loadAnimation(
                 ProblemInfoActivity.this, R.anim.anim_in_right);
@@ -464,7 +481,6 @@ public class ProblemInfoActivity extends AppCompatActivity {
      */
     private void getProblem(int type) {
         btnAnswer.setVisibility(View.INVISIBLE);
-
         LogUtils.d("长度suoyou", myProblems.size() + "");
         isGetAnswer = false;
         String url = ServiceConfig.SERVICE_ROOT + "/problem/replenish/" + type + "/" + dynastyId + "";
@@ -473,6 +489,7 @@ public class ProblemInfoActivity extends AppCompatActivity {
         //构造请求类
         Request request = builder.build();
         final Call call = okHttpClient.newCall(request);
+        promptDialog.showLoading("正在加载");
 //        请求
         call.enqueue(new Callback() {
             @Override
@@ -483,6 +500,9 @@ public class ProblemInfoActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                Message msgDis = new Message();
+                msgDis.arg1 = 9;
+                handler.sendMessage(msgDis);
                 String jsonData = response.body().string();
                 Problem problem = gson.fromJson(jsonData, Problem.class);
 //                查看是否已经收藏
@@ -491,6 +511,9 @@ public class ProblemInfoActivity extends AppCompatActivity {
                 String[] contents1 = problem.getProblemContent().split(Constant.DELIMITER);
                 switch (type) {
                     case 1:
+                        Message msgIv = new Message();
+                        msgIv.arg1 = 8;
+                        handler.sendMessage(msgIv);
                         problemSelect = new ProblemSelect();
                         problemSelect.setDynastyId(dynastyId);
                         problemSelect.setProblemType(1);
@@ -692,17 +715,42 @@ public class ProblemInfoActivity extends AppCompatActivity {
                 break;
             case R.id.optionA:
 //                判断正误的方法
-                checkUserXuanAnswer(problemSelect.getOptionA());
+                boolean b = checkUserXuanAnswer(problemSelect.getOptionA());
+                if (b) {
+                    imageViewsCkeck[0].setImageResource(R.mipmap.p_yes);
+                } else {
+                    //显示错误 正确显示正确
+                    getCheckImage(0);
+                }
+
                 break;
             case R.id.optionB:
-                checkUserXuanAnswer(problemSelect.getOptionB());
+                boolean b2 = checkUserXuanAnswer(problemSelect.getOptionB());
+                if (b2) {
+                    imageViewsCkeck[1].setImageResource(R.mipmap.p_yes);
+                } else {
+                    //显示错误 正确显示正确
+                    getCheckImage(1);
+                }
                 break;
             case R.id.optionC:
-                checkUserXuanAnswer(problemSelect.getOptionC());
+                boolean b3 = checkUserXuanAnswer(problemSelect.getOptionC());
+                if (b3) {
+                    imageViewsCkeck[2].setImageResource(R.mipmap.p_yes);
+                } else {
+                    //显示错误 正确显示正确
+                    getCheckImage(2);
+                }
 
                 break;
             case R.id.optionD:
-                checkUserXuanAnswer(problemSelect.getOptionD());
+                boolean b4 = checkUserXuanAnswer(problemSelect.getOptionD());
+                if (b4) {
+                    imageViewsCkeck[3].setImageResource(R.mipmap.p_yes);
+                } else {
+                    //显示错误 正确显示正确
+                    getCheckImage(3);
+                }
                 break;
             case R.id.btn_pai_to_check:
                 if (isGetAnswer) {
@@ -727,17 +775,39 @@ public class ProblemInfoActivity extends AppCompatActivity {
         }
     }
 
-    //    检查正误
-    private void checkUserXuanAnswer(String option) {
-        if (isGetAnswer) {
-            return;
+    private void getCheckImage(int index) {
+        imageViewsCkeck[index].setImageResource(R.mipmap.p_no);
+        if (problemSelect.getProblemKey().equals(problemSelect.getOptionA())) {
+            imageViewsCkeck[0].setImageResource(R.mipmap.p_yes);
         }
-        isGetAnswer = true;
+        if (problemSelect.getProblemKey().equals(problemSelect.getOptionB())) {
+            imageViewsCkeck[1].setImageResource(R.mipmap.p_yes);
+        }
+        if (problemSelect.getProblemKey().equals(problemSelect.getOptionC())) {
+            imageViewsCkeck[2].setImageResource(R.mipmap.p_yes);
+        }
+        if (problemSelect.getProblemKey().equals(problemSelect.getOptionD())) {
+            imageViewsCkeck[3].setImageResource(R.mipmap.p_yes);
+        }
+
+
+    }
+
+    //    检查正误
+    private boolean checkUserXuanAnswer(String option) {
+        if (isGetAnswer) {
+            return false;
+        }
         if (problemSelect.getProblemKey().equals(option) && !isGetAnswer) {
             UpProblemAnwer(problemSelect.getProblemId(), 1);
+            isGetAnswer = true;
+            return true;
         } else {
             UpProblemAnwer(problemSelect.getProblemId(), 2);
+            isGetAnswer = true;
+            return false;
         }
+
     }
 
 //    选择题点击事件
@@ -813,6 +883,9 @@ public class ProblemInfoActivity extends AppCompatActivity {
         Problem problem = myProblems.get(cIndex);
         switch (problem.getProblemType()) {
             case 1://选择
+                Message msgIv = new Message();
+                msgIv.arg1 = 8;
+                handler.sendMessage(msgIv);
                 if (cType == 4) {
                     llTypeLian.setVisibility(View.INVISIBLE);
                     llTypePai.setVisibility(View.INVISIBLE);
@@ -916,7 +989,7 @@ public class ProblemInfoActivity extends AppCompatActivity {
                 promptDialog.showInfo("很遗憾，回答错误~");
                 break;
         }
-        if(before.equals("info")){
+        if (before.equals("info")) {
             return;//收藏页不上传
         }
 //        上传服务器
