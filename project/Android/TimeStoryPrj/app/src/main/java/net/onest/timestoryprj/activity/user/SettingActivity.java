@@ -272,10 +272,6 @@ public class SettingActivity extends AppCompatActivity {
                     .circleCrop()
                     .into(ivHeader);
         }
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
         //设置内容
         tvNickName.setText(Constant.UserDetails.getUserNickname());
         tvSignature.setText(Constant.UserDetails.getUserSignature());
@@ -311,10 +307,6 @@ public class SettingActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
         //保存
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -849,11 +841,7 @@ public class SettingActivity extends AppCompatActivity {
                         .load(photo)
                         .circleCrop()
                         .into(ivHeader);
-<<<<<<< Updated upstream
-                convertBitmapToFile(photo);
-=======
                 convertBitmapToFile(bitmapHeader);
->>>>>>> Stashed changes
                 upHeaderToServer();
             }
         } else if (requestCode == 100) {

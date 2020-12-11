@@ -120,7 +120,7 @@ public class HomepageActivity extends AppCompatActivity {
                             llLayout1.addView(tv);
                         } else {
                             if (i == 1) {
-                                params.setMargins(580, 0, 0, 0);
+                                params.setMargins(650, 0, 0, 0);
                             } else {
                                 params.setMargins(330, 0, 0, 0);
                             }
@@ -281,6 +281,7 @@ public class HomepageActivity extends AppCompatActivity {
     private void getUserInfo() {
         initProgress();
         loadImgWithPlaceHolders();
+        Log.e("经验", String.valueOf(Constant.User.getUserExperience()));
         tvPoint.setText(Constant.User.getUserCount() + "");
         tvLevel.setText(Constant.User.getUserStatus().getStatusName());
     }
@@ -459,6 +460,7 @@ public class HomepageActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        setListener();
         getUserInfo();
     }
 }
