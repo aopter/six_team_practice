@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -272,20 +273,6 @@ public class SettingActivity extends AppCompatActivity {
                     .into(ivHeader);
         }
 
-////        RelativeLayout relaErweima = view.findViewById(R.id.rela_erweima);
-//        rightLayout.addView(scrollView);
-//        //头像
-//        if (Constant.User.getUserHeader() == null){
-//            Glide.with(this)
-//                    .load(R.mipmap.man)
-//                    .circleCrop()
-//                    .into(ivHeader);
-//        }else {
-//            Glide.with(this)
-//                    .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
-//                    .circleCrop()
-//                    .into(ivHeader);
-//        }
         //设置内容
         tvNickName.setText(Constant.UserDetails.getUserNickname());
         tvSignature.setText(Constant.UserDetails.getUserSignature());
@@ -321,13 +308,7 @@ public class SettingActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-//        relaErweima.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-////                Intent intent = new Intent(getApplicationContext(),UserCardActivity.class);
-//
-//            }
-//        });
+
         //保存
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -352,7 +333,7 @@ public class SettingActivity extends AppCompatActivity {
                 //动态申请权限
                 if(ActivityCompat.checkSelfPermission(SettingActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
                     //请求权限
-                    ActivityCompat.requestPermissions(SettingActivity.this,new String[]{Manifest.permission.CAMERA},1);
+                    ActivityCompat.requestPermissions(SettingActivity.this,new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
                 }
                 PromptButton cancle = new PromptButton("取消", null);
                 cancle.setTextColor(Color.parseColor("#0076ff"));
@@ -855,16 +836,14 @@ public class SettingActivity extends AppCompatActivity {
             File picture = new File(Environment.getExternalStorageDirectory()+"/temp.jpg");
             Bundle extras = data.getExtras();
             if (extras != null) {
-//                Bitmap photo = extras.getParcelable("data");
-                bitmapHeader = extras.getParcelable("data");
+                Bitmap photo = extras.getParcelable("data");
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bitmapHeader.compress(Bitmap.CompressFormat.JPEG,75,stream);
+                photo.compress(Bitmap.CompressFormat.JPEG,75,stream);
                 Glide.with(getApplicationContext())
-                        .load(bitmapHeader)
+                        .load(photo)
                         .circleCrop()
                         .into(ivHeader);
-//                convertBitmapToFile(photo);
-                convertBitmapToFile(bitmapHeader);
+                convertBitmapToFile(photo);
                 upHeaderToServer();
             }
         } else if (requestCode == 100) {
@@ -892,7 +871,7 @@ public class SettingActivity extends AppCompatActivity {
             file = new File(SettingActivity.this.getCacheDir(), "portrait");
             file.createNewFile();
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG,0,bos);
+            bitmap.compress(Bitmap.CompressFormat.PNG,0,bos);
             byte[] bitmapdata = bos.toByteArray();
             FileOutputStream fos = new FileOutputStream(file);
             fos.write(bitmapdata);
@@ -920,8 +899,6 @@ public class SettingActivity extends AppCompatActivity {
         cursor.close();
         return path;
     }
-
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -932,3 +909,4 @@ public class SettingActivity extends AppCompatActivity {
         }
     }
 }
+

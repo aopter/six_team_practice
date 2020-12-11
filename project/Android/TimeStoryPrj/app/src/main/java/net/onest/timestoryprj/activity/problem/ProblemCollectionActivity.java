@@ -136,7 +136,6 @@ public class ProblemCollectionActivity extends AppCompatActivity {
                     loadMore();
                 } else {//没有更多数据
                     refreshLayout.finishLoadMoreWithNoMoreData();
-
                 }
             }
 
@@ -184,9 +183,6 @@ public class ProblemCollectionActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
 
     private void init() {//获得用户收藏的题目
         cPageCount = 1;
@@ -345,5 +341,4 @@ public class ProblemCollectionActivity extends AppCompatActivity {
     }
 
 }
-
 
