@@ -108,7 +108,9 @@ public class HomepageActivity extends AppCompatActivity {
                         tv.setBackgroundResource(R.mipmap.shanhui);
                         tv.setGravity(Gravity.CENTER);
                         tv.setText(dynasties1.get(i).getDynastyName());
-                        tv.setTextColor(Color.argb((float) 0.7, 0, 0, 0));
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            tv.setTextColor(Color.argb((float) 0.7, 0, 0, 0));
+                        }
                         tv.setTypeface(typeface);
                         tv.setAlpha((float) 0.7);
                         tv.setTextSize(20);

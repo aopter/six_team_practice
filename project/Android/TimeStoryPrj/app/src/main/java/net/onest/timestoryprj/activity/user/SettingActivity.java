@@ -249,7 +249,6 @@ public class SettingActivity extends AppCompatActivity {
         RelativeLayout relaNickName = view.findViewById(R.id.rela_nickname);
         RelativeLayout relaSignature = view.findViewById(R.id.rela_signature);
         RelativeLayout relaNumber = view.findViewById(R.id.rela_number);
-<<<<<<< Updated upstream
         RelativeLayout relaErweima = view.findViewById(R.id.rela_erweima);
         rightLayout.addView(scrollView);
         //头像
@@ -273,22 +272,20 @@ public class SettingActivity extends AppCompatActivity {
                     .into(ivHeader);
         }
 
-=======
-//        RelativeLayout relaErweima = view.findViewById(R.id.rela_erweima);
-        rightLayout.addView(scrollView);
-        //头像
-        if (Constant.User.getUserHeader() == null){
-            Glide.with(this)
-                    .load(R.mipmap.man)
-                    .circleCrop()
-                    .into(ivHeader);
-        }else {
-            Glide.with(this)
-                    .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
-                    .circleCrop()
-                    .into(ivHeader);
-        }
->>>>>>> Stashed changes
+////        RelativeLayout relaErweima = view.findViewById(R.id.rela_erweima);
+//        rightLayout.addView(scrollView);
+//        //头像
+//        if (Constant.User.getUserHeader() == null){
+//            Glide.with(this)
+//                    .load(R.mipmap.man)
+//                    .circleCrop()
+//                    .into(ivHeader);
+//        }else {
+//            Glide.with(this)
+//                    .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
+//                    .circleCrop()
+//                    .into(ivHeader);
+//        }
         //设置内容
         tvNickName.setText(Constant.UserDetails.getUserNickname());
         tvSignature.setText(Constant.UserDetails.getUserSignature());
@@ -317,7 +314,6 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
         //二维码
-<<<<<<< Updated upstream
         relaErweima.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -325,7 +321,6 @@ public class SettingActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-=======
 //        relaErweima.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -333,7 +328,6 @@ public class SettingActivity extends AppCompatActivity {
 //
 //            }
 //        });
->>>>>>> Stashed changes
         //保存
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -869,11 +863,8 @@ public class SettingActivity extends AppCompatActivity {
                         .load(bitmapHeader)
                         .circleCrop()
                         .into(ivHeader);
-<<<<<<< Updated upstream
-                convertBitmapToFile(photo);
-=======
+//                convertBitmapToFile(photo);
                 convertBitmapToFile(bitmapHeader);
->>>>>>> Stashed changes
                 upHeaderToServer();
             }
         } else if (requestCode == 100) {
@@ -929,23 +920,7 @@ public class SettingActivity extends AppCompatActivity {
         cursor.close();
         return path;
     }
-<<<<<<< Updated upstream
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (tvNickName != null && tvNumber != null && tvSignature != null){
-            tvNickName.setText(Constant.UserDetails.getUserNickname());
-            tvSignature.setText(Constant.UserDetails.getUserSignature());
-            tvNumber.setText(Constant.User.getUserAccount());
-        }
-    }
-}
-
-
-
-=======
->>>>>>> Stashed changes
 
     @Override
     protected void onResume() {
