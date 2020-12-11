@@ -9,9 +9,11 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -55,6 +57,7 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
     private Gson gson;
     private TextUtil textUtil;
     private Dynasty dynasty1;
+//    private ScrollView svIntroWord;
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -92,6 +95,8 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
         btnQuestions.setOnClickListener(myListener);
         rlBack.setOnClickListener(myListener);
         btnImg.setOnClickListener(myListener);
+//        svIntroWord.setOnClickListener(myListener);
+        tvDynastyIntro.setOnClickListener(myListener);
     }
 
     /**
@@ -142,6 +147,8 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
 
     private void findViews() {
         tvDynastyIntro = findViewById(R.id.tv_dynasty_intro);
+        tvDynastyIntro.setMovementMethod(ScrollingMovementMethod.getInstance());
+        tvDynastyIntro.setClickable(true);
         tvDynastyName = findViewById(R.id.tv_dynasty_name);
         btnQuestions = findViewById(R.id.btn_questions);
         btnDetails = findViewById(R.id.btn_details);
@@ -153,28 +160,15 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View view) {
+            view.getParent().requestDisallowInterceptTouchEvent(true);
             switch (view.getId()) {
                 case R.id.btn_questions:
-                    if (textUtil.isFlag() == false){
-                        Log.e("false", "false");
-                        textUtil.setFlag(true);
-                    }else{
-                        Log.e("true", "true");
-                        tvDynastyIntro.setText(dynasty1.getDynastyInfo());
-                    }
                     Intent intent = new Intent(DynastyIntroduceActivity.this, SelectProblemTypeActivity.class);
                     intent.putExtra("dynastyId1",dynastyId);//朝代
                     startActivity(intent);
                     overridePendingTransition(R.anim.anim_in_right,R.anim.anim_out_left);
                     break;
                 case R.id.btn_details:
-                    if (textUtil.isFlag() == false){
-                        Log.e("false", "false");
-                        textUtil.setFlag(true);
-                    }else{
-                        Log.e("true", "true");
-                        tvDynastyIntro.setText(dynasty1.getDynastyInfo());
-                    }
                     Intent intent1 = new Intent();
                     intent1.setClass(DynastyIntroduceActivity.this, DetailsEventActivity.class);
                     intent1.putExtra("dynastyName1", tvDynastyName.getText());
@@ -191,14 +185,15 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
                         tvDynastyIntro.setText(dynasty1.getDynastyInfo());
                     }
                     break;
-                case R.id.btn_img:
+                case R.id.tv_dynasty_intro:
+                    Log.e("点击", "TextView");
                     if (textUtil.isFlag() == false){
-                        Log.e("false", "false");
                         textUtil.setFlag(true);
                     }else{
-                        Log.e("true", "true");
                         tvDynastyIntro.setText(dynasty1.getDynastyInfo());
                     }
+                    break;
+                case R.id.btn_img:
                     Intent intent2 = new Intent();
                     intent2.setClass(DynastyIntroduceActivity.this, AllScreenImgActivity.class);
                     startActivity(intent2);
@@ -209,6 +204,18 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
     }
     @OnClick(R.id.btn_pre)
     void backToLastPage(){finish();}
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (textUtil != null){
+            if (textUtil.isFlag() == false){
+                textUtil.setFlag(true);
+            }else{
+                tvDynastyIntro.setText(dynasty1.getDynastyInfo());
+            }
+        }
+    }
 
     @Override
     protected void onDestroy() {
