@@ -3,39 +3,41 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:paddingLeft="10dp"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingLeft="10dp">
 
     <LinearLayout
-        android:orientation="vertical"
+        android:id="@+id/rank_detail"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:id="@+id/rank_detail">
+        android:orientation="vertical">
+
         <LinearLayout
-            android:gravity="center"
-            android:layout_marginTop="5dp"
-            android:padding="2dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="2dp">
+
             <RelativeLayout
                 android:layout_width="20dp"
                 android:layout_height="wrap_content">
+
                 <ImageView
-                    android:layout_centerInParent="true"
+                    android:id="@+id/rank_img"
                     android:layout_width="20dp"
                     android:layout_height="15dp"
-                    android:id="@+id/rank_img"
-                    android:src="@mipmap/rank_f"
-                    />
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/rank_f" />
 
                 <TextView
-                    android:layout_centerInParent="true"
                     android:id="@+id/rank_rank"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="3dp"
+                    android:layout_centerInParent="true"
                     android:gravity="center"
+                    android:paddingTop="3dp"
                     android:text="1"
                     android:textColor="#fff"
                     android:textSize="8sp" />
@@ -44,65 +46,71 @@
             </RelativeLayout>
 
             <TextView
-                android:gravity="bottom"
-                android:textColor="@color/ourDynastyRed"
                 android:id="@+id/tv_user_level"
-                android:textSize="10sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="举人"/>
+                android:gravity="bottom"
+                android:text="举人"
+                android:textColor="@color/ourDynastyRed"
+                android:textSize="10sp" />
         </LinearLayout>
 
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="5dp"
+        android:layout_width="35dp"
+        android:layout_height="match_parent"
         android:gravity="center"
-        android:layout_width="30dp"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
+        android:orientation="vertical">
+
         <ImageView
             android:id="@+id/rank_header"
-            android:layout_width="25dp"
-            android:layout_height="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:src="@mipmap/man" />
     </LinearLayout>
 
     <LinearLayout
-        android:gravity="center"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
         <LinearLayout
-            android:orientation="horizontal"
+            android:layout_marginLeft="2dp"
+            android:layout_marginBottom="5dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/rank_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="10sp"
-                android:text="小美"/>
+                android:text="小美"
+                android:textSize="10sp" />
+
             <LinearLayout
-                android:gravity="right"
-                android:paddingRight="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:paddingRight="10dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="经验："
-                    android:textSize="10sp"/>
+                    android:textSize="10sp" />
+
                 <TextView
-                    android:gravity="right"
                     android:id="@+id/rank_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="10sp"
-                    android:text="55555"/>
+                    android:gravity="right"
+                    android:text="55555"
+                    android:textSize="10sp" />
 
             </LinearLayout>
 
@@ -113,8 +121,8 @@
             android:id="@+id/rank_sign"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="9sp"
-            android:text="打不死的小美"/>
+            android:text="打不死的小美"
+            android:textSize="9sp" />
 
     </LinearLayout>
 

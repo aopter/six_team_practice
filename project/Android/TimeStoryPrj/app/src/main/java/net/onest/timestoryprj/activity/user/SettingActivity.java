@@ -272,7 +272,6 @@ public class SettingActivity extends AppCompatActivity {
                     .circleCrop()
                     .into(ivHeader);
         }
-
         //设置内容
         tvNickName.setText(Constant.UserDetails.getUserNickname());
         tvSignature.setText(Constant.UserDetails.getUserSignature());
@@ -308,7 +307,6 @@ public class SettingActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
         //保存
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -843,7 +841,7 @@ public class SettingActivity extends AppCompatActivity {
                         .load(photo)
                         .circleCrop()
                         .into(ivHeader);
-                convertBitmapToFile(photo);
+                convertBitmapToFile(bitmapHeader);
                 upHeaderToServer();
             }
         } else if (requestCode == 100) {

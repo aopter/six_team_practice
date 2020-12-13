@@ -57,25 +57,6 @@
                 android:id="@+id/tv_level"
                 style="@style/normalBtn"/>
         </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="83dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="20dp">
-
-            <TextView
-                android:drawableLeft="@mipmap/coun_icon_l"
-                android:text="8888"
-                android:id="@+id/tv_point"
-                style="@style/normalBtn"/>
-            <Button
-                android:layout_alignParentRight="true"
-                android:id="@+id/btn_plus"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:background="@mipmap/plus"/>
-        </RelativeLayout>
         <!-- 抽卡 -->
         <LinearLayout
             android:layout_width="wrap_content"
@@ -105,7 +86,41 @@
                 android:text="出行"/>
         </LinearLayout>
 
+        <!-- 积分 -->
+        <RelativeLayout
+            android:id="@+id/rl_point"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="20dp">
 
+
+            <TextView
+                android:paddingLeft="23dp"
+                android:gravity="center"
+                android:paddingRight="20dp"
+                android:id="@+id/tv_point"
+                style="@style/normalBtnT"
+                android:text="200" />
+
+            <Button
+                android:alpha="0.6"
+                android:layout_marginRight="7dp"
+                android:layout_alignRight="@+id/tv_point"
+                android:layout_centerVertical="true"
+                android:id="@+id/btn_plus"
+                android:layout_width="16dp"
+                android:layout_height="17dp"
+                android:background="@mipmap/plust" />
+            <TextView
+                android:textSize="10sp"
+                android:layout_marginLeft="8dp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/ourDynastyRed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="积分:  "/>
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"

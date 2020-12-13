@@ -118,7 +118,7 @@ public class EventDialogActivity extends AppCompatActivity {
                                 int width = DensityUtil.dip2px(getApplicationContext(), 250);
                                 int height = DensityUtil.dip2px(getApplicationContext(), 80);
                                 int th = DensityUtil.dip2px(getApplicationContext(), 20);
-                                int tp = DensityUtil.dip2px(getApplicationContext(), 10);
+                                int tp = DensityUtil.dip2px(getApplicationContext(), 15);
                                 int ml = DensityUtil.dip2px(getApplicationContext(), 30);
                                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
 //                                tv.setText(txtList[count]);
@@ -152,11 +152,6 @@ public class EventDialogActivity extends AppCompatActivity {
                                 rlRelativeLayout.addView(tv);
                                 if (count == txtList.length-1) {
                                     llDialogLayout.setOnClickListener(null);
-                                    long experience = Constant.User.getUserExperience();
-                                    Log.i("ex1", String.valueOf(Constant.User.getUserExperience()));
-                                    experience = experience + 15;
-                                    Constant.User.setUserExperience(experience);
-                                    Log.i("ex", String.valueOf(Constant.User.getUserExperience()));
                                     addUnlockIncidents();
                                     isPass(dynastyId);
                                 }
@@ -172,13 +167,12 @@ public class EventDialogActivity extends AppCompatActivity {
                                     int width = DensityUtil.dip2px(getApplicationContext(), 250);
                                     int height = DensityUtil.dip2px(getApplicationContext(), 80);
                                     int th = DensityUtil.dip2px(getApplicationContext(), 20);
-                                    int tp = DensityUtil.dip2px(getApplicationContext(), 10);
+                                    int tp = DensityUtil.dip2px(getApplicationContext(), 15);
                                     int ml = DensityUtil.dip2px(getApplicationContext(), 30);
                                     RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
 //                                    tv.setText(txtList[count]);
                                     TextUtil textUtil1 = new TextUtil(tv, txtList[count], 50);
                                     tv.setTextColor(Color.BLACK);
-                                    tv.setPadding(0,10,0,0);
                                     tv.setTypeface(typeface1);
                                     tv.setPadding(th,tp,th,0);
                                     if (count % 2 != 0) {
@@ -206,9 +200,6 @@ public class EventDialogActivity extends AppCompatActivity {
                                     rlRelativeLayout.addView(tv);
                                     if (count == txtList.length-1) {
                                         llDialogLayout.setOnClickListener(null);
-                                        long experience = Constant.User.getUserExperience();
-                                        experience = experience + 15;
-                                        Constant.User.setUserExperience(experience);
                                         addUnlockIncidents();
                                         isPass(dynastyId);
                                     }
@@ -240,14 +231,18 @@ public class EventDialogActivity extends AppCompatActivity {
                     JSONObject json1 = new JSONObject(json);
                     String isAdd = json1.getString("result");
                     if (isAdd.equals("true")){
+                        long experience = Constant.User.getUserExperience();
+                        experience = experience + 15;
+                        Constant.User.setUserExperience(experience);
+                        Log.e("ex", String.valueOf(Constant.User.getUserExperience()));
                         Looper.prepare();
                         Toast.makeText(getApplicationContext(), "您已看完此事件", Toast.LENGTH_LONG).show();
                         Looper.loop();
-                        UserUnlockDynastyIncident unlockIncident = new UserUnlockDynastyIncident();
-                        unlockIncident.setIncidentId(incident.getIncidentId());
-                        unlockIncident.setIncidentName(incident.getIncidentName());
-                        unlockIncident.setIncidentPicture("incident/tang-" + incidentId + ".png");
-                        Constant.UnlockDynastyIncident.add(unlockIncident);
+//                        UserUnlockDynastyIncident unlockIncident = new UserUnlockDynastyIncident();
+//                        unlockIncident.setIncidentId(incident.getIncidentId());
+//                        unlockIncident.setIncidentName(incident.getIncidentName());
+//                        unlockIncident.setIncidentPicture("incident/tang-" + incidentId + ".png");
+//                        Constant.UnlockDynastyIncident.add(unlockIncident);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -312,12 +307,6 @@ public class EventDialogActivity extends AppCompatActivity {
                 .into(ivDialog2Img);
         Glide.with(this).load(ServiceConfig.SERVICE_ROOT + "/img/incident/tang-other.png")
                 .into(ivDialogIntroImg);
-//        Glide.with(this).load(getDrawable(R.mipmap.dialog1))
-//                .into(ivDialog1Img);
-//        Glide.with(this).load(getDrawable(R.mipmap.dialog2))
-//                .into(ivDialog2Img);
-//        Glide.with(this).load(ServiceConfig.SERVICE_ROOT + "/img/incident/tang-other.png")
-//                .into(ivDialogIntroImg);
     }
 
     /**

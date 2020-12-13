@@ -17,14 +17,27 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.tinytongtong.tinyutils.LogUtils;
 
 import net.onest.timestoryprj.R;
+import net.onest.timestoryprj.constant.Constant;
+import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.entity.User;
+import net.onest.timestoryprj.entity.UserStatus;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class UserRankListAdapter extends BaseAdapter {
 
@@ -40,14 +53,14 @@ public class UserRankListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        if(null!=users)
+        if (null != users)
             return users.size();
         return 0;
     }
 
     @Override
     public Object getItem(int i) {
-        if(null!=users)
+        if (null != users)
             return users.get(i);
         return null;
     }
@@ -71,17 +84,23 @@ public class UserRankListAdapter extends BaseAdapter {
 
         User user = users.get(position);
 //        holder.rankLevel.setText(users.get(position).getUserStatus().getStatusName());
-        if(null==user.getUserHeader())
-            holder.rankHeader.setImageResource(R.mipmap.test_header);
-        else {
-            Glide.with(mContext).load(user.getUserHeader()).into( holder.rankHeader);
+        if (null == user.getUserHeader()) {
+            Glide.with(mContext).load(R.mipmap.man).circleCrop().into(holder.rankHeader);
+
+        } else {
+            Glide.with(mContext)
+                    .load(ServiceConfig.SERVICE_ROOT + "/img/" + user.getUserHeader())
+                    .circleCrop()
+                    .into(holder.rankHeader);
         }
         holder.rankName.setText(user.getUserNickname());
         holder.rankSign.setText(user.getUserSignature());
-        holder.rankCount.setText(user.getUserExperience()+"");
+        holder.rankCount.setText(user.getUserExperience() + "");
+//        获取用户地位
+        holder.rankLevel.setText(getStatusName((int) user.getUserExperience()));
 
 //        更改图片
-        switch (position){
+        switch (position) {
             case 0:
                 holder.rankImage.setImageResource(R.mipmap.rank_f);
                 break;
@@ -95,12 +114,32 @@ public class UserRankListAdapter extends BaseAdapter {
                 holder.rankImage.setImageResource(R.mipmap.rank_e);
                 break;
         }
-        holder.rank.setText(position+1+"");
+        holder.rank.setText(position + 1 + "");
         // etc...
         return view;
     }
 
 
+    /**
+     * 判断
+     *
+     * @param userExpression
+     * @return
+     */
+    public  String getStatusName(int userExpression) {
+        if (Constant.userStatuses.size() < 1) {
+            return "秀才";
+        } else {
+            for (int i = 0; i < Constant.userStatuses.size(); ++i) {
+                LogUtils.d(Constant.userStatuses.get(i).getStatusName());
+                //判断
+                if (Constant.userStatuses.get(i).getStatusExperienceLow() <= userExpression && userExpression < Constant.userStatuses.get(i).getStatusExperienceTop()) {
+                    return Constant.userStatuses.get(i).getStatusName();
+                }
+            }
+            return "秀才";
+        }
+    }
 //    public static Bitmap drawTextToBitmap(Context gContext,
 //                                          int gResId,
 //                                          String text) {
@@ -156,7 +195,7 @@ public class UserRankListAdapter extends BaseAdapter {
 //    }
 
 
-        static class ViewHolder {
+    static class ViewHolder {
         @BindView(R.id.rank_header)
         ImageView rankHeader;
         @BindView(R.id.tv_user_level)

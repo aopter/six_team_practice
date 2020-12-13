@@ -120,7 +120,7 @@ public class HomepageActivity extends AppCompatActivity {
                             llLayout1.addView(tv);
                         } else {
                             if (i == 1) {
-                                params.setMargins(580, 0, 0, 0);
+                                params.setMargins(650, 0, 0, 0);
                             } else {
                                 params.setMargins(330, 0, 0, 0);
                             }
@@ -169,7 +169,6 @@ public class HomepageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
         findViews();
-        loadImgWithPlaceHolders();
         setListener();
         initSnow();
         //初始化gson
@@ -178,7 +177,6 @@ public class HomepageActivity extends AppCompatActivity {
         AssetManager assets = getAssets();
         typeface = Typeface.createFromAsset(assets, "fonts/custom_fontt.ttf");
         initData();
-        initProgress();
         Log.e("user", Constant.User.toString());
     }
 
@@ -219,6 +217,7 @@ public class HomepageActivity extends AppCompatActivity {
     /**
      * 初始化首页数据
      */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void initData() {
         getUserInfo();
         downloadUnlockDynastyList();
@@ -278,7 +277,11 @@ public class HomepageActivity extends AppCompatActivity {
     /**
      * 通过跳转获得用户信息
      */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void getUserInfo() {
+        initProgress();
+        loadImgWithPlaceHolders();
+        Log.e("经验", String.valueOf(Constant.User.getUserExperience()));
         tvPoint.setText(Constant.User.getUserCount() + "");
         tvLevel.setText(Constant.User.getUserStatus().getStatusName());
     }
@@ -350,15 +353,22 @@ public class HomepageActivity extends AppCompatActivity {
      */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void loadImgWithPlaceHolders() {
-        Log.e("ss", String.valueOf(getDrawable(R.mipmap.man)));
-        if (Constant.User.getUserHeader() == null) {
+        //头像
+        if (Constant.User.getFlag() == 0){
+            if (Constant.User.getUserHeader() == null){
+                Glide.with(this)
+                        .load(R.mipmap.man)
+                        .circleCrop()
+                        .into(ivHeader);
+            }else {
+                Glide.with(this)
+                        .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
+                        .circleCrop()
+                        .into(ivHeader);
+            }
+        }else if (Constant.User.getFlag() == 1){
             Glide.with(this)
-                    .load(getDrawable(R.mipmap.man))
-                    .circleCrop()
-                    .into(ivHeader);
-        }else{
-            Glide.with(this)
-                    .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
+                    .load(Constant.User.getUserHeader())
                     .circleCrop()
                     .into(ivHeader);
         }
@@ -418,16 +428,20 @@ public class HomepageActivity extends AppCompatActivity {
                         int he = DensityUtil.dip2px(getApplicationContext(), 40);
                         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(we, he);
                         params.topMargin = 5;
-                        tvExerperience.setPadding(20,0,20,0);
-                        tvExerperience.setText(""+Constant.User.getUserExperience()+"/"+Constant.User.getUserStatus().getStatusExperienceTop());
+                        tvExerperience.setPadding(20, 0, 20, 0);
+                        tvExerperience.setText("" + Constant.User.getUserExperience() + "/" + Constant.User.getUserStatus().getStatusExperienceTop());
                         tvExerperience.setTextColor(getResources().getColor(R.color.ourDynastyRed));
                         tvExerperience.setTextSize(12);
                         tvExerperience.setBackgroundResource(R.mipmap.button);
                         params.addRule(RelativeLayout.BELOW, R.id.tv_level);
                         tvExerperience.setLayoutParams(params);
+                        tvExerperience.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                relativeProgress.removeViewAt(1);
+                            }
+                        });
                         relativeProgress.addView(tvExerperience);
-                    } else if (count == 2) {
-                        relativeProgress.removeViewAt(1);
                     }
                     break;
             }
@@ -449,4 +463,11 @@ public class HomepageActivity extends AppCompatActivity {
         mediaPlayer.setLooping(true);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setListener();
+        getUserInfo();
+    }
 }

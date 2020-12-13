@@ -270,7 +270,7 @@ public class ProblemInfoActivity extends AppCompatActivity {
                     try {
                         JSONObject jsonObject = new JSONObject(isCollection);
                         String result = jsonObject.getString("result");
-                        if (isCollection.equals("true")) {
+                        if (result.equals("true")) {
                             btnProblemSave.setText("已收藏");
                         } else {
                             btnProblemSave.setText("收藏");
@@ -281,7 +281,7 @@ public class ProblemInfoActivity extends AppCompatActivity {
 
                     break;
 
-                case 7:
+                case 7://上传结果
                     String re = (String) msg.obj;
                     ProblemCheckAnswer problemCheckAnswer = gson.fromJson(re, ProblemCheckAnswer.class);
 
@@ -995,7 +995,7 @@ public class ProblemInfoActivity extends AppCompatActivity {
 //        上传服务器
 //        /problem/answer/{userId}/{dynastyId}/{problemId}/{result}
         String url = ServiceConfig.SERVICE_ROOT + "/problem/answer/" +
-                Constant.User.getUserId() + "/" + dynastyId + "/" + cProblem.getProblemId() + "/" + result;
+                Constant.User.getUserId() + "/" + dynastyId + "/" + problemId + "/" + result;
         Log.e("urlSaveProblem: ", url);
         Request.Builder builder = new Request.Builder();
         builder.url(url);
@@ -1023,274 +1023,6 @@ public class ProblemInfoActivity extends AppCompatActivity {
 
     }
 
-//    private void getBeforeOrNextProblem(Problem problem) {
-//        LogUtils.d("类型", problem.getProblemType() + "");
-//        switch (problem.getProblemType()) {
-//            case 1://选择
-//                LogUtils.d("收到的选择");
-//                if (null == problemSelect) {
-//                    problemSelect = new ProblemSelect();
-//                }
-//                problemSelect = (ProblemSelect) problem;
-//                LogUtils.d("收到的选择", problemSelect.toString());
-//
-//                Message message = new Message();
-//                message.arg1 = 1;
-//                handler.sendMessage(message);
-//                break;
-//            case 2:
-//                problemLinkLine = (ProblemLinkLine) problem;
-//                Message message2 = new Message();
-//                message2.arg1 = 2;
-//                handler.sendMessage(message2);
-//                break;
-//            case 3:
-//                problemgetOrder = (ProblemgetOrder) problem;
-//                LogUtils.d("排序接收到的", problemgetOrder.toString());
-//                Message message1 = new Message();
-//                message1.arg1 = 3;
-//                handler.sendMessage(message1);
-//                break;
-//        }
-//    }
-
-
-    //    private void doResult(int action) {
-//        switch (action) {
-//            case LEFT:
-//                LogUtils.d("before",before);
-//                cIndex += 1;
-//                switch (before) {
-//                    case "types":
-//                        if (myProblems.size() > cIndex) {
-//                            Problem problem = myProblems.get(cIndex);
-//                            getBeforeOrNextProblem(problem);//显示
-//                            return;
-//                        } else {
-//                            LogUtils.d("获取题目");
-//                            LogUtils.d(cType + "aaa");
-//                            if (cType == 4) {
-//                                getRandomProblem();
-//                            } else {
-//                                getProblem(cProblem.getProblemType());
-//                            }
-//                        }
-//                        animationin.setDuration(600);
-//                        reContainer.startAnimation(animationin);
-//                        break;
-//                    case "info":
-//                        LogUtils.d(Constant.userProblems.size()+"长度");
-//                        LogUtils.d(cIndex+"index");
-//                        if (Constant.userProblems.size() > cIndex) {
-//                            Problem problem = Constant.userProblems.get(cIndex);
-//                            LogUtils.d(problem.toString());
-//                            llTypeLian.setVisibility(View.INVISIBLE);
-//                            llTypePai.setVisibility(View.INVISIBLE);
-//                            llTypeXuan.setVisibility(View.INVISIBLE);
-//                            switch (problem.getProblemType()){//显示题目 下一道
-//                                case 1:
-//                                    llTypeXuan.setVisibility(View.VISIBLE);
-//                                    problemSelect = (ProblemSelect) problem;
-//                                    Message message = new Message();
-//                                    message.arg1 = 1;
-//                                    handler.sendMessage(message);
-//                                    break;
-//                                case 2:
-//                                    llTypeLian.setVisibility(View.VISIBLE);
-//                                    LogUtils.d("zhuanhuanqian:",problem.toString());
-//                                    problemLinkLine = (ProblemLinkLine) problem;
-//                                    LogUtils.d("zhuanhuan后:",problem.toString());
-//
-//                                    String problemKey = problemLinkLine.getProblemKey();
-//                                    String[] qNum = problemKey.split(Constant.DELIMITER);
-//                                    List<LinkDataBean> linkDataBeans = new ArrayList<>();
-//                                    for (int i = 0; i < 4; i++) {
-//                                        LinkDataBean linkDataBean = new LinkDataBean();
-//                                        switch (i){
-//                                            case 0:
-//                                                linkDataBean.setContent(problemLinkLine.getOptionA());
-//                                                break;
-//                                            case 1:
-//                                                linkDataBean.setContent(problemLinkLine.getOptionB());
-//
-//                                                break;
-//                                            case 2:
-//                                                linkDataBean.setContent(problemLinkLine.getOptionC());
-//
-//                                                break;
-//                                            case 3:
-//                                                linkDataBean.setContent(problemLinkLine.getOptionD());
-//
-//                                                break;
-//                                        }
-//                                        linkDataBean.setQ_num(Integer.parseInt(qNum[i]));
-//                                        linkDataBean.setRow(i + 1);
-//                                        linkDataBean.setCol(0);
-//                                        linkDataBeans.add(linkDataBean);
-//                                    }
-//
-//                                    for (int i = 0; i < 4; i++) {
-//                                        LinkDataBean linkDataBean = new LinkDataBean();
-//                                        switch (i){
-//                                            case 0:
-//                                                linkDataBean.setContent(problemLinkLine.getOptionAdes());
-//                                                break;
-//                                            case 1:
-//                                                linkDataBean.setContent(problemLinkLine.getOptionBdes());
-//
-//                                                break;
-//                                            case 2:
-//                                                linkDataBean.setContent(problemLinkLine.getOptionCdes());
-//
-//                                                break;
-//                                            case 3:
-//                                                linkDataBean.setContent(problemLinkLine.getOptionDdes());
-//
-//                                                break;
-//                                        }
-//                                        linkDataBean.setQ_num(Integer.parseInt(qNum[i + 4]));
-//                                        linkDataBean.setRow(i + 1);
-//                                        linkDataBean.setCol(1);
-//                                        linkDataBeans.add(linkDataBean);
-//                                    }
-//                                    LogUtils.d("zhuanhuan后:",problemLinkLine.toString());
-//                                    Message message2 = new Message();
-//                                    message2.arg1 = 2;
-//                                    message2.obj = linkDataBeans;
-//                                    handler.sendMessage(message2);
-//                                    break;
-//                                case 3:
-//                                    llTypePai.setVisibility(View.VISIBLE);
-//                                    problemgetOrder = new ProblemgetOrder();
-//                                    problemgetOrder = (ProblemgetOrder) problem;
-//                                    Message message1 = new Message();
-//                                    message1.arg1 = 3;
-//                                    handler.sendMessage(message1);
-//                                    break;
-//                            }
-//                            animationin.setDuration(600);
-//                            reContainer.startAnimation(animationin);
-//                            return;
-//                        } else {
-//                            LogUtils.d("获取题目");
-//                            LogUtils.d(cType + "aaa");
-//                            //获取收藏的题目
-//                        }
-//                        break;
-//                }
-//                break;
-//
-//            case RIGHT://shang一道题目
-//                cIndex -= 1;
-//                switch (before) {
-//                    case "types":
-//                        if (cIndex < 0) {
-////                    提示不能滑动
-//                            Toast.makeText(getApplicationContext(), "不能再滑啦", Toast.LENGTH_SHORT).show();
-//                            return;
-//                        } else {
-////                    显示
-//                            Problem problem = myProblems.get(cIndex);
-//                            getBeforeOrNextProblem(problem);
-//                            animationout.setDuration(600);
-//                            reContainer.startAnimation(animationout);
-//                        }
-//                        break;
-//                    case "info":
-//                        if (cIndex < 0) {
-////                    提示不能滑动
-//                            Toast.makeText(getApplicationContext(), "不能再滑啦", Toast.LENGTH_SHORT).show();
-//                            return;
-//                        } else {
-////                    显示
-//                            llTypeLian.setVisibility(View.INVISIBLE);
-//                            llTypePai.setVisibility(View.INVISIBLE);
-//                            llTypeXuan.setVisibility(View.INVISIBLE);
-//                            Problem problem = Constant.userProblems.get(cIndex);
-//                            switch (problem.getProblemType()){
-//                                case 1:
-//                                    llTypeXuan.setVisibility(View.VISIBLE);
-//                                    problemSelect = (ProblemSelect) problem;
-//                                    Message message = new Message();
-//                                    message.arg1 = 1;
-//                                    handler.sendMessage(message);
-//                                    break;
-//                                case 2:
-//                                    llTypeLian.setVisibility(View.VISIBLE);
-//                                    problemLinkLine = (ProblemLinkLine) problem;
-//                                    String problemKey = problemLinkLine.getProblemKey();
-//                                    String[] qNum = problemKey.split(Constant.DELIMITER);
-//                                    List<LinkDataBean> linkDataBeans = new ArrayList<>();
-//                                    for (int i = 0; i < 4; i++) {
-//                                        LinkDataBean linkDataBean = new LinkDataBean();
-//                                        switch (i){
-//                                            case 0:
-//                                                linkDataBean.setContent(problemLinkLine.getOptionA());
-//                                                break;
-//                                            case 1:
-//                                                linkDataBean.setContent(problemLinkLine.getOptionB());
-//
-//                                                break;
-//                                            case 2:
-//                                                linkDataBean.setContent(problemLinkLine.getOptionC());
-//
-//                                                break;
-//                                            case 3:
-//                                                linkDataBean.setContent(problemLinkLine.getOptionD());
-//
-//                                                break;
-//                                        }
-//                                        linkDataBean.setQ_num(Integer.parseInt(qNum[i]));
-//                                        linkDataBean.setRow(i + 1);
-//                                        linkDataBean.setCol(0);
-//                                        linkDataBeans.add(linkDataBean);
-//                                    }
-//
-//                                    for (int i = 0; i < 4; i++) {
-//                                        LinkDataBean linkDataBean = new LinkDataBean();
-//                                        switch (i){
-//                                            case 0:
-//                                                linkDataBean.setContent(problemLinkLine.getOptionAdes());
-//                                                break;
-//                                            case 1:
-//                                                linkDataBean.setContent(problemLinkLine.getOptionBdes());
-//
-//                                                break;
-//                                            case 2:
-//                                                linkDataBean.setContent(problemLinkLine.getOptionCdes());
-//
-//                                                break;
-//                                            case 3:
-//                                                linkDataBean.setContent(problemLinkLine.getOptionDdes());
-//                                                break;
-//                                        }
-//                                        linkDataBean.setQ_num(Integer.parseInt(qNum[i + 4]));
-//                                        linkDataBean.setRow(i + 1);
-//                                        linkDataBean.setCol(1);
-//                                        linkDataBeans.add(linkDataBean);
-//                                    }
-//                                    Message message2 = new Message();
-//                                    message2.arg1 = 2;
-//                                    message2.obj = linkDataBeans;
-//                                    handler.sendMessage(message2);
-//                                    break;
-//                                case 3:
-//                                    llTypePai.setVisibility(View.VISIBLE);
-//                                    problemgetOrder = (ProblemgetOrder) problem;
-//                                    Message message1 = new Message();
-//                                    message1.arg1 = 3;
-//                                    handler.sendMessage(message1);
-//                                    break;
-//                            }
-//                            getBeforeOrNextProblem(problem);
-//                            animationout.setDuration(600);
-//                            reContainer.startAnimation(animationout);
-//                        }
-//                        break;
-//                }
-//                break;
-//        }
-//    }
 
 
 }

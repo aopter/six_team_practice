@@ -33,7 +33,6 @@
                 android:background="@mipmap/back" />
 
             <TextView
-                android:lineSpacingExtra="10dp"
                 android:id="@+id/tv_dynasty_name"
                 android:layout_width="50dp"
                 android:layout_height="180dp"
@@ -41,6 +40,7 @@
                 android:layout_margin="20dp"
                 android:alpha="0.7"
                 android:gravity="center"
+                android:lineSpacingExtra="10dp"
                 android:padding="5dp"
                 android:paddingLeft="5dp"
                 android:paddingTop="15dp"
@@ -52,40 +52,34 @@
 
 
         <LinearLayout
-            android:alpha="0.7"
-            android:padding="18dp"
-            android:background="@mipmap/bg_container"
-            android:layout_toRightOf="@+id/ll_intro_word"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/rl_below"
->
+            android:layout_toRightOf="@+id/ll_intro_word"
+            android:alpha="0.7"
+            android:background="@mipmap/bg_container"
+            android:padding="18dp">
 
-            <ScrollView
+
+            <LinearLayout
                 android:layout_marginTop="80dp"
-                android:id="@+id/sv_intro_word"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="25dp"
-                android:elevation="5dp">
+                android:paddingLeft="5dp">
 
-                <LinearLayout
+                <TextView
+                    android:scrollbars="vertical"
+                    android:fadeScrollbars="false"
+                    android:id="@+id/tv_dynasty_intro"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingLeft="5dp">
-
-                    <TextView
-                        android:lineSpacingExtra="3dp"
-                        android:id="@+id/tv_dynasty_intro"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:textColor="@android:color/white"
-                        android:textSize="20sp" />
-                </LinearLayout>
-
-            </ScrollView>
+                    android:layout_gravity="center"
+                    android:lineSpacingExtra="3dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp" />
+            </LinearLayout>
         </LinearLayout>
 
         <RelativeLayout
@@ -99,36 +93,38 @@
                 android:id="@+id/btn_questions"
                 android:layout_width="130dp"
                 android:layout_height="35dp"
-                android:alpha="0.7"
                 android:layout_marginRight="30dp"
                 android:layout_toLeftOf="@+id/btn_details"
+                android:alpha="0.7"
                 android:background="@drawable/cornert"
                 android:text="朝代知多少"
-                android:textColor="#fff"
+                android:textColor="#fcf5e9"
                 android:textSize="20sp" />
 
             <Button
-                android:alpha="0.7"
                 android:id="@+id/btn_details"
                 android:layout_width="130dp"
                 android:layout_height="35dp"
-                android:layout_toLeftOf="@+id/btn_img"
                 android:layout_marginRight="30dp"
+                android:layout_toLeftOf="@+id/btn_img"
+                android:alpha="0.7"
                 android:background="@drawable/cornert"
                 android:text="进入详情"
-                android:textColor="#fff"
+                android:textColor="#fcf5e9"
                 android:textSize="20sp" />
+
             <Button
-                android:alpha="0.7"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="30dp"
+                android:id="@+id/btn_img"
                 android:layout_width="130dp"
                 android:layout_height="35dp"
-                android:id="@+id/btn_img"
-                android:textSize="20sp"
-                android:text="进入全景图"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="30dp"
+                android:alpha="0.7"
                 android:background="@drawable/cornert"
-                android:textColor="#fff"/>
+                android:text="进入全景图"
+                android:textColor="#fff"
+                android:textSize="20sp" />
+                android:textColor="#fcf5e9"/>
         </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>
