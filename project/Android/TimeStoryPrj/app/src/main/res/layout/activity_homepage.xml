@@ -13,7 +13,7 @@
         android:layout_alignParentTop="true"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="#66fcf5e9"
+        android:background="@mipmap/beijing"
         android:orientation="horizontal"
         android:padding="5dp">
 
@@ -180,7 +180,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:background="@mipmap/timg1">
+            android:background="@mipmap/timg3">
 
             <LinearLayout
                 android:id="@+id/ll_layout1"

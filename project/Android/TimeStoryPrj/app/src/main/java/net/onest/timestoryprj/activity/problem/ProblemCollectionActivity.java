@@ -6,6 +6,8 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -54,6 +56,11 @@ public class ProblemCollectionActivity extends AppCompatActivity {
     @BindView(R.id.refreshLayout_collction)
     SmartRefreshLayout refreshLayout;
 
+    @BindView(R.id.tv_collection_null)
+    TextView tvNull;
+    @BindView(R.id.ll_collection_list)
+    LinearLayout llList;
+
     private List<ProblemCollection> problemCollections;//题目列表
     private List<Problem> problems;//题目列表
     private OkHttpClient okHttpClient;
@@ -85,6 +92,14 @@ public class ProblemCollectionActivity extends AppCompatActivity {
                         });
                     }
                     break;
+                case  2://没收藏
+                    tvNull.setVisibility(View.VISIBLE);
+                    llList.setVisibility(View.GONE);
+                    break;
+                case  3://没收藏
+                    tvNull.setVisibility(View.GONE);
+                    llList.setVisibility(View.VISIBLE);
+                    break;
             }
         }
     };
@@ -113,6 +128,7 @@ public class ProblemCollectionActivity extends AppCompatActivity {
         promptDialog = new PromptDialog(this);
         promptDialog.getDefaultBuilder().touchAble(false).round(3).loadingDuration(3000);
         gson = new Gson();
+        tvNull.setVisibility(View.GONE);
         init();//所有朝代
         initLeftMenu();//初始化左边
         refreshLayout.setReboundDuration(300);//回弹动画时常
@@ -199,6 +215,7 @@ public class ProblemCollectionActivity extends AppCompatActivity {
         if (cType != 0) {
             url = ServiceConfig.SERVICE_ROOT + "/userproblem/typecount/" + Constant.User.getUserId() + "/" + cType + "/" + pageSize + "";
         }
+        LogUtils.d("请求收藏题目路径",url);
 
         Request.Builder builder = new Request.Builder();
         builder.url(url);
@@ -244,7 +261,18 @@ public class ProblemCollectionActivity extends AppCompatActivity {
 
                             problemCollections = gson.fromJson(problemJson, new TypeToken<List<ProblemCollection>>() {
                             }.getType());
-                            Log.e("problemCollections数目 ", problemCollections.size() + "");
+                            if(problemCollections.size()<=0){
+                                //提示没有收藏题目 快点收藏吧
+                                Message message = new Message();
+                                message.arg1 = 2;
+                                handler.sendMessage(message);
+                                return;
+                            }else {
+                                //有题目   显示
+                                Message message = new Message();
+                                message.arg1 = 3;
+                                handler.sendMessage(message);
+                            }
                             for (int i = 0; i < problemCollections.size(); ++i) {
                                 //设置朝代号
                                 problemCollections.get(i).getProblem().setDynastyId(problemCollections.get(i).getDynasty().getDynastyId() + "");
@@ -336,6 +364,7 @@ public class ProblemCollectionActivity extends AppCompatActivity {
                         cType = 0;
                         cDynastyId = Constant.UnlockDynasty.get(childPosition).getDynastyId();
                         Log.e("onChildClick:dynastyId ", cDynastyId);
+
                         init();//加载
                         break;
                 }
