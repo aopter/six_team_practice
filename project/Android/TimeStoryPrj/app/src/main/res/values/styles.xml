@@ -82,6 +82,10 @@
     </style>
 
     <style name="tvSelectProblemType">
+        <item name="android:shadowColor">#cccccc</item>
+        <item name="android:shadowRadius">4</item>
+        <item name="android:shadowDx">4</item>
+        <item name="android:shadowDy">4</item>
         <item name="android:gravity">center</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_width">match_parent</item>

@@ -312,8 +312,7 @@ public class UserCenterActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_go_dynasty)
     public void jumpDynasty() {
-        Intent intent = new Intent(UserCenterActivity.this, HomepageActivity.class);
-        startActivity(intent);
+        finish();
     }
 
     @OnClick(R.id.btn_my_card)

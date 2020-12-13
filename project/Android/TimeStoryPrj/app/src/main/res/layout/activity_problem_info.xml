@@ -28,6 +28,10 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="10dp"
             android:gravity="center"
+            android:shadowColor="#eecccccc"
+            android:shadowDx="4"
+            android:shadowDy="4"
+            android:shadowRadius="4"
             android:text="我来考考你"
             android:textColor="@color/ourDynastyRed"
             android:textSize="24sp"
@@ -56,12 +60,12 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:drawableLeft="@mipmap/left_p_title"
                         android:id="@+id/problem_xuan_info_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:layout_marginRight="80dp"
+                        android:drawableLeft="@mipmap/left_p_title"
                         android:text="题目：你喜欢这个界面吗"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -251,12 +255,12 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:drawableLeft="@mipmap/left_p_title"
                     android:id="@+id/title_lian"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_marginBottom="0dp"
+                    android:drawableLeft="@mipmap/left_p_title"
                     android:text="题目：请将人物与学科相对应"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -292,17 +296,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:gravity="center"
                 android:orientation="vertical">
 
-                <TextView
-                    android:drawableLeft="@mipmap/left_p_title"
-                    android:id="@+id/tv_pai_title"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="题目：你喜欢这个界面吗"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:layout_margin="10dp">
+
+                    <ImageView
+                        android:id="@+id/title_a"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/left_p_title" />
+
+                    <TextView
+                        android:id="@+id/tv_pai_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/title_a"
+                        android:text="题目：你喜欢这个界面吗"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
