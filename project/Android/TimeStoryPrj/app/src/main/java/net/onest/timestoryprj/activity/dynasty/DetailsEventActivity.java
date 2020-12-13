@@ -7,10 +7,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -23,6 +25,7 @@ import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.adapter.dynasty.EventListAdapter;
 import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
+import net.onest.timestoryprj.dialog.card.CustomDialog;
 import net.onest.timestoryprj.entity.Incident;
 import net.onest.timestoryprj.entity.UserUnlockDynastyIncident;
 import net.onest.timestoryprj.util.DensityUtil;
@@ -56,11 +59,36 @@ public class DetailsEventActivity extends AppCompatActivity {
             switch (msg.what) {
                 case 1:
                     incidentList = (List<Incident>) msg.obj;
-                    initAdapter();
+                    if (incidentList.size() != 0){
+                        Log.e("事件", String.valueOf(incidentList.size()));
+                        initAdapter();
+                    }
+                    else{
+                        showIncidentDialog();
+                    }
                     break;
             }
         }
     };
+
+    /**
+     * 没有事件时，显示弹窗
+     */
+    private void showIncidentDialog() {
+        CustomDialog.Builder builder = new CustomDialog.Builder(this);
+        builder.setTitle("提示");
+        builder.setMessage("此朝代事件还未解锁，看看其他朝代吧！");
+        builder.setButtonConfirm("确定", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        CustomDialog customDialog = builder.create();
+        customDialog.setCancelable(false);
+        customDialog.setCanceledOnTouchOutside(false);
+        customDialog.show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

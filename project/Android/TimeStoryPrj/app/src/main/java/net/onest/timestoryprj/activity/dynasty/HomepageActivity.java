@@ -125,8 +125,6 @@ public class HomepageActivity extends AppCompatActivity {
                                 params.setMargins(330, 0, 0, 0);
                             }
                             tv.setLayoutParams(params);
-//                            ll.addView(iv);
-//                            ll.addView(tv);
                             llLayout2.addView(tv);
                         }
                         int finalI = i;
