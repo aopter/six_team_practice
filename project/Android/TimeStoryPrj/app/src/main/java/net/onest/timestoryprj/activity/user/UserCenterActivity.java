@@ -168,19 +168,19 @@ public class UserCenterActivity extends AppCompatActivity {
 //        .skipMemoryCache(true)//跳过内存缓存
 //                .diskCacheStrategy(DiskCacheStrategy.NONE)//不缓冲disk硬盘中
         //头像
-        if (Constant.User.getFlag() == 0){
-            if (Constant.User.getUserHeader() == null){
+        if (Constant.User.getFlag() == 0) {
+            if (Constant.User.getUserHeader() == null) {
                 Glide.with(this)
                         .load(R.mipmap.man)
                         .circleCrop()
                         .into(ivHeader);
-            }else {
+            } else {
                 Glide.with(this)
                         .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
                         .circleCrop()
                         .into(ivHeader);
             }
-        }else if (Constant.User.getFlag() == 1){
+        } else if (Constant.User.getFlag() == 1) {
             Glide.with(this)
                     .load(Constant.User.getUserHeader())
                     .circleCrop()
@@ -222,6 +222,7 @@ public class UserCenterActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String jsonData = response.body().string();
+                LogUtils.d("排行榜", jsonData);
                 Constant.UserRankList = gson.fromJson(jsonData, new TypeToken<List<User>>() {
                 }.getType());
                 Message message = new Message();
@@ -231,7 +232,7 @@ public class UserCenterActivity extends AppCompatActivity {
             }
         });
 //        加载地位
-        if(Constant.userStatuses.size() < 1) {
+        if (Constant.userStatuses.size() < 1) {
             //请求
             Request.Builder builder1 = new Request.Builder();
             builder1.url(ServiceConfig.SERVICE_ROOT + "/status/list");
@@ -258,6 +259,12 @@ public class UserCenterActivity extends AppCompatActivity {
 
     //获取历史上的今天
     private void getHistoryToday() {
+        if (Constant.historyDays.size() > 0) {//直接去提交
+            Message message = handler.obtainMessage();
+            message.arg1 = 1;
+            handler.sendMessage(message);
+            return;
+        }
 
         Request.Builder builder = new Request.Builder();
         Time t = new Time("GMT+8"); // 设置Time Zone资料。
@@ -274,7 +281,6 @@ public class UserCenterActivity extends AppCompatActivity {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
                 LogUtils.d("历史上请求失败");
             }
 
