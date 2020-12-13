@@ -5,15 +5,11 @@
     android:orientation="vertical">
 
     <TextView
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:paddingTop="0dp"
-        android:paddingBottom="0dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:padding="20dp"
         android:id="@+id/tv_pai"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_width="wrap_content"
         android:background="@mipmap/bg_option_pai"
         android:gravity="center"

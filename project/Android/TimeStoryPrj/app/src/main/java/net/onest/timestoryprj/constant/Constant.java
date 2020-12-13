@@ -7,6 +7,7 @@ import net.onest.timestoryprj.entity.Problem;
 import net.onest.timestoryprj.entity.Rule;
 import net.onest.timestoryprj.entity.User;
 import net.onest.timestoryprj.entity.UserDetails;
+import net.onest.timestoryprj.entity.UserStatus;
 import net.onest.timestoryprj.entity.UserUnlockDynasty;
 import net.onest.timestoryprj.entity.UserUnlockDynastyIncident;
 
@@ -40,4 +41,5 @@ public class Constant {
 
     public static Bitmap shareBitmap;
 
+    public static List<UserStatus> userStatuses = new ArrayList<>();
 }

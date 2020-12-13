@@ -1,6 +1,7 @@
 package net.onest.timestoryprj.activity.user;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,14 +12,17 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tinytongtong.tinyutils.LogUtils;
@@ -41,6 +45,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,8 +70,8 @@ public class UserCenterActivity extends AppCompatActivity {
     @BindView(R.id.btn_plus)
     Button btnPlus;
 
-//    @BindView(R.id.tv_name)
-//    public TextView tvName;
+    @BindView(R.id.tv_point)
+    public TextView tvPoint;
 
     @BindView(R.id.tv_level)
     public TextView tvLevel;
@@ -93,6 +98,9 @@ public class UserCenterActivity extends AppCompatActivity {
     Button btnGetCard;
     Gson gson;
 
+    @BindView(R.id.experience_progress)
+    ProgressBar progressBar;
+
 
     private Handler handler = new Handler() {
         @Override
@@ -117,6 +125,7 @@ public class UserCenterActivity extends AppCompatActivity {
         }
     };
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,20 +134,74 @@ public class UserCenterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_center);
 //      绑定初始化ButterKnife
         ButterKnife.bind(this);
+        showUserInfo();
 
-        tvLevel.setText(Constant.User.getUserStatus().getStatusName());
         gson = new Gson();
-        Glide.with(this)
-                .load((R.mipmap.man))
-                .circleCrop()
-                .into(ivHeader);
         okHttpClient = new OkHttpClient();
-//        tvData = findViewById(R.id.tv_data);
 //  //获取历史上的今天
         getHistoryToday();
 //        获取排行榜
         getUserRank();
 //        initListView();
+    }
+
+
+    /**
+     * 初始化进度条
+     */
+    private void initProgress() {
+        long userExperience = Constant.User.getUserExperience();
+        UserStatus userStatus = Constant.User.getUserStatus();
+        long experMax = userStatus.getStatusExperienceTop();
+        long experMin = userStatus.getStatusExperienceLow();
+        long experOnStatus = experMax - experMin;
+        DecimalFormat df = new DecimalFormat("0.00");
+        String rate = df.format((float) (userExperience - experMin) / experOnStatus);
+        double exRate = Double.parseDouble(rate);
+        int progress = (int) (exRate * 100);
+        progressBar.setProgress(progress);
+    }
+
+    //加载头像
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void loadImgWithPlaceHolders() {
+//        .skipMemoryCache(true)//跳过内存缓存
+//                .diskCacheStrategy(DiskCacheStrategy.NONE)//不缓冲disk硬盘中
+        //头像
+        if (Constant.User.getFlag() == 0){
+            if (Constant.User.getUserHeader() == null){
+                Glide.with(this)
+                        .load(R.mipmap.man)
+                        .circleCrop()
+                        .into(ivHeader);
+            }else {
+                Glide.with(this)
+                        .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
+                        .circleCrop()
+                        .into(ivHeader);
+            }
+        }else if (Constant.User.getFlag() == 1){
+            Glide.with(this)
+                    .load(Constant.User.getUserHeader())
+                    .circleCrop()
+                    .into(ivHeader);
+        }
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void showUserInfo() {
+        tvLevel.setText(Constant.User.getUserStatus().getStatusName());
+        loadImgWithPlaceHolders();
+        tvPoint.setText(Constant.User.getUserCount() + "");
+        initProgress();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showUserInfo();
     }
 
     /**
@@ -159,7 +222,6 @@ public class UserCenterActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String jsonData = response.body().string();
-                Log.e("onResponse: ", jsonData);
                 Constant.UserRankList = gson.fromJson(jsonData, new TypeToken<List<User>>() {
                 }.getType());
                 Message message = new Message();
@@ -168,6 +230,29 @@ public class UserCenterActivity extends AppCompatActivity {
 
             }
         });
+//        加载地位
+        if(Constant.userStatuses.size() < 1) {
+            //请求
+            Request.Builder builder1 = new Request.Builder();
+            builder1.url(ServiceConfig.SERVICE_ROOT + "/status/list");
+            //构造请求类
+            Request request1 = builder1.build();
+            final Call call1 = okHttpClient.newCall(request1);
+            call1.enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    LogUtils.d("下载失败");
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String jsonData = response.body().string();
+                    Constant.userStatuses = gson.fromJson(jsonData, new TypeToken<List<UserStatus>>() {
+                    }.getType());
+                }
+            });
+        }
+
 
     }
 
@@ -189,6 +274,7 @@ public class UserCenterActivity extends AppCompatActivity {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+
                 LogUtils.d("历史上请求失败");
             }
 
@@ -215,71 +301,11 @@ public class UserCenterActivity extends AppCompatActivity {
                 }
             }
         });
-//        //开启线程接收
-//        new Thread(() -> {
-//            try {
-//                Response response = call.execute();// 同步请求
-//                String jsonData = response.body().string();
-//                JSONObject jsonObject = new JSONObject(jsonData);
-//                JSONArray jsonArray = jsonObject.getJSONArray("result");
-//                for (int i = 0; i < jsonArray.length(); ++i) {
-//                    JSONObject his = jsonArray.getJSONObject(i);
-//                    HistoryDay historyDay = new HistoryDay();
-//                    historyDay.setDes(his.getString("des"));
-//                    historyDay.setTitle(his.getString("title"));
-//                    historyDay.setLunar(his.getString("lunar"));
-//                    historyDay.setYear(his.getInt("year"));
-//                    Constant.historyDays.add(historyDay);
-//                }
-//                Message message = handler.obtainMessage();
-//                message.arg1 = 1;
-//                handler.sendMessage(message);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//        }).start();
     }
 
-
-//    private void initListView() {
-////        获取排行榜
-//
-////        造假数据
-//        List<User> userList = new ArrayList<>();
-//        for(int i=0;i<20;++i){
-//
-//            User user = new User();
-//            UserStatus userStatus = new UserStatus();
-//            userStatus.setStatusName("秀才");
-//            user.setUserStatus(userStatus);
-//
-//            if(i==0 || i==1)
-//            {
-//                UserStatus userStatus2 = new UserStatus();
-//                userStatus2.setStatusName("秀才");
-//                user.setUserStatus(userStatus2);
-//            }
-//                userList.add(user);
-//        }
-//        UserRankListAdapter cakeListAdapter = new UserRankListAdapter(this,userList ,
-//                R.layout.item_user_rank_list);
-//        rankList.setAdapter(cakeListAdapter);
-//
-//    }
-
-    /**
-     * 获取排行榜
-     */
-    private void getUserList() {
-
-
-    }
 
     @OnClick(R.id.btn_plus)
     void toRechargePage() {
-        Log.e("btn", "点击");
         Intent intent = new Intent(getApplicationContext(), RechargeActivity.class);
         startActivity(intent);
     }

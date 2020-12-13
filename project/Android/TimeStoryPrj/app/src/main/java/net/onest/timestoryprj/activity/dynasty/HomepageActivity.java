@@ -353,15 +353,22 @@ public class HomepageActivity extends AppCompatActivity {
      */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void loadImgWithPlaceHolders() {
-        Log.e("ss", String.valueOf(getDrawable(R.mipmap.man)));
-        if (Constant.User.getUserHeader() == null) {
+        //头像
+        if (Constant.User.getFlag() == 0){
+            if (Constant.User.getUserHeader() == null){
+                Glide.with(this)
+                        .load(R.mipmap.man)
+                        .circleCrop()
+                        .into(ivHeader);
+            }else {
+                Glide.with(this)
+                        .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
+                        .circleCrop()
+                        .into(ivHeader);
+            }
+        }else if (Constant.User.getFlag() == 1){
             Glide.with(this)
-                    .load(getDrawable(R.mipmap.man))
-                    .circleCrop()
-                    .into(ivHeader);
-        }else{
-            Glide.with(this)
-                    .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
+                    .load(Constant.User.getUserHeader())
                     .circleCrop()
                     .into(ivHeader);
         }

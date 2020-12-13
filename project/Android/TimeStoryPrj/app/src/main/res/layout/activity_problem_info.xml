@@ -56,13 +56,14 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:drawableLeft="@mipmap/left_p_title"
                         android:id="@+id/problem_xuan_info_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:layout_marginRight="80dp"
                         android:text="题目：你喜欢这个界面吗"
-                        android:textSize="16sp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -162,6 +163,7 @@
                             android:gravity="center"
                             android:orientation="vertical">
 
+
                             <ImageView
                                 android:id="@+id/iv_optionC"
                                 style="@style/ivOptionPic"
@@ -222,6 +224,7 @@
                                     android:layout_height="match_parent"
                                     android:text="D " />
 
+
                                 <TextView
                                     android:id="@+id/tv_optionD"
                                     android:layout_width="wrap_content"
@@ -248,106 +251,15 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:drawableLeft="@mipmap/left_p_title"
                     android:id="@+id/title_lian"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_marginBottom="0dp"
                     android:text="题目：请将人物与学科相对应"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
-
-                <!--        <LinearLayout-->
-                <!--            android:id="@+id/lian_first"-->
-                <!--            android:layout_width="match_parent"-->
-                <!--            android:layout_height="wrap_content"-->
-                <!--            android:layout_marginTop="8dp"-->
-                <!--            android:orientation="horizontal">-->
-
-                <!--            <TextView-->
-                <!--                android:id="@+id/tv1_lian_first"-->
-                <!--                android:layout_width="0dp"-->
-                <!--                android:layout_height="wrap_content"-->
-                <!--                android:layout_weight="1"-->
-                <!--                android:text="王伟" />-->
-
-                <!--            <TextView-->
-                <!--                android:id="@+id/tv2_lian_first"-->
-                <!--                android:layout_width="0dp"-->
-                <!--                android:layout_height="wrap_content"-->
-                <!--                android:layout_weight="1"-->
-                <!--                android:text="java" />-->
-
-                <!--        </LinearLayout>-->
-
-                <!--        <LinearLayout-->
-                <!--            android:id="@+id/lian_second"-->
-                <!--            android:layout_width="match_parent"-->
-                <!--            android:layout_height="wrap_content"-->
-                <!--            android:layout_marginTop="8dp"-->
-                <!--            android:orientation="horizontal">-->
-
-                <!--            <TextView-->
-                <!--                android:id="@+id/tv1_lian_second"-->
-                <!--                android:layout_width="0dp"-->
-                <!--                android:layout_height="wrap_content"-->
-                <!--                android:layout_weight="1"-->
-                <!--                android:text="王伟" />-->
-
-                <!--            <TextView-->
-                <!--                android:id="@+id/tv2_lian_second"-->
-                <!--                android:layout_width="0dp"-->
-                <!--                android:layout_height="wrap_content"-->
-                <!--                android:layout_weight="1"-->
-                <!--                android:text="java" />-->
-
-                <!--        </LinearLayout>-->
-
-                <!--        <LinearLayout-->
-                <!--            android:id="@+id/lian_third"-->
-                <!--            android:layout_width="match_parent"-->
-                <!--            android:layout_height="wrap_content"-->
-                <!--            android:layout_marginTop="8dp"-->
-                <!--            android:orientation="horizontal">-->
-
-                <!--            <TextView-->
-                <!--                android:id="@+id/tv1_lian_third"-->
-                <!--                android:layout_width="0dp"-->
-                <!--                android:layout_height="wrap_content"-->
-                <!--                android:layout_weight="1"-->
-                <!--                android:text="王伟" />-->
-
-                <!--            <TextView-->
-                <!--                android:id="@+id/tv2_lian_third"-->
-                <!--                android:layout_width="0dp"-->
-                <!--                android:layout_height="wrap_content"-->
-                <!--                android:layout_weight="1"-->
-                <!--                android:text="java" />-->
-
-                <!--        </LinearLayout>-->
-
-                <!--        <LinearLayout-->
-                <!--            android:id="@+id/lian_forth"-->
-                <!--            android:layout_width="match_parent"-->
-                <!--            android:layout_height="wrap_content"-->
-                <!--            android:layout_marginTop="8dp"-->
-                <!--            android:orientation="horizontal">-->
-
-                <!--            <TextView-->
-                <!--                android:id="@+id/tv1_lian_forth"-->
-                <!--                android:layout_width="0dp"-->
-                <!--                android:layout_height="wrap_content"-->
-                <!--                android:layout_weight="1"-->
-                <!--                android:text="王伟" />-->
-
-                <!--            <TextView-->
-                <!--                android:id="@+id/tv2_lian_forth"-->
-                <!--                android:layout_width="0dp"-->
-                <!--                android:layout_height="wrap_content"-->
-                <!--                android:layout_weight="1"-->
-                <!--                android:text="java" />-->
-
-                <!--        </LinearLayout>-->
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -383,12 +295,13 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:drawableLeft="@mipmap/left_p_title"
                     android:id="@+id/tv_pai_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:text="题目：你喜欢这个界面吗"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <LinearLayout
@@ -407,113 +320,6 @@
                     android:layout_marginRight="10dp"
                     android:gravity="center"
                     android:padding="5dp" />
-
-
-                <!--        <LinearLayout-->
-                <!--            android:layout_width="match_parent"-->
-                <!--            android:layout_height="wrap_content"-->
-                <!--            android:layout_marginTop="10dp"-->
-                <!--            android:orientation="horizontal">-->
-
-                <!--            <TextView-->
-                <!--                android:background="@mipmap/bg_option_pai"-->
-                <!--                android:id="@+id/tv_pai_first"-->
-                <!--                android:textSize="18sp"-->
-                <!--                android:gravity="center"-->
-                <!--                android:layout_width="0dp"-->
-                <!--                android:layout_height="match_parent"-->
-                <!--                android:layout_weight="1"-->
-                <!--                android:text="李白乘舟将欲行" />-->
-
-                <!--            <TextView-->
-                <!--                android:textSize="18sp"-->
-                <!--                android:gravity="center"-->
-                <!--                android:background="@mipmap/bg_option_pai"-->
-                <!--                android:id="@+id/tv_pai_second"-->
-                <!--                android:layout_width="0dp"-->
-                <!--                android:layout_height="match_parent"-->
-                <!--                android:layout_weight="1"-->
-                <!--                android:text="桃花潭水深千尺" />-->
-                <!--        </LinearLayout>-->
-
-                <!--        <LinearLayout-->
-                <!--            android:layout_width="match_parent"-->
-                <!--            android:layout_height="wrap_content"-->
-                <!--            android:layout_marginTop="10dp"-->
-                <!--            android:orientation="horizontal">-->
-
-
-                <!--            <TextView-->
-                <!--                android:gravity="center"-->
-                <!--                android:textSize="18sp"-->
-                <!--                android:background="@mipmap/bg_option_pai"-->
-                <!--                android:id="@+id/tv_pai_third"-->
-                <!--                android:layout_width="0dp"-->
-                <!--                android:layout_height="match_parent"-->
-                <!--                android:layout_weight="1"-->
-                <!--                android:text="不及汪伦送我情" />-->
-
-                <!--            <TextView-->
-                <!--                android:gravity="center"-->
-                <!--                android:textSize="18sp"-->
-                <!--                android:background="@mipmap/bg_option_pai"-->
-                <!--                android:id="@+id/tv_pai_forth"-->
-                <!--                android:layout_width="0dp"-->
-                <!--                android:layout_height="match_parent"-->
-                <!--                android:layout_weight="1"-->
-                <!--                android:text="忽闻岸上踏歌声" />-->
-                <!--        </LinearLayout>-->
-
-
-                <!--        答案区-->
-                <!--        <LinearLayout-->
-
-                <!--            android:layout_width="match_parent"-->
-                <!--            android:layout_height="wrap_content"-->
-                <!--            android:orientation="vertical">-->
-
-                <!--            <LinearLayout-->
-                <!--                android:layout_width="match_parent"-->
-                <!--                android:layout_height="wrap_content"-->
-                <!--                android:layout_marginTop="30dp"-->
-                <!--                android:orientation="horizontal">-->
-
-                <!--                <TextView-->
-                <!--                    android:id="@+id/tv_pai_a"-->
-                <!--                    android:layout_width="180dp"-->
-                <!--                    android:layout_height="50dp"-->
-                <!--                    android:layout_marginRight="30dp"-->
-                <!--                    android:background="@mipmap/bg_option_pai" />-->
-
-                <!--                <TextView-->
-                <!--                    android:id="@+id/tv_pai_b"-->
-                <!--                    android:layout_width="180dp"-->
-                <!--                    android:layout_height="50dp"-->
-                <!--                    android:background="@mipmap/bg_option_pai" />-->
-
-                <!--            </LinearLayout>-->
-
-                <!--            <LinearLayout-->
-                <!--                android:layout_width="match_parent"-->
-                <!--                android:layout_height="wrap_content"-->
-                <!--                android:layout_marginTop="15dp"-->
-                <!--                android:orientation="horizontal">-->
-
-                <!--                <TextView-->
-                <!--                    android:id="@+id/tv_pai_c"-->
-                <!--                    android:layout_width="180dp"-->
-                <!--                    android:layout_height="50dp"-->
-                <!--                    android:layout_marginRight="30dp"-->
-                <!--                    android:background="@mipmap/bg_option_pai" />-->
-
-                <!--                <TextView-->
-                <!--                    android:id="@+id/tv_pai_d"-->
-                <!--                    android:layout_width="180dp"-->
-                <!--                    android:layout_height="50dp"-->
-                <!--                    android:background="@mipmap/bg_option_pai" />-->
-
-                <!--            </LinearLayout>-->
-                <!--        </LinearLayout>-->
             </LinearLayout>
         </RelativeLayout>
 

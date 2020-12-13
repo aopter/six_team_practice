@@ -37,6 +37,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.leefeng.promptlibrary.PromptDialog;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -62,12 +63,14 @@ public class ProblemCollectionActivity extends AppCompatActivity {
     private int pageSize = 3;//容量
     private String cDynastyId = "0";//当前朝代
     private int cType = 0;
+    private PromptDialog promptDialog;
 
     Handler handler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
             switch (msg.arg1) {
                 case 1://题目下载好
+//                    promptDialog.dismissImmediately();
 //                    初始化adapter
                     if (cPageCount == 1) {//第一页
                         initAdapter();
@@ -107,6 +110,8 @@ public class ProblemCollectionActivity extends AppCompatActivity {
         problems = new ArrayList<>();
         problemCollections = new ArrayList<>();
         cPageCount = 1;
+        promptDialog = new PromptDialog(this);
+        promptDialog.getDefaultBuilder().touchAble(false).round(3).loadingDuration(3000);
         gson = new Gson();
         init();//所有朝代
         initLeftMenu();//初始化左边
@@ -184,7 +189,8 @@ public class ProblemCollectionActivity extends AppCompatActivity {
         });
     }
 
-    private void init() {//获得用户收藏的题目
+    private void init() {//获得用户收藏的题目=======
+//        promptDialog.showLoading("正在加载");
         cPageCount = 1;
         String url = ServiceConfig.SERVICE_ROOT + "/userproblem/count/" + Constant.User.getUserId() + "/" + pageSize + "";
         if (!cDynastyId.equals("0")) {
@@ -268,7 +274,7 @@ public class ProblemCollectionActivity extends AppCompatActivity {
 
         String[] dynastyName = new String[Constant.UnlockDynasty.size()];
         Log.e("init: ", dynastyName.length + "");
-        for (int i = dynastyName.length - 1; i > 0; i--) {
+        for (int i = 0; i < dynastyName.length; i++) {
             dynastyName[i] = Constant.UnlockDynasty.get(i).getDynastyName();
         }
         final String[][] infos =

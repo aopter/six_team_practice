@@ -98,7 +98,7 @@
                 android:alpha="0.7"
                 android:background="@drawable/cornert"
                 android:text="朝代知多少"
-                android:textColor="#fff"
+                android:textColor="#fcf5e9"
                 android:textSize="20sp" />
 
             <Button
@@ -110,7 +110,7 @@
                 android:alpha="0.7"
                 android:background="@drawable/cornert"
                 android:text="进入详情"
-                android:textColor="#fff"
+                android:textColor="#fcf5e9"
                 android:textSize="20sp" />
 
             <Button
@@ -124,6 +124,7 @@
                 android:text="进入全景图"
                 android:textColor="#fff"
                 android:textSize="20sp" />
+                android:textColor="#fcf5e9"/>
         </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>
