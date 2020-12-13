@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -35,6 +36,7 @@ import net.onest.timestoryprj.adapter.card.SpecificDynastyCardAdapter;
 import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.customview.DropdownListView;
+import net.onest.timestoryprj.dialog.LoadingDialog;
 import net.onest.timestoryprj.entity.card.UserCard;
 
 import java.io.IOException;
@@ -54,7 +56,7 @@ import okhttp3.Response;
 
 public class SpecificDynastyCardActivity extends AppCompatActivity {
     @BindView(R.id.dynasty_cards)
-    RecyclerView dyanstyCardView;
+    GridView dyanstyCardView;
     private List<UserCard> userCards = new ArrayList<>();
     private SpecificDynastyCardAdapter cardAdapter;
     private int dynastyId;
@@ -72,6 +74,7 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
     private OkHttpClient client;
     private Gson gson;
     int type = 0;
+    private LoadingDialog loadingDialog;
     private PromptDialog promptDialog;
     private Handler handler = new Handler() {
         @Override
@@ -83,7 +86,6 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
                     Type type = new TypeToken<ArrayList<UserCard>>() {
                     }.getType();
                     userCards = gson.fromJson(result, type);
-                    promptDialog.dismissImmediately();
                     initDatas();
                     break;
             }
@@ -160,17 +162,16 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "没有相关卡片，请重新选择吧~", Toast.LENGTH_SHORT).show();
         }
         cardAdapter = new SpecificDynastyCardAdapter(getApplicationContext(), userCards);
-        cardAdapter.setOnItemClickLitener(new CardAdapter.OnItemClickLitener() {
+        dyanstyCardView.setAdapter(cardAdapter);
+        dyanstyCardView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Intent intent = new Intent(getApplicationContext(), SpectficCardDetailActivity.class);
                 intent.putExtra("cardId", userCards.get(position).getCardListVO().getCardId());
                 startActivity(intent);
             }
         });
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
-        dyanstyCardView.setLayoutManager(layoutManager);
-        dyanstyCardView.setAdapter(cardAdapter);
+        promptDialog.dismissImmediately();
     }
 
     @OnClick(R.id.back)
@@ -328,4 +329,17 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
         typeView.popupWindow.dismiss();
         typeView.popupWindow = null;
     }
+
+    private void showDialog() {
+        LoadingDialog.Builder builder = new LoadingDialog.Builder(this);
+        loadingDialog = builder.create();
+        loadingDialog.setCancelable(false);
+        loadingDialog.setCanceledOnTouchOutside(false);
+        loadingDialog.show();
+    }
+
+    private void stopDialog() {
+        loadingDialog.dismiss();
+    }
+
 }

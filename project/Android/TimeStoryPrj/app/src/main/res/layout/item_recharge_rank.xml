@@ -6,6 +6,7 @@
     android:descendantFocusability="blocksDescendants"
     android:padding="10dp">
 
+
     <net.onest.timestoryprj.customview.CusShadowLayout
         android:id="@+id/card_container"
         android:layout_width="wrap_content"
@@ -24,6 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@mipmap/bg_recharge"
+                android:alpha="0.8"
                 android:padding="10dp">
 
                 <TextView
@@ -64,7 +66,7 @@
                 android:layout_alignLeft="@+id/recharge_container"
                 android:layout_alignRight="@+id/recharge_container"
                 android:layout_marginTop="2dp"
-                android:alpha="0.9"
+                android:alpha="0.8"
                 android:background="@drawable/corner"
                 android:focusable="false"
                 android:text="购买"

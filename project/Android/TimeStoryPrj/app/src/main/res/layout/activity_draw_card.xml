@@ -5,24 +5,6 @@
     android:background="@mipmap/bg_drawcard"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/share_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:alpha="0.8"
-        android:clickable="true"
-        android:visibility="gone">
-
-        <GridView
-            android:id="@+id/icon_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:numColumns="4" />
-    </RelativeLayout>
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -44,9 +26,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
+                    android:lineSpacingExtra="4dp"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
-                    android:text="您的好友已经获得很多卡片啦\n赶快加入我们吧"
+                    android:text="您的好友已经获得很多卡片啦\n赶快加入我们吧↖(￣▽￣)"
                     android:textColor="@android:color/white"
                     android:visibility="gone" />
 
@@ -63,7 +46,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="20dp"
-                    android:text="点击看看获取了什么卡片吧"
+                    android:text="点击看看得到了什么卡片吧＾０＾~"
                     android:textColor="@android:color/white"
                     android:textSize="17sp" />
 
@@ -139,7 +122,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@+id/back"
                         android:paddingLeft="5dp"
-                        android:text="请在下面挑选一张图片吧。"
+                        android:text="快在下面挑选一张属于你的卡片吧~"
                         android:textColor="@android:color/black"
                         android:textSize="20sp" />
                 </LinearLayout>
@@ -201,4 +184,5 @@
             </RelativeLayout>
         </LinearLayout>
     </FrameLayout>
+
 </RelativeLayout>

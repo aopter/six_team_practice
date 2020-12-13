@@ -51,7 +51,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 //抽卡
-//GitPushTest
+
 public class DrawCardActivity extends AppCompatActivity {
     @BindView(R.id.back)
     ImageView back;
@@ -77,10 +77,6 @@ public class DrawCardActivity extends AppCompatActivity {
     TextView text;
     @BindView(R.id.share)
     ImageView btnShare;
-    @BindView(R.id.icon_view)
-    GridView iconView;
-    @BindView(R.id.share_container)
-    RelativeLayout shareContainer;
     @BindView(R.id.e_r_code)
     ImageView ERCode;
     @BindView(R.id.join)
@@ -143,7 +139,6 @@ public class DrawCardActivity extends AppCompatActivity {
             gson = new GsonBuilder()//创建GsonBuilder对象
                     .serializeNulls()//允许输出Null值属性
                     .create();//创建Gson对象
-            getDrawCard();
         } else {
             showDialog();
         }
@@ -183,12 +178,9 @@ public class DrawCardActivity extends AppCompatActivity {
     void showCard() {
         if (!isShareing) {
             if (!flag) {
-                // TODO 恭喜
                 flag = true;
-                shareContainer.setVisibility(View.VISIBLE);
                 toLastView.setVisibility(View.VISIBLE);
                 btnShare.setVisibility(View.VISIBLE);
-                tip.setText("恭喜你获得‘" + card.getCardName() + "’的卡片");
                 // 调用setAnimationListener方法对动画的实现过程进行监听
                 cardAnimation.setAnimationListener(new Animation.AnimationListener() {
                     @Override
@@ -204,6 +196,7 @@ public class DrawCardActivity extends AppCompatActivity {
                                 .load(ServiceConfig.SERVICE_ROOT + "/img/" + card.getCardPicture())
                                 .into(drawCard);
                         drawCard.startAnimation(animation);
+                        tip.setText(" (≧∇≦)ﾉ 手气真棒，恭喜你获得了‘" + card.getCardName() + "’卡片！");
                     }
 
                     @Override
@@ -226,6 +219,8 @@ public class DrawCardActivity extends AppCompatActivity {
     @OnClick({R.id.card1, R.id.card2, R.id.card3, R.id.card4})
     void showCardContainerPage() {
         if (!isFlag) {
+            getDrawCard();
+            Constant.User.setUserCount(Constant.User.getUserCount() - 60);
             animatorSet = new AnimatorSet();
             ObjectAnimator alphaAnim = ObjectAnimator.ofFloat(
                     cardContainer,
@@ -256,11 +251,9 @@ public class DrawCardActivity extends AppCompatActivity {
 
     @OnClick(R.id.share)
     void toShare() {
-        shareContainer.setVisibility(View.VISIBLE);
         toLastView.setVisibility(View.INVISIBLE);
         join.setVisibility(View.VISIBLE);
         ERCode.setVisibility(View.VISIBLE);
-        shareContainer.bringToFront();
         ScreenShot sh = new ScreenShot();
         sh.start();
         try {
@@ -276,11 +269,9 @@ public class DrawCardActivity extends AppCompatActivity {
     @OnClick({R.id.card_container, R.id.draw_card_show})
     void showOriginPage() {
         if (isFlag) {
-            shareContainer.setVisibility(View.GONE);
             toLastView.setVisibility(View.VISIBLE);
             join.setVisibility(View.INVISIBLE);
             ERCode.setVisibility(View.INVISIBLE);
-            shareContainer.bringToFront();
             isShareing = false;
         }
     }
@@ -303,8 +294,7 @@ public class DrawCardActivity extends AppCompatActivity {
         builder.setButtonConfirm("确定", new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(DrawCardActivity.this, HomepageActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
         CustomDialog customDialog = builder.create();

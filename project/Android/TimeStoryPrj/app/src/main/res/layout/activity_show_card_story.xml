@@ -61,8 +61,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="190dp"
                     android:alpha="0.85"
+                    android:background="@mipmap/bg_card_story_test"
                     android:lineSpacingExtra="4dp"
-                    android:background="@drawable/story_style"
                     android:padding="25dp"
                     android:scrollbars="vertical"
                     android:textColor="@android:color/black"
@@ -79,11 +79,11 @@
         </LinearLayout>
 
         <net.onest.timestoryprj.customview.StoryNodeView
-            android:alpha="0.8"
             android:id="@+id/story_process"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_alignParentBottom="true" />
+            android:layout_alignParentBottom="true"
+            android:alpha="0.8" />
 
         <ImageView
             android:id="@+id/card_img"
@@ -93,4 +93,5 @@
             android:alpha="0.9"
             android:src="@mipmap/role" />
     </RelativeLayout>
+
 </LinearLayout>

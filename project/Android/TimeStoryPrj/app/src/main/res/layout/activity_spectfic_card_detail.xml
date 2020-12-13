@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/bg_card"
+    android:background="@mipmap/bg_card_detail"
     android:orientation="vertical"
     android:padding="20dp">
 
@@ -68,6 +68,7 @@
                     android:textColor="@android:color/white"
                     android:textStyle="bold" />
             </LinearLayout>
+
         </RelativeLayout>
 
         <RelativeLayout
@@ -76,22 +77,27 @@
             android:layout_marginRight="20dp"
             android:orientation="vertical">
 
-            <TextView
-                android:lineSpacingExtra="5dp"
-                android:id="@+id/card_info"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@+id/card_story"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginRight="30dp"
-                android:layout_marginBottom="10dp"
-                android:alpha="0.85"
-                android:background="@drawable/story_style"
-                android:padding="15dp"
-                android:scrollbars="vertical"
-                android:textColor="@android:color/black"
-                android:textSize="17sp" />
+                android:layout_marginBottom="7dp"
+                android:background="@mipmap/bg_card_detail_info"
+                android:padding="15dp">
+
+                <TextView
+                    android:id="@+id/card_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:alpha="0.85"
+                    android:lineSpacingExtra="5dp"
+                    android:layout_margin="15dp"
+                    android:scrollbars="vertical"
+                    android:textColor="@android:color/black"
+                    android:textSize="17sp" />
+            </LinearLayout>
 
             <Button
                 android:id="@+id/card_story"
@@ -99,13 +105,12 @@
                 android:layout_height="35dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginRight="40dp"
+                android:layout_marginRight="30dp"
                 android:alpha="0.7"
                 android:background="@android:color/holo_red_dark"
                 android:text="查看生平"
                 android:textColor="@android:color/white"
-                android:textStyle="bold"
-                android:visibility="gone" />
+                android:textStyle="bold" />
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

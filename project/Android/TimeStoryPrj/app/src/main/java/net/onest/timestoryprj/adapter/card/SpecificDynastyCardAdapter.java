@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,36 +19,39 @@ import net.onest.timestoryprj.entity.card.UserCard;
 
 import java.util.List;
 
-public class SpecificDynastyCardAdapter extends RecyclerView.Adapter<SpecificDynastyCardAdapter.ViewHolder> {
+public class SpecificDynastyCardAdapter extends BaseAdapter {
     private List<UserCard> cards;
     private Context mContext;
-    private View view;
     private CardAdapter.OnItemClickLitener mOnItemClickLitener;
 
-    //设置回调接口
-    public interface OnItemClickLitener {
-        void onItemClick(View view, int position);
-    }
-
-    public void setOnItemClickLitener(CardAdapter.OnItemClickLitener mOnItemClickLitener) {
-        this.mOnItemClickLitener = mOnItemClickLitener;
-    }
-
-    public SpecificDynastyCardAdapter(Context context, List<UserCard> cards) {
-        this.mContext = context;
-        this.cards = cards;
-    }
-
-    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.dynasty_card_item, null);
-        ViewHolder holder = new ViewHolder(view);
-        return holder;
+    public int getCount() {
+        return cards.size();
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+    public Object getItem(int i) {
+        return cards.get(i);
+    }
+
+    @Override
+    public long getItemId(int i) {
+        return i;
+    }
+
+    @Override
+    public View getView(int position, View view, ViewGroup viewGroup) {
+        ViewHolder holder = null;
+        if (null == view) {
+            view = LayoutInflater.from(mContext).inflate(R.layout.dynasty_card_item, null);
+            holder = new ViewHolder();
+            holder.cardName = view.findViewById(R.id.card_name);
+            holder.cardPic = view.findViewById(R.id.card_pic);
+            holder.cardNum = view.findViewById(R.id.card_num);
+            view.setTag(holder);
+        } else {
+            holder = (ViewHolder) view.getTag();
+        }
         holder.cardName.setText(cards.get(position).getCardListVO().getCardName());
         Glide.with(mContext)
                 .load(ServiceConfig.SERVICE_ROOT + "/picture/download/" + cards.get(position).getCardListVO().getCardPicture())
@@ -57,31 +61,18 @@ public class SpecificDynastyCardAdapter extends RecyclerView.Adapter<SpecificDyn
         } else {
             holder.cardNum.setText(cards.get(position).getCardCount() + "");
         }
-        if (mOnItemClickLitener != null) {
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mOnItemClickLitener.onItemClick(view, position);
-                }
-            });
-        }
+        return view;
     }
 
-    @Override
-    public int getItemCount() {
-        return cards.size();
+    public SpecificDynastyCardAdapter(Context context, List<UserCard> cards) {
+        this.mContext = context;
+        this.cards = cards;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder {
         private ImageView cardPic;
         private TextView cardName;
         private TextView cardNum;
-
-        public ViewHolder(final View view) {
-            super(view);
-            cardName = view.findViewById(R.id.card_name);
-            cardPic = view.findViewById(R.id.card_pic);
-            cardNum = view.findViewById(R.id.card_num);
-        }
     }
+
 }

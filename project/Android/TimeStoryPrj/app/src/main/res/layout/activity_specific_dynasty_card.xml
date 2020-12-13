@@ -3,14 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:alpha="0.8"
-    android:background="@mipmap/cardbackground"
+    android:background="@mipmap/bg_dynasty_card"
     android:orientation="vertical"
     android:padding="10dp">
 
     <RelativeLayout
-        android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:layout_marginBottom="10dp"
         android:padding="10dp">
 
         <ImageView
@@ -32,7 +32,6 @@
             android:paddingRight="10dp">
 
             <EditText
-                android:imeOptions="actionDone|flagNoExtractUi"
                 android:id="@+id/search_card_name"
                 android:layout_width="150dp"
                 android:layout_height="match_parent"
@@ -40,17 +39,18 @@
                 android:background="@null"
                 android:gravity="center_vertical"
                 android:hint="请输入卡片名称"
+                android:imeOptions="actionDone|flagNoExtractUi"
                 android:padding="5dp"
                 android:textSize="16sp" />
 
             <ImageView
-                android:visibility="invisible"
                 android:id="@+id/search_delete"
                 android:layout_width="40dp"
                 android:layout_height="match_parent"
                 android:layout_toRightOf="@+id/search_card_name"
                 android:padding="8dp"
-                android:src="@mipmap/delete" />
+                android:src="@mipmap/delete"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/search_btn"
@@ -72,8 +72,10 @@
             android:layout_marginLeft="10dp" />
     </RelativeLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
+    <GridView
         android:id="@+id/dynasty_cards"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:numColumns="3" />
+
 </LinearLayout>
