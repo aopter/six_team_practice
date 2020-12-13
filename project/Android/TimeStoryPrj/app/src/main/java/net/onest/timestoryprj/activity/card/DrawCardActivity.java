@@ -51,7 +51,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 //抽卡
-
+//GitPushTest
 public class DrawCardActivity extends AppCompatActivity {
     @BindView(R.id.back)
     ImageView back;
