@@ -38,6 +38,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.constant.Constant;
@@ -130,25 +131,37 @@ public class SettingActivity extends AppCompatActivity {
         promptDialog = new PromptDialog(this);
         //设置自定义属性
         promptDialog.getDefaultBuilder().touchAble(false).round(3).loadingDuration(3000);
-
         findViews();
         setListener();
         okHttpClient = new OkHttpClient();
         gson = new Gson();
         userId = Constant.User.getUserId();
+        //清空缓存
+        Glide.get(getApplicationContext()).clearMemory();
+        new Thread(){
+            @Override
+            public void run() {
+                Glide.get(getApplicationContext()).clearDiskCache();
+            }
+        }.start();
 
         new Thread() {
             @Override
             public void run() {
                 try {
+                    String result = "";
                     URL url = new URL(ServiceConfig.SERVICE_ROOT + "/rule");
                     URLConnection connection = url.openConnection();
                     InputStream in = connection.getInputStream();
                     BufferedReader reader = new BufferedReader(
                             new InputStreamReader(in, "utf-8"));
-                    String rule = reader.readLine();
-                    Log.e("规则", rule);
-                    Constant.Rule.setRuleInfo(rule);
+                    String line = "";
+                    while ((line = reader.readLine()) != null){
+                        result +=line;
+                        result += "\r\n";
+                    }
+                    Log.e("规则", result);
+                    Constant.Rule.setRuleInfo(result);
 
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
@@ -264,6 +277,8 @@ public class SettingActivity extends AppCompatActivity {
                 Glide.with(this)
                         .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
                         .circleCrop()
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
                         .into(ivHeader);
             }
         }else if (Constant.User.getFlag() == 1){
@@ -405,14 +420,15 @@ public class SettingActivity extends AppCompatActivity {
         linearLayout.addView(etProblem);
         //提交
         Button btnSub = new Button(getApplicationContext());
-        LinearLayout.LayoutParams btnParam = new LinearLayout.LayoutParams(280, 160);
+        LinearLayout.LayoutParams btnParam = new LinearLayout.LayoutParams(280, 150);
         btnSub.setText("提交");
         btnSub.setTextColor(getResources().getColor(R.color.white));
         btnSub.setTextSize(20);
         btnSub.setBackgroundResource(R.color.ourDynastyRed);
         btnParam.gravity = Gravity.RIGHT;
         btnParam.rightMargin = 30;
-        btnParam.topMargin = 80;
+        btnParam.topMargin = 50;
+        btnParam.bottomMargin = 20;
         btnSub.setLayoutParams(btnParam);
         linearLayout.addView(btnSub);
         rightLayout.addView(linearLayout);
@@ -533,6 +549,10 @@ public class SettingActivity extends AppCompatActivity {
         tvTitle.setLayoutParams(tvParam);
         linearLayout.addView(tvTitle);
 
+        ScrollView scrollView = new ScrollView(getApplicationContext());
+        LinearLayout.LayoutParams scParam = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        scParam.topMargin = 20;
+        scrollView.setLayoutParams(scParam);
         TextView tvRule = new TextView(getApplicationContext());
         tvRule.setText(Constant.Rule.getRuleInfo());
         tvRule.setTextSize(20);
@@ -540,7 +560,8 @@ public class SettingActivity extends AppCompatActivity {
         ruleParam.leftMargin = 100;
         ruleParam.topMargin = 50;
         tvRule.setLayoutParams(ruleParam);
-        linearLayout.addView(tvRule);
+        scrollView.addView(tvRule);
+        linearLayout.addView(scrollView);
         rightLayout.addView(linearLayout);
     }
 
@@ -706,7 +727,6 @@ public class SettingActivity extends AppCompatActivity {
                     //用户详情传给服务器
                     upToServer();
                     //上传头像
-//                    upHeaderToServer();
 
                 } else {
                     Toast.makeText(getApplicationContext(), "请您完善用户信息后提交", Toast.LENGTH_SHORT).show();
@@ -841,7 +861,7 @@ public class SettingActivity extends AppCompatActivity {
                         .load(photo)
                         .circleCrop()
                         .into(ivHeader);
-                convertBitmapToFile(bitmapHeader);
+                convertBitmapToFile(photo);
                 upHeaderToServer();
             }
         } else if (requestCode == 100) {
@@ -866,7 +886,6 @@ public class SettingActivity extends AppCompatActivity {
     private File convertBitmapToFile(Bitmap bitmap) {
         try {
             file = new File(SettingActivity.this.getCacheDir(), "userHeader");
-            file = new File(SettingActivity.this.getCacheDir(), "portrait");
             file.createNewFile();
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG,0,bos);

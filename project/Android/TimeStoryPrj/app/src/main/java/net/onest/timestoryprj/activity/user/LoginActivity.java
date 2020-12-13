@@ -108,7 +108,6 @@ public class LoginActivity extends AppCompatActivity {
             chRemember.setChecked(true);
         }
         setListener();
-
     }
 
     private void setListener() {
@@ -179,7 +178,9 @@ public class LoginActivity extends AppCompatActivity {
                         //跳转到主页
                         Intent intent = new Intent();
                         intent.setClass(getApplicationContext(), HomepageActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
+                        LoginActivity.this.finish();
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -282,7 +283,6 @@ public class LoginActivity extends AppCompatActivity {
 
         }
     }
-
     /**
      * QQ授权登录
      */
@@ -309,9 +309,14 @@ public class LoginActivity extends AppCompatActivity {
                         Looper.prepare();
                         Toast.makeText(getApplicationContext(),"登录失败",Toast.LENGTH_SHORT).show();
                         Looper.loop();
-                    }else {
+                    }else if (result == null || result.equals("")){
+                        Looper.prepare();
+                        Toast.makeText(getApplicationContext(),"登录失败",Toast.LENGTH_SHORT).show();
+                        Looper.loop();
+                    }else{
                         Intent intent = new Intent();
                         intent.setClass(getApplicationContext(),HomepageActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                         Constant.User = gson.fromJson(result,User.class);
                         Constant.User.setFlag(1);
