@@ -231,28 +231,6 @@ public class UserCenterActivity extends AppCompatActivity {
 
             }
         });
-//        加载地位
-        if (Constant.userStatuses.size() < 1) {
-            //请求
-            Request.Builder builder1 = new Request.Builder();
-            builder1.url(ServiceConfig.SERVICE_ROOT + "/status/list");
-            //构造请求类
-            Request request1 = builder1.build();
-            final Call call1 = okHttpClient.newCall(request1);
-            call1.enqueue(new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    LogUtils.d("下载失败");
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    String jsonData = response.body().string();
-                    Constant.userStatuses = gson.fromJson(jsonData, new TypeToken<List<UserStatus>>() {
-                    }.getType());
-                }
-            });
-        }
 
 
     }
