@@ -89,7 +89,8 @@
             android:id="@+id/card_img"
             android:layout_width="130dp"
             android:layout_height="200dp"
-            android:layout_margin="50dp"
+            android:layout_margin="60dp"
+            android:layout_alignParentRight="true"
             android:alpha="0.9"
             android:src="@mipmap/role" />
     </RelativeLayout>

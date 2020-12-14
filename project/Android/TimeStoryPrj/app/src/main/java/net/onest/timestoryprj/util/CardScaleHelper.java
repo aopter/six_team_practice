@@ -11,7 +11,6 @@ public class CardScaleHelper {
 
     private float mScale = 0.3f; // 两边视图scale
     private int mPagePadding = 15; // 卡片的padding, 卡片间的距离等于2倍的mPagePadding
-    public int mShowLeftCardWidth = 60;   // 左边卡片显示大小
 
     private int mCardWidth; // 卡片宽度
     private int mOnePageWidth; // 滑动一页的距离
@@ -42,7 +41,7 @@ public class CardScaleHelper {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 // dx>0则表示右滑, dx<0表示左滑, dy<0表示上滑, dy>0表示下滑
-                if(dx != 0){//去掉奇怪的内存疯涨问题
+                if (dx != 0) {//去掉奇怪的内存疯涨问题
                     mCurrentItemOffset += dx;
                     computeCurrentItemPos();
 //                    LogUtils.v(String.format("dx=%s, dy=%s, mScrolledX=%s", dx, dy, mCurrentItemOffset));
@@ -63,7 +62,7 @@ public class CardScaleHelper {
             @Override
             public void run() {
                 mCardGalleryWidth = mRecyclerView.getWidth();
-                mCardWidth = mCardGalleryWidth - ScreenUtil.dip2px(mContext, 2 * (mPagePadding + mShowLeftCardWidth));
+                mCardWidth = mCardGalleryWidth - ScreenUtil.dip2px(mContext, 2 * (mPagePadding));
                 mOnePageWidth = mCardWidth;
                 mRecyclerView.smoothScrollToPosition(mCurrentItemPos);
                 onScrolledChangedCallback();
@@ -145,8 +144,5 @@ public class CardScaleHelper {
         mPagePadding = pagePadding;
     }
 
-    public void setShowLeftCardWidth(int showLeftCardWidth) {
-        mShowLeftCardWidth = showLeftCardWidth;
-    }
 }
 

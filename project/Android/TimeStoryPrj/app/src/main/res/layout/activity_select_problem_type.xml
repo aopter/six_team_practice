@@ -12,6 +12,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:gravity="center"
+        android:shadowColor="#ffcccccc"
+        android:shadowDx="4"
+        android:shadowDy="4"
+        android:shadowRadius="4"
         android:text="要做什么题"
         android:textColor="@color/ourDynastyRed"
         android:textSize="24sp" />
@@ -42,6 +46,7 @@
                 android:layout_gravity="center"
                 android:src="@mipmap/select_xuan" />
             <TextView
+
                 style="@style/tvSelectProblemType"
                 android:text="选一选" />
         </LinearLayout>

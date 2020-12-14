@@ -302,9 +302,13 @@ public class ProblemInfoActivity extends AppCompatActivity {
                         imageViewsCkeck[i].setImageResource(0);
                     }
                     break;
-                case 9:{
+                case 9:
                     promptDialog.dismissImmediately();
-                }
+                    break;
+                case  10:
+                    promptDialog.dismissImmediately();
+                    Toast.makeText(getApplicationContext(),"题目正在录入哦，先去唐朝看看吧~",Toast.LENGTH_SHORT);
+                    break;
             }
         }
     };
@@ -484,6 +488,7 @@ public class ProblemInfoActivity extends AppCompatActivity {
         LogUtils.d("长度suoyou", myProblems.size() + "");
         isGetAnswer = false;
         String url = ServiceConfig.SERVICE_ROOT + "/problem/replenish/" + type + "/" + dynastyId + "";
+        LogUtils.d("请求题目路径", url);
         Request.Builder builder = new Request.Builder();
         builder.url(url);
         //构造请求类
@@ -495,7 +500,8 @@ public class ProblemInfoActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call call, IOException e) {
 
-                promptDialog.showError("网络较差，请稍后");
+//                promptDialog.dismissImmediately();
+//                promptDialog.showError("网络较差，请稍后");
             }
 
             @Override
@@ -505,6 +511,13 @@ public class ProblemInfoActivity extends AppCompatActivity {
                 handler.sendMessage(msgDis);
                 String jsonData = response.body().string();
                 Problem problem = gson.fromJson(jsonData, Problem.class);
+                LogUtils.d("收到的题目", problem.toString());
+                if (0 == problem.getProblemId()) {
+                    Message msgNull = new Message();
+                    msgDis.arg1 = 10;
+                    handler.sendMessage(msgNull);
+                    return;
+                }
 //                查看是否已经收藏
                 checkIsUserCollection(problem.getProblemId());
                 cProblem = problem;
@@ -1022,7 +1035,6 @@ public class ProblemInfoActivity extends AppCompatActivity {
 
 
     }
-
 
 
 }

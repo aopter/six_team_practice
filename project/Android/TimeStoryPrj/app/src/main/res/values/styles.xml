@@ -54,7 +54,7 @@
 
     <style name="settingBtn">
         <item name="android:alpha">0.8</item>
-        <item name="android:background">@android:color/white</item>
+        <item name="android:background">@mipmap/setting1</item>
         <item name="android:layout_width">120dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginLeft">0dp</item>
@@ -82,6 +82,10 @@
     </style>
 
     <style name="tvSelectProblemType">
+        <item name="android:shadowColor">#cccccc</item>
+        <item name="android:shadowRadius">4</item>
+        <item name="android:shadowDx">4</item>
+        <item name="android:shadowDy">4</item>
         <item name="android:gravity">center</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_width">match_parent</item>

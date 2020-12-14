@@ -2,6 +2,7 @@ package net.onest.timestoryprj.activity.user;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -40,6 +41,7 @@ public class UpdateNickNameActivity extends AppCompatActivity {
                 Constant.User.setUserNickname(nickname);
                 Constant.UserDetails.setUserNickname(nickname);
                 Toast.makeText(getApplicationContext(),"保存成功",Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
     }

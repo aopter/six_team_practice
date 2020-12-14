@@ -9,13 +9,14 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import net.onest.timestoryprj.R;
+import net.onest.timestoryprj.customview.SpeedRecyclerView;
 import net.onest.timestoryprj.entity.Dynasty;
 import net.onest.timestoryprj.entity.UserUnlockDynasty;
 import net.onest.timestoryprj.util.AdapterMeasureHelper;
 
 import java.util.List;
 
-public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
+public class CardAdapter extends SpeedRecyclerView.Adapter<CardAdapter.ViewHolder> {
     private List<UserUnlockDynasty> dynasties;
     private Context mContext;
     private OnItemClickLitener mOnItemClickLitener;
