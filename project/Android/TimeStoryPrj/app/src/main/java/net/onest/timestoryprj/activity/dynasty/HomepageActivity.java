@@ -217,7 +217,10 @@ public class HomepageActivity extends AppCompatActivity {
                     String jsonData = response.body().string();
                     Constant.userStatuses = gson.fromJson(jsonData, new TypeToken<List<UserStatus>>() {
                     }.getType());
+<<<<<<< Updated upstream
                     Log.e("等级列表", Constant.userStatuses.toString());
+=======
+>>>>>>> Stashed changes
                 }
             });
         }
@@ -327,7 +330,11 @@ public class HomepageActivity extends AppCompatActivity {
         loadImgWithPlaceHolders();
         tvPoint.setText(Constant.User.getUserCount() + "");
         if (Constant.User.getUserExperience() == Constant.User.getUserStatus().getStatusExperienceTop()){
+<<<<<<< Updated upstream
             Constant.User.setUserStatus(Constant.userStatuses.get(Constant.User.getUserStatus().getStatusId()));
+=======
+            Constant.User.setUserStatus(Constant.userStatuses.get(Constant.User.getUserStatus().getStatusId() + 1));
+>>>>>>> Stashed changes
         }
         tvLevel.setText(Constant.User.getUserStatus().getStatusName());
     }

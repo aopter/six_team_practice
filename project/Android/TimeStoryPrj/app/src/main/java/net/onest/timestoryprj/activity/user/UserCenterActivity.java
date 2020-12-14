@@ -231,7 +231,10 @@ public class UserCenterActivity extends AppCompatActivity {
 
             }
         });
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 
     }
 
