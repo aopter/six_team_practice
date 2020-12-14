@@ -38,7 +38,7 @@ public class StoryNodeView extends View {
     /**
      * 前景颜色
      */
-    private int foreColor = Color.parseColor("#99b13634");
+    private int foreColor = Color.parseColor("#b13634");
     /**
      * 默认高度
      */

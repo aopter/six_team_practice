@@ -302,9 +302,9 @@ public class EventDialogActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void downloadIncidentImg() {
         Glide.with(this).load(ServiceConfig.SERVICE_ROOT + "/img/incident/tang-1.png")
-                .into(ivDialog1Img);
-        Glide.with(this).load(ServiceConfig.SERVICE_ROOT + "/img/incident/tang-2.png")
                 .into(ivDialog2Img);
+        Glide.with(this).load(ServiceConfig.SERVICE_ROOT + "/img/incident/tang-2.png")
+                .into(ivDialog1Img);
         Glide.with(this).load(ServiceConfig.SERVICE_ROOT + "/img/incident/tang-other.png")
                 .into(ivDialogIntroImg);
     }
