@@ -5,27 +5,17 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <net.onest.timestoryprj.customview.CusShadowLayout
-        android:id="@+id/card_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        app:shadowColor="#55000000"
-        app:shadowRadius="3dp">
 
-        <TextView
-            android:id="@+id/tv_pai"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_margin="3dp"
-            android:background="@mipmap/bg_option_pai"
-            android:gravity="center"
-            android:padding="20dp"
-            android:text="李白乘舟将欲行"
-            android:textSize="12sp" />
-    </net.onest.timestoryprj.customview.CusShadowLayout>
+    <TextView
+        android:id="@+id/tv_pai"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_margin="3dp"
+        android:background="@mipmap/bg_option_pai"
+        android:gravity="center"
+        android:padding="20dp"
+        android:text="李白乘舟将欲行"
+        android:textSize="12sp" />
 
 </LinearLayout>
