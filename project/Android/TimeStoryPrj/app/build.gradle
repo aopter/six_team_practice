@@ -54,4 +54,6 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.aar', '*.jar'], exclude: [])
     implementation 'com.lijiankun24:shadowlayout:1.0.0'
     implementation 'com.google.zxing:core:3.3.0'
+
+    implementation 'com.github.adnan-SM:TimelyTextView:1.0'
 }
