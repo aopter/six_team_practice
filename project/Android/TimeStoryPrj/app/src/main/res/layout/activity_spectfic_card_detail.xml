@@ -21,13 +21,13 @@
             android:padding="10dp"
             android:src="@mipmap/back" />
 
-        <TextView
+        <net.onest.timestoryprj.customview.CusTextView
             android:id="@+id/text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="卡片详情"
             android:textColor="@android:color/black"
-            android:textSize="20dp" />
+            android:textSize="18sp" />
     </LinearLayout>
 
     <LinearLayout

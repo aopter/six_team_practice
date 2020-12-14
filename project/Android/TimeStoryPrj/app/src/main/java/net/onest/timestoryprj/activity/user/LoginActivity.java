@@ -88,7 +88,6 @@ public class LoginActivity extends AppCompatActivity {
         okHttpClient = new OkHttpClient();
         promptDialog = new PromptDialog(this);
         //设置自定义属性
-
         promptDialog.getDefaultBuilder().touchAble(false).round(3).loadingDuration(3000);
 
         findViews();
@@ -173,7 +172,6 @@ public class LoginActivity extends AppCompatActivity {
                         handler.sendMessage(message);
                         Constant.User = gson.fromJson(result, User.class);
                         Constant.User.setUserAccount(phone);
-                        Log.e("user信息",Constant.User.getUserCount()+"");
 
                         //跳转到主页
                         Intent intent = new Intent();
@@ -233,7 +231,6 @@ public class LoginActivity extends AppCompatActivity {
                 QQToken qqToken = mTencent.getQQToken();
                 userInfo = new UserInfo(getApplicationContext(),qqToken);
                 //上传服务器
-
                 userInfo.getUserInfo(new IUiListener() {
                     @Override
                     public void onComplete(Object o) {
@@ -248,7 +245,6 @@ public class LoginActivity extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                     }
 
                     @Override
@@ -292,8 +288,8 @@ public class LoginActivity extends AppCompatActivity {
             public void run() {
                 FormBody.Builder formBuilder = new FormBody.Builder();
                 FormBody formBody = formBuilder.add("userAccount", openId)
-                        .add("userNickName",userNickName)
-                        .add("flag", 2 + "")
+                        .add("userNickname",userNickName)
+                        .add("flag",2+"")
                         .build();
                 Request request = new Request.Builder()
                         .url(ServiceConfig.SERVICE_ROOT + "/user/register")
@@ -303,8 +299,10 @@ public class LoginActivity extends AppCompatActivity {
                 Call call = okHttpClient.newCall(request);
                 try {
                     Response response = call.execute();
+                    String obj = response.toString();
+                    Log.e("obj",obj);
                     String result = response.body().string();
-                    Log.e("result", result);
+                    Log.e("result", result+"2");
                     if (result.contains("false")){
                         Looper.prepare();
                         Toast.makeText(getApplicationContext(),"登录失败",Toast.LENGTH_SHORT).show();
@@ -325,7 +323,6 @@ public class LoginActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
             }
         }.start();
     }
