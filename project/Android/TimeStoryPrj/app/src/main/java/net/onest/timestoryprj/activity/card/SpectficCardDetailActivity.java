@@ -24,6 +24,7 @@ import com.google.gson.GsonBuilder;
 
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.constant.ServiceConfig;
+import net.onest.timestoryprj.customview.CusTextView;
 import net.onest.timestoryprj.entity.card.Card;
 import net.onest.timestoryprj.util.TextUtil;
 
@@ -52,7 +53,7 @@ public class SpectficCardDetailActivity extends AppCompatActivity {
     @BindView(R.id.back)
     ImageView back;
     @BindView(R.id.text)
-    TextView tip;
+    CusTextView tip;
     private Gson gson;
     int cardId;
     private TextUtil textUtil;
@@ -97,8 +98,6 @@ public class SpectficCardDetailActivity extends AppCompatActivity {
         promptDialog.showLoading("正在加载");
         client = new OkHttpClient();
         cardInfo.setMovementMethod(ScrollingMovementMethod.getInstance());
-        final Typeface typeface = Typeface.createFromAsset(getResources().getAssets(), "fonts/custom_font.ttf");
-        tip.setTypeface(typeface);
         gson = new GsonBuilder()//创建GsonBuilder对象
                 .serializeNulls()//允许输出Null值属性
                 .create();//创建Gson对象
