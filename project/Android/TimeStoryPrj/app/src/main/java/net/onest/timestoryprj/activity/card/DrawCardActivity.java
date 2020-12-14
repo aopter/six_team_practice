@@ -191,7 +191,7 @@ public class DrawCardActivity extends AppCompatActivity {
                     @Override
                     public void onAnimationEnd(Animation animation) {//当动画结束时需要执行的行为
                         animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.front);
-                        drawCard.setBackground(getResources().getDrawable(R.mipmap.card_bg));
+                        drawCard.setBackground(getResources().getDrawable(R.mipmap.bg_card_img));
                         Glide.with(getApplicationContext())
                                 .load(ServiceConfig.SERVICE_ROOT + "/img/" + card.getCardPicture())
                                 .into(drawCard);

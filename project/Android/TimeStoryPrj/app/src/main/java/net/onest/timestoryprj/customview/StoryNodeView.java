@@ -159,6 +159,7 @@ public class StoryNodeView extends View {
                 canvas.drawCircle(radius + i * dividWidth, getHeight() / 2, radius, bgPaint);
             }
         }
+        // 画文字
         for (int i = 0; i < nodeList.size(); i++) {
             int currentTextWidth = mBounds.get(i).width();
             if (i == 0) {
