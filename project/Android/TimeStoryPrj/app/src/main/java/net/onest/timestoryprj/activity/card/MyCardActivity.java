@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.adapter.card.CardAdapter;
 import net.onest.timestoryprj.constant.Constant;
+import net.onest.timestoryprj.customview.SpeedRecyclerView;
 import net.onest.timestoryprj.entity.UserUnlockDynasty;
 import net.onest.timestoryprj.util.CardScaleHelper;
 
@@ -24,7 +25,7 @@ import butterknife.OnClick;
 
 public class MyCardActivity extends AppCompatActivity {
     @BindView(R.id.dynasty_list)
-    RecyclerView dyanstiesView;
+    SpeedRecyclerView dyanstiesView;
     private CardScaleHelper mCardScaleHelper;
     private CardAdapter cardAdapter;
     @BindView(R.id.back)
@@ -45,9 +46,6 @@ public class MyCardActivity extends AppCompatActivity {
     private void initRecyclerView() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         dyanstiesView.setLayoutManager(linearLayoutManager);
-        for (UserUnlockDynasty dynasty : Constant.UnlockDynasty) {
-            Log.e("dynasty", dynasty.toString());
-        }
         cardAdapter = new CardAdapter(this, Constant.UnlockDynasty);
         cardAdapter.setOnItemClickLitener(new CardAdapter.OnItemClickLitener() {
             @Override

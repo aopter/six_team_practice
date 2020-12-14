@@ -1,5 +1,6 @@
 package net.onest.timestoryprj.activity.problem;
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -126,6 +127,17 @@ public class ProblemInfoActivity extends AppCompatActivity {
     @BindView(R.id.tv_pai_title)
     TextView tvPaiTitle;
 
+    @BindView(R.id.re_all_container)
+    RelativeLayout re_all_container;
+
+    @BindView(R.id.tv_user_c)
+    TextView tvUserC;
+    @BindView(R.id.tv_user_e)
+    TextView tvUserE;
+//    @BindView(R.id.tv_add_user_c)
+//    TextView tvAddC;
+//    @BindView(R.id.tv_add_user_e)
+//    TextView tvAddE;
 
     //   三种题目
     Problem cProblem;
@@ -241,7 +253,7 @@ public class ProblemInfoActivity extends AppCompatActivity {
                         @Override
                         public boolean isLongPressDragEnabled() {
                             //是否可拖拽
-                            return true;
+                            return false;
                         }
 
                         @Override
@@ -288,6 +300,11 @@ public class ProblemInfoActivity extends AppCompatActivity {
                     LogUtils.d("结果", problemCheckAnswer.toString());
                     Constant.User.setUserExperience(problemCheckAnswer.getUserExperience());
                     Constant.User.setUserCount(problemCheckAnswer.getUserCount());
+                    tvUserC.setText(problemCheckAnswer.getUserCount() + "");
+                    tvUserE.setText(problemCheckAnswer.getUserExperience() + "");
+                    //加积分的动画
+//                    animToAddC();
+
                     if (problemCheckAnswer.getUnlock().equals("true")) {
                         //成功
                         UserUnlockDynasty userUnlockDynasty = new UserUnlockDynasty();
@@ -305,13 +322,24 @@ public class ProblemInfoActivity extends AppCompatActivity {
                 case 9:
                     promptDialog.dismissImmediately();
                     break;
-                case  10:
+                case 10:
                     promptDialog.dismissImmediately();
-                    Toast.makeText(getApplicationContext(),"题目正在录入哦，先去唐朝看看吧~",Toast.LENGTH_SHORT);
+                    Toast.makeText(getApplicationContext(), "题目正在录入哦，先去唐朝看看吧~", Toast.LENGTH_SHORT);
                     break;
             }
         }
     };
+
+    /**
+     * 加积分和经验
+     */
+//    private void animToAddC() {
+//        ObjectAnimator animator = ObjectAnimator
+//                .ofFloat(tvAddC, "alpha",1f , 0.5f,0f );
+//        animator.setDuration(5000);
+//        animator.start();
+//
+//    }
 
     public static OnStartDragListener mDragStartListener;
     //    okhttp客户端类
@@ -341,6 +369,9 @@ public class ProblemInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_problem_info);
         ButterKnife.bind(this);
+        tvUserC.setText(Constant.User.getUserCount() + "");
+        tvUserE.setText(Constant.User.getUserExperience() + "");
+
 
         promptDialog = new PromptDialog(this);
         promptDialog.getDefaultBuilder().touchAble(false).round(3).loadingDuration(3000);
@@ -854,7 +885,7 @@ public class ProblemInfoActivity extends AppCompatActivity {
                 if (myProblems.size() > cIndex) {//下一道
                     getBeforeOrNextProblem();//显示
                     animationin.setDuration(600);
-                    reContainer.startAnimation(animationin);
+                    re_all_container.startAnimation(animationin);
                     return;
                 } else {
                     LogUtils.d("获取题目");
@@ -866,7 +897,7 @@ public class ProblemInfoActivity extends AppCompatActivity {
                     }
                 }
                 animationin.setDuration(600);
-                reContainer.startAnimation(animationin);
+                re_all_container.startAnimation(animationin);
                 break;
             case RIGHT:
                 cIndex -= 1;
@@ -883,7 +914,7 @@ public class ProblemInfoActivity extends AppCompatActivity {
                     getBeforeOrNextProblem();//显示上一道题目
                 }
                 animationout.setDuration(600);
-                reContainer.startAnimation(animationout);
+                re_all_container.startAnimation(animationout);
                 break;
         }
     }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<net.onest.timestoryprj.customview.CusKRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/my_rel"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/bg_problem_info">
@@ -16,16 +17,27 @@
 
         <ImageView
             android:id="@+id/iv_gif_bg"
-            android:layout_width="180dp"
-            android:layout_height="150dp"
+            android:layout_width="120dp"
+            android:layout_height="100dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true" />
 
+        <!--        <TextView-->
+        <!--            android:id="@+id/tv_add_user_c"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="+10"/>-->
+        <!--        <TextView-->
+        <!--            android:id="@+id/tv_add_user_e"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="+20"/>-->
         <net.onest.timestoryprj.customview.CusTextView
             android:id="@+id/problem_title"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:shadowColor="#eecccccc"
@@ -37,12 +49,87 @@
             android:textSize="24sp"
             android:textStyle="bold" />
 
+        <LinearLayout
+            android:paddingRight="5dp"
+            android:orientation="vertical"
+            android:id="@+id/ll_user_eAndC"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_below="@+id/problem_title"
+            android:layout_marginRight="80dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <TextView
+                    android:layout_alignParentBottom="true"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/tv_user_e"
+                    android:text="经验:" />
+
+
+
+                <TextView
+                    android:layout_alignParentBottom="true"
+
+                    android:paddingRight="10dp"
+                    android:id="@+id/tv_user_e"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/tv_c"
+                    android:text="666" />
+
+<!--                <TextView-->
+
+<!--                    android:layout_alignRight="@+id/tv_user_e"-->
+<!--                    android:layout_above="@+id/tv_user_e"-->
+<!--                    android:text="+20"-->
+<!--                    android:id="@+id/tv_add_user_e"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="20dp"-->
+<!--                    />-->
+
+                <TextView
+                    android:layout_alignParentBottom="true"
+
+                    android:textStyle="bold"
+                    android:id="@+id/tv_c"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/tv_user_c"
+                    android:text="   积分:" />
+
+                <TextView
+                    android:layout_alignParentBottom="true"
+                    android:paddingRight="10dp"
+                    android:id="@+id/tv_user_c"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="5555" />
+<!--                <TextView-->
+
+<!--                    android:layout_alignRight="@+id/tv_user_c"-->
+<!--                    android:layout_above="@+id/tv_user_c"-->
+<!--                    android:text="+10"-->
+<!--                    android:id="@+id/tv_add_user_c"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="20dp"-->
+<!--                    />-->
+
+            </RelativeLayout>
+        </LinearLayout>
 
         <RelativeLayout
+            android:id="@+id/re_all_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/bottom"
-            android:layout_below="@+id/problem_title">
+            android:layout_below="@+id/ll_user_eAndC">
 
 
             <!--    选择题-->
@@ -50,7 +137,7 @@
 
                 android:id="@+id/type_xuan"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_centerVertical="true"
                 android:orientation="vertical">
                 <!--    题目/描述-->
@@ -59,189 +146,202 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/problem_xuan_info_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:layout_marginRight="80dp"
-                        android:drawableLeft="@mipmap/left_p_title"
-                        android:text="题目：你喜欢这个界面吗"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
                         android:orientation="horizontal">
 
-                        <LinearLayout
-                            android:id="@+id/optionA"
-                            android:layout_width="0dp"
+                        <ImageView
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
+                            android:src="@mipmap/left_p_title" />
+
+                        <TextView
+                            android:id="@+id/problem_xuan_info_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="80dp"
+                            android:text="题目：你喜欢这个界面吗"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/optionA"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/iv_optionA"
+                            style="@style/ivOptionPic"
+                            android:src="@mipmap/select_lian" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:orientation="vertical">
+                            android:orientation="horizontal"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp">
 
-                            <ImageView
-                                android:id="@+id/iv_optionA"
-                                style="@style/ivOptionPic"
-                                android:src="@mipmap/select_lian" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="A " />
 
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
+                            <TextView
+                                android:id="@+id/tv_optionA"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:orientation="horizontal"
-                                android:paddingLeft="5dp"
-                                android:paddingRight="5dp">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:text="A " />
-
-                                <TextView
-                                    android:id="@+id/tv_optionA"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="喜欢" />
-
-                            </LinearLayout>
-
-                            <ImageView
-                                android:id="@+id/iv_optionA_check"
-                                style="@style/ivOptionCheck" />
-
+                                android:text="喜欢" />
 
                         </LinearLayout>
 
+                        <ImageView
+                            android:id="@+id/iv_optionA_check"
+                            style="@style/ivOptionCheck" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/optionB"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/iv_optionB"
+                            style="@style/ivOptionPic"
+
+                            android:src="@mipmap/select_lian" />
+
                         <LinearLayout
-                            android:id="@+id/optionB"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:orientation="vertical">
+                            android:orientation="horizontal"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp">
 
-                            <ImageView
-                                android:id="@+id/iv_optionB"
-                                style="@style/ivOptionPic"
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="B " />
 
-                                android:src="@mipmap/select_lian" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
+                            <TextView
+                                android:id="@+id/tv_optionB"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:orientation="horizontal"
-                                android:paddingLeft="5dp"
-                                android:paddingRight="5dp">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:text="B " />
-
-                                <TextView
-                                    android:id="@+id/tv_optionB"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="非常喜欢" />
-
-                            </LinearLayout>
-
-                            <ImageView
-                                android:id="@+id/iv_optionB_check"
-                                style="@style/ivOptionCheck" />
-
+                                android:text="非常喜欢" />
 
                         </LinearLayout>
 
+                        <ImageView
+                            android:id="@+id/iv_optionB_check"
+                            style="@style/ivOptionCheck" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/optionC"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+
+                        <ImageView
+                            android:id="@+id/iv_optionC"
+                            style="@style/ivOptionPic"
+
+                            android:src="@mipmap/select_lian" />
+
                         <LinearLayout
-                            android:id="@+id/optionC"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:orientation="vertical">
+                            android:orientation="horizontal"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp">
 
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="C " />
 
-                            <ImageView
-                                android:id="@+id/iv_optionC"
-                                style="@style/ivOptionPic"
-
-                                android:src="@mipmap/select_lian" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
+                            <TextView
+                                android:id="@+id/tv_optionC"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:orientation="horizontal"
-                                android:paddingLeft="5dp"
-                                android:paddingRight="5dp">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:text="C " />
-
-                                <TextView
-                                    android:id="@+id/tv_optionC"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="太喜欢" />
-
-                            </LinearLayout>
-
-                            <ImageView
-                                android:id="@+id/iv_optionC_check"
-                                style="@style/ivOptionCheck" />
-
+                                android:text="太喜欢" />
 
                         </LinearLayout>
 
+                        <ImageView
+                            android:id="@+id/iv_optionC_check"
+                            style="@style/ivOptionCheck" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/optionD"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/iv_optionD"
+                            style="@style/ivOptionPic"
+                            android:src="@mipmap/select_lian" />
+
                         <LinearLayout
-                            android:id="@+id/optionD"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:orientation="vertical">
+                            android:orientation="horizontal"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp">
 
-                            <ImageView
-                                android:id="@+id/iv_optionD"
-                                style="@style/ivOptionPic"
-                                android:src="@mipmap/select_lian" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="D " />
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
+
+                            <TextView
+                                android:id="@+id/tv_optionD"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:orientation="horizontal"
-                                android:paddingLeft="5dp"
-                                android:paddingRight="5dp">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:text="D " />
-
-
-                                <TextView
-                                    android:id="@+id/tv_optionD"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="好看死了" />
-
-                            </LinearLayout>
-
-                            <ImageView
-                                android:id="@+id/iv_optionD_check"
-                                style="@style/ivOptionCheck" />
+                                android:text="好看死了" />
 
                         </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/iv_optionD_check"
+                            style="@style/ivOptionCheck" />
+
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -250,24 +350,37 @@
             <LinearLayout
                 android:id="@+id/type_lian"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_centerVertical="true"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/title_lian"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:layout_marginBottom="0dp"
-                    android:drawableLeft="@mipmap/left_p_title"
-                    android:text="题目：请将人物与学科相对应"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:layout_marginLeft="10dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="5dp"
+                        android:src="@mipmap/left_p_title" />
+
+                    <TextView
+                        android:id="@+id/title_lian"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="0dp"
+                        android:text="题目：请将人物与学科相对应"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
 
                     <FrameLayout
                         android:id="@+id/fl_link_line"
@@ -294,37 +407,29 @@
             <LinearLayout
                 android:id="@+id/type_pai"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_centerVertical="true"
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp">
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/title_a"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:src="@mipmap/left_p_title" />
 
                     <TextView
                         android:id="@+id/tv_pai_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/title_a"
                         android:text="题目：你喜欢这个界面吗"
                         android:textSize="18sp"
                         android:textStyle="bold" />
-                </RelativeLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
                 </LinearLayout>
 
 
@@ -332,8 +437,8 @@
                     android:id="@+id/re_pai"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
                     android:gravity="center"
                     android:padding="5dp" />
             </LinearLayout>
@@ -370,4 +475,4 @@
     </RelativeLayout>
 
 
-</RelativeLayout>
+</net.onest.timestoryprj.customview.CusKRelativeLayout>

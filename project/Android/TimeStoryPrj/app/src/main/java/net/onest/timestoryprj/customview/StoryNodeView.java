@@ -38,7 +38,7 @@ public class StoryNodeView extends View {
     /**
      * 前景颜色
      */
-    private int foreColor = Color.parseColor("#FFE4C4");
+    private int foreColor = Color.parseColor("#b13634");
     /**
      * 默认高度
      */
@@ -89,7 +89,7 @@ public class StoryNodeView extends View {
         unselectPaint.setTextSize(SizeUtils.sp2px(context, 10));
 
         selectPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        selectPaint.setColor(Color.RED);
+        selectPaint.setColor(bgColor);
         selectPaint.setTextSize(20);
         selectPaint.setTextSize(SizeUtils.sp2px(context, 10));
     }
@@ -159,6 +159,7 @@ public class StoryNodeView extends View {
                 canvas.drawCircle(radius + i * dividWidth, getHeight() / 2, radius, bgPaint);
             }
         }
+        // 画文字
         for (int i = 0; i < nodeList.size(); i++) {
             int currentTextWidth = mBounds.get(i).width();
             if (i == 0) {

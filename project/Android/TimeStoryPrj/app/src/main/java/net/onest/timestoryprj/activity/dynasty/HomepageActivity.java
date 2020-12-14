@@ -27,9 +27,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.tinytongtong.tinyutils.LogUtils;
 
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.activity.card.DrawCardActivity;
@@ -38,6 +40,7 @@ import net.onest.timestoryprj.activity.problem.ProblemCollectionActivity;
 import net.onest.timestoryprj.activity.user.RechargeActivity;
 import net.onest.timestoryprj.activity.user.SettingActivity;
 import net.onest.timestoryprj.activity.user.UserCenterActivity;
+import net.onest.timestoryprj.adapter.user.UserRankListAdapter;
 import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.customview.FlowerView;
@@ -62,6 +65,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 public class HomepageActivity extends AppCompatActivity {
     public static MediaPlayer mediaPlayer;
     private TextView tvLevel;
@@ -73,6 +83,7 @@ public class HomepageActivity extends AppCompatActivity {
     private ImageView ivHeader;
     private Button btnVoice;
     private Button btnSettings;
+    private OkHttpClient okHttpClient;
     private LinearLayout llLayout1;
     private LinearLayout llLayout2;
     private String DYNASTY_LIST = "/dynasty/list";
@@ -125,8 +136,6 @@ public class HomepageActivity extends AppCompatActivity {
                                 params.setMargins(330, 0, 0, 0);
                             }
                             tv.setLayoutParams(params);
-//                            ll.addView(iv);
-//                            ll.addView(tv);
                             llLayout2.addView(tv);
                         }
                         int finalI = i;
@@ -169,6 +178,9 @@ public class HomepageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
         findViews();
+        initOkhttp();
+        //获取等级列表
+        initStatus();
         setListener();
         initSnow();
         //初始化gson
@@ -177,7 +189,39 @@ public class HomepageActivity extends AppCompatActivity {
         AssetManager assets = getAssets();
         typeface = Typeface.createFromAsset(assets, "fonts/custom_fontt.ttf");
         initData();
-        Log.e("user", Constant.User.toString());
+    }
+
+    /**
+     * 加载okhttp
+     */
+    private void initOkhttp() {
+        okHttpClient = new OkHttpClient();
+    }
+
+    private void initStatus() {
+        //加载地位
+        if(Constant.userStatuses.size() < 1) {
+            //请求
+            Request.Builder builder1 = new Request.Builder();
+            builder1.url(ServiceConfig.SERVICE_ROOT + "/status/list");
+            //构造请求类
+            Request request1 = builder1.build();
+            final Call call1 = okHttpClient.newCall(request1);
+            call1.enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    LogUtils.d("下载失败");
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String jsonData = response.body().string();
+                    Constant.userStatuses = gson.fromJson(jsonData, new TypeToken<List<UserStatus>>() {
+                    }.getType());
+                }
+            });
+        }
+
     }
 
     private void initSnow() {
@@ -281,8 +325,11 @@ public class HomepageActivity extends AppCompatActivity {
     private void getUserInfo() {
         initProgress();
         loadImgWithPlaceHolders();
-        Log.e("经验", String.valueOf(Constant.User.getUserExperience()));
         tvPoint.setText(Constant.User.getUserCount() + "");
+        if (Constant.User.getUserExperience() == Constant.User.getUserStatus().getStatusExperienceTop()){
+            Constant.User.setUserStatus(Constant.userStatuses.get(Constant.User.getUserStatus().getStatusId()));
+            Constant.User.setUserStatus(Constant.userStatuses.get(Constant.User.getUserStatus().getStatusId() + 1));
+        }
         tvLevel.setText(Constant.User.getUserStatus().getStatusName());
     }
     /**
@@ -358,17 +405,23 @@ public class HomepageActivity extends AppCompatActivity {
             if (Constant.User.getUserHeader() == null){
                 Glide.with(this)
                         .load(R.mipmap.man)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
                         .circleCrop()
                         .into(ivHeader);
             }else {
                 Glide.with(this)
                         .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
                         .circleCrop()
                         .into(ivHeader);
             }
         }else if (Constant.User.getFlag() == 1){
             Glide.with(this)
                     .load(Constant.User.getUserHeader())
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
                     .circleCrop()
                     .into(ivHeader);
         }
@@ -433,6 +486,7 @@ public class HomepageActivity extends AppCompatActivity {
                         tvExerperience.setTextColor(getResources().getColor(R.color.ourDynastyRed));
                         tvExerperience.setTextSize(12);
                         tvExerperience.setBackgroundResource(R.mipmap.button);
+                        tvExerperience.setGravity(View.TEXT_ALIGNMENT_CENTER);
                         params.addRule(RelativeLayout.BELOW, R.id.tv_level);
                         tvExerperience.setLayoutParams(params);
                         tvExerperience.setOnClickListener(new View.OnClickListener() {

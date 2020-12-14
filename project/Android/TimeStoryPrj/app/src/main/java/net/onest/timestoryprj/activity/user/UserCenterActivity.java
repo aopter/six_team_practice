@@ -165,24 +165,28 @@ public class UserCenterActivity extends AppCompatActivity {
     //加载头像
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void loadImgWithPlaceHolders() {
-//        .skipMemoryCache(true)//跳过内存缓存
-//                .diskCacheStrategy(DiskCacheStrategy.NONE)//不缓冲disk硬盘中
         //头像
         if (Constant.User.getFlag() == 0) {
             if (Constant.User.getUserHeader() == null) {
                 Glide.with(this)
                         .load(R.mipmap.man)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
                         .circleCrop()
                         .into(ivHeader);
             } else {
                 Glide.with(this)
                         .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
                         .circleCrop()
                         .into(ivHeader);
             }
         } else if (Constant.User.getFlag() == 1) {
             Glide.with(this)
                     .load(Constant.User.getUserHeader())
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
                     .circleCrop()
                     .into(ivHeader);
         }
@@ -231,29 +235,6 @@ public class UserCenterActivity extends AppCompatActivity {
 
             }
         });
-//        加载地位
-        if (Constant.userStatuses.size() < 1) {
-            //请求
-            Request.Builder builder1 = new Request.Builder();
-            builder1.url(ServiceConfig.SERVICE_ROOT + "/status/list");
-            //构造请求类
-            Request request1 = builder1.build();
-            final Call call1 = okHttpClient.newCall(request1);
-            call1.enqueue(new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    LogUtils.d("下载失败");
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    String jsonData = response.body().string();
-                    Constant.userStatuses = gson.fromJson(jsonData, new TypeToken<List<UserStatus>>() {
-                    }.getType());
-                }
-            });
-        }
-
 
     }
 
