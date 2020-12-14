@@ -87,13 +87,14 @@ public class RegisterActivity extends AppCompatActivity {
                     Log.e("result", result);
                     JSONObject object = new JSONObject(result);
                     if (object.getBoolean("result") == true){
-                        Looper.prepare();
-                        Toast.makeText(getApplicationContext(),"注册成功",Toast.LENGTH_SHORT).show();
-                        Looper.loop();
                         //跳转至登录界面
                         Intent intent = new Intent();
                         intent.setClass(getApplicationContext(),LoginActivity.class);
                         startActivity(intent);
+                        Looper.prepare();
+                        Toast.makeText(getApplicationContext(),"注册成功",Toast.LENGTH_SHORT).show();
+                        Looper.loop();
+
                     }else {
                         Looper.prepare();
                         Toast.makeText(getApplicationContext(),"注册失败，该用户已存在",Toast.LENGTH_SHORT).show();
