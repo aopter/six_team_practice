@@ -558,8 +558,10 @@ public class SettingActivity extends AppCompatActivity {
 
         ScrollView scrollView = new ScrollView(getApplicationContext());
         LinearLayout.LayoutParams scParam = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+
         scParam.topMargin = 30;
         scrollView.setPadding(200,150,20,120);
+
         scrollView.setLayoutParams(scParam);
         TextView tvRule = new TextView(getApplicationContext());
         tvRule.setText(Constant.Rule.getRuleInfo());
@@ -568,6 +570,7 @@ public class SettingActivity extends AppCompatActivity {
         ruleParam.leftMargin = 100;
         ruleParam.topMargin = 50;
         tvRule.setLayoutParams(ruleParam);
+
 
         bigLinear.addView(scrollView);
         scrollView.addView(tvRule);
@@ -788,6 +791,7 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 Log.e("ok", "成功");
+
                 Constant.User.setUserHeader("user/us-" + Constant.User.getUserId() + ".jpg");
                 Looper.prepare();
                 Toast.makeText(getApplicationContext(), "头像上传成功", Toast.LENGTH_SHORT).show();
@@ -872,6 +876,7 @@ public class SettingActivity extends AppCompatActivity {
                         .circleCrop()
                         .into(ivHeader);
                 convertBitmapToFile(photo);
+
                 upHeaderToServer();
             }
         } else if (requestCode == 100) {
