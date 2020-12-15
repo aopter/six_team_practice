@@ -159,7 +159,7 @@ public class EventDialogActivity extends AppCompatActivity {
                                 curTime = new Date().getTime();
                                 if ((curTime-prelongTim) < 1000){
                                     Log.e("iii", curTime-prelongTim + "");
-                                    Toast.makeText(getApplicationContext(), "点击太快了，慢一些把！",Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "点击太快了，慢一些吧！",Toast.LENGTH_LONG).show();
                                 }else{
                                     Log.e("iiie", curTime-prelongTim + "");
                                     int count = rlRelativeLayout.getChildCount();

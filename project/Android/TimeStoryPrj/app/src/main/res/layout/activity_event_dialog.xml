@@ -74,7 +74,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentBottom="true"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="30dp"/>
+            android:layout_marginBottom="25dp"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -104,7 +104,7 @@
                     android:layout_marginRight="30dp"
                     android:background="@mipmap/conversation1"
                     android:paddingLeft="20dp"
-                    android:paddingTop="10dp"
+                    android:paddingTop="15dp"
                     android:paddingRight="20dp"
                     android:textColor="@android:color/black" />
 
@@ -116,7 +116,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="40dp"
+            android:layout_marginBottom="25dp"
             android:gravity="center_horizontal"
             android:orientation="horizontal">
 

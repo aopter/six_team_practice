@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -72,6 +73,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class HomepageActivity extends AppCompatActivity {
+    int flag = 0;
     public static MediaPlayer mediaPlayer;
     private TextView tvLevel;
     private TextView tvPoint;
@@ -217,10 +219,6 @@ public class HomepageActivity extends AppCompatActivity {
                     String jsonData = response.body().string();
                     Constant.userStatuses = gson.fromJson(jsonData, new TypeToken<List<UserStatus>>() {
                     }.getType());
-<<<<<<< Updated upstream
-                    Log.e("等级列表", Constant.userStatuses.toString());
-=======
->>>>>>> Stashed changes
                 }
             });
         }
@@ -330,11 +328,8 @@ public class HomepageActivity extends AppCompatActivity {
         loadImgWithPlaceHolders();
         tvPoint.setText(Constant.User.getUserCount() + "");
         if (Constant.User.getUserExperience() == Constant.User.getUserStatus().getStatusExperienceTop()){
-<<<<<<< Updated upstream
             Constant.User.setUserStatus(Constant.userStatuses.get(Constant.User.getUserStatus().getStatusId()));
-=======
             Constant.User.setUserStatus(Constant.userStatuses.get(Constant.User.getUserStatus().getStatusId() + 1));
->>>>>>> Stashed changes
         }
         tvLevel.setText(Constant.User.getUserStatus().getStatusName());
     }
@@ -411,17 +406,23 @@ public class HomepageActivity extends AppCompatActivity {
             if (Constant.User.getUserHeader() == null){
                 Glide.with(this)
                         .load(R.mipmap.man)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
                         .circleCrop()
                         .into(ivHeader);
             }else {
                 Glide.with(this)
                         .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
                         .circleCrop()
                         .into(ivHeader);
             }
         }else if (Constant.User.getFlag() == 1){
             Glide.with(this)
                     .load(Constant.User.getUserHeader())
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
                     .circleCrop()
                     .into(ivHeader);
         }
@@ -473,31 +474,38 @@ public class HomepageActivity extends AppCompatActivity {
                     overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
                     break;
                 case R.id.tv_level:
-                    int count = relativeProgress.getChildCount();
-                    Log.e("元素个数", count + "");
-                    if (count == 1) {
-                        TextView tvExerperience = new TextView(getApplicationContext());
-                        int we = DensityUtil.dip2px(getApplicationContext(), 70);
-                        int he = DensityUtil.dip2px(getApplicationContext(), 40);
-                        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(we, he);
-                        params.topMargin = 5;
-                        tvExerperience.setPadding(20, 0, 20, 0);
-                        tvExerperience.setText("" + Constant.User.getUserExperience() + "/" + Constant.User.getUserStatus().getStatusExperienceTop());
-                        tvExerperience.setTextColor(getResources().getColor(R.color.ourDynastyRed));
-                        tvExerperience.setTextSize(12);
-                        tvExerperience.setBackgroundResource(R.mipmap.button);
-                        tvExerperience.setGravity(View.TEXT_ALIGNMENT_CENTER);
-                        params.addRule(RelativeLayout.BELOW, R.id.tv_level);
-                        tvExerperience.setLayoutParams(params);
-                        tvExerperience.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                relativeProgress.removeViewAt(1);
-                            }
-                        });
-                        relativeProgress.addView(tvExerperience);
+                    if (flag == 0){
+                        tvLevel.setText("" + Constant.User.getUserExperience() + "/" + Constant.User.getUserStatus().getStatusExperienceTop());
+                        flag = 1;
+                    }else{
+                        tvLevel.setText(Constant.User.getUserStatus().getStatusName());
+                        flag = 0;
                     }
                     break;
+//                    breakint count = relativeProgress.getChildCount();
+//                    Log.e("元素个数", count + "");
+//                    if (count == 1) {
+//                        TextView tvExerperience = new TextView(getApplicationContext());
+//                        int we = DensityUtil.dip2px(getApplicationContext(), 70);
+//                        int he = DensityUtil.dip2px(getApplicationContext(), 40);
+//                        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(we, he);
+//                        params.topMargin = 5;
+//                        tvExerperience.setPadding(20, 0, 20, 0);
+//                        tvExerperience.setText("" + Constant.User.getUserExperience() + "/" + Constant.User.getUserStatus().getStatusExperienceTop());
+//                        tvExerperience.setTextColor(getResources().getColor(R.color.ourDynastyRed));
+//                        tvExerperience.setTextSize(12);
+//                        tvExerperience.setBackgroundResource(R.mipmap.button);
+//                        tvExerperience.setGravity(View.TEXT_ALIGNMENT_CENTER);
+//                        params.addRule(RelativeLayout.BELOW, R.id.tv_level);
+//                        tvExerperience.setLayoutParams(params);
+//                        tvExerperience.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View view) {
+//                                relativeProgress.removeViewAt(1);
+//                            }
+//                        });
+//                        relativeProgress.addView(tvExerperience);
+//                    };
             }
         }
     }
@@ -521,6 +529,7 @@ public class HomepageActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        flag = 0;
         setListener();
         getUserInfo();
     }

@@ -95,14 +95,22 @@ public class EventListAdapter extends BaseAdapter {
 //            public boolean onTouch(View view, MotionEvent motionEvent) {
 //                switch (motionEvent.getAction()){
 //                    case MotionEvent.ACTION_DOWN: //按住执行
-//                        int size1 = DensityUtil.dip2px(context, 40);
-//                        tvIncidentName.setTextColor(Color.parseColor("#AE5B41"));
-//                        Log.e("执行", "run");
+//                        if(view.getId() == R.id.tv_incident_name){
+//                            int size1 = DensityUtil.dip2px(context, 40);
+////                            tvIncidentName.setScaleX((float) 0.7);
+////                            tvIncidentName.setScaleY((float) 0.7);
+//                            tvIncidentName.setTextColor(Color.parseColor("#AE5B41"));
+//                            Log.e("执行", "run");
+//                        }
 //                        break;
 //                    case MotionEvent.ACTION_UP:
-//                        Log.e("停止", "stop");
-//                        int size2 = DensityUtil.dip2px(context, 25);
-//                        tvIncidentName.setTextColor(Color.parseColor("#000000"));
+//                        if(view.getId() == R.id.tv_incident_name){
+//                            Log.e("停止", "stop");
+//                            int size2 = DensityUtil.dip2px(context, 25);
+////                            tvIncidentName.setScaleY(1);
+////                            tvIncidentName.setScaleX(1);
+//                            tvIncidentName.setTextColor(Color.parseColor("#000000"));
+//                        }
 //                        break;
 //                }
 //                return false;

@@ -57,11 +57,11 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
     private Gson gson;
     private TextUtil textUtil;
     private Dynasty dynasty1;
-//    private ScrollView svIntroWord;
-    private Handler handler = new Handler(){
+    //    private ScrollView svIntroWord;
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case 1:
                     dynasty1 = (Dynasty) msg.obj;
                     AssetManager assets = getAssets();
@@ -95,7 +95,6 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
         btnQuestions.setOnClickListener(myListener);
         rlBack.setOnClickListener(myListener);
         btnImg.setOnClickListener(myListener);
-//        svIntroWord.setOnClickListener(myListener);
         tvDynastyIntro.setOnClickListener(myListener);
     }
 
@@ -164,54 +163,70 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
             switch (view.getId()) {
                 case R.id.btn_questions:
                     Intent intent = new Intent(DynastyIntroduceActivity.this, SelectProblemTypeActivity.class);
-                    intent.putExtra("dynastyId1",dynastyId);//朝代
+                    intent.putExtra("dynastyId1", dynastyId);//朝代
                     startActivity(intent);
-                    overridePendingTransition(R.anim.anim_in_right,R.anim.anim_out_left);
+                    overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
+
                     break;
                 case R.id.btn_details:
+
                     Intent intent1 = new Intent();
                     intent1.setClass(DynastyIntroduceActivity.this, DetailsEventActivity.class);
                     intent1.putExtra("dynastyName1", tvDynastyName.getText());
                     intent1.putExtra("dynastyId1", dynastyId);
                     startActivity(intent1);
-                    overridePendingTransition(R.anim.anim_in_right,R.anim.anim_out_left);
+                    overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
+
                     break;
                 case R.id.rl_back:
-                    if (textUtil.isFlag() == false){
-                        Log.e("false", "false");
-                        textUtil.setFlag(true);
-                    }else{
-                        Log.e("true", "true");
-                        tvDynastyIntro.setText(dynasty1.getDynastyInfo());
+                    if (dynasty1 != null) {
+                        if (textUtil.isFlag() == false) {
+                            Log.e("false", "false");
+                            textUtil.setFlag(true);
+                        } else {
+                            Log.e("true", "true");
+                            tvDynastyIntro.setText(dynasty1.getDynastyInfo());
+                        }
                     }
                     break;
                 case R.id.tv_dynasty_intro:
                     Log.e("点击", "TextView");
-                    if (textUtil.isFlag() == false){
-                        textUtil.setFlag(true);
-                    }else{
-                        tvDynastyIntro.setText(dynasty1.getDynastyInfo());
+                    if (dynasty1 != null) {
+                        if (textUtil.isFlag() == false) {
+                            Log.e("false", "false");
+                            textUtil.setFlag(true);
+                        } else {
+                            Log.e("true", "true");
+                            tvDynastyIntro.setText(dynasty1.getDynastyInfo());
+                        }
                     }
                     break;
                 case R.id.btn_img:
                     Intent intent2 = new Intent();
                     intent2.setClass(DynastyIntroduceActivity.this, AllScreenImgActivity.class);
                     startActivity(intent2);
-                    overridePendingTransition(R.anim.anim_in_right,R.anim.anim_out_left);
+                    overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
+
                     break;
             }
         }
     }
+
     @OnClick(R.id.btn_pre)
-    void backToLastPage(){finish();}
+    void backToLastPage() {
+        finish();
+    }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (textUtil != null){
-            if (textUtil.isFlag() == false){
+        if (textUtil != null) {
+            if (textUtil.isFlag() == false) {
+                Log.e("onresume", "flag:false");
+                tvDynastyIntro.setText(dynasty1.getDynastyInfo());
                 textUtil.setFlag(true);
-            }else{
+            } else {
+                Log.e("onresume", "flag:true");
                 tvDynastyIntro.setText(dynasty1.getDynastyInfo());
             }
         }
@@ -220,13 +235,13 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (null == textUtil){
+        if (null == textUtil) {
             return;
-        }else{
-            if (textUtil.isFlag() == false){
+        } else {
+            if (textUtil.isFlag() == false) {
                 Log.e("false", "false");
                 textUtil.setFlag(true);
-            }else{
+            } else {
                 Log.e("true", "true");
                 tvDynastyIntro.setText(dynasty1.getDynastyInfo());
             }

@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/info"
-    android:orientation="vertical"
     tools:context=".activity.dynasty.DetailsEventActivity">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="15dp"
-        android:orientation="vertical">
         <LinearLayout
+            android:id="@+id/ll_lishi"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="15dp"
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -25,14 +22,23 @@
                 android:textColor="@color/ourDynastyRed"/>
         </LinearLayout>
 
-        <GridView
-            android:orientation="horizontal"
-            android:id="@+id/hlv_timeline"
-            android:layout_width="wrap_content"
-            android:padding="0dp"
+        <HorizontalScrollView
+            android:layout_below="@+id/ll_lishi"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:horizontalSpacing="0dp"
-            android:verticalSpacing="0dp"
-            android:clickable="false"/>
-    </LinearLayout>
-</HorizontalScrollView>
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <GridView
+                    android:orientation="horizontal"
+                    android:id="@+id/hlv_timeline"
+                    android:layout_width="wrap_content"
+                    android:padding="0dp"
+                    android:layout_height="match_parent"
+                    android:horizontalSpacing="0dp"
+                    android:verticalSpacing="0dp"
+                    android:clickable="false"/>
+            </LinearLayout>
+        </HorizontalScrollView>
+</RelativeLayout>

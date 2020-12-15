@@ -165,24 +165,28 @@ public class UserCenterActivity extends AppCompatActivity {
     //加载头像
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void loadImgWithPlaceHolders() {
-//        .skipMemoryCache(true)//跳过内存缓存
-//                .diskCacheStrategy(DiskCacheStrategy.NONE)//不缓冲disk硬盘中
         //头像
         if (Constant.User.getFlag() == 0) {
             if (Constant.User.getUserHeader() == null) {
                 Glide.with(this)
                         .load(R.mipmap.man)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
                         .circleCrop()
                         .into(ivHeader);
             } else {
                 Glide.with(this)
                         .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
                         .circleCrop()
                         .into(ivHeader);
             }
         } else if (Constant.User.getFlag() == 1) {
             Glide.with(this)
                     .load(Constant.User.getUserHeader())
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
                     .circleCrop()
                     .into(ivHeader);
         }
@@ -231,10 +235,6 @@ public class UserCenterActivity extends AppCompatActivity {
 
             }
         });
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 
     }
 
