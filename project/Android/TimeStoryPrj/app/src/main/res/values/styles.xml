@@ -36,20 +36,20 @@
 
     <style name="loginEtStyle">
         <item name="android:layout_height">40dp</item>
-        <item name="android:layout_width">270dp</item>
-        <item name="android:layout_marginTop">25dp</item>
-        <item name="android:background">#bfffffff</item>
+        <item name="android:layout_width">300dp</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:background">@drawable/bg_edit_style</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:gravity">center</item>
     </style>
 
     <style name="loginBtn">
-        <item name="android:layout_width">110dp</item>
+        <item name="android:layout_width">120dp</item>
         <item name="android:layout_height">40dp</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:textSize">23sp</item>
         <item name="android:textColor">@color/ourDynastyRed</item>
-        <item name="android:background">@mipmap/bg_login_kl</item>
+        <item name="android:background">@mipmap/login_button</item>
     </style>
 
     <style name="settingBtn">

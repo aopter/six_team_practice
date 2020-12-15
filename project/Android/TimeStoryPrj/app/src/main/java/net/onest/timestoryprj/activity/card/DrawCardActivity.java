@@ -126,22 +126,18 @@ public class DrawCardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_draw_card);
         ButterKnife.bind(this);
-        if (Constant.User.getUserCount() >= descCount) {
-            back.setVisibility(View.VISIBLE);
-            width = ScreenUtil.dip2px(getApplicationContext(), 120);
-            height = ScreenUtil.dip2px(getApplicationContext(), 180);
-            final Typeface typeface = Typeface.createFromAsset(getResources().getAssets(), "fonts/custom_font.ttf");
-            tip.setTypeface(typeface);
-            text.setTypeface(typeface);
-            client = new OkHttpClient();
-            frontContainer.bringToFront();
-            cardAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.back);
-            gson = new GsonBuilder()//创建GsonBuilder对象
-                    .serializeNulls()//允许输出Null值属性
-                    .create();//创建Gson对象
-        } else {
-            showDialog();
-        }
+        back.setVisibility(View.VISIBLE);
+        width = ScreenUtil.dip2px(getApplicationContext(), 120);
+        height = ScreenUtil.dip2px(getApplicationContext(), 180);
+        final Typeface typeface = Typeface.createFromAsset(getResources().getAssets(), "fonts/custom_font.ttf");
+        tip.setTypeface(typeface);
+        text.setTypeface(typeface);
+        client = new OkHttpClient();
+        frontContainer.bringToFront();
+        cardAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.back);
+        gson = new GsonBuilder()//创建GsonBuilder对象
+                .serializeNulls()//允许输出Null值属性
+                .create();//创建Gson对象
     }
 
     private void getDrawCard() {
@@ -285,21 +281,5 @@ public class DrawCardActivity extends AppCompatActivity {
             view.buildDrawingCache();
             Constant.shareBitmap = view.getDrawingCache();
         }
-    }
-
-    private void showDialog() {
-        CustomDialog.Builder builder = new CustomDialog.Builder(this);
-        builder.setTitle("提示");
-        builder.setMessage("您的积分不足，快去选择朝代进行答题来赚取积分吧~");
-        builder.setButtonConfirm("确定", new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-        CustomDialog customDialog = builder.create();
-        customDialog.setCancelable(false);
-        customDialog.setCanceledOnTouchOutside(false);
-        customDialog.show();
     }
 }

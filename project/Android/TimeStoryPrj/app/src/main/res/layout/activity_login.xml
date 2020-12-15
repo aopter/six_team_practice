@@ -1,131 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:background="#000"
-    android:alpha="0.90">
-
-<LinearLayout
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:alpha="0.9"
-
     android:layout_height="match_parent"
-    android:background="@mipmap/login"
-    android:orientation="vertical"
+    android:alpha="0.90"
+    android:background="#F5F5F5"
+    android:orientation="horizontal"
     tools:context=".activity.user.LoginActivity">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.95"
+        android:background="@mipmap/bg_login"
+        android:orientation="vertical">
 
-    <net.onest.timestoryprj.customview.CusTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="15dp"
-        android:text="时光序"
-        android:textColor="#fff"
-        android:textSize="40sp" />
-
-    <EditText
-        android:id="@+id/et_phone"
-        style="@style/loginEtStyle"
-        android:hint="手机号"
-        android:imeOptions="actionDone|flagNoExtractUi"
-        android:inputType="number" />
-
-    <EditText
-        android:id="@+id/et_pwd"
-        style="@style/loginEtStyle"
-        android:hint="密码"
-        android:imeOptions="actionDone|flagNoExtractUi"
-        android:inputType="textPassword" />
-
-    <LinearLayout
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
-
-        <CheckBox
-            android:id="@+id/remember"
-            android:layout_width="30dp"
-            android:layout_height="30dp" />
-
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="记住密码"
-            android:textColor="#fff"
-            android:textSize="20sp" />
-    </LinearLayout>
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp">
-        <Button
-            android:id="@+id/btn_register"
-            style="@style/loginBtn"
-            android:text="注册" />
-        <Button
-            android:id="@+id/btn_login"
-            style="@style/loginBtn"
-            android:layout_marginLeft="10dp"
-            android:text="登录" />
+            <EditText
+                android:id="@+id/et_phone"
+                style="@style/loginEtStyle"
+                android:hint="手机号"
+                android:imeOptions="actionDone|flagNoExtractUi"
+                android:inputType="number" />
 
+            <EditText
+                android:id="@+id/et_pwd"
+                style="@style/loginEtStyle"
+                android:hint="密码"
+                android:imeOptions="actionDone|flagNoExtractUi"
+                android:inputType="textPassword" />
 
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center"
-        android:orientation="horizontal">
+                <CheckBox
+                    android:id="@+id/remember"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp" />
 
-        <net.onest.timestoryprj.customview.CusTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="记住密码"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+            </LinearLayout>
 
-            <TextView
+            <LinearLayout
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <Button
+                    android:id="@+id/btn_register"
+                    style="@style/loginBtn"
+                    android:text="注册" />
+
+                <Button
+                    android:id="@+id/btn_login"
+                    style="@style/loginBtn"
+                    android:layout_marginLeft="10dp"
+                    android:text="登录" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:text="其他登录方式"
-                android:textColor="#fff"
-                android:textSize="20sp" />
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btn_weixin"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="15dp"
-                android:background="@mipmap/weixin" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="其他登录方式"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
 
-            <Button
-                android:id="@+id/btn_qq"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="15dp"
-                android:background="@mipmap/qq" />
+                <Button
+                    android:id="@+id/btn_weixin"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="15dp"
+                    android:background="@mipmap/weixin" />
 
-            <Button
-                android:id="@+id/btn_forget"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:background="#00000000"
-                android:text="忘记密码？"
-                android:textColor="#fff" />
+                <Button
+                    android:id="@+id/btn_qq"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="15dp"
+                    android:background="@mipmap/qq" />
 
+                <Button
+                    android:id="@+id/btn_forget"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:background="#00000000"
+                    android:text="忘记密码？"
+                    android:textColor="@color/black" />
+            </LinearLayout>
         </LinearLayout>
-
-</LinearLayout>
-
+    </RelativeLayout>
 </LinearLayout>
