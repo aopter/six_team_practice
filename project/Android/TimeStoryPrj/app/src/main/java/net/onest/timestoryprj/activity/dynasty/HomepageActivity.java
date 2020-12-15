@@ -350,11 +350,7 @@ public class HomepageActivity extends AppCompatActivity {
         loadImgWithPlaceHolders();
         tvPoint.setText(Constant.User.getUserCount() + "");
         if (Constant.User.getUserExperience() == Constant.User.getUserStatus().getStatusExperienceTop()){
-<<<<<<< Updated upstream
             Constant.User.setUserStatus(Constant.userStatuses.get(Constant.User.getUserStatus().getStatusId()));
-=======
->>>>>>> Stashed changes
-            Constant.User.setUserStatus(Constant.userStatuses.get(Constant.User.getUserStatus().getStatusId() + 1));
         }
         tvLevel.setText(Constant.User.getUserStatus().getStatusName());
     }
@@ -497,38 +493,13 @@ public class HomepageActivity extends AppCompatActivity {
                     overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
                     break;
                 case R.id.tv_level:
-<<<<<<< Updated upstream
                     if (flag == 0){
                         tvLevel.setText("" + Constant.User.getUserExperience() + "/" + Constant.User.getUserStatus().getStatusExperienceTop());
                         flag = 1;
                     }else{
                         tvLevel.setText(Constant.User.getUserStatus().getStatusName());
                         flag = 0;
-=======
-                    int count = relativeProgress.getChildCount();
-                    Log.e("元素个数", count + "");
-                    if (count == 1) {
-                        TextView tvExerperience = new TextView(getApplicationContext());
-                        int we = DensityUtil.dip2px(getApplicationContext(), 70);
-                        int he = DensityUtil.dip2px(getApplicationContext(), 40);
-                        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(we, he);
-                        params.topMargin = 5;
-                        tvExerperience.setPadding(20, 0, 20, 0);
-                        tvExerperience.setText("" + Constant.User.getUserExperience() + "/" + Constant.User.getUserStatus().getStatusExperienceTop());
-                        tvExerperience.setTextColor(getResources().getColor(R.color.ourDynastyRed));
-                        tvExerperience.setTextSize(12);
-                        tvExerperience.setBackgroundResource(R.mipmap.button);
-                        tvExerperience.setGravity(View.TEXT_ALIGNMENT_CENTER);
-                        params.addRule(RelativeLayout.BELOW, R.id.tv_level);
-                        tvExerperience.setLayoutParams(params);
-                        tvExerperience.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                relativeProgress.removeViewAt(1);
-                            }
-                        });
-                        relativeProgress.addView(tvExerperience);
->>>>>>> Stashed changes
+
                     }
                     break;
 //                    breakint count = relativeProgress.getChildCount();

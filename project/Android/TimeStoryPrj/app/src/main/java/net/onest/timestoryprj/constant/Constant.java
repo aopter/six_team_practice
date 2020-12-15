@@ -42,5 +42,9 @@ public class Constant {
     public static Bitmap shareBitmap;
 
     public static List<UserStatus> userStatuses = new ArrayList<>();
+    //用户是否更改图片，未更改为0，更改后为1
+    public static int ChangeHeader;
+
+    public static long Random;
 
 }

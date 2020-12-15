@@ -166,17 +166,14 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
                     intent.putExtra("dynastyId1", dynastyId);//朝代
                     startActivity(intent);
                     overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
-
                     break;
                 case R.id.btn_details:
-
                     Intent intent1 = new Intent();
                     intent1.setClass(DynastyIntroduceActivity.this, DetailsEventActivity.class);
                     intent1.putExtra("dynastyName1", tvDynastyName.getText());
                     intent1.putExtra("dynastyId1", dynastyId);
                     startActivity(intent1);
                     overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
-
                     break;
                 case R.id.rl_back:
                     if (dynasty1 != null) {
@@ -202,12 +199,15 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
                     }
                     break;
                 case R.id.btn_img:
-                    Intent intent2 = new Intent();
-                    intent2.setClass(DynastyIntroduceActivity.this, AllScreenImgActivity.class);
-                    startActivity(intent2);
-                    overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
-
+                    if (dynasty1 != null) {
+                        Intent intent2 = new Intent();
+                        intent2.setClass(DynastyIntroduceActivity.this, AllScreenImgActivity.class);
+                        startActivity(intent2);
+                        overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
+                    }
                     break;
+
+
             }
         }
     }

@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -39,6 +38,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.signature.ObjectKey;
 import com.google.gson.Gson;
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.constant.Constant;
@@ -112,6 +112,7 @@ public class SettingActivity extends AppCompatActivity {
             switch (msg.what) {
                 case 1:
                     setPerson();
+                    promptDialog.dismissImmediately();
                     break;
             }
         }
@@ -125,7 +126,8 @@ public class SettingActivity extends AppCompatActivity {
         //创建对象
         promptDialog = new PromptDialog(this);
         //设置自定义属性
-        promptDialog.getDefaultBuilder().touchAble(false).round(3).loadingDuration(3000);
+        promptDialog.getDefaultBuilder().touchAble(false).round(3).loadingDuration(1000);
+        promptDialog.showLoading("正在加载");
         findViews();
         setListener();
         okHttpClient = new OkHttpClient();
@@ -277,14 +279,24 @@ public class SettingActivity extends AppCompatActivity {
                         .circleCrop()
                         .into(ivHeader);
             }else {
-                Log.e("下载头像",ServiceConfig.SERVICE_ROOT+"/img/"+Constant.User.getUserHeader());
-                Glide.with(getApplicationContext())
-                        .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
-                        .circleCrop()
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                        .skipMemoryCache(true)
-                        .into(ivHeader);
-
+                if (Constant.ChangeHeader == 0){
+                    //未修改头像
+                    Glide.with(getApplicationContext())
+                            .load(ServiceConfig.SERVICE_ROOT + "/img/"+Constant.User.getUserHeader())
+                            .circleCrop()
+                            .signature(new ObjectKey(Constant.Random))
+                            .into(ivHeader);
+                }else if (Constant.ChangeHeader == 1){
+                    //修改头像
+                    Constant.Random = System.currentTimeMillis();
+                    Log.e("下载头像",ServiceConfig.SERVICE_ROOT+"/img/"+Constant.User.getUserHeader());
+                    Glide.with(getApplicationContext())
+                            .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
+                            .circleCrop()
+                            .signature(new ObjectKey(Constant.Random))
+                            .into(ivHeader);
+                    Constant.ChangeHeader = 0;
+                }
             }
         }else if (Constant.User.getFlag() == 1){
             //QQ登录
@@ -293,7 +305,6 @@ public class SettingActivity extends AppCompatActivity {
                     .circleCrop()
                     .into(ivHeader);
         }
-
         //设置内容
         tvNickName.setText(Constant.UserDetails.getUserNickname());
         tvSignature.setText(Constant.UserDetails.getUserSignature());
@@ -791,7 +802,7 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 Log.e("ok", "成功");
-
+                Constant.ChangeHeader = 1;
                 Constant.User.setUserHeader("user/us-" + Constant.User.getUserId() + ".jpg");
                 Looper.prepare();
                 Toast.makeText(getApplicationContext(), "头像上传成功", Toast.LENGTH_SHORT).show();
