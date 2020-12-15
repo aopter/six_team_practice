@@ -1,12 +1,12 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
-    <solid android:color="@android:color/white" />
+    <solid android:color="@color/recharge_color" />
 
     <stroke
-        android:width="1dp"
-        android:color="@color/colorBorder" />
+        android:width="2dp"
+        android:color="@color/recharge_color" />
 
-    <corners android:radius="25dip" />
+    <corners android:radius="10dp" />
 
     <padding
         android:bottom="1dp"

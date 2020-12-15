@@ -42,4 +42,5 @@ public class Constant {
     public static Bitmap shareBitmap;
 
     public static List<UserStatus> userStatuses = new ArrayList<>();
+
 }

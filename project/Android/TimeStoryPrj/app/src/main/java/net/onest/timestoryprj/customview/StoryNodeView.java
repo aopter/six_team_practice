@@ -38,7 +38,11 @@ public class StoryNodeView extends View {
     /**
      * 前景颜色
      */
-    private int foreColor = Color.parseColor("#FFE4C4");
+    private int foreColor = Color.parseColor("#e8b48c");
+    /**
+     * 选中颜色
+     */
+    private int foreTextColor = Color.parseColor("#e06967");
     /**
      * 默认高度
      */
@@ -72,7 +76,7 @@ public class StoryNodeView extends View {
     }
 
     private void init(Context context) {
-        radius = SizeUtils.dp2px(context, 8);
+        radius = SizeUtils.dp2px(context, 9);
         defaultHeight = SizeUtils.dp2px(context, 30);
         marginTop = SizeUtils.dp2px(context, 10);
 
@@ -89,7 +93,7 @@ public class StoryNodeView extends View {
         unselectPaint.setTextSize(SizeUtils.sp2px(context, 10));
 
         selectPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        selectPaint.setColor(Color.RED);
+        selectPaint.setColor(foreTextColor);
         selectPaint.setTextSize(20);
         selectPaint.setTextSize(SizeUtils.sp2px(context, 10));
     }
@@ -152,9 +156,12 @@ public class StoryNodeView extends View {
         dividWidth = (getWidth() - radius * 2) / (nodeList.size() - 1);
         forePaint.setStrokeWidth(SizeUtils.dp2px(getContext(), 9));
         for (int i = 0; i < nodeList.size(); i++) {
-            if (i <= selectIndex) {
-                canvas.drawCircle(radius + i * dividWidth, getHeight() / 2, radius, forePaint);
+            if (i == selectIndex){
                 canvas.drawLine(radius, getHeight() / 2, radius + i * dividWidth, getHeight() / 2, forePaint);
+                canvas.drawCircle(radius + i * dividWidth, getHeight() / 2, radius, selectPaint);
+            } else if (i <= selectIndex) {
+                canvas.drawLine(radius, getHeight() / 2, radius + i * dividWidth, getHeight() / 2, forePaint);
+                canvas.drawCircle(radius + i * dividWidth, getHeight() / 2, radius, forePaint);
             } else {
                 canvas.drawCircle(radius + i * dividWidth, getHeight() / 2, radius, bgPaint);
             }

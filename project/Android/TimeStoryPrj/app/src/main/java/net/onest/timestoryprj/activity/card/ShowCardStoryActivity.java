@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
+import net.onest.timestoryprj.customview.CusTextView;
 import net.onest.timestoryprj.customview.StoryNodeView;
 import net.onest.timestoryprj.entity.card.Card;
 
@@ -45,8 +46,8 @@ public class ShowCardStoryActivity extends AppCompatActivity {
     LinearLayout nextStory;
     @BindView(R.id.card_img)
     ImageView cardImg;
-    @BindView(R.id.text)
-    TextView tip;
+    @BindView(R.id.role_story)
+    CusTextView tip;
     @BindView(R.id.story_process)
     StoryNodeView storyNode;
     @BindView(R.id.title_container)
@@ -85,8 +86,7 @@ public class ShowCardStoryActivity extends AppCompatActivity {
     }
 
     private void defineViewAndAnimation() {
-        final Typeface typeface = Typeface.createFromAsset(getResources().getAssets(), "fonts/custom_font.ttf");
-        tip.setTypeface(typeface);
+        tip.setText("'" + card.getCardName() + "'的那些事");
         story.setMovementMethod(ScrollingMovementMethod.getInstance());
         in = new AlphaAnimation(0.0f, 1.0f);
         in.setDuration(1000);

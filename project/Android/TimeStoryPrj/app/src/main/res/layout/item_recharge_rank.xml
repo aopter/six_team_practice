@@ -16,46 +16,49 @@
         app:shadowRadius="5dp">
 
         <RelativeLayout
-            android:layout_margin="5dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
 
             <RelativeLayout
                 android:id="@+id/recharge_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@mipmap/bg_recharge"
                 android:alpha="0.8"
+                android:background="@mipmap/bg_recharge"
                 android:padding="10dp">
 
-                <TextView
-                    android:id="@+id/recharge_integral"
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignRight="@+id/recharge_img"
-                    android:alpha="0.75"
-                    android:gravity="center"
-                    android:textColor="@android:color/white"
-                    android:textSize="17sp" />
+                    android:layout_centerInParent="true"
+                    android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/recharge_img"
-                    android:layout_width="95dp"
-                    android:layout_height="95dp"
-                    android:layout_below="@+id/recharge_integral"
-                    android:padding="5dp"
-                    android:src="@mipmap/recharge" />
+                    <TextView
+                        android:id="@+id/recharge_integral"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.75"
+                        android:gravity="center"
+                        android:textColor="@android:color/black"
+                        android:textSize="17sp" />
 
-                <TextView
-                    android:id="@+id/recharge_money"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/recharge_img"
-                    android:layout_alignRight="@+id/recharge_img"
-                    android:alpha="0.75"
-                    android:gravity="center"
-                    android:textColor="@android:color/white"
-                    android:textSize="15sp" />
+                    <ImageView
+                        android:id="@+id/recharge_img"
+                        android:layout_width="95dp"
+                        android:layout_height="95dp"
+                        android:padding="5dp"
+                        android:src="@mipmap/recharge" />
+
+                    <TextView
+                        android:id="@+id/recharge_money"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.75"
+                        android:gravity="center"
+                        android:textColor="@android:color/black"
+                        android:textSize="15sp" />
+                </LinearLayout>
             </RelativeLayout>
 
             <Button
@@ -67,10 +70,10 @@
                 android:layout_alignRight="@+id/recharge_container"
                 android:layout_marginTop="2dp"
                 android:alpha="0.8"
-                android:background="@drawable/corner"
+                android:background="@drawable/recharge_button_style"
                 android:focusable="false"
                 android:text="购买"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/black" />
         </RelativeLayout>
     </net.onest.timestoryprj.customview.CusShadowLayout>
 </RelativeLayout>

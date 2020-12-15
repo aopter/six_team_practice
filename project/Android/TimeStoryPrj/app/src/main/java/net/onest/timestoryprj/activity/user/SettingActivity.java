@@ -26,6 +26,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -36,7 +37,6 @@ import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
@@ -56,16 +56,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
-import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 import me.leefeng.promptlibrary.PromptButton;
 import me.leefeng.promptlibrary.PromptButtonListener;
 import me.leefeng.promptlibrary.PromptDialog;
@@ -196,7 +191,6 @@ public class SettingActivity extends AppCompatActivity {
                 }
             }
         }.start();
-
     }
 
     private void setListener() {
@@ -266,27 +260,40 @@ public class SettingActivity extends AppCompatActivity {
         RelativeLayout relaErweima = view.findViewById(R.id.rela_erweima);
         rightLayout.addView(scrollView);
         //头像
+        Glide.get(getApplicationContext()).clearMemory();
+        new Thread(){
+            @Override
+            public void run() {
+                Glide.get(getApplicationContext()).clearDiskCache();
+                Log.e("ok","缓存清除成功");
+            }
+        }.start();
+
         if (Constant.User.getFlag() == 0){
+            //手机号登录
             if (Constant.User.getUserHeader() == null){
-                Glide.with(this)
+                Glide.with(getApplicationContext())
                         .load(R.mipmap.man)
                         .circleCrop()
                         .into(ivHeader);
             }else {
                 Log.e("下载头像",ServiceConfig.SERVICE_ROOT+"/img/"+Constant.User.getUserHeader());
-                Glide.with(this)
+                Glide.with(getApplicationContext())
                         .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
                         .circleCrop()
                         .diskCacheStrategy(DiskCacheStrategy.NONE)
                         .skipMemoryCache(true)
                         .into(ivHeader);
+
             }
         }else if (Constant.User.getFlag() == 1){
-            Glide.with(this)
+            //QQ登录
+            Glide.with(getApplicationContext())
                     .load(Constant.User.getUserHeader())
                     .circleCrop()
                     .into(ivHeader);
         }
+
         //设置内容
         tvNickName.setText(Constant.UserDetails.getUserNickname());
         tvSignature.setText(Constant.UserDetails.getUserSignature());
@@ -340,32 +347,35 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
         //头像
-        ivHeader.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //动态申请权限
-                if(ActivityCompat.checkSelfPermission(SettingActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
-                    //请求权限
-                    ActivityCompat.requestPermissions(SettingActivity.this,new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+        if (Constant.User.getFlag() == 0){
+            ivHeader.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //动态申请权限
+                    if(ActivityCompat.checkSelfPermission(SettingActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+                        //请求权限
+                        ActivityCompat.requestPermissions(SettingActivity.this,new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+                    }
+
+                    PromptButton cancle = new PromptButton("取消", null);
+                    cancle.setTextColor(Color.parseColor("#0076ff"));
+                    promptDialog.showAlertSheet("", true, cancle, new PromptButton("从相册选择", new PromptButtonListener() {
+                        @Override
+                        public void onClick(PromptButton button) {
+                            Intent intent = new Intent(Intent.ACTION_PICK, null);
+                            intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                            startActivityForResult(intent, 1);
+                        }
+                    }), new PromptButton("拍照", new PromptButtonListener() {
+                        @Override
+                        public void onClick(PromptButton button) {
+                            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            startActivityForResult(intent, 2);
+                        }
+                    }));
                 }
-                PromptButton cancle = new PromptButton("取消", null);
-                cancle.setTextColor(Color.parseColor("#0076ff"));
-                promptDialog.showAlertSheet("", true, cancle, new PromptButton("从相册选择", new PromptButtonListener() {
-                    @Override
-                    public void onClick(PromptButton button) {
-                        Intent intent = new Intent(Intent.ACTION_PICK, null);
-                        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-                        startActivityForResult(intent, 1);
-                    }
-                }), new PromptButton("拍照", new PromptButtonListener() {
-                    @Override
-                    public void onClick(PromptButton button) {
-                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        startActivityForResult(intent, 2);
-                    }
-                }));
-            }
-        });
+            });
+        }
     }
 
     /**
@@ -412,8 +422,9 @@ public class SettingActivity extends AppCompatActivity {
         LinearLayout.LayoutParams etParam = new LinearLayout.LayoutParams(1200, 700);
         etParam.topMargin = 150;
         etParam.gravity = Gravity.CENTER_HORIZONTAL;
-        etProblem.setText("说说你的问题吧……");
-        etProblem.setPadding(20,5,20,300);
+        etProblem.setHint("说说您的问题吧……");
+        etProblem.setImeOptions(EditorInfo.IME_ACTION_DONE | EditorInfo.IME_FLAG_NO_EXTRACT_UI);
+        etProblem.setPadding(20,0,20,480);
         etProblem.setTextSize(20);
         etProblem.setBackgroundResource(R.drawable.edit_style);
         etProblem.setLayoutParams(etParam);
@@ -540,18 +551,17 @@ public class SettingActivity extends AppCompatActivity {
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         linearLayout.setLayoutParams(params);
 
-        TextView tvTitle = new TextView(getApplicationContext());
-        LinearLayout.LayoutParams tvParam = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        tvParam.leftMargin = 50;
-        tvParam.topMargin = 60;
-        tvTitle.setText("时光序平台积分规则:");
-        tvTitle.setTextSize(25);
-        tvTitle.setLayoutParams(tvParam);
-        linearLayout.addView(tvTitle);
+        LinearLayout bigLinear = new LinearLayout(getApplicationContext());
+        LinearLayout.LayoutParams bigParam = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        bigLinear.setBackgroundResource(R.mipmap.rule);
+        bigLinear.setLayoutParams(bigParam);
 
         ScrollView scrollView = new ScrollView(getApplicationContext());
         LinearLayout.LayoutParams scParam = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        scParam.topMargin = 20;
+
+        scParam.topMargin = 30;
+        scrollView.setPadding(200,150,20,120);
+
         scrollView.setLayoutParams(scParam);
         TextView tvRule = new TextView(getApplicationContext());
         tvRule.setText(Constant.Rule.getRuleInfo());
@@ -560,8 +570,11 @@ public class SettingActivity extends AppCompatActivity {
         ruleParam.leftMargin = 100;
         ruleParam.topMargin = 50;
         tvRule.setLayoutParams(ruleParam);
+
+
+        bigLinear.addView(scrollView);
         scrollView.addView(tvRule);
-        linearLayout.addView(scrollView);
+        linearLayout.addView(bigLinear);
         rightLayout.addView(linearLayout);
     }
 
@@ -778,6 +791,7 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 Log.e("ok", "成功");
+
                 Constant.User.setUserHeader("user/us-" + Constant.User.getUserId() + ".jpg");
                 Looper.prepare();
                 Toast.makeText(getApplicationContext(), "头像上传成功", Toast.LENGTH_SHORT).show();
@@ -862,6 +876,7 @@ public class SettingActivity extends AppCompatActivity {
                         .circleCrop()
                         .into(ivHeader);
                 convertBitmapToFile(photo);
+
                 upHeaderToServer();
             }
         } else if (requestCode == 100) {

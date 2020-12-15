@@ -22,4 +22,5 @@
     <color name="dialog_button">#e3891a</color>
     <color name="button_container">#e9d284</color>
     <color name="content_border">#f0d7aa</color>
+    <color name="recharge_color">#e8b48c</color>
 </resources>

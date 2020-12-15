@@ -23,16 +23,16 @@
                 android:layout_centerInParent="true"
                 android:layout_margin="3dp"
                 android:alpha="0.8"
-                android:padding="10dp"
-                android:background="@mipmap/bg_card_img" />
+                android:background="@mipmap/bg_card_img"
+                android:padding="10dp" />
 
             <net.onest.timestoryprj.customview.CusTextView
                 android:id="@+id/card_num"
+                android:background="@mipmap/bg_bubble_card"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_alignTop="@id/card_pic"
                 android:layout_alignRight="@+id/card_pic"
-                android:background="@mipmap/center_bubble_bg"
                 android:gravity="center"
                 android:textColor="@color/ourDynastyRed"
                 android:textSize="15sp" />

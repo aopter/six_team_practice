@@ -126,7 +126,7 @@ public class UserRankListAdapter extends BaseAdapter {
      * @param userExpression
      * @return
      */
-    public  String getStatusName(int userExpression) {
+    public  static String getStatusName(int userExpression) {
         if (Constant.userStatuses.size() < 1) {
             return "秀才";
         } else {

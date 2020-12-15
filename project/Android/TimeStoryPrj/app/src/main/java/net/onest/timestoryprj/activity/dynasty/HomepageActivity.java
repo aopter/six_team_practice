@@ -62,6 +62,7 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -94,8 +95,8 @@ public class HomepageActivity extends AppCompatActivity {
     private Typeface typeface;
     private ProgressBar progressBar;
     private User user;
-    private RelativeLayout relativeProgress;
-    private HorizontalScrollView hsvDynasty;
+    private long prelongTim = 0;
+    private long curTime = 0;
     /** Called when the activity is first created. */
     private FlowerView mFlowerView;
     // 屏幕宽度
@@ -150,17 +151,38 @@ public class HomepageActivity extends AppCompatActivity {
                         tv.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                for (int j = 0; j < Constant.UnlockDynasty.size(); j++) {
-                                    if (unlockDynastyIds.contains(dynasties1.get(finalI).getDynastyId().toString())) {
-                                        Intent intent = new Intent();
-                                        intent.setClass(getApplicationContext(), DynastyIntroduceActivity.class);
-                                        intent.putExtra("dynastyId", dynasties1.get(finalI).getDynastyId().toString());
-                                        startActivity(intent);
-                                        overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
-                                        break;
-                                    } else {
-                                        Toast.makeText(getApplicationContext(), "该朝代未解锁", Toast.LENGTH_SHORT).show();
+                                if(prelongTim == 0){
+                                    prelongTim = new Date().getTime();
+                                    for (int j = 0; j < Constant.UnlockDynasty.size(); j++) {
+                                        if (unlockDynastyIds.contains(dynasties1.get(finalI).getDynastyId().toString())) {
+                                            Intent intent = new Intent();
+                                            intent.setClass(getApplicationContext(), DynastyIntroduceActivity.class);
+                                            intent.putExtra("dynastyId", dynasties1.get(finalI).getDynastyId().toString());
+                                            startActivity(intent);
+                                            overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
+                                            break;
+                                        } else {
+                                            Toast.makeText(getApplicationContext(), "该朝代未解锁", Toast.LENGTH_SHORT).show();
+                                        }
                                     }
+                                }else{
+                                    curTime = new Date().getTime();
+                                    if (curTime - prelongTim < 1000){
+                                    }else{
+                                        for (int j = 0; j < Constant.UnlockDynasty.size(); j++) {
+                                            if (unlockDynastyIds.contains(dynasties1.get(finalI).getDynastyId().toString())) {
+                                                Intent intent = new Intent();
+                                                intent.setClass(getApplicationContext(), DynastyIntroduceActivity.class);
+                                                intent.putExtra("dynastyId", dynasties1.get(finalI).getDynastyId().toString());
+                                                startActivity(intent);
+                                                overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
+                                                break;
+                                            } else {
+                                                Toast.makeText(getApplicationContext(), "该朝代未解锁", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    }
+                                    prelongTim = curTime;
                                 }
                             }
                         });
@@ -392,8 +414,6 @@ public class HomepageActivity extends AppCompatActivity {
         llLayout1 = findViewById(R.id.ll_layout1);
         llLayout2 = findViewById(R.id.ll_layout2);
         progressBar = findViewById(R.id.experience_progress);
-        relativeProgress = findViewById(R.id.relative_progress);
-        hsvDynasty = findViewById(R.id.hsv_dynasty);
     }
 
     /**
