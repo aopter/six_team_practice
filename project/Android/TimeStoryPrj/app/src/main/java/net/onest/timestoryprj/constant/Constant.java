@@ -1,7 +1,10 @@
 package net.onest.timestoryprj.constant;
 
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.view.View;
 
+import net.onest.timestoryprj.dialog.card.CustomDialog;
 import net.onest.timestoryprj.entity.HistoryDay;
 import net.onest.timestoryprj.entity.Problem;
 import net.onest.timestoryprj.entity.Rule;
@@ -46,5 +49,27 @@ public class Constant {
     public static int ChangeHeader;
 
     public static long Random;
+
+
+
+    public static int  descCount = 60;
+
+//    积分不足提示
+    public static void showCountDialog(Context context) {
+        CustomDialog.Builder builder = new CustomDialog.Builder(context);
+        builder.setTitle("积分不足");
+        builder.setMessage("您的积分不足，快去选择朝代进行答题来赚取积分吧~");
+
+        CustomDialog customDialog = builder.create();
+        customDialog.setCancelable(false);
+        customDialog.setCanceledOnTouchOutside(false);
+        customDialog.show();
+        builder.setButtonConfirm("确定", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                customDialog.dismiss();
+            }
+        });
+    }
 
 }

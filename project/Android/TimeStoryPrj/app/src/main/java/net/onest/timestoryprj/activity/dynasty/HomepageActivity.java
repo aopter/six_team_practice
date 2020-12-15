@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.signature.ObjectKey;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -44,6 +45,7 @@ import net.onest.timestoryprj.adapter.user.UserRankListAdapter;
 import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.customview.FlowerView;
+import net.onest.timestoryprj.dialog.card.CustomDialog;
 import net.onest.timestoryprj.entity.Dynasty;
 import net.onest.timestoryprj.entity.User;
 import net.onest.timestoryprj.entity.UserStatus;
@@ -98,6 +100,13 @@ public class HomepageActivity extends AppCompatActivity {
     private long prelongTim = 0;
     private long curTime = 0;
     /** Called when the activity is first created. */
+
+    private RelativeLayout relativeProgress;
+    private HorizontalScrollView hsvDynasty;
+    /**
+     * Called when the activity is first created.
+     */
+
     private FlowerView mFlowerView;
     // 屏幕宽度
     public static int screenWidth;
@@ -223,7 +232,7 @@ public class HomepageActivity extends AppCompatActivity {
 
     private void initStatus() {
         //加载地位
-        if(Constant.userStatuses.size() < 1) {
+        if (Constant.userStatuses.size() < 1) {
             //请求
             Request.Builder builder1 = new Request.Builder();
             builder1.url(ServiceConfig.SERVICE_ROOT + "/status/list");
@@ -281,6 +290,7 @@ public class HomepageActivity extends AppCompatActivity {
                 .setDateFormat("yy:mm:dd")
                 .create();
     }
+
     /**
      * 初始化首页数据
      */
@@ -289,6 +299,7 @@ public class HomepageActivity extends AppCompatActivity {
         getUserInfo();
         downloadUnlockDynastyList();
     }
+
     /**
      * 初始化进度条
      */
@@ -341,6 +352,7 @@ public class HomepageActivity extends AppCompatActivity {
             }
         }.start();
     }
+
     /**
      * 通过跳转获得用户信息
      */
@@ -349,11 +361,12 @@ public class HomepageActivity extends AppCompatActivity {
         initProgress();
         loadImgWithPlaceHolders();
         tvPoint.setText(Constant.User.getUserCount() + "");
-        if (Constant.User.getUserExperience() == Constant.User.getUserStatus().getStatusExperienceTop()){
+        if (Constant.User.getUserExperience() == Constant.User.getUserStatus().getStatusExperienceTop()) {
             Constant.User.setUserStatus(Constant.userStatuses.get(Constant.User.getUserStatus().getStatusId()));
         }
         tvLevel.setText(Constant.User.getUserStatus().getStatusName());
     }
+
     /**
      * 从服务器端获得朝代列表
      */
@@ -387,6 +400,7 @@ public class HomepageActivity extends AppCompatActivity {
             }
         }.start();
     }
+
     private void setListener() {
         MyListener myListener = new MyListener();
         btnVoice.setOnClickListener(myListener);
@@ -420,28 +434,37 @@ public class HomepageActivity extends AppCompatActivity {
      */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void loadImgWithPlaceHolders() {
-        //头像
-        if (Constant.User.getFlag() == 0){
-            if (Constant.User.getUserHeader() == null){
-                Glide.with(this)
+        if (Constant.User.getFlag() == 0) {
+            //手机号登录
+            if (Constant.User.getUserHeader() == null) {
+                Glide.with(getApplicationContext())
                         .load(R.mipmap.man)
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                        .skipMemoryCache(true)
                         .circleCrop()
                         .into(ivHeader);
-            }else {
-                Glide.with(this)
-                        .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                        .skipMemoryCache(true)
-                        .circleCrop()
-                        .into(ivHeader);
+            } else {
+                if (Constant.ChangeHeader == 0) {
+                    //未修改头像
+                    Glide.with(getApplicationContext())
+                            .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
+                            .circleCrop()
+                            .signature(new ObjectKey(Constant.Random))
+                            .into(ivHeader);
+                } else if (Constant.ChangeHeader == 1) {
+                    //修改头像
+                    Constant.Random = System.currentTimeMillis();
+                    Log.e("下载头像", ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader());
+                    Glide.with(getApplicationContext())
+                            .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
+                            .circleCrop()
+                            .signature(new ObjectKey(Constant.Random))
+                            .into(ivHeader);
+                    Constant.ChangeHeader = 0;
+                }
             }
-        }else if (Constant.User.getFlag() == 1){
-            Glide.with(this)
+        } else if (Constant.User.getFlag() == 1) {
+            //QQ登录
+            Glide.with(getApplicationContext())
                     .load(Constant.User.getUserHeader())
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .skipMemoryCache(true)
                     .circleCrop()
                     .into(ivHeader);
         }
@@ -451,6 +474,10 @@ public class HomepageActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View view) {
+            if (null == Constant.User || Constant.User.getUserId() == 0) {
+                Toast.makeText(getApplicationContext(), "正在加载，稍后再试哦", Toast.LENGTH_SHORT).show();
+                return;
+            }
             switch (view.getId()) {
                 case R.id.btn_voice:
                     if (mediaPlayer.isPlaying()) {
@@ -467,6 +494,11 @@ public class HomepageActivity extends AppCompatActivity {
                     overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
                     break;
                 case R.id.btn_card:
+//                    抽卡界面
+                    if (Constant.User.getUserCount() < Constant.descCount) {
+                        Constant.showCountDialog(HomepageActivity.this);
+                        return;
+                    }
                     Intent intent3 = new Intent(HomepageActivity.this, DrawCardActivity.class);
                     startActivity(intent3);
                     overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
@@ -553,4 +585,6 @@ public class HomepageActivity extends AppCompatActivity {
         setListener();
         getUserInfo();
     }
+
+
 }

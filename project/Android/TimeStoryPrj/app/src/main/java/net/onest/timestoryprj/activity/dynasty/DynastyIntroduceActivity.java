@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -24,6 +25,7 @@ import com.google.gson.GsonBuilder;
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.activity.problem.SelectProblemTypeActivity;
 import net.onest.timestoryprj.constant.ServiceConfig;
+import net.onest.timestoryprj.dialog.card.CustomDialog;
 import net.onest.timestoryprj.entity.Dynasty;
 import net.onest.timestoryprj.util.TextUtil;
 
@@ -162,12 +164,20 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
             view.getParent().requestDisallowInterceptTouchEvent(true);
             switch (view.getId()) {
                 case R.id.btn_questions:
+                    if(!dynastyId.equals("11")){
+                        showIncidentDialog();
+                        return;
+                    }
                     Intent intent = new Intent(DynastyIntroduceActivity.this, SelectProblemTypeActivity.class);
                     intent.putExtra("dynastyId1", dynastyId);//朝代
                     startActivity(intent);
                     overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
                     break;
                 case R.id.btn_details:
+                    if(!dynastyId.equals("11")){
+                        showIncidentDialog();
+                        return;
+                    }
                     Intent intent1 = new Intent();
                     intent1.setClass(DynastyIntroduceActivity.this, DetailsEventActivity.class);
                     intent1.putExtra("dynastyName1", tvDynastyName.getText());
@@ -230,6 +240,29 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
                 tvDynastyIntro.setText(dynasty1.getDynastyInfo());
             }
         }
+    }
+
+
+
+
+    /**
+     * 没有题目和事件时，显示弹窗
+     * 这次简略用!id=11判断
+     */
+    private void showIncidentDialog() {
+        CustomDialog.Builder builder = new CustomDialog.Builder(this);
+        builder.setTitle("正在开发中");
+        builder.setMessage("此朝代模块正在开发中，先去看看唐朝吧！");
+        CustomDialog customDialog = builder.create();
+        customDialog.setCancelable(false);
+        customDialog.setCanceledOnTouchOutside(false);
+        customDialog.show();
+        builder.setButtonConfirm("确定", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                customDialog.dismiss();
+            }
+        });
     }
 
     @Override

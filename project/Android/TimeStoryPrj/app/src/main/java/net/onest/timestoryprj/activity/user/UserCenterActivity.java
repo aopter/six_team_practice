@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -23,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.signature.ObjectKey;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tinytongtong.tinyutils.LogUtils;
@@ -39,6 +41,7 @@ import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.entity.HistoryDay;
 import net.onest.timestoryprj.entity.User;
 import net.onest.timestoryprj.entity.UserStatus;
+import net.onest.timestoryprj.util.ToastUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -165,32 +168,40 @@ public class UserCenterActivity extends AppCompatActivity {
     //加载头像
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void loadImgWithPlaceHolders() {
-        //头像
         if (Constant.User.getFlag() == 0) {
+            //手机号登录
             if (Constant.User.getUserHeader() == null) {
-                Glide.with(this)
+                Glide.with(getApplicationContext())
                         .load(R.mipmap.man)
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                        .skipMemoryCache(true)
                         .circleCrop()
                         .into(ivHeader);
             } else {
-                Glide.with(this)
-                        .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                        .skipMemoryCache(true)
-                        .circleCrop()
-                        .into(ivHeader);
+                if (Constant.ChangeHeader == 0) {
+                    //未修改头像
+                    Glide.with(getApplicationContext())
+                            .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
+                            .circleCrop()
+                            .signature(new ObjectKey(Constant.Random))
+                            .into(ivHeader);
+                } else if (Constant.ChangeHeader == 1) {
+                    //修改头像
+                    Constant.Random = System.currentTimeMillis();
+                    Log.e("下载头像", ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader());
+                    Glide.with(getApplicationContext())
+                            .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
+                            .circleCrop()
+                            .signature(new ObjectKey(Constant.Random))
+                            .into(ivHeader);
+                    Constant.ChangeHeader = 0;
+                }
             }
         } else if (Constant.User.getFlag() == 1) {
-            Glide.with(this)
+            //QQ登录
+            Glide.with(getApplicationContext())
                     .load(Constant.User.getUserHeader())
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .skipMemoryCache(true)
                     .circleCrop()
                     .into(ivHeader);
         }
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -316,6 +327,10 @@ public class UserCenterActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.btn_card:
+                if (Constant.User.getUserCount() < Constant.descCount) {
+                    Constant.showCountDialog(UserCenterActivity.this);
+                    return;
+                }
                 Intent intent2 = new Intent(UserCenterActivity.this, DrawCardActivity.class);
                 startActivity(intent2);
                 break;
