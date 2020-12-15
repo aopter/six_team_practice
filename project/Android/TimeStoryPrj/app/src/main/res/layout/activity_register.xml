@@ -1,39 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/login"
+    android:background="@mipmap/bg_login"
     android:orientation="vertical"
     tools:context=".activity.user.RegisterActivity">
 
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:text="用户注册"
-        android:textColor="@android:color/white"
-        android:textSize="35sp" />
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/et_res_phone"
-        style="@style/loginEtStyle"
-        android:hint="手机号"
-        android:imeOptions="actionDone|flagNoExtractUi"
-        android:inputType="number" />
+        <net.onest.timestoryprj.customview.CusTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:text="用户注册"
+            android:textSize="30sp" />
 
-    <EditText
-        android:id="@+id/et_res_pwd"
-        style="@style/loginEtStyle"
-        android:hint="密码"
-        android:imeOptions="actionDone|flagNoExtractUi"
-        android:inputType="textPassword" />
+        <EditText
+            android:id="@+id/et_res_phone"
+            style="@style/loginEtStyle"
+            android:hint="手机号"
+            android:imeOptions="actionDone|flagNoExtractUi"
+            android:inputType="number" />
 
-    <Button
-        android:id="@+id/btn_res"
-        style="@style/loginBtn"
-        android:layout_marginTop="40dp"
-        android:text="注册" />
+        <EditText
+            android:id="@+id/et_res_pwd"
+            style="@style/loginEtStyle"
+            android:hint="密码"
+            android:imeOptions="actionDone|flagNoExtractUi"
+            android:inputType="textPassword" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/btn_res"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@mipmap/login_button"
+            android:text="注册"
+            android:textColor="@color/ourDynastyRed"
+            android:textSize="23sp" />
+    </LinearLayout>
+</RelativeLayout>
