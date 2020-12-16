@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.constant.Constant;
+import net.onest.timestoryprj.util.ToastUtil;
 
 public class UpdateNickNameActivity extends AppCompatActivity {
     private ImageView ivBack;
@@ -40,7 +41,7 @@ public class UpdateNickNameActivity extends AppCompatActivity {
                 String nickname = etName.getText().toString().trim();
                 Constant.User.setUserNickname(nickname);
                 Constant.UserDetails.setUserNickname(nickname);
-                Toast.makeText(getApplicationContext(),"保存成功",Toast.LENGTH_SHORT).show();
+                ToastUtil.showEncourageToast(getApplicationContext(), "保存成功", 1500);
                 finish();
             }
         });

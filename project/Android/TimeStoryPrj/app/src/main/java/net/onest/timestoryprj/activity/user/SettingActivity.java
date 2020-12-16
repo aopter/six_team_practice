@@ -45,6 +45,8 @@ import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.entity.UserDetails;
 import net.onest.timestoryprj.util.AudioUtil;
+import net.onest.timestoryprj.util.ToastUtil;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.BufferedReader;
@@ -460,9 +462,9 @@ public class SettingActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String content = etProblem.getText().toString().trim();
                 if (null != content && !content.equals("")) {
-                    Toast.makeText(getApplicationContext(), "您的问题已反馈成功", Toast.LENGTH_SHORT).show();
+                    ToastUtil.showEncourageToast(getApplicationContext(), "您的问题已反馈成功！", 1500);
                 } else {
-                    Toast.makeText(getApplicationContext(), "请填写您的问题", Toast.LENGTH_SHORT).show();
+                    ToastUtil.showSickToast(getApplicationContext(), "请填写您的问题！", 1500);
                 }
             }
         });
@@ -753,7 +755,7 @@ public class SettingActivity extends AppCompatActivity {
                     //上传头像
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "请您完善用户信息后提交", Toast.LENGTH_SHORT).show();
+                    ToastUtil.showSickToast(getApplicationContext(), "请您完善用户信息后提交！", 1500);
                 }
             }
         });
@@ -795,7 +797,7 @@ public class SettingActivity extends AppCompatActivity {
             public void onFailure(Call call, IOException e) {
                 Log.e("no", "失败");
                 Looper.prepare();
-                Toast.makeText(getApplicationContext(), "头像上传失败", Toast.LENGTH_SHORT).show();
+                ToastUtil.showCryToast(getApplicationContext(), "头像上传失败", 1500);
                 Looper.loop();
             }
 
@@ -805,7 +807,7 @@ public class SettingActivity extends AppCompatActivity {
                 Constant.ChangeHeader = 1;
                 Constant.User.setUserHeader("user/us-" + Constant.User.getUserId() + ".jpg");
                 Looper.prepare();
-                Toast.makeText(getApplicationContext(), "头像上传成功", Toast.LENGTH_SHORT).show();
+                ToastUtil.showEncourageToast(getApplicationContext(), "头像上传成功", 1500);
                 Looper.loop();
             }
         });
@@ -839,11 +841,11 @@ public class SettingActivity extends AppCompatActivity {
                     boolean flag = object.getBoolean("result");
                     if (flag){
                         Looper.prepare();
-                        Toast.makeText(getApplicationContext(),"保存成功",Toast.LENGTH_SHORT).show();
+                        ToastUtil.showEncourageToast(getApplicationContext(), "保存成功", 1500);
                         Looper.loop();
                     }else {
                         Looper.prepare();
-                        Toast.makeText(getApplicationContext(),"保存失败",Toast.LENGTH_SHORT).show();
+                        ToastUtil.showCryToast(getApplicationContext(), "保存失败", 1500);
                         Looper.loop();
                     }
                 } catch (MalformedURLException e) {
