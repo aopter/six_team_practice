@@ -10,7 +10,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -23,6 +22,7 @@ import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.adapter.card.ShareAdapter;
 import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.entity.card.Icon;
+import net.onest.timestoryprj.util.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,11 +33,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ShareCardActivity extends AppCompatActivity {
-    private String path;
     private List<Icon> icons;
     @BindView(R.id.icon_view)
     GridView iconView;
-    private Bitmap shareBitmap;
     @BindView(R.id.share_img)
     ImageView shareImg;
     @BindView(R.id.back)
@@ -48,7 +46,6 @@ public class ShareCardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share_card);
         ButterKnife.bind(this);
-        path = getFilesDir().getAbsolutePath() + "/share.png";
         shareImg.setImageBitmap(Constant.shareBitmap);
         initShareView();
     }
@@ -78,14 +75,10 @@ public class ShareCardActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 if (position == 0) {
-                    Log.e("d", "点击了qq");
                     shareQQFriend("卡片分享", "您的好友向你分享了卡片", DrawCardActivity.DRAWABLE, Constant.shareBitmap);
                 } else if (position == 1) {
-                    Log.e("d", "点击了wechat");
-                    //
                     shareWeChatFriend("卡片分享", "您的好友向你分享了卡片", DrawCardActivity.DRAWABLE, Constant.shareBitmap);
                 } else if (position == 2) {
-                    Log.e("d", "点击了朋友圈");
                     shareWeChatFriendCircle("卡片分享", "您的好友向你分享了一张卡片", Constant.shareBitmap);
                 }
             }
@@ -146,8 +139,7 @@ public class ShareCardActivity extends AppCompatActivity {
                           String appname, String msgTitle, String msgText, int type,
                           Bitmap drawable) {
         if (!packageName.isEmpty() && !isAvilible(getApplicationContext(), packageName)) {// 判断APP是否存在
-            Toast.makeText(getApplicationContext(), "请先安装" + appname, Toast.LENGTH_SHORT)
-                    .show();
+            ToastUtil.showSickToast(getApplicationContext(), "还没有安装" + appname + "哦", 1500);
             return;
         }
         Intent intent = new Intent("android.intent.action.SEND");

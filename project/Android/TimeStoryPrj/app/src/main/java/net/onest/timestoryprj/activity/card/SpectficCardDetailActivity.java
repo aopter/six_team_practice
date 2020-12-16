@@ -1,18 +1,15 @@
 package net.onest.timestoryprj.activity.card;
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -27,6 +24,7 @@ import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.customview.CusTextView;
 import net.onest.timestoryprj.entity.card.Card;
 import net.onest.timestoryprj.util.TextUtil;
+import net.onest.timestoryprj.util.ToastUtil;
 
 import java.io.IOException;
 
@@ -65,7 +63,6 @@ public class SpectficCardDetailActivity extends AppCompatActivity {
             switch (msg.what) {
                 case 1:
                     String result = (String) msg.obj;
-                    Log.e("info", result);
                     card = gson.fromJson(result, Card.class);
                     promptDialog.dismissImmediately();
                     showDatas();
@@ -111,7 +108,7 @@ public class SpectficCardDetailActivity extends AppCompatActivity {
         if (card == null) {
             cardId = intent.getIntExtra("cardId", -1);
             if (cardId == -1) {
-                Toast.makeText(getApplicationContext(), "获取卡片详情出错啦，请重新获取", Toast.LENGTH_SHORT).show();
+                ToastUtil.showCryToast(getApplicationContext(), "获取卡片详情出错了", 1500);
                 cardName.setVisibility(View.INVISIBLE);
                 cardStory.setVisibility(View.INVISIBLE);
                 // TODO 弹窗提示获取卡片信息失败
@@ -163,7 +160,6 @@ public class SpectficCardDetailActivity extends AppCompatActivity {
         new Thread() {
             @Override
             public void run() {
-                Log.e("url", ServiceConfig.SERVICE_ROOT + "/card/details/" + cardId);
                 Request request = new Request.Builder()
                         .url(ServiceConfig.SERVICE_ROOT + "/card/details/" + cardId)
                         .build();

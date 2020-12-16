@@ -1,7 +1,6 @@
 package net.onest.timestoryprj.activity.card;
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
@@ -11,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +22,7 @@ import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.customview.CusTextView;
 import net.onest.timestoryprj.customview.StoryNodeView;
 import net.onest.timestoryprj.entity.card.Card;
+import net.onest.timestoryprj.util.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,13 +105,15 @@ public class ShowCardStoryActivity extends AppCompatActivity {
     void formerStory() {
         clickTwiceMillis = System.currentTimeMillis();
         if ((clickTwiceMillis - clickMillis) < 250) {
-            Toast.makeText(getApplicationContext(), "正在加载，请点击慢一些吧", Toast.LENGTH_SHORT).show();
+            if (currentStory > 0) {
+                ToastUtil.showCryToast(getApplicationContext(), "跟不上你的脚步了，点击慢一点吧", 1500);
+            }
         } else {
             clickMillis = clickTwiceMillis;
             currentStory = currentStory - 1;
             RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(cardImg.getLayoutParams());
             if (currentStory < 0) {
-                Toast.makeText(getApplicationContext(), "不能再回头啦", Toast.LENGTH_SHORT).show();
+                ToastUtil.showSickToast(getApplicationContext(), "不能再回头啦", 1500);
                 currentStory = 0;
             } else {
                 storyNode.setSelectIndex(currentStory);
@@ -125,13 +126,15 @@ public class ShowCardStoryActivity extends AppCompatActivity {
     void nextStory() {
         clickTwiceMillis = System.currentTimeMillis();
         if ((clickTwiceMillis - clickMillis) < 250) {
-            Toast.makeText(getApplicationContext(), "正在加载，请点击慢一些吧", Toast.LENGTH_SHORT).show();
+            if (currentStory < event.size() - 1) {
+                ToastUtil.showCryToast(getApplicationContext(), "跟不上你的脚步了，点击慢一点吧", 1500);
+            }
         } else {
             clickMillis = clickTwiceMillis;
             currentStory = currentStory + 1;
             if (currentStory >= event.size()) {
                 currentStory = event.size() - 1;
-                Toast.makeText(getApplicationContext(), "没有更多了", Toast.LENGTH_SHORT).show();
+                ToastUtil.showSickToast(getApplicationContext(), "没有更多了", 1500);
             } else {
                 storyNode.setSelectIndex(currentStory);
                 story.setText(event.get(currentStory));

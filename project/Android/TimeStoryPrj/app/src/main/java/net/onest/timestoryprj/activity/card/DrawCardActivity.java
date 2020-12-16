@@ -9,17 +9,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -30,10 +26,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import net.onest.timestoryprj.R;
-import net.onest.timestoryprj.activity.dynasty.HomepageActivity;
 import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
-import net.onest.timestoryprj.dialog.card.CustomDialog;
 import net.onest.timestoryprj.entity.card.Card;
 import net.onest.timestoryprj.entity.card.Icon;
 import net.onest.timestoryprj.util.ScreenUtil;
@@ -49,8 +43,6 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-
-//抽卡
 
 public class DrawCardActivity extends AppCompatActivity {
     @BindView(R.id.back)
@@ -113,7 +105,6 @@ public class DrawCardActivity extends AppCompatActivity {
             switch (msg.what) {
                 case 1:
                     String result = (String) msg.obj;
-                    Log.e("info", result);
                     card = gson.fromJson(result, Card.class);
                     break;
             }
@@ -144,7 +135,6 @@ public class DrawCardActivity extends AppCompatActivity {
         new Thread() {
             @Override
             public void run() {
-                Log.e("draw", ServiceConfig.SERVICE_ROOT + "/card/draw/" + Constant.User.getUserId());
                 Request request = new Request.Builder()
                         .url(ServiceConfig.SERVICE_ROOT + "/card/draw/" + Constant.User.getUserId())
                         .build();
@@ -159,7 +149,6 @@ public class DrawCardActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
                         String result = response.body().string();
-                        Log.e("log", result);
                         Message message = new Message();
                         message.what = 1;
                         message.obj = result;
@@ -236,7 +225,6 @@ public class DrawCardActivity extends AppCompatActivity {
             isFlag = true;
             cardContainer.bringToFront();
         }
-        Log.e("card", isFlag + "");
     }
 
 

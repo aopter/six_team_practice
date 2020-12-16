@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,26 +17,22 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import net.onest.timestoryprj.R;
-import net.onest.timestoryprj.adapter.card.CardAdapter;
 import net.onest.timestoryprj.adapter.card.DropdownListAdapter;
 import net.onest.timestoryprj.adapter.card.SpecificDynastyCardAdapter;
 import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.customview.DropdownListView;
-import net.onest.timestoryprj.dialog.LoadingDialog;
 import net.onest.timestoryprj.entity.card.UserCard;
+import net.onest.timestoryprj.util.ToastUtil;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -74,7 +69,6 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
     private OkHttpClient client;
     private Gson gson;
     int type = 0;
-    private LoadingDialog loadingDialog;
     private PromptDialog promptDialog;
     private Handler handler = new Handler() {
         @Override
@@ -82,11 +76,18 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
             switch (msg.what) {
                 case 1:
                     String result = (String) msg.obj;
-                    Log.e("log", result);
                     Type type = new TypeToken<ArrayList<UserCard>>() {
                     }.getType();
                     userCards = gson.fromJson(result, type);
                     initDatas();
+                    break;
+                case 2:
+                    userCards.clear();
+                    String result2 = (String) msg.obj;
+                    Type type2 = new TypeToken<ArrayList<UserCard>>() {
+                    }.getType();
+                    userCards = gson.fromJson(result2, type2);
+                    notifyDataChange();
                     break;
             }
         }
@@ -159,7 +160,7 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
 
     private void initDatas() {
         if (userCards.size() == 0) {
-            Toast.makeText(getApplicationContext(), "没有相关卡片，请重新选择吧~", Toast.LENGTH_SHORT).show();
+            ToastUtil.showEncourageToast(getApplicationContext(), "没有此朝代的卡片，请重新选择朝代吧", 1500);
         }
         cardAdapter = new SpecificDynastyCardAdapter(getApplicationContext(), userCards);
         dyanstyCardView.setAdapter(cardAdapter);
@@ -172,6 +173,22 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
             }
         });
         promptDialog.dismissImmediately();
+    }
+
+    private void notifyDataChange() {
+        if (userCards.size() == 0) {
+            ToastUtil.showSickToast(getApplicationContext(), "没有相关卡片，请重新选择吧", 1500);
+        }
+        cardAdapter = new SpecificDynastyCardAdapter(getApplicationContext(), userCards);
+        dyanstyCardView.setAdapter(cardAdapter);
+        dyanstyCardView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent intent = new Intent(getApplicationContext(), SpectficCardDetailActivity.class);
+                intent.putExtra("cardId", userCards.get(position).getCardListVO().getCardId());
+                startActivity(intent);
+            }
+        });
     }
 
     @OnClick(R.id.back)
@@ -198,7 +215,7 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
     void showSearchCards() {
         String key = searchCardName.getText().toString().trim();
         if ("".equals(key)) {
-            Toast.makeText(getApplicationContext(), "请输入搜索关键字", Toast.LENGTH_SHORT).show();
+            ToastUtil.showEncourageToast(getApplicationContext(), "要输入关键字才可以搜索哦", 1500);
         } else {
             getCardsByKey(key);
         }
@@ -208,7 +225,6 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
         new Thread() {
             @Override
             public void run() {
-                Log.e("key", ServiceConfig.SERVICE_ROOT + "/usercard/list/" + Constant.User.getUserId() + "/" + +dynastyId + "/" + type + "/" + key);
                 Request request = new Request.Builder()
                         .url(ServiceConfig.SERVICE_ROOT + "/usercard/list/" + Constant.User.getUserId() + "/" + +dynastyId + "/" + type + "/" + key)
                         .build();
@@ -217,14 +233,14 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call call, IOException e) {
                         // TODO获取卡片内容失败
-                        Toast.makeText(getApplicationContext(), "获取朝代卡片失败", Toast.LENGTH_SHORT).show();
+                        ToastUtil.showCryToast(getApplicationContext(), "获取朝代卡片失败了", 1500);
                     }
 
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
                         String result = response.body().string();
                         Message message = new Message();
-                        message.what = 1;
+                        message.what = 2;
                         message.obj = result;
                         handler.sendMessage(message);
                     }
@@ -289,7 +305,6 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
         new Thread() {
             @Override
             public void run() {
-                Log.e("key", ServiceConfig.SERVICE_ROOT + "/usercard/list/" + Constant.User.getUserId() + "/" + dynastyId + "/" + type);
                 Request request = new Request.Builder()
                         .url(ServiceConfig.SERVICE_ROOT + "/usercard/list/" + Constant.User.getUserId() + "/" + dynastyId + "/" + type)
                         .build();
@@ -298,28 +313,24 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call call, IOException e) {
                         // TODO 错误提示
-                        Toast.makeText(getApplicationContext(), "获取相关卡片失败", Toast.LENGTH_SHORT).show();
+                        ToastUtil.showCryToast(getApplicationContext(), "获取卡片失败了", 1500);
                     }
 
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
                         String result = response.body().string();
                         Message message = new Message();
-                        message.what = 1;
+                        if (cardAdapter == null) {
+                            message.what = 1;
+                        } else {
+                            message.what = 2;
+                        }
                         message.obj = result;
                         handler.sendMessage(message);
                     }
                 });
             }
         }.start();
-    }
-
-
-    private void showCards() {
-        if (userCards.size() == 0) {
-            Toast.makeText(getApplicationContext(), "没有相关卡片，请重新选择吧~", Toast.LENGTH_SHORT).show();
-        }
-        cardAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -329,17 +340,4 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
         typeView.popupWindow.dismiss();
         typeView.popupWindow = null;
     }
-
-    private void showDialog() {
-        LoadingDialog.Builder builder = new LoadingDialog.Builder(this);
-        loadingDialog = builder.create();
-        loadingDialog.setCancelable(false);
-        loadingDialog.setCanceledOnTouchOutside(false);
-        loadingDialog.show();
-    }
-
-    private void stopDialog() {
-        loadingDialog.dismiss();
-    }
-
 }
