@@ -9,6 +9,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
+import android.widget.VideoView;
 
 import com.google.gson.Gson;
 
@@ -20,6 +22,7 @@ import net.onest.timestoryprj.entity.User;
 
 import java.io.IOException;
 
+import butterknife.BindView;
 import me.leefeng.promptlibrary.PromptDialog;
 import okhttp3.Call;
 import okhttp3.FormBody;
@@ -36,6 +39,10 @@ public class FirstOpenActivity extends AppCompatActivity {
     private OkHttpClient okHttpClient;
     private Gson gson;
     private PromptDialog promptDialog;
+
+    private  VideoView welcomeVideo;
+//    private LinearLayout llLayout;
+
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {            //实现页面的跳转
@@ -58,10 +65,8 @@ public class FirstOpenActivity extends AppCompatActivity {
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                         finish();
-
                     }
             }
-
             super.handleMessage(msg);
         }
     };
@@ -129,6 +134,10 @@ public class FirstOpenActivity extends AppCompatActivity {
         okHttpClient = new OkHttpClient();
         gson = new Gson();
         promptDialog = new PromptDialog(this);
-        handler.sendEmptyMessageDelayed(0, 2500);
+        welcomeVideo = findViewById(R.id.vv_videoview);
+
+        welcomeVideo.setVideoPath(getFilesDir() + "/welcomeTimeStory.mp4");
+        welcomeVideo.start();
+        handler.sendEmptyMessageDelayed(0, 7000);
     }
 }
