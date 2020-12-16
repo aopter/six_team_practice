@@ -26,6 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="昵称"
+                android:textColor="@color/black"
                 android:textSize="20sp"/>
             <TextView
                 android:id="@+id/tv_niname"
@@ -33,6 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@id/iv_jiantou1"
                 android:textSize="20sp"
+                android:textColor="@color/black"
                 android:text="小美"/>
             <ImageView
                 android:id="@+id/iv_jiantou1"
@@ -52,6 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="个性签名"
+                android:textColor="@color/black"
                 android:textSize="20sp"/>
             <TextView
                 android:id="@+id/tv_signature"
@@ -59,6 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@id/iv_jiantou2"
                 android:textSize="20sp"
+                android:textColor="@color/black"
                 android:text="这是一只小美"/>
             <ImageView
                 android:id="@+id/iv_jiantou2"
@@ -78,6 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="手机号"
+                android:textColor="@color/black"
                 android:textSize="20sp"/>
             <TextView
                 android:id="@+id/tv_number"
@@ -85,6 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@id/iv_jiantou3"
                 android:textSize="20sp"
+                android:textColor="@color/black"
                 android:text="12345678"/>
             <ImageView
                 android:id="@+id/iv_jiantou3"
@@ -104,6 +110,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="二维码名片"
+                android:textColor="@color/black"
                 android:textSize="20sp"/>
             <ImageView
                 android:layout_width="30dp"
@@ -129,6 +136,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
+                android:textColor="@color/black"
                 android:text="性别"/>
             <RadioGroup
                 android:layout_width="match_parent"
@@ -152,9 +160,9 @@
             android:id="@+id/btn_save"
             android:layout_width="100dp"
             android:layout_height="50dp"
-            android:background="@color/ourDynastyRed"
+            android:background="@mipmap/button"
             android:textSize="22sp"
-            android:textColor="@color/white"
+            android:textColor="@color/ourDynastyRed"
             android:layout_marginTop="20dp"
             android:layout_gravity="right"
             android:layout_marginRight="15dp"

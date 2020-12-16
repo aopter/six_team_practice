@@ -12,7 +12,10 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -63,6 +66,8 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.DecimalFormat;
+import java.util.concurrent.ExecutionException;
+
 import me.leefeng.promptlibrary.PromptButton;
 import me.leefeng.promptlibrary.PromptButtonListener;
 import me.leefeng.promptlibrary.PromptDialog;
@@ -107,7 +112,9 @@ public class SettingActivity extends AppCompatActivity {
     private TextView tvNickName;
     private TextView tvSignature;
     private TextView tvNumber;
+    private EditText etProblem;
     private OkHttpClient okHttpClient;
+
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -431,7 +438,7 @@ public class SettingActivity extends AppCompatActivity {
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         linearLayout.setLayoutParams(params);
         //问题编辑框
-        EditText etProblem = new EditText(getApplicationContext());
+        etProblem = new EditText(getApplicationContext());
         LinearLayout.LayoutParams etParam = new LinearLayout.LayoutParams(1200, 700);
         etParam.topMargin = 150;
         etParam.gravity = Gravity.CENTER_HORIZONTAL;
@@ -440,15 +447,16 @@ public class SettingActivity extends AppCompatActivity {
         etProblem.setPadding(20,0,20,480);
         etProblem.setTextSize(20);
         etProblem.setBackgroundResource(R.drawable.edit_style);
+
         etProblem.setLayoutParams(etParam);
         linearLayout.addView(etProblem);
         //提交
         Button btnSub = new Button(getApplicationContext());
         LinearLayout.LayoutParams btnParam = new LinearLayout.LayoutParams(280, 150);
         btnSub.setText("提交");
-        btnSub.setTextColor(getResources().getColor(R.color.white));
+        btnSub.setTextColor(getResources().getColor(R.color.ourDynastyRed));
         btnSub.setTextSize(20);
-        btnSub.setBackgroundResource(R.color.ourDynastyRed);
+        btnSub.setBackgroundResource(R.mipmap.button);
         btnParam.gravity = Gravity.RIGHT;
         btnParam.rightMargin = 30;
         btnParam.topMargin = 50;
@@ -573,7 +581,7 @@ public class SettingActivity extends AppCompatActivity {
         LinearLayout.LayoutParams scParam = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
         scParam.topMargin = 30;
-        scrollView.setPadding(200,150,20,120);
+        scrollView.setPadding(150,150,20,120);
 
         scrollView.setLayoutParams(scParam);
         TextView tvRule = new TextView(getApplicationContext());
