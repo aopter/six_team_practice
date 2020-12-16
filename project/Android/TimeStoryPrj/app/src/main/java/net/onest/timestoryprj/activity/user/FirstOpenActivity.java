@@ -4,12 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
 import android.widget.VideoView;
 
 import com.google.gson.Gson;
@@ -22,7 +22,6 @@ import net.onest.timestoryprj.entity.User;
 
 import java.io.IOException;
 
-import butterknife.BindView;
 import me.leefeng.promptlibrary.PromptDialog;
 import okhttp3.Call;
 import okhttp3.FormBody;
@@ -136,7 +135,10 @@ public class FirstOpenActivity extends AppCompatActivity {
         promptDialog = new PromptDialog(this);
         welcomeVideo = findViewById(R.id.vv_videoview);
 
-        welcomeVideo.setVideoPath(getFilesDir() + "/welcomeTimeStory.mp4");
+
+        String uri = "android.resource://" + getPackageName() + "/" + R.raw.welcome_time_story;
+        welcomeVideo.setVideoURI(Uri.parse(uri));
+//        welcomeVideo.setVideoPath(getFilesDir() + "/raw/welcome_time_story.mp4");
         welcomeVideo.start();
         handler.sendEmptyMessageDelayed(0, 7000);
     }
