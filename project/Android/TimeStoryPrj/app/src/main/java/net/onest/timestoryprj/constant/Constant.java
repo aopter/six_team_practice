@@ -50,6 +50,7 @@ public class Constant {
     public static long Random;
     public static int  descCount = 60;
 
+<<<<<<< Updated upstream
 //    积分不足提示
     public static void showCountDialog(Context context) {
         CustomDialog.Builder builder = new CustomDialog.Builder(context);
@@ -67,4 +68,10 @@ public class Constant {
             }
         });
     }
+=======
+    public static int ChangeHeader;
+
+    public static long Random;
+
+>>>>>>> Stashed changes
 }

@@ -161,19 +161,34 @@ public class HomepageActivity extends AppCompatActivity {
                             public void onClick(View view) {
                                 if (prelongTim == 0) {
                                     prelongTim = new Date().getTime();
+<<<<<<< Updated upstream
+=======
+//
+>>>>>>> Stashed changes
                                     if (unlockDynastyIds.contains(dynasties1.get(finalI).getDynastyId().toString())) {
                                         Intent intent = new Intent();
                                         intent.setClass(getApplicationContext(), DynastyIntroduceActivity.class);
                                         intent.putExtra("dynastyId", dynasties1.get(finalI).getDynastyId().toString());
                                         startActivity(intent);
                                         overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
+<<<<<<< Updated upstream
                                     } else {
                                         ToastUtil.showSickToast(getApplicationContext(), "该朝代未解锁", 1500);
+=======
+//
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "该朝代未解锁", Toast.LENGTH_SHORT).show();
+//
+>>>>>>> Stashed changes
                                     }
                                 } else {
                                     curTime = new Date().getTime();
                                     if (curTime - prelongTim < 1000) {
                                     } else {
+<<<<<<< Updated upstream
+=======
+//
+>>>>>>> Stashed changes
                                         if (unlockDynastyIds.contains(dynasties1.get(finalI).getDynastyId().toString())) {
                                             Intent intent = new Intent();
                                             intent.setClass(getApplicationContext(), DynastyIntroduceActivity.class);
@@ -182,7 +197,11 @@ public class HomepageActivity extends AppCompatActivity {
                                             overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
 //
                                         } else {
+<<<<<<< Updated upstream
                                             ToastUtil.showSickToast(getApplicationContext(), "该朝代未解锁", 1500);
+=======
+                                            Toast.makeText(getApplicationContext(), "该朝代未解锁", Toast.LENGTH_SHORT).show();
+>>>>>>> Stashed changes
                                         }
 //
                                     }
@@ -429,10 +448,18 @@ public class HomepageActivity extends AppCompatActivity {
      */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void loadImgWithPlaceHolders() {
+<<<<<<< Updated upstream
         if (Constant.User.getFlag() == 0) {
             //手机号登录
             if (Constant.User.getUserHeader() == null) {
                 Glide.with(getApplicationContext())
+=======
+        //头像
+        if (Constant.User.getFlag() == 0) {
+            //手机号登录
+            if (Constant.User.getUserHeader() == null) {
+                Glide.with(this)
+>>>>>>> Stashed changes
                         .load(R.mipmap.man)
                         .circleCrop()
                         .into(ivHeader);
@@ -445,7 +472,10 @@ public class HomepageActivity extends AppCompatActivity {
                             .signature(new ObjectKey(Constant.Random))
                             .into(ivHeader);
                 } else if (Constant.ChangeHeader == 1) {
+<<<<<<< Updated upstream
                     //修改头像
+=======
+>>>>>>> Stashed changes
                     Constant.Random = System.currentTimeMillis();
                     Glide.with(this)
                             .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
