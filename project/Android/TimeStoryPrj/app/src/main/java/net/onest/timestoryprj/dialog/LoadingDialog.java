@@ -37,7 +37,6 @@ public class LoadingDialog extends Dialog {
     public static class Builder {
         private View mLayout;
         private LoadingDialog mDialog;
-        private ImageView loading;
 
         public Builder(Context context) {
             mDialog = new LoadingDialog(context, R.style.Dialog);
@@ -46,11 +45,6 @@ public class LoadingDialog extends Dialog {
             mLayout = inflater.inflate(R.layout.dialog_loading, null, false);
             // 添加布局文件到 Dialog
             mDialog.addContentView(mLayout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-            loading = mLayout.findViewById(R.id.loading_img);
-            AnimationDrawable animationDrawable = (AnimationDrawable) loading.getDrawable();
-            animationDrawable.setOneShot(false);
-            animationDrawable.start();
         }
 
 

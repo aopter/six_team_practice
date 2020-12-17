@@ -31,6 +31,7 @@ import net.onest.timestoryprj.adapter.card.SpecificDynastyCardAdapter;
 import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.customview.DropdownListView;
+import net.onest.timestoryprj.dialog.LoadingDialog;
 import net.onest.timestoryprj.entity.card.UserCard;
 import net.onest.timestoryprj.util.ToastUtil;
 
@@ -324,8 +325,7 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
                 call.enqueue(new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
-                        // TODO 错误提示
-                        ToastUtil.showCryToast(getApplicationContext(), "获取卡片失败了", 1500);
+                        // 获取失败
                     }
 
                     @Override

@@ -7,10 +7,10 @@
 
     <pl.droidsonroids.gif.GifImageView
         android:layout_width="350dp"
-        android:layout_marginTop="-100dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
+        android:layout_marginTop="-100dp"
         android:src="@mipmap/gif_story" />
 
     <LinearLayout
@@ -89,18 +89,18 @@
         <net.onest.timestoryprj.customview.StoryNodeView
             android:id="@+id/story_process"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginBottom="15dp"
-            android:layout_alignParentBottom="true" />
+            android:layout_height="70dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:paddingBottom="20dp" />
 
         <ImageView
             android:id="@+id/card_img"
             android:layout_width="130dp"
             android:layout_height="200dp"
             android:layout_marginLeft="50dp"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="70dp"
             android:alpha="0.95"
             android:src="@mipmap/role" />
     </RelativeLayout>
