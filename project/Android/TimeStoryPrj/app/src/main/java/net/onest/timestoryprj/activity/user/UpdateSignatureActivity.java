@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.constant.Constant;
+import net.onest.timestoryprj.util.ToastUtil;
 
 public class UpdateSignatureActivity extends AppCompatActivity {
     private ImageView ivBack;
@@ -40,7 +41,7 @@ public class UpdateSignatureActivity extends AppCompatActivity {
                 String signature = etSignature.getText().toString().trim();
                 Constant.User.setUserSignature(signature);
                 Constant.UserDetails.setUserSignature(signature);
-                Toast.makeText(getApplicationContext(),"保存成功",Toast.LENGTH_SHORT).show();
+                ToastUtil.showEncourageToast(getApplicationContext(),"保存成功",Toast.LENGTH_SHORT);
                 finish();
             }
         });
