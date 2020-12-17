@@ -6,7 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import com.bumptech.glide.Glide;
 
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.constant.Constant;
@@ -38,12 +41,24 @@ public class SelectProblemTypeActivity extends AppCompatActivity {
 
     private String dynastyId;
 
+    @BindViews({R.id.iv_xuan,R.id.iv_lian,R.id.iv_pai,R.id.iv_all})
+    ImageView[] ivGif;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_problem_type);
         ButterKnife.bind(this);
+
+        Glide.with(SelectProblemTypeActivity.this).asGif().load(R.mipmap.gif_problem_f).into(ivGif[3]);
+        Glide.with(SelectProblemTypeActivity.this).asGif().load(R.mipmap.gif_problem_s).into(ivGif[1]);
+        Glide.with(SelectProblemTypeActivity.this).asGif().load(R.mipmap.gif_problem_t).into(ivGif[2]);
+        Glide.with(SelectProblemTypeActivity.this).asGif().load(R.mipmap.gif_problem_ff).into(ivGif[0]);
+
+
+
+
 //        获得当前朝代
         Intent intent = getIntent();
         dynastyId = intent.getStringExtra("dynastyId1");

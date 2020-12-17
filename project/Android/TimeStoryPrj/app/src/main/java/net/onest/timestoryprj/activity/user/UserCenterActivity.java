@@ -94,6 +94,8 @@ public class UserCenterActivity extends AppCompatActivity {
     Button btnGoDynasty;
     @BindView(R.id.btn_my_card)
     Button btnMyCards;
+    @BindView(R.id.iv_gif_history)
+    ImageView iv_histroy;
 
     @BindView(R.id.btn_my_collections)
     Button btnMyCollections;
@@ -147,6 +149,9 @@ public class UserCenterActivity extends AppCompatActivity {
 //        获取排行榜
         getUserRank();
 //        initListView();
+
+//
+        Glide.with(UserCenterActivity.this).asGif().load(R.mipmap.gif_history).into(iv_histroy);
     }
 
 

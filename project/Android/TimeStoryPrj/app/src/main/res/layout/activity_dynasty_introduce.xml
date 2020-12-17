@@ -29,23 +29,42 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="15dp"
                 android:background="@mipmap/back" />
+<!--            <pl.droidsonroids.gif.GifImageView-->
+<!--                android:layout_width="50dp"-->
+<!--                android:layout_height="200dp"-->
+<!--                android:layout_marginRight="-40dp"-->
+<!--                android:layout_marginLeft="-40dp"-->
+<!--                android:layout_marginTop="-190dp"-->
+<!--                android:layout_marginBottom="-180dp"-->
+<!--                android:src="@mipmap/git_bg_dy"-->
+<!--                android:layout_alignRight="@+id/tv_dynasty_name"-->
+<!--                android:layout_alignLeft="@+id/tv_dynasty_name"-->
+<!--                android:layout_alignTop="@+id/tv_dynasty_name"-->
+<!--                android:layout_alignBottom="@+id/tv_dynasty_name"-->
 
-            <TextView
-                android:shadowRadius="3"
+<!--                android:id="@+id/iv_gif_bgs"-->
+<!--                />-->
+            <pl.droidsonroids.gif.GifTextView
+                android:background="@mipmap/git_bg_dy"
+                android:layout_marginRight="-35dp"
+                android:layout_marginLeft="-35dp"
+                android:layout_marginTop="-15dp"
+                android:layout_marginBottom="-15dp"
+                android:paddingTop="10dp"
+                android:shadowRadius="2"
                 android:shadowDx="3"
                 android:shadowDy="3"
                 android:shadowColor="#bb000000"
                 android:id="@+id/tv_dynasty_name"
-                android:layout_width="50dp"
-                android:layout_height="180dp"
+                android:layout_width="160dp"
+                android:layout_height="190dp"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
-                android:layout_margin="15dp"
                 android:alpha="0.7"
-                android:background="@mipmap/bg_1"
                 android:gravity="center"
                 android:lineSpacingExtra="10dp"
-                android:padding="5dp"
+                android:paddingRight="50dp"
+                android:paddingLeft="50dp"
                 android:textColor="#77000000"
                 android:textSize="30sp" />
         </RelativeLayout>
@@ -99,7 +118,7 @@
                 android:layout_height="30dp"
                 android:layout_marginRight="20dp"
                 android:layout_toLeftOf="@+id/btn_questions"
-                android:alpha="0.7"
+                android:alpha="0.65"
                 android:background="@drawable/cornert"
                 android:text="进入全景图"
                 android:textColor="#fff"
@@ -111,10 +130,10 @@
                 android:layout_height="30dp"
                 android:layout_marginRight="20dp"
                 android:layout_toLeftOf="@+id/btn_details"
-                android:alpha="0.7"
+                android:alpha="0.65"
                 android:background="@drawable/cornert"
                 android:text="朝代知多少"
-                android:textColor="#fcf5e9"
+                android:textColor="#fff"
                 android:textSize="16sp" />
 
             <Button
@@ -123,10 +142,10 @@
                 android:layout_height="30dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="30dp"
-                android:alpha="0.7"
+                android:alpha="0.65"
                 android:background="@drawable/cornert"
                 android:text="进入详情"
-                android:textColor="#fcf5e9"
+                android:textColor="#fff"
                 android:textSize="16sp" />
 
 
