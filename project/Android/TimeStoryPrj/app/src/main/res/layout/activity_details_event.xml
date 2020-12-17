@@ -6,39 +6,47 @@
     android:layout_height="match_parent"
     android:background="@mipmap/info"
     tools:context=".activity.dynasty.DetailsEventActivity">
-        <LinearLayout
-            android:id="@+id/ll_lishi"
-            android:layout_alignParentLeft="true"
-            android:layout_margin="15dp"
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tv_big_word"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="35sp"
-                android:layout_marginBottom="20dp"
-                android:textColor="@color/ourDynastyRed"/>
-        </LinearLayout>
+    <ImageView
+        android:id="@+id/iv_denglong"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true" />
+    <RelativeLayout
+        android:id="@+id/ll_lishi"
+        android:layout_margin="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        <HorizontalScrollView
-            android:layout_below="@+id/ll_lishi"
+        <TextView
+            android:id="@+id/tv_big_word"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <GridView
-                    android:orientation="horizontal"
-                    android:id="@+id/hlv_timeline"
-                    android:layout_width="wrap_content"
-                    android:padding="0dp"
-                    android:layout_height="match_parent"
-                    android:horizontalSpacing="0dp"
-                    android:verticalSpacing="0dp"
-                    android:clickable="false"/>
-            </LinearLayout>
-        </HorizontalScrollView>
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/ourDynastyRed"
+            android:textSize="35sp" />
+    </RelativeLayout>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ll_lishi"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <GridView
+                android:id="@+id/hlv_timeline"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:clickable="false"
+                android:horizontalSpacing="0dp"
+                android:orientation="horizontal"
+                android:padding="0dp"
+                android:verticalSpacing="0dp" />
+        </LinearLayout>
+    </HorizontalScrollView>
 </RelativeLayout>

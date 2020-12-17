@@ -15,8 +15,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -43,6 +45,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class DetailsEventActivity extends AppCompatActivity {
+    private ImageView ivDengLong;
     private GridView hlvTimeline;
     private List<Incident> incidentList = new ArrayList<>();
     private EventListAdapter eventListAdapter;
@@ -126,6 +129,14 @@ public class DetailsEventActivity extends AppCompatActivity {
         final Typeface typeface = Typeface.createFromAsset(assets, "fonts/custom_fontt.ttf");
         tvBigWord.setTypeface(typeface);
         tvBigWord.setText(word);
+        initGlide();
+    }
+
+    private void initGlide() {
+        Glide.with(this)
+                .asGif()
+                .load(R.mipmap.housedenglong)
+                .into(ivDengLong);
     }
 
     /**
@@ -209,6 +220,7 @@ public class DetailsEventActivity extends AppCompatActivity {
     private void findViews() {
         hlvTimeline = findViewById(R.id.hlv_timeline);
         tvBigWord = findViewById(R.id.tv_big_word);
+        ivDengLong = findViewById(R.id.iv_denglong);
     }
 
     @Override

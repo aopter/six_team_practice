@@ -80,6 +80,7 @@ public class HomepageActivity extends AppCompatActivity {
     int flag = 0;
     public static MediaPlayer mediaPlayer;
     private TextView tvLevel;
+    private List<TextView> tvs = new ArrayList<>();
     private TextView tvPoint;
     private Button btnPlus;
     private Button btnCard;
@@ -144,11 +145,17 @@ public class HomepageActivity extends AppCompatActivity {
                         } else {
                             if (i == 1) {
                                 params.setMargins(650, 0, 0, 0);
+<<<<<<< Updated upstream
+=======
+                            } else if (i == dynasties1.size() - 1) {
+                                params.setMargins(330, 0, 330, 0);
+>>>>>>> Stashed changes
                             } else {
                                 params.setMargins(330, 0, 0, 0);
                             }
                             tv.setLayoutParams(params);
                             llLayout2.addView(tv);
+                            tvs.add(tv);
                         }
                         int finalI = i;
                         List<String> unlockDynastyIds = new ArrayList<>();
@@ -163,8 +170,24 @@ public class HomepageActivity extends AppCompatActivity {
                             public void onClick(View view) {
                                 if(prelongTim == 0){
                                     prelongTim = new Date().getTime();
+<<<<<<< Updated upstream
 
                                     for (int j = 0; j < Constant.UnlockDynasty.size(); j++) {
+=======
+                                    if (unlockDynastyIds.contains(dynasties1.get(finalI).getDynastyId().toString())) {
+                                        Intent intent = new Intent();
+                                        intent.setClass(getApplicationContext(), DynastyIntroduceActivity.class);
+                                        intent.putExtra("dynastyId", dynasties1.get(finalI).getDynastyId().toString());
+                                        startActivity(intent);
+                                        overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
+                                    } else {
+                                        ToastUtil.showSickToast(getApplicationContext(), "该朝代未解锁", 1500);
+                                    }
+                                } else {
+                                    curTime = new Date().getTime();
+                                    if (curTime - prelongTim < 1000) {
+                                    } else {
+>>>>>>> Stashed changes
                                         if (unlockDynastyIds.contains(dynasties1.get(finalI).getDynastyId().toString())) {
                                             Intent intent = new Intent();
                                             intent.setClass(getApplicationContext(), DynastyIntroduceActivity.class);
@@ -174,6 +197,7 @@ public class HomepageActivity extends AppCompatActivity {
                                             break;
                                         } else {
                                             ToastUtil.showSickToast(getApplicationContext(), "该朝代未解锁", 1500);
+<<<<<<< Updated upstream
 
                                         }
                                     }
@@ -192,6 +216,8 @@ public class HomepageActivity extends AppCompatActivity {
                                             } else {
                                                 Toast.makeText(getApplicationContext(), "该朝代未解锁", Toast.LENGTH_SHORT).show();
                                             }
+=======
+>>>>>>> Stashed changes
                                         }
                                     }
                                     prelongTim = curTime;
@@ -389,7 +415,9 @@ public class HomepageActivity extends AppCompatActivity {
                     }.getType();
                     //2.反序列化
                     List<Dynasty> dynasties = gson.fromJson(json1, type);
-
+                    Constant.dynastiesName = dynasties;
+                    Log.e("朝代列表", dynasties.toString());
+                    Log.e("添加", Constant.dynastiesName.get(12).getDynastyName());
                     Message msg = new Message();
                     msg.what = 1;
                     msg.obj = dynasties;
@@ -436,6 +464,7 @@ public class HomepageActivity extends AppCompatActivity {
      */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void loadImgWithPlaceHolders() {
+<<<<<<< Updated upstream
 
         if (Constant.User.getFlag() == 0) {
             //手机号登录
@@ -450,9 +479,18 @@ public class HomepageActivity extends AppCompatActivity {
                     //未修改头像
                     Glide.with(getApplicationContext())
                             .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
+=======
+        if (Constant.User.getFlag() == 0) {
+            //头像
+            if (Constant.User.getFlag() == 0) {
+                //手机号登录
+                if (Constant.User.getUserHeader() == null) {
+                    Glide.with(this)
+                            .load(R.mipmap.man)
+>>>>>>> Stashed changes
                             .circleCrop()
-                            .signature(new ObjectKey(Constant.Random))
                             .into(ivHeader);
+<<<<<<< Updated upstream
                 } else if (Constant.ChangeHeader == 1) {
 
                     Constant.Random = System.currentTimeMillis();
@@ -463,14 +501,43 @@ public class HomepageActivity extends AppCompatActivity {
                             .signature(new ObjectKey(Constant.Random))
                             .into(ivHeader);
                     Constant.ChangeHeader = 0;
+=======
+                } else {
+                    if (Constant.ChangeHeader == 0) {
+                        //未修改头像
+                        Glide.with(this)
+                                .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
+                                .circleCrop()
+                                .signature(new ObjectKey(Constant.Random))
+                                .into(ivHeader);
+                    } else if (Constant.ChangeHeader == 1) {
+                        //修改头像
+                        Constant.Random = System.currentTimeMillis();
+                        Glide.with(this)
+                                .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
+                                .circleCrop()
+                                .signature(new ObjectKey(Constant.Random))
+                                .into(ivHeader);
+                        Constant.ChangeHeader = 0;
+                    }
+>>>>>>> Stashed changes
                 }
+            } else if (Constant.User.getFlag() == 1) {
+                //QQ登录
+                Glide.with(this)
+                        .load(Constant.User.getUserHeader())
+                        .circleCrop()
+                        .into(ivHeader);
             }
+<<<<<<< Updated upstream
         } else if (Constant.User.getFlag() == 1) {
             //QQ登录
             Glide.with(getApplicationContext())
                     .load(Constant.User.getUserHeader())
                     .circleCrop()
                     .into(ivHeader);
+=======
+>>>>>>> Stashed changes
         }
     }
 
@@ -564,6 +631,7 @@ public class HomepageActivity extends AppCompatActivity {
 //                    };
             }
         }
+
     }
 
     /**
@@ -588,6 +656,17 @@ public class HomepageActivity extends AppCompatActivity {
         flag = 0;
         setListener();
         getUserInfo();
+        List<String> unlockDynastyIds = new ArrayList<>();
+        for (int j = 0; j < Constant.UnlockDynasty.size(); j++) {
+            unlockDynastyIds.add(Constant.UnlockDynasty.get(j).getDynastyName());
+        }
+        Log.e("unlock", unlockDynastyIds.toString());
+        for (int i = 0; i < tvs.size();i++){
+            if (unlockDynastyIds.contains(tvs.get(i).getText().toString())){
+                tvs.get(i).setBackgroundResource(R.mipmap.shan);
+                Log.e("tvs", tvs.get(i).getText().toString());
+            }
+        }
     }
 
 

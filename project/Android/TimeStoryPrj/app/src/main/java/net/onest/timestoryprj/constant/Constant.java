@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.view.View;
 
 import net.onest.timestoryprj.dialog.card.CustomDialog;
+import net.onest.timestoryprj.entity.Dynasty;
 import net.onest.timestoryprj.entity.HistoryDay;
 import net.onest.timestoryprj.entity.Problem;
 import net.onest.timestoryprj.entity.Rule;
@@ -42,6 +43,8 @@ public class Constant {
 
     public static UserDetails UserDetails = new UserDetails();
 
+    public static List<Dynasty> dynastiesName = new ArrayList<>();
+
     public static Bitmap shareBitmap;
 
     public static List<UserStatus> userStatuses = new ArrayList<>();
@@ -53,7 +56,10 @@ public class Constant {
 
 
     public static int  descCount = 60;
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 //    积分不足提示
     public static void showCountDialog(Context context) {
         CustomDialog.Builder builder = new CustomDialog.Builder(context);
@@ -71,5 +77,8 @@ public class Constant {
             }
         });
     }
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 }

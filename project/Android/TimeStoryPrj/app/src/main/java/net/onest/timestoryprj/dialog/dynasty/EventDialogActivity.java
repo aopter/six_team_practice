@@ -57,6 +57,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class EventDialogActivity extends AppCompatActivity {
+    private ImageView ivDenglong1;
     private TextView tvBigWord2;
     private TextView tvDialogIntro;
     private LinearLayout llDialogLayout;
@@ -267,6 +268,10 @@ public class EventDialogActivity extends AppCompatActivity {
         typeface = Typeface.createFromAsset(assets, "fonts/custom_fontt.ttf");
         typeface1 = Typeface.createFromAsset(assets, "fonts/custom_font.ttf");
         initData();
+        Glide.with(this)
+                .asGif()
+                .load(R.mipmap.denglong1)
+                .into(ivDenglong1);
     }
 
     private void findViews() {
@@ -280,6 +285,7 @@ public class EventDialogActivity extends AppCompatActivity {
         btnPre2 = findViewById(R.id.btn_pre2);
         llDialogLayout = findViewById(R.id.ll_dialog_layout);
         svScroll = findViewById(R.id.sv_scroll);
+        ivDenglong1 = findViewById(R.id.iv_denglong1);
     }
 
     /**
@@ -301,9 +307,9 @@ public class EventDialogActivity extends AppCompatActivity {
      */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void downloadIncidentImg() {
-        Glide.with(this).load(ServiceConfig.SERVICE_ROOT + "/img/incident/tang-1.png")
+        Glide.with(this).load(ServiceConfig.SERVICE_ROOT + "/img/incident/tang-1.gif")
                 .into(ivDialog2Img);
-        Glide.with(this).load(ServiceConfig.SERVICE_ROOT + "/img/incident/tang-2.png")
+        Glide.with(this).load(ServiceConfig.SERVICE_ROOT + "/img/incident/tang-2.gif")
                 .into(ivDialog1Img);
         Glide.with(this).load(ServiceConfig.SERVICE_ROOT + "/img/incident/tang-other.png")
                 .into(ivDialogIntroImg);
@@ -357,8 +363,8 @@ public class EventDialogActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "您已解锁下一朝代", Toast.LENGTH_SHORT).show();
                     Looper.loop();
                     UserUnlockDynasty unlockDynasty = new UserUnlockDynasty();
-                    unlockDynasty.setDynastyId(dynastyId);
-                    unlockDynasty.setDynastyName(dynastyName);
+                    unlockDynasty.setDynastyId(dynastyID + "");
+                    unlockDynasty.setDynastyName(Constant.dynastiesName.get(dynastyID - 1).getDynastyName());
                     unlockDynasty.setProgress(0);
                     unlockDynasty.setUserId(Constant.User.getUserId());
                     Constant.UnlockDynasty.add(unlockDynasty);

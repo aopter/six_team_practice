@@ -36,7 +36,14 @@
         android:layout_height="match_parent"
         android:gravity="center">
 
+        <ImageView
+            android:id="@+id/iv_denglong1"
+            android:layout_width="70dp"
+            android:layout_height="100dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="55dp"/>
         <LinearLayout
+            android:id="@+id/ll_pangbai"
             android:gravity="center"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
@@ -44,7 +51,7 @@
             android:layout_height="230dp"
             android:layout_marginTop="50dp"
             android:layout_alignParentRight="true"
-            android:background="@mipmap/pangbai">
+            android:background="@mipmap/pangbai1">
 
             <ScrollView
                 android:paddingTop="15dp"

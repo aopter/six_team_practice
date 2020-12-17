@@ -13,12 +13,14 @@ import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -49,6 +51,7 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
     @BindView(R.id.btn_pre)
     Button btnPre;
     private RelativeLayout rlBack;
+    private ImageView ivHead;
     private TextView tvDynastyName;
     private TextView tvDynastyIntro;
     private Button btnImg;
@@ -88,7 +91,10 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
         initGson();
         initData();
         setListener();
-
+        Glide.with(this)
+                .asGif()
+                .load(R.mipmap.bird)
+                .into(ivHead);
     }
 
     private void setListener() {
@@ -155,6 +161,7 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
         btnDetails = findViewById(R.id.btn_details);
         rlBack = findViewById(R.id.rl_back);
         btnImg = findViewById(R.id.btn_img);
+        ivHead = findViewById(R.id.iv_head);
     }
 
     class MyListener implements View.OnClickListener {

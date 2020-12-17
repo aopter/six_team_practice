@@ -17,7 +17,6 @@
         android:padding="5dp">
 
         <RelativeLayout
-
             android:id="@+id/ll_intro_word"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -50,22 +49,26 @@
                 android:textColor="#77000000"
                 android:textSize="30sp" />
         </RelativeLayout>
-
-
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/rl_intro"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/rl_below"
+            android:orientation="vertical"
             android:layout_toRightOf="@+id/ll_intro_word"
             android:alpha="0.7"
             android:background="@mipmap/bg_container"
             android:padding="18dp">
-
-
+            <ImageView
+                android:id="@+id/iv_head"
+                android:layout_alignParentTop="true"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"/>
             <LinearLayout
+                android:id="@+id/ll_white"
+                android:layout_marginTop="80dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="80dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="25dp"
                 android:paddingLeft="5dp">
@@ -81,7 +84,7 @@
                     android:textColor="@android:color/black"
                     android:textSize="20sp" />
             </LinearLayout>
-        </LinearLayout>
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/rl_below"
