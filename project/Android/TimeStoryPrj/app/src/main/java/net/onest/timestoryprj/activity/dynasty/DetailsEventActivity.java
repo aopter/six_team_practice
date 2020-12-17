@@ -12,8 +12,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -101,6 +103,8 @@ public class DetailsEventActivity extends AppCompatActivity {
         initGson();
         initOkHttp();
         initData();
+
+
     }
 
     /**
@@ -229,4 +233,6 @@ public class DetailsEventActivity extends AppCompatActivity {
         Log.e("onResume", "加载");
         initData();
     }
+
+
 }

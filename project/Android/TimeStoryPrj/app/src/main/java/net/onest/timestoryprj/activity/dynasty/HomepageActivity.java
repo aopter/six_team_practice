@@ -145,11 +145,8 @@ public class HomepageActivity extends AppCompatActivity {
                         } else {
                             if (i == 1) {
                                 params.setMargins(650, 0, 0, 0);
-<<<<<<< Updated upstream
-=======
                             } else if (i == dynasties1.size() - 1) {
                                 params.setMargins(330, 0, 330, 0);
->>>>>>> Stashed changes
                             } else {
                                 params.setMargins(330, 0, 0, 0);
                             }
@@ -168,37 +165,17 @@ public class HomepageActivity extends AppCompatActivity {
                         tv.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                if(prelongTim == 0){
+                                if(prelongTim == 0) {
                                     prelongTim = new Date().getTime();
-<<<<<<< Updated upstream
-
                                     for (int j = 0; j < Constant.UnlockDynasty.size(); j++) {
-=======
-                                    if (unlockDynastyIds.contains(dynasties1.get(finalI).getDynastyId().toString())) {
-                                        Intent intent = new Intent();
-                                        intent.setClass(getApplicationContext(), DynastyIntroduceActivity.class);
-                                        intent.putExtra("dynastyId", dynasties1.get(finalI).getDynastyId().toString());
-                                        startActivity(intent);
-                                        overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
-                                    } else {
-                                        ToastUtil.showSickToast(getApplicationContext(), "该朝代未解锁", 1500);
-                                    }
-                                } else {
-                                    curTime = new Date().getTime();
-                                    if (curTime - prelongTim < 1000) {
-                                    } else {
->>>>>>> Stashed changes
                                         if (unlockDynastyIds.contains(dynasties1.get(finalI).getDynastyId().toString())) {
                                             Intent intent = new Intent();
                                             intent.setClass(getApplicationContext(), DynastyIntroduceActivity.class);
                                             intent.putExtra("dynastyId", dynasties1.get(finalI).getDynastyId().toString());
                                             startActivity(intent);
                                             overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
-                                            break;
                                         } else {
                                             ToastUtil.showSickToast(getApplicationContext(), "该朝代未解锁", 1500);
-<<<<<<< Updated upstream
-
                                         }
                                     }
                                 }else{
@@ -216,8 +193,6 @@ public class HomepageActivity extends AppCompatActivity {
                                             } else {
                                                 Toast.makeText(getApplicationContext(), "该朝代未解锁", Toast.LENGTH_SHORT).show();
                                             }
-=======
->>>>>>> Stashed changes
                                         }
                                     }
                                     prelongTim = curTime;
@@ -464,81 +439,41 @@ public class HomepageActivity extends AppCompatActivity {
      */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void loadImgWithPlaceHolders() {
-<<<<<<< Updated upstream
-
-        if (Constant.User.getFlag() == 0) {
+        if (Constant.User.getFlag() == 0){
             //手机号登录
-            if (Constant.User.getUserHeader() == null) {
+            if (Constant.User.getUserHeader() == null){
                 Glide.with(getApplicationContext())
-
                         .load(R.mipmap.man)
                         .circleCrop()
                         .into(ivHeader);
-            } else {
-                if (Constant.ChangeHeader == 0) {
+            }else {
+                if (Constant.ChangeHeader == 0){
                     //未修改头像
                     Glide.with(getApplicationContext())
-                            .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
-=======
-        if (Constant.User.getFlag() == 0) {
-            //头像
-            if (Constant.User.getFlag() == 0) {
-                //手机号登录
-                if (Constant.User.getUserHeader() == null) {
-                    Glide.with(this)
-                            .load(R.mipmap.man)
->>>>>>> Stashed changes
+                            .load(ServiceConfig.SERVICE_ROOT + "/img/"+Constant.User.getUserHeader())
                             .circleCrop()
+                            .signature(new ObjectKey(Constant.Random))
                             .into(ivHeader);
-<<<<<<< Updated upstream
-                } else if (Constant.ChangeHeader == 1) {
-
+                }else if (Constant.ChangeHeader == 1){
+                    //修改头像
                     Constant.Random = System.currentTimeMillis();
-                    Log.e("下载头像", ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader());
+                    Log.e("下载头像",ServiceConfig.SERVICE_ROOT+"/img/"+Constant.User.getUserHeader());
                     Glide.with(getApplicationContext())
                             .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
                             .circleCrop()
                             .signature(new ObjectKey(Constant.Random))
                             .into(ivHeader);
                     Constant.ChangeHeader = 0;
-=======
-                } else {
-                    if (Constant.ChangeHeader == 0) {
-                        //未修改头像
-                        Glide.with(this)
-                                .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
-                                .circleCrop()
-                                .signature(new ObjectKey(Constant.Random))
-                                .into(ivHeader);
-                    } else if (Constant.ChangeHeader == 1) {
-                        //修改头像
-                        Constant.Random = System.currentTimeMillis();
-                        Glide.with(this)
-                                .load(ServiceConfig.SERVICE_ROOT + "/img/" + Constant.User.getUserHeader())
-                                .circleCrop()
-                                .signature(new ObjectKey(Constant.Random))
-                                .into(ivHeader);
-                        Constant.ChangeHeader = 0;
-                    }
->>>>>>> Stashed changes
                 }
-            } else if (Constant.User.getFlag() == 1) {
-                //QQ登录
-                Glide.with(this)
-                        .load(Constant.User.getUserHeader())
-                        .circleCrop()
-                        .into(ivHeader);
             }
-<<<<<<< Updated upstream
-        } else if (Constant.User.getFlag() == 1) {
+        }else if (Constant.User.getFlag() == 1){
             //QQ登录
             Glide.with(getApplicationContext())
                     .load(Constant.User.getUserHeader())
                     .circleCrop()
                     .into(ivHeader);
-=======
->>>>>>> Stashed changes
         }
+
     }
 
     class MyListener implements View.OnClickListener {

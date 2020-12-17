@@ -56,10 +56,6 @@ public class Constant {
 
 
     public static int  descCount = 60;
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 //    积分不足提示
     public static void showCountDialog(Context context) {
         CustomDialog.Builder builder = new CustomDialog.Builder(context);
@@ -77,8 +73,5 @@ public class Constant {
             }
         });
     }
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
 }
