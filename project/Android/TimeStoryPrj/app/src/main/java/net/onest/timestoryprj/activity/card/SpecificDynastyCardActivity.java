@@ -69,6 +69,8 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
     private OkHttpClient client;
     private Gson gson;
     int type = 0;
+    private long clickMillis = 0;
+    private long clickTwiceMillis;
     private PromptDialog promptDialog;
     private Handler handler = new Handler() {
         @Override
@@ -159,23 +161,29 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
     }
 
     private void initDatas() {
+        clickMillis = System.currentTimeMillis();
         if (userCards.size() == 0) {
-            ToastUtil.showEncourageToast(getApplicationContext(), "没有此朝代的卡片，请重新选择朝代吧", 1500);
+            ToastUtil.showSickToast(getApplicationContext(), "没有此朝代的卡片，请重新选择朝代吧", 1500);
         }
         cardAdapter = new SpecificDynastyCardAdapter(getApplicationContext(), userCards);
         dyanstyCardView.setAdapter(cardAdapter);
         dyanstyCardView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Intent intent = new Intent(getApplicationContext(), SpectficCardDetailActivity.class);
-                intent.putExtra("cardId", userCards.get(position).getCardListVO().getCardId());
-                startActivity(intent);
+                clickTwiceMillis = System.currentTimeMillis();
+                if ((clickTwiceMillis - clickMillis) > 1000) {
+                    Intent intent = new Intent(getApplicationContext(), SpectficCardDetailActivity.class);
+                    intent.putExtra("cardId", userCards.get(position).getCardListVO().getCardId());
+                    startActivity(intent);
+                }
+                clickMillis = clickTwiceMillis;
             }
         });
         promptDialog.dismissImmediately();
     }
 
     private void notifyDataChange() {
+        clickMillis = System.currentTimeMillis();
         if (userCards.size() == 0) {
             ToastUtil.showSickToast(getApplicationContext(), "没有相关卡片，请重新选择吧", 1500);
         }
@@ -184,9 +192,13 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
         dyanstyCardView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Intent intent = new Intent(getApplicationContext(), SpectficCardDetailActivity.class);
-                intent.putExtra("cardId", userCards.get(position).getCardListVO().getCardId());
-                startActivity(intent);
+                clickTwiceMillis = System.currentTimeMillis();
+                if ((clickTwiceMillis - clickMillis) > 1000) {
+                    Intent intent = new Intent(getApplicationContext(), SpectficCardDetailActivity.class);
+                    intent.putExtra("cardId", userCards.get(position).getCardListVO().getCardId());
+                    startActivity(intent);
+                }
+                clickMillis = clickTwiceMillis;
             }
         });
     }

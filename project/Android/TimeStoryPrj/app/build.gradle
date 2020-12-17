@@ -56,4 +56,7 @@ dependencies {
     implementation 'com.google.zxing:core:3.3.0'
 
     implementation 'com.github.adnan-SM:TimelyTextView:1.0'
+    // https://mvnrepository.com/artifact/pl.droidsonroids.gif/android-gif-drawable
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.15'
+
 }
