@@ -54,9 +54,9 @@
             android:background="@mipmap/pangbai1">
 
             <ScrollView
-                android:paddingTop="15dp"
+                android:paddingTop="5dp"
                 android:paddingBottom="10dp"
-             android:layout_marginTop="19dp"
+                android:layout_marginTop="19dp"
                 android:layout_marginBottom="15dp"
                 android:id="@+id/sv_scroll1"
                 android:layout_width="210dp"
