@@ -96,13 +96,13 @@
     </style>
 
     <style name="ivOptionPic">
-        <item name="android:layout_width">110dp</item>
-        <item name="android:layout_height">110dp</item>
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">100dp</item>
     </style>
     <style name="ivOptionCheck">
-        <item name="android:layout_marginTop">10dp</item>
-        <item name="android:layout_width">25dp</item>
-        <item name="android:layout_height">25dp</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:layout_width">20dp</item>
+        <item name="android:layout_height">20dp</item>
     </style>
 
 

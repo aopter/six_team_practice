@@ -22,16 +22,6 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true" />
 
-        <!--        <TextView-->
-        <!--            android:id="@+id/tv_add_user_c"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:text="+10"/>-->
-        <!--        <TextView-->
-        <!--            android:id="@+id/tv_add_user_e"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:text="+20"/>-->
         <net.onest.timestoryprj.customview.CusTextView
             android:id="@+id/problem_title"
             android:layout_width="wrap_content"
@@ -137,7 +127,7 @@
 
                 android:id="@+id/type_xuan"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:orientation="vertical">
                 <!--    题目/描述-->
@@ -256,8 +246,6 @@
                         <ImageView
                             android:id="@+id/iv_optionB_check"
                             style="@style/ivOptionCheck" />
-
-
                     </LinearLayout>
 
                     <LinearLayout
@@ -350,7 +338,7 @@
             <LinearLayout
                 android:id="@+id/type_lian"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:orientation="vertical">
 
@@ -407,7 +395,7 @@
             <LinearLayout
                 android:id="@+id/type_pai"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:gravity="center"
                 android:orientation="vertical">

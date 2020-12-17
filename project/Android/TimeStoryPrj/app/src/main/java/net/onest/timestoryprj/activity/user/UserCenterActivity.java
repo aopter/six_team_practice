@@ -66,6 +66,7 @@ public class UserCenterActivity extends AppCompatActivity {
     private OkHttpClient okHttpClient;
     //    历史上的今天 文本框
     private TextView tvData;
+    private int flag;
 
     @BindView(R.id.btn_set)
     Button btnSet;
@@ -302,13 +303,13 @@ public class UserCenterActivity extends AppCompatActivity {
     }
 
 
-    @OnClick(R.id.btn_plus)
+    @OnClick({R.id.btn_plus, R.id.tv_point})
     void toRechargePage() {
         Intent intent = new Intent(getApplicationContext(), RechargeActivity.class);
         startActivity(intent);
     }
 
-    @OnClick(R.id.btn_go_dynasty)
+    @OnClick({R.id.btn_go_dynasty, R.id.iv_header})
     public void jumpDynasty() {
         finish();
     }
@@ -319,9 +320,19 @@ public class UserCenterActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    @OnClick({R.id.btn_my_collections, R.id.btn_card, R.id.btn_set})
+    @OnClick({R.id.btn_my_collections, R.id.btn_card, R.id.btn_set,R.id.tv_level})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.tv_level:
+                if (flag == 0){
+                    tvLevel.setText("" + Constant.User.getUserExperience() + "/" + Constant.User.getUserStatus().getStatusExperienceTop());
+                    flag = 1;
+                }else{
+                    tvLevel.setText(Constant.User.getUserStatus().getStatusName());
+                    flag = 0;
+
+                }
+                break;
             case R.id.btn_my_collections:
                 Intent intent = new Intent(UserCenterActivity.this, ProblemCollectionActivity.class);
                 startActivity(intent);

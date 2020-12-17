@@ -1,6 +1,7 @@
 package net.onest.timestoryprj.util;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,6 +35,18 @@ public class ToastUtil {
         toast.setGravity(1, 0, 250);
         toast.show();
     }
+
+    public static void showProblemYesToast(Context context, String message, int length) {
+        Toast toast = new Toast(context);
+        View view = View.inflate(context, R.layout.toast_problem, null);
+        TextView textView = view.findViewById(R.id.toast_message);
+        textView.setText(message);
+        toast.setDuration(length);
+        toast.setView(view);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
+    }
+
 
     public static void showSickToast(Context context, String message, int length) {
         Toast toast = new Toast(context);

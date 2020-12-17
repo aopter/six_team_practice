@@ -45,6 +45,7 @@ import net.onest.timestoryprj.entity.problem.ProblemCheckAnswer;
 import net.onest.timestoryprj.entity.problem.ProblemLinkLine;
 import net.onest.timestoryprj.entity.problem.ProblemSelect;
 import net.onest.timestoryprj.entity.problem.ProblemgetOrder;
+import net.onest.timestoryprj.util.ToastUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -271,11 +272,12 @@ public class ProblemInfoActivity extends AppCompatActivity {
                     break;
                 case 4://收藏
                     btnProblemSave.setText("已收藏");
-                    promptDialog.showSuccess("收藏成功");
+                    ToastUtil.showEncourageToast(ProblemInfoActivity.this,"收藏成功啦",1500);
                     break;
                 case 5://取消收藏
                     btnProblemSave.setText("收藏");
-                    promptDialog.showSuccess("取消收藏成功");
+                    ToastUtil.showEncourageToast(ProblemInfoActivity.this,"取消收藏成功啦",1500);
+
                     break;
                 case 6://是否收藏
                     String isCollection = (String) msg.obj;
@@ -297,7 +299,6 @@ public class ProblemInfoActivity extends AppCompatActivity {
                     String re = (String) msg.obj;
                     ProblemCheckAnswer problemCheckAnswer = gson.fromJson(re, ProblemCheckAnswer.class);
 
-                    LogUtils.d("结果", problemCheckAnswer.toString());
                     Constant.User.setUserExperience(problemCheckAnswer.getUserExperience());
                     Constant.User.setUserCount(problemCheckAnswer.getUserCount());
                     tvUserC.setText(problemCheckAnswer.getUserCount() + "");
@@ -306,12 +307,15 @@ public class ProblemInfoActivity extends AppCompatActivity {
 //                    animToAddC();
 
                     if (problemCheckAnswer.getUnlock().equals("true")) {
-                        //成功
-                        UserUnlockDynasty userUnlockDynasty = new UserUnlockDynasty();
-                        userUnlockDynasty.setUserId(Constant.User.getUserId());
-                        userUnlockDynasty.setDynastyId(dynastyId);
-                        userUnlockDynasty.setDynastyName("秦朝");//
-                        Constant.UnlockDynasty.add(userUnlockDynasty);
+                        if (Integer.parseInt(dynastyId) == Constant.UnlockDynasty.size()) {
+                            ToastUtil.showEncourageToast(getApplicationContext(), "在您认真的学习下，下一个朝代已经解锁啦！", 1500);
+                            UserUnlockDynasty userUnlockDynasty = new UserUnlockDynasty();
+                            userUnlockDynasty.setUserId(Constant.User.getUserId());
+                            userUnlockDynasty.setDynastyId(dynastyId);
+                            userUnlockDynasty.setDynastyName("秦朝");//
+                            Constant.UnlockDynasty.add(userUnlockDynasty);
+                        }
+
                     }
                     break;
                 case 8:
@@ -925,6 +929,7 @@ public class ProblemInfoActivity extends AppCompatActivity {
     private void getBeforeOrNextProblem() {
         LogUtils.d("类型", "");
         Problem problem = myProblems.get(cIndex);
+        cProblem = problem;
         switch (problem.getProblemType()) {
             case 1://选择
                 Message msgIv = new Message();
@@ -1027,10 +1032,17 @@ public class ProblemInfoActivity extends AppCompatActivity {
         btnAnswer.setVisibility(View.VISIBLE);
         switch (result) {
             case 1:
-                promptDialog.showInfo("恭喜你，回答正确喽！");
+                if (Integer.parseInt(dynastyId) == Constant.UnlockDynasty.size()) {
+                    promptDialog.showInfo("回答正确喽！经验+20,积分+10");
+                } else {
+                    promptDialog.showInfo("回答正确喽！经验+20");
+
+                }
+//                ToastUtil.showProblemYesToast(ProblemInfoActivity.this,"回答正确，积分+10",1500);
                 break;
             case 2:
-                promptDialog.showInfo("很遗憾，回答错误~");
+                promptDialog.showInfo("很遗憾~ 回答错误,经验+20");
+//                ToastUtil.showProblemYesToast(ProblemInfoActivity.this,"回答错误，经验+20",1500);
                 break;
         }
         if (before.equals("info")) {

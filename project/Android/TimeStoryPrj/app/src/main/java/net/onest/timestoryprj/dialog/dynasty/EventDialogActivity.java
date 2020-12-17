@@ -38,7 +38,6 @@ import net.onest.timestoryprj.entity.UserUnlockDynasty;
 import net.onest.timestoryprj.entity.UserUnlockDynastyIncident;
 import net.onest.timestoryprj.util.DensityUtil;
 import net.onest.timestoryprj.util.TextUtil;
-import net.onest.timestoryprj.util.ToastUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -160,7 +159,7 @@ public class EventDialogActivity extends AppCompatActivity {
                                 curTime = new Date().getTime();
                                 if ((curTime-prelongTim) < 1000){
                                     Log.e("iii", curTime-prelongTim + "");
-                                    ToastUtil.showCryToast(getApplicationContext(), "点击太快了，慢一些吧！", 1500);
+                                    Toast.makeText(getApplicationContext(), "点击太快了，慢一些吧！",Toast.LENGTH_LONG).show();
                                 }else{
                                     Log.e("iiie", curTime-prelongTim + "");
                                     int count = rlRelativeLayout.getChildCount();
@@ -237,7 +236,7 @@ public class EventDialogActivity extends AppCompatActivity {
                         Constant.User.setUserExperience(experience);
                         Log.e("ex", String.valueOf(Constant.User.getUserExperience()));
                         Looper.prepare();
-                        ToastUtil.showEncourageToast(getApplicationContext(), "您学习完此事件啦，看看下一个吧！", 1500);
+                        Toast.makeText(getApplicationContext(), "您已看完此事件", Toast.LENGTH_LONG).show();
                         Looper.loop();
 //                        UserUnlockDynastyIncident unlockIncident = new UserUnlockDynastyIncident();
 //                        unlockIncident.setIncidentId(incident.getIncidentId());
@@ -355,7 +354,7 @@ public class EventDialogActivity extends AppCompatActivity {
                 if (isPass.equals("true")) {
                     Looper.prepare();
                     //解锁成功
-                    ToastUtil.showEncourageToast(getApplicationContext(), "在您认真的学习下，下一个朝代已经解锁啦！", 1500);
+                    Toast.makeText(getApplicationContext(), "您已解锁下一朝代", Toast.LENGTH_SHORT).show();
                     Looper.loop();
                     UserUnlockDynasty unlockDynasty = new UserUnlockDynasty();
                     unlockDynasty.setDynastyId(dynastyId);
