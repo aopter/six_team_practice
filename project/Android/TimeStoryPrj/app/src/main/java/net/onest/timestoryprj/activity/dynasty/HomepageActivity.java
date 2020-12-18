@@ -183,18 +183,17 @@ public class HomepageActivity extends AppCompatActivity {
                                     curTime = new Date().getTime();
                                     if (curTime - prelongTim < 1000) {
                                     } else {
-                                        for (int j = 0; j < Constant.UnlockDynasty.size(); j++) {
-                                            if (unlockDynastyIds.contains(dynasties1.get(finalI).getDynastyId().toString())) {
-                                                Intent intent = new Intent();
-                                                intent.setClass(getApplicationContext(), DynastyIntroduceActivity.class);
-                                                intent.putExtra("dynastyId", dynasties1.get(finalI).getDynastyId().toString());
-                                                startActivity(intent);
-                                                overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
-                                                break;
-                                            } else {
-                                                Toast.makeText(getApplicationContext(), "该朝代未解锁", Toast.LENGTH_SHORT).show();
-                                            }
+
+                                        if (unlockDynastyIds.contains(dynasties1.get(finalI).getDynastyId().toString())) {
+                                            Intent intent = new Intent();
+                                            intent.setClass(getApplicationContext(), DynastyIntroduceActivity.class);
+                                            intent.putExtra("dynastyId", dynasties1.get(finalI).getDynastyId().toString());
+                                            startActivity(intent);
+                                            overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
+                                        } else {
+                                            ToastUtil.showSickToast(getApplicationContext(), "该朝代未解锁", 1500);
                                         }
+
                                     }
                                     prelongTim = curTime;
                                 }
@@ -476,7 +475,6 @@ public class HomepageActivity extends AppCompatActivity {
         }
     }
 
-
     class MyListener implements View.OnClickListener {
 
         @Override
@@ -590,19 +588,18 @@ public class HomepageActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         flag = 0;
-        setListener();
         getUserInfo();
-//        List<String> unlockDynastyIds = new ArrayList<>();
-//        for (int j = 0; j < Constant.UnlockDynasty.size(); j++) {
-//            unlockDynastyIds.add(Constant.UnlockDynasty.get(j).getDynastyName());
-//        }
-//        Log.e("unlock", unlockDynastyIds.toString());
-//        for (int i = 0; i < tvs.size();i++){
-//            if (unlockDynastyIds.contains(tvs.get(i).getText().toString())){
-//                tvs.get(i).setBackgroundResource(R.mipmap.shan);
-//                Log.e("tvs", tvs.get(i).getText().toString());
-//            }
-//        }
+        List<String> unlockDynastyIds = new ArrayList<>();
+        for (int j = 0; j < Constant.UnlockDynasty.size(); j++) {
+            unlockDynastyIds.add(Constant.UnlockDynasty.get(j).getDynastyName());
+        }
+        Log.e("unlock", unlockDynastyIds.toString());
+        for (int i = 0; i < tvs.size(); i++) {
+            if (unlockDynastyIds.contains(tvs.get(i).getText().toString())) {
+                tvs.get(i).setBackgroundResource(R.mipmap.shan);
+                Log.e("tvs", tvs.get(i).getText().toString());
+            }
+        }
     }
 
 
