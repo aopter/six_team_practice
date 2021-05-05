@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Dashboard - Multipurpose Dash </title>
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+
+    <!-- Favicon -->
+    <link th:href="@{/assets/images/favicon.png}" rel="shortcut icon" href="../assets/images/favicon.png" type="image/x-icon" />
+    <!-- For iPhone -->
+    <link th:href="@{/assets/images/apple-touch-icon-57-precomposed.png}" rel="apple-touch-icon-precomposed" href="../assets/images/apple-touch-icon-57-precomposed.png">
+    <!-- For iPhone 4 Retina display -->
+    <link th:href="@{/assets/images/apple-touch-icon-114-precomposed.png}" rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/images/apple-touch-icon-114-precomposed.png">
+    <!-- For iPad -->
+    <link th:href="@{/assets/images/apple-touch-icon-72-precomposed.png}" rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/images/apple-touch-icon-72-precomposed.png">
+    <!-- For iPad Retina display -->
+    <link th:href="@{/assets/images/apple-touch-icon-144-precomposed.png}" rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/images/apple-touch-icon-144-precomposed.png">
+
+    <!-- CORE CSS FRAMEWORK - START -->
+    <link th:href="@{/assets/plugins/pace/pace-theme-flash.css}" href="../assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen" />
+    <link th:href="@{/assets/plugins/bootstrap/css/bootstrap.min.css}" href="../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link th:href="@{/assets/plugins/bootstrap/css/bootstrap-theme.min.css}" href="../assets/plugins/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
+    <link th:href="@{/assets/fonts/font-awesome/css/font-awesome.css}" href="../assets/fonts/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css" />
+    <link th:href="@{/assets/css/animate.min.css}" href="../assets/css/animate.min.css" rel="stylesheet" type="text/css" />
+    <link th:href="@{/assets/plugins/perfect-scrollbar/perfect-scrollbar.css}" href="../assets/plugins/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" type="text/css" />
+    <!-- CORE CSS FRAMEWORK - END -->
+
+    <!-- HEADER SCRIPTS INCLUDED ON THIS PAGE - START -->
+
+    <!-- HEADER SCRIPTS INCLUDED ON THIS PAGE - END -->
+
+    <!-- CORE CSS TEMPLATE - START -->
+    <link th:href="@{/assets/css/style.css}" href="../assets/css/style.css" rel="stylesheet" type="text/css" />
+    <link th:href="@{/assets/css/responsive.css}" href="../assets/css/responsive.css" rel="stylesheet" type="text/css" />
+    <!-- CORE CSS TEMPLATE - END -->
+
+</head>
+<!-- END HEAD -->
+
+<!-- BEGIN BODY -->
+
+<body class=" login_page">
+
+    <div class="container-fluid">
+        <div class="login-wrapper row">
+            <div id="login" class="login loginpage col-lg-offset-4 col-md-offset-3 col-sm-offset-3 col-xs-offset-0 col-xs-12 col-sm-6 col-lg-4">    
+                <div class="login-form-header">
+                     <img th:src="@{/data/icons/padlock.png}" src="../data/icons/padlock.png" alt="login-icon" style="max-width:64px">
+                     <div class="login-header">
+                         <h4 class="bold color-white">Login Now!</h4>
+                         <h4><small>Please enter your credentials to login.</small></h4>
+                     </div>
+                </div>
+               
+                <div class="box login">
+
+                    <div class="content-body" style="padding-top:30px">
+
+                        <form id="msg_validate" action="#" th:action="@{/admin/login}" th:method="post" novalidate="novalidate" class="no-mb no-mt">
+                            <div class="row">
+                                <div class="col-xs-12">
+
+                                    <div class="form-group">
+                                        <label class="form-label">USERNAME</label>
+                                        <div class="controls">
+                                            <input type="text" th:name="username" class="form-control" name="formfield2" placeholder="username">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label">Password</label>
+                                        <div class="controls">
+                                            <input type="text" th:name="password" class="form-control" name="formfield1" placeholder="password">
+                                        </div>
+                                        <p style="color: red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
+                                    </div>
+
+                                    <div class="pull-left">
+                                        <input type="submit" value="Log in" class="btn btn-primary mt-10 btn-corner right-15"/>
+                                        <a href="ui-register.html" class="btn mt-10 btn-corner signup">Sign up</a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <p id="nav">
+                    <a class="pull-left" href="#" title="Password Lost and Found">Forgot password?</a>
+                    <a class="pull-right" href="ui-register.html" title="Sign Up">Sign Up</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT AREA ENDS -->
+    <!-- LOAD FILES AT PAGE END FOR FASTER LOADING -->
+
+    <!-- CORE JS FRAMEWORK - START -->
+    <script th:src="@{/assets/js/jquery-1.11.2.min.js}" src="../assets/js/jquery-1.11.2.min.js"></script>
+    <script th:src="@{/assets/js/jquery.easing.min.js}" src="../assets/js/jquery.easing.min.js"></script>
+    <script th:src="@{/assets/plugins/bootstrap/js/bootstrap.min.js}" src="../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script th:src="@{/assets/plugins/pace/pace.min.js}" src="../assets/plugins/pace/pace.min.js"></script>
+    <script th:src="@{/assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js}" src="../assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script th:src="@{/assets/plugins/viewport/viewportchecker.js}" src="../assets/plugins/viewport/viewportchecker.js"></script>
+    <script>
+        window.jQuery || document.write('<script th:src="@{/assets/js/jquery-1.11.2.min.js}" src="../assets/js/jquery-1.11.2.min.js"><\/script>');
+    </script>
+    <!-- CORE JS FRAMEWORK - END -->
+
+    <!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - START -->
+
+    <!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - END -->
+
+    <!-- CORE TEMPLATE JS - START -->
+    <script th:src="@{/assets/js/scripts.js}" src="../assets/js/scripts.js"></script>
+    <!-- END CORE TEMPLATE JS - END -->
+
+</body>
+
+</html>
