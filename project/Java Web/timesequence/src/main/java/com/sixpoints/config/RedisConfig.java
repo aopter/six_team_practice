@@ -95,4 +95,11 @@ public class RedisConfig {
     public BloomFilterHelper problemIdBloomFilterHelper(){
         return new BloomFilterHelper<>(Funnels.integerFunnel(), 100000, 0.1);
     }
+
+    //bookId的布隆过滤器
+    @Bean
+    @Scope("singleton")
+    public BloomFilterHelper bookIdBloomFilterHelper() {
+        return new BloomFilterHelper<>(Funnels.integerFunnel(), 50, 0.1);
+    }
 }

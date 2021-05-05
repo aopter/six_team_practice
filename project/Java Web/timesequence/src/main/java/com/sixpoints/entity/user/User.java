@@ -1,6 +1,7 @@
 package com.sixpoints.entity.user;
 
 import com.sixpoints.entity.status.UserStatus;
+import com.sixpoints.entity.user.book.UserBookProcess;
 import com.sixpoints.entity.user.card.UserCard;
 import com.sixpoints.entity.user.dynasty.UserProblem;
 import com.sixpoints.entity.user.dynasty.UserUnlockDynasty;
@@ -9,7 +10,6 @@ import com.sixpoints.entity.user.recharge.UserRecharge;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -24,11 +24,16 @@ public class User {
     private int userCount;//用户积分
 
     private UserStatus userStatus;//用户地位
-    private Set<UserCard> userCards = new LinkedHashSet<>();//用户拥有的卡片
-    private Set<UserRecharge> userRecharges = new LinkedHashSet<>();//用户的历史订单
-    private Set<UserUnlockDynasty> userUnlockDynasties = new LinkedHashSet<>();//用户解锁的朝代集合
-    private Set<UserUnlockDynastyIncident> userUnlockDynastyIncidents = new LinkedHashSet<>();//用户解锁的某个朝代的事件集合
-    private Set<UserProblem> problems = new LinkedHashSet<>();//用户做过的题目
+
+    private long userFirstDonateTime;//用户首次捐赠图书
+    private int userTotalDonateBooks;//用户共计捐赠的图书数量
+
+    private Set<UserCard> userCards = new HashSet<>();//用户拥有的卡片
+    private Set<UserRecharge> userRecharges = new HashSet<>();//用户的历史订单
+    private Set<UserUnlockDynasty> userUnlockDynasties = new HashSet<>();//用户解锁的朝代集合
+    private Set<UserUnlockDynastyIncident> userUnlockDynastyIncidents = new HashSet<>();//用户解锁的某个朝代的事件集合
+    private Set<UserProblem> problems = new HashSet<>();//用户做过的题目
+    private Set<UserBookProcess> userBookProcesses = new HashSet<>();//用户捐赠的
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -95,6 +100,24 @@ public class User {
         this.userCount = userCount;
     }
 
+    @Column
+    public long getUserFirstDonateTime() {
+        return userFirstDonateTime;
+    }
+
+    public void setUserFirstDonateTime(long userFirstDonateTime) {
+        this.userFirstDonateTime = userFirstDonateTime;
+    }
+
+    @Column(columnDefinition = "0")
+    public int getUserTotalDonateBooks() {
+        return userTotalDonateBooks;
+    }
+
+    public void setUserTotalDonateBooks(int userTotalDonateBooks) {
+        this.userTotalDonateBooks = userTotalDonateBooks;
+    }
+
     @ManyToOne
     @JoinColumn(name = "status_id",foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
     public UserStatus getUserStatus() {
@@ -154,5 +177,12 @@ public class User {
         this.problems = problems;
     }
 
+    @OneToMany(mappedBy = "user")
+    public Set<UserBookProcess> getUserBookProcesses() {
+        return userBookProcesses;
+    }
 
+    public void setUserBookProcesses(Set<UserBookProcess> userBookProcesses) {
+        this.userBookProcesses = userBookProcesses;
+    }
 }
