@@ -1,0 +1,73 @@
+server:
+  port: 8889                    #tomcat服务端口
+  servlet:
+    context-path: /             #根路径
+  tomcat:
+    uri-encoding: UTF-8         #编码方式
+    threads:
+      min-spare: 8              #最小空闲线程数
+      max: 200
+    accept-count: 250           #等待线程队列长度
+    max-connections: 560        #最大连接数，一般比（accept-count+max）大
+    connection-timeout: 20000   #设置超时连接，减小服务压力
+  error:
+    path: /ui-404.html          #设置错误界面
+
+file:
+  upload:
+    path: D:/aitong/upload
+    relative:
+      path: /upload/**
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    #    url: jdbc:mysql://47.101.157.246:3307/timesequence?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&useSSL=false
+    #    username: root
+    #    password: 123456
+    url: jdbc:mysql://localhost:3306/timesequence?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&useSSL=false
+    username: root
+    password:
+    #    username: timesequence
+    #    password: 19991029SSK
+    # 创建数据库  初始数据  由sql脚本创建：initialization-mode设置为always
+    # 也可以只初始化数据，则注释掉schema
+    # 若由实体Bean映射自动创建表，则initialization-mode设置为never
+    initialization-mode: never
+  #    data: classpath*:/db-import.sql
+  jpa:
+    database: MySQL
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    open-in-view: true
+
+
+  thymeleaf:
+    cache: false
+    check-template-location: true
+    servlet:
+      content-type: text/html
+    enabled: true
+    encoding: utf-8
+
+  redis:
+    #    host: 47.101.157.246 #此为默认值
+    #    port: 10000 #此为默认值
+    host: localhost #此为默认值
+    port: 6379 #此为默认值
+    database: 0 #此为默认值
+    password: #此为默认值
+    timeout: 30000s #连接超时时间，默认1天
+    lettuce:
+      shutdown-timeout: 100ms #关闭超时时间 默认100ms
+      pool:
+        max-active: 8 # 连接池最大连接数 默认 8（-1 ：表示没有限制）
+        max-wait: 60000ms # 连接池最大阻塞等待时间 默认-1ms （-1 :表示没有限制） 这里设置1分钟
+        max-idle: 8 # 最大空闲连接  默认 8
+        min-idle: 0 # 最小空闲连接  默认 0
+
+  data:
+    solr:
+      host: http://localhost:8983/solr/incident
