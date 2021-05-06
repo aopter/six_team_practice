@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="15dp"
     tools:context=".activity.benefit_shop.DonateShopActivity">
 
     <RelativeLayout
@@ -12,8 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:alpha="0.95"
-        android:gravity="center_vertical"
-        android:padding="10dp">
+        android:gravity="center">
 
         <ImageView
             android:id="@+id/back"
@@ -25,7 +25,9 @@
 
         <net.onest.timestoryprj.customview.CusTextView
             android:id="@+id/text"
+            android:gravity="center"
             android:padding="5dp"
+            android:layout_marginTop="5dp"
             android:layout_toRightOf="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,16 +36,14 @@
             android:textSize="18sp" />
 
         <Button
+            android:layout_marginTop="10dp"
             android:id="@+id/btn_certification"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             style="@style/normalBtn"
             android:text="我的证书"
             android:layout_alignParentRight="true"/>
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:id="@+id/btn_project"
             android:text="我的项目"
             android:layout_marginRight="20dp"
@@ -56,6 +56,8 @@
         android:id="@+id/gv_donate_books"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="10dp"
+        android:verticalSpacing="15dp"
         android:numColumns="2">
 
     </GridView>

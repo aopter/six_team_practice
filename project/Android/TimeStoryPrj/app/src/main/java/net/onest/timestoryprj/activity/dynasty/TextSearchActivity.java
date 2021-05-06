@@ -38,6 +38,8 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.leefeng.promptlibrary.PromptButton;
+import me.leefeng.promptlibrary.PromptDialog;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -50,6 +52,7 @@ public class TextSearchActivity extends AppCompatActivity {
     private String searchIncident = "/incident/search/";
     private Gson gson;
     private Typeface typeface;
+    private PromptDialog promptDialog;
     @BindView(R.id.btn_pre)
     Button btnPre;
     List<SearchIncident> incidentList;
@@ -61,6 +64,7 @@ public class TextSearchActivity extends AppCompatActivity {
                     incidentList = (List<SearchIncident>) msg.obj;
                     Log.i("事件门", incidentList.toString());
                     initMsg();
+                    promptDialog.dismissImmediately();
                     break;
             }
         }
@@ -107,6 +111,10 @@ public class TextSearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text_search);
         ButterKnife.bind(this);
+        promptDialog = new PromptDialog(this);
+        //设置自定义属性
+        promptDialog.getDefaultBuilder().touchAble(false).round(3).loadingDuration(1000);
+        promptDialog.showLoading("正在加载");
         initOkHttp();
         initGson();
         findViews();

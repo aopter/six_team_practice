@@ -30,6 +30,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.leefeng.promptlibrary.PromptDialog;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -46,6 +47,7 @@ public class DonateShopActivity extends AppCompatActivity {
     private Gson gson;
     private GridView gvDonateBook;
     private List<BookListVO> bookListVOS;
+    private PromptDialog promptDialog;
     private CustomDonateBookAdapter customDonateBookAdapter;
     private Handler handler = new Handler(){
         @Override
@@ -54,6 +56,8 @@ public class DonateShopActivity extends AppCompatActivity {
                 case 1:
                     bookListVOS = (List<BookListVO>)msg.obj;
                     initAdapter();
+                    promptDialog.dismissImmediately();
+                    break;
             }
         }
     };
@@ -69,6 +73,10 @@ public class DonateShopActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donate_shop);
         ButterKnife.bind(this);
+        promptDialog = new PromptDialog(this);
+        //设置自定义属性
+        promptDialog.getDefaultBuilder().touchAble(false).round(3).loadingDuration(1000);
+        promptDialog.showLoading("正在加载");
         findViews();
         initGson();
         initOkHttp();
@@ -96,10 +104,13 @@ public class DonateShopActivity extends AppCompatActivity {
 //            List<BookListVO> bookList = gson.fromJson(json, type);
                 List<BookListVO> bookList = new ArrayList<>();
                 BookListVO bookListVO = new BookListVO();
+                bookListVO.setBookName("一千零一夜");
                 bookListVO.setBookId(1);
                 bookListVO.setGoalNum(8);
                 bookListVO.setTotalNum(5);
-                bookList.add(bookListVO);
+                for (int i = 0; i < 10; i++){
+                    bookList.add(bookListVO);
+                }
                 Message msg = new Message();
                 msg.what = 1;
                 msg.obj = bookList;
