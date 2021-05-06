@@ -5,13 +5,13 @@ package net.onest.timestoryprj.entity.donate;
  */
 public class SpecificBookCompletedListVO {
     private String userName; // 捐赠爱心的用户编号
-    private long donateTime;//捐赠时间,当process达到100时记录
+    private String donateTime;//捐赠时间,当process达到100时记录
     private String donateObject;//捐赠对象
 
     public SpecificBookCompletedListVO() {
     }
 
-    public SpecificBookCompletedListVO(String userName, long donateTime, String donateObject) {
+    public SpecificBookCompletedListVO(String userName, String donateTime, String donateObject) {
         this.userName = userName;
         this.donateTime = donateTime;
         this.donateObject = donateObject;
@@ -25,11 +25,11 @@ public class SpecificBookCompletedListVO {
         this.userName = userName;
     }
 
-    public long getDonateTime() {
+    public String getDonateTime() {
         return donateTime;
     }
 
-    public void setDonateTime(long donateTime) {
+    public void setDonateTime(String donateTime) {
         this.donateTime = donateTime;
     }
 
