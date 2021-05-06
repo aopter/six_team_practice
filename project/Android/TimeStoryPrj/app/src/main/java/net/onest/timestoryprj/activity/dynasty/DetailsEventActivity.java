@@ -103,8 +103,6 @@ public class DetailsEventActivity extends AppCompatActivity {
         initGson();
         initOkHttp();
         initData();
-
-
     }
 
     /**
@@ -157,7 +155,6 @@ public class DetailsEventActivity extends AppCompatActivity {
             try {
                 response = call.execute();
                 String json = response.body().string();
-                Log.i("cccccc", json);
                 //1.得到集合类型
                 Type type = new TypeToken<List<UserUnlockDynastyIncident>>() {
                 }.getType();

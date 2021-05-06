@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Color;
@@ -18,6 +19,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,6 +37,7 @@ import com.google.gson.reflect.TypeToken;
 import com.tinytongtong.tinyutils.LogUtils;
 
 import net.onest.timestoryprj.R;
+import net.onest.timestoryprj.activity.benefit_shop.DonateShopActivity;
 import net.onest.timestoryprj.activity.card.DrawCardActivity;
 import net.onest.timestoryprj.activity.card.MyCardActivity;
 import net.onest.timestoryprj.activity.problem.ProblemCollectionActivity;
@@ -84,8 +87,8 @@ public class HomepageActivity extends AppCompatActivity {
     private TextView tvPoint;
     private Button btnPlus;
     private Button btnCard;
-    private Button btnMyCard;
-    private Button btnMyCollections;
+    private Button btnLove;
+    private Button btnTextSearch;
     private ImageView ivHeader;
     private Button btnVoice;
     private Button btnSettings;
@@ -99,6 +102,7 @@ public class HomepageActivity extends AppCompatActivity {
     private Typeface typeface;
     private ProgressBar progressBar;
     private User user;
+    private EditText etTextSearch;
     private long prelongTim = 0;
     private long curTime = 0;
     /**
@@ -410,25 +414,25 @@ public class HomepageActivity extends AppCompatActivity {
         MyListener myListener = new MyListener();
         btnVoice.setOnClickListener(myListener);
         btnSettings.setOnClickListener(myListener);
-        btnMyCollections.setOnClickListener(myListener);
-        btnMyCard.setOnClickListener(myListener);
         btnCard.setOnClickListener(myListener);
         btnPlus.setOnClickListener(myListener);
         ivHeader.setOnClickListener(myListener);
         tvLevel.setOnClickListener(myListener);
+        btnTextSearch.setOnClickListener(myListener);
+        btnLove.setOnClickListener(myListener);
     }
 
     private void findViews() {
         ivHeader = findViewById(R.id.iv_header);
         btnVoice = findViewById(R.id.btn_voice);
         btnSettings = findViewById(R.id.btn_settings);
-//        tvName = findViewById(R.id.tv);
+        btnTextSearch = findViewById(R.id.btn_text_search);
+        btnLove = findViewById(R.id.btn_love);
+        etTextSearch = findViewById(R.id.et_text_search);
         tvLevel = findViewById(R.id.tv_level);
         tvPoint = findViewById(R.id.tv_point);
         btnPlus = findViewById(R.id.btn_plus);
         btnCard = findViewById(R.id.btn_card);
-        btnMyCard = findViewById(R.id.btn_my_card);
-        btnMyCollections = findViewById(R.id.btn_my_collections);
         llLayout1 = findViewById(R.id.ll_layout1);
         llLayout2 = findViewById(R.id.ll_layout2);
         progressBar = findViewById(R.id.experience_progress);
@@ -508,16 +512,6 @@ public class HomepageActivity extends AppCompatActivity {
                     startActivity(intent3);
                     overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
                     break;
-                case R.id.btn_my_card:
-                    Intent intent4 = new Intent(HomepageActivity.this, MyCardActivity.class);
-                    startActivity(intent4);
-                    overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
-                    break;
-                case R.id.btn_my_collections:
-                    Intent intent2 = new Intent(HomepageActivity.this, ProblemCollectionActivity.class);
-                    startActivity(intent2);
-                    overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
-                    break;
                 case R.id.btn_settings:
                     Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
                     startActivity(intent);
@@ -539,30 +533,19 @@ public class HomepageActivity extends AppCompatActivity {
 
                     }
                     break;
-//                    breakint count = relativeProgress.getChildCount();
-//                    Log.e("元素个数", count + "");
-//                    if (count == 1) {
-//                        TextView tvExerperience = new TextView(getApplicationContext());
-//                        int we = DensityUtil.dip2px(getApplicationContext(), 70);
-//                        int he = DensityUtil.dip2px(getApplicationContext(), 40);
-//                        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(we, he);
-//                        params.topMargin = 5;
-//                        tvExerperience.setPadding(20, 0, 20, 0);
-//                        tvExerperience.setText("" + Constant.User.getUserExperience() + "/" + Constant.User.getUserStatus().getStatusExperienceTop());
-//                        tvExerperience.setTextColor(getResources().getColor(R.color.ourDynastyRed));
-//                        tvExerperience.setTextSize(12);
-//                        tvExerperience.setBackgroundResource(R.mipmap.button);
-//                        tvExerperience.setGravity(View.TEXT_ALIGNMENT_CENTER);
-//                        params.addRule(RelativeLayout.BELOW, R.id.tv_level);
-//                        tvExerperience.setLayoutParams(params);
-//                        tvExerperience.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View view) {
-//                                relativeProgress.removeViewAt(1);
-//                            }
-//                        });
-//                        relativeProgress.addView(tvExerperience);
-//                    };
+                case R.id.btn_text_search:
+                    //跳转
+                    Intent intent6 =  new Intent(HomepageActivity.this, TextSearchActivity.class);
+                    startActivity(intent6);
+                    intent6.putExtra("searchText", etTextSearch.getText().toString());
+                    overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
+                    break;
+                case R.id.btn_love:
+                    //跳转
+                    Intent intent2 = new Intent(HomepageActivity.this, DonateShopActivity.class);
+                    startActivity(intent2);
+                    overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
+                    break;
             }
         }
 

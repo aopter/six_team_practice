@@ -29,21 +29,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="15dp"
                 android:background="@mipmap/back" />
-<!--            <pl.droidsonroids.gif.GifImageView-->
-<!--                android:layout_width="50dp"-->
-<!--                android:layout_height="200dp"-->
-<!--                android:layout_marginRight="-40dp"-->
-<!--                android:layout_marginLeft="-40dp"-->
-<!--                android:layout_marginTop="-190dp"-->
-<!--                android:layout_marginBottom="-180dp"-->
-<!--                android:src="@mipmap/git_bg_dy"-->
-<!--                android:layout_alignRight="@+id/tv_dynasty_name"-->
-<!--                android:layout_alignLeft="@+id/tv_dynasty_name"-->
-<!--                android:layout_alignTop="@+id/tv_dynasty_name"-->
-<!--                android:layout_alignBottom="@+id/tv_dynasty_name"-->
 
-<!--                android:id="@+id/iv_gif_bgs"-->
-<!--                />-->
             <pl.droidsonroids.gif.GifTextView
                 android:background="@mipmap/git_bg_dy"
                 android:layout_marginRight="-35dp"

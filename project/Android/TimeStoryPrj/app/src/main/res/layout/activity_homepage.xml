@@ -56,7 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginRight="20dp"
+                android:layout_marginRight="15dp"
                 android:orientation="vertical"
                 android:paddingBottom="2dp">
 
@@ -74,7 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginRight="20dp">
+                android:layout_marginRight="15dp">
 
                 <Button
                     android:id="@+id/btn_card"
@@ -82,40 +82,13 @@
                     android:text="抽卡" />
             </LinearLayout>
 
-            <!-- 我的卡片 -->
-            <LinearLayout
-                android:id="@+id/ll_mycard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="20dp">
-
-                <Button
-                    android:id="@+id/btn_my_card"
-                    style="@style/normalBtn"
-                    android:text="我的卡片" />
-            </LinearLayout>
-
-            <!-- 我的收藏 -->
-            <LinearLayout
-                android:id="@+id/ll_my_collections"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="20dp">
-
-                <Button
-                    android:id="@+id/btn_my_collections"
-                    style="@style/normalBtn"
-                    android:text="我的收藏" />
-            </LinearLayout>
             <!-- 积分 -->
             <RelativeLayout
                 android:id="@+id/rl_point"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginRight="20dp">
+                android:layout_marginRight="15dp">
 
 
                 <TextView
@@ -145,12 +118,39 @@
                     android:text="积分:  "/>
             </RelativeLayout>
 
-            <!-- 音量-->
+            <!-- 全文检索 -->
+            <RelativeLayout
+                android:layout_marginRight="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <EditText
+                    android:id="@+id/et_text_search"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"/>
+                <Button
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:id="@+id/btn_text_search"
+                    android:layout_toRightOf="@id/et_text_search"
+                    style="@style/normalBtn"
+                    android:text="全文检索"/>
+            </RelativeLayout>
+
+            <!-- 图标-->
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center">
 
+                <Button
+                    android:id="@+id/btn_love"
+                    android:layout_toLeftOf="@+id/btn_voice"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@mipmap/heart"/>
                 <Button
                     android:id="@+id/btn_voice"
                     android:layout_width="30dp"
