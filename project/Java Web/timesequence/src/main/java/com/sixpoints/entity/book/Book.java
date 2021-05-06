@@ -1,13 +1,14 @@
 package com.sixpoints.entity.book;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * 图书类
  */
 @Entity
 @Table(name = "li_book")
-public class Book {
+public class Book implements Serializable {
     private Integer bookId;//图书流水号
     private String bookName;//图书名称
     private String bookDes;//图书描述

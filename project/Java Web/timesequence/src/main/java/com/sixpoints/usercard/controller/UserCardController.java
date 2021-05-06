@@ -19,19 +19,25 @@ public class UserCardController {
 
     @RequestMapping("/list/{userId}/{dynastyId}/{cardType}")
     @ResponseBody
-    public List<UserCardVO> queryExistingCard(@PathVariable("userId") int userId,@PathVariable("dynastyId") int dynastyId,@PathVariable("cardType")int cardType){
-        if(cardType == 0) {
+    public List<UserCardVO> queryExistingCard(@PathVariable("userId") int userId, @PathVariable("dynastyId") int dynastyId, @PathVariable("cardType") int cardType) {
+        if (cardType == 0) {
             return userCardService.queryExistingCardByIdAndDynasty(userId, dynastyId);
         }
-        return userCardService.queryExistingCardByIdAndDynasty(userId,dynastyId,cardType);
+        return userCardService.queryExistingCardByIdAndDynasty(userId, dynastyId, cardType);
     }
 
     @RequestMapping("/list/{userId}/{dynastyId}/{cardType}/{key}")
     @ResponseBody
-    public List<UserCardVO> fuzzySearch(@PathVariable("userId") int userId,@PathVariable("dynastyId") int dynastyId,@PathVariable("cardType")int cardType,@PathVariable("key")String key){
-        if(cardType == 0){
-            return userCardService.fuzzySearch(userId,dynastyId,key);
+    public List<UserCardVO> fuzzySearch(@PathVariable("userId") int userId, @PathVariable("dynastyId") int dynastyId, @PathVariable("cardType") int cardType, @PathVariable("key") String key) {
+        if (cardType == 0) {
+            return userCardService.fuzzySearch(userId, dynastyId, key);
         }
-        return userCardService.fuzzySearch(userId,dynastyId,cardType,key);
+        return userCardService.fuzzySearch(userId, dynastyId, cardType, key);
+    }
+
+    @RequestMapping("/all/{userId}")
+    @ResponseBody
+    public List<UserCardVO> queryAllExistingCards(@PathVariable("userId") int userId) {
+        return userCardService.queryExistingCardByUserId(userId);
     }
 }

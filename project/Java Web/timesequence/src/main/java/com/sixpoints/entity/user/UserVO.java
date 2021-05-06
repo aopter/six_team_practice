@@ -13,15 +13,21 @@ public class UserVO implements Serializable {
 
     private UserStatus userStatus;//用户地位
 
-    public UserVO() {}
+    private long userFirstDonateTime;//用户首次捐赠图书
+    private int userTotalDonateBooks;//用户共计捐赠的图书数量
 
-    public UserVO(Integer userId, String userHeader, String userNickname, long userExperience, int userCount, UserStatus userStatus) {
+    public UserVO() {
+    }
+
+    public UserVO(Integer userId, String userHeader, String userNickname, long userExperience, int userCount, UserStatus userStatus, long userFirstDonateTime, int userTotalDonateBooks) {
         this.userId = userId;
         this.userHeader = userHeader;
         this.userNickname = userNickname;
         this.userExperience = userExperience;
         this.userCount = userCount;
         this.userStatus = userStatus;
+        this.userFirstDonateTime = userFirstDonateTime;
+        this.userTotalDonateBooks = userTotalDonateBooks;
     }
 
     public Integer getUserId() {
@@ -70,5 +76,21 @@ public class UserVO implements Serializable {
 
     public void setUserStatus(UserStatus userStatus) {
         this.userStatus = userStatus;
+    }
+
+    public long getUserFirstDonateTime() {
+        return userFirstDonateTime;
+    }
+
+    public void setUserFirstDonateTime(long userFirstDonateTime) {
+        this.userFirstDonateTime = userFirstDonateTime;
+    }
+
+    public int getUserTotalDonateBooks() {
+        return userTotalDonateBooks;
+    }
+
+    public void setUserTotalDonateBooks(int userTotalDonateBooks) {
+        this.userTotalDonateBooks = userTotalDonateBooks;
     }
 }

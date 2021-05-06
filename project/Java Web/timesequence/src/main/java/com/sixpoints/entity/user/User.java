@@ -119,7 +119,7 @@ public class User {
     }
 
     @ManyToOne
-    @JoinColumn(name = "status_id",foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
+    @JoinColumn(name = "status_id", foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
     public UserStatus getUserStatus() {
         return userStatus;
     }
@@ -129,7 +129,7 @@ public class User {
     }
 
     @OneToMany
-    @JoinColumn(name = "user_id",foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
+    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
     public Set<UserCard> getUserCards() {
         return userCards;
     }
@@ -148,7 +148,7 @@ public class User {
     }
 
     @OneToMany
-    @JoinColumn(name = "user_id",foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
+    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
     public Set<UserUnlockDynasty> getUserUnlockDynasties() {
         return userUnlockDynasties;
     }
@@ -158,7 +158,7 @@ public class User {
     }
 
     @OneToMany
-    @JoinColumn(name = "user_id",foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
+    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
     public Set<UserUnlockDynastyIncident> getUserUnlockDynastyIncidents() {
         return userUnlockDynastyIncidents;
     }
@@ -168,7 +168,7 @@ public class User {
     }
 
     @OneToMany
-    @JoinColumn(name = "user_id",foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
+    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
     public Set<UserProblem> getProblems() {
         return problems;
     }
@@ -177,7 +177,8 @@ public class User {
         this.problems = problems;
     }
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany
+    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
     public Set<UserBookProcess> getUserBookProcesses() {
         return userBookProcesses;
     }
