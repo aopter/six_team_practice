@@ -1,4 +1,5 @@
 package net.onest.timestoryprj.entity;
+
 import androidx.annotation.NonNull;
 
 import net.onest.timestoryprj.entity.card.UserCard;
@@ -16,6 +17,8 @@ public class User {
     private int userCount;//用户积分
     private String userSignature;//用户个性签名
     private int flag;//用于区分手机号登录和QQ登录
+    private long userFirstDonateTime;//用户首次捐赠图书
+    private int userTotalDonateBooks;//用户共计捐赠的图书数量
 
     public String getUserSignature() {
         return userSignature;
@@ -31,6 +34,7 @@ public class User {
     private Set<UserUnlockDynasty> userUnlockDynasties = new HashSet<>();//用户解锁的朝代集合
     private Set<UserUnlockDynastyIncident> userUnlockDynastyIncidents = new HashSet<>();//用户解锁的某个朝代的事件集合
     private Set<UserProblem> problems = new HashSet<>();//用户做过的题目
+    private Set<UserBookProcess> userBookProcesses = new HashSet<>();//用户捐赠的
 
     public Integer getUserId() {
         return userId;
@@ -144,6 +148,30 @@ public class User {
         this.flag = flag;
     }
 
+    public long getUserFirstDonateTime() {
+        return userFirstDonateTime;
+    }
+
+    public void setUserFirstDonateTime(long userFirstDonateTime) {
+        this.userFirstDonateTime = userFirstDonateTime;
+    }
+
+    public int getUserTotalDonateBooks() {
+        return userTotalDonateBooks;
+    }
+
+    public void setUserTotalDonateBooks(int userTotalDonateBooks) {
+        this.userTotalDonateBooks = userTotalDonateBooks;
+    }
+
+    public Set<UserBookProcess> getUserBookProcesses() {
+        return userBookProcesses;
+    }
+
+    public void setUserBookProcesses(Set<UserBookProcess> userBookProcesses) {
+        this.userBookProcesses = userBookProcesses;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -155,12 +183,16 @@ public class User {
                 ", userExperience=" + userExperience +
                 ", userCount=" + userCount +
                 ", userSignature='" + userSignature + '\'' +
+                ", flag=" + flag +
+                ", userFirstDonateTime=" + userFirstDonateTime +
+                ", userTotalDonateBooks=" + userTotalDonateBooks +
                 ", userStatus=" + userStatus +
                 ", userCards=" + userCards +
                 ", userRecharges=" + userRecharges +
                 ", userUnlockDynasties=" + userUnlockDynasties +
                 ", userUnlockDynastyIncidents=" + userUnlockDynastyIncidents +
                 ", problems=" + problems +
+                ", userBookProcesses=" + userBookProcesses +
                 '}';
     }
 }

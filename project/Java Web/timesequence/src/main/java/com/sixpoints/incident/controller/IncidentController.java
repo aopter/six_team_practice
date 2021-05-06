@@ -2,6 +2,7 @@ package com.sixpoints.incident.controller;
 
 import com.sixpoints.entity.dynasty.IncidentListVO;
 import com.sixpoints.entity.dynasty.IncidentVO;
+import com.sixpoints.entity.dynasty.SearchIncident;
 import com.sixpoints.incident.service.IncidentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,5 +30,11 @@ public class IncidentController {
     @ResponseBody
     public IncidentVO incidentDetails(@PathVariable("id")int id){
         return incidentService.getIncidentDetailsById(id);
+    }
+
+    @RequestMapping("/solr/{id}/{key}")
+    @ResponseBody
+    public List<SearchIncident> searchIncidentList(@PathVariable("id") int userId, @PathVariable("key") String key) {
+        return incidentService.getIncidentListByKey(userId, key);
     }
 }

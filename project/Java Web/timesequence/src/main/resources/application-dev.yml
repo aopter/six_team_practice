@@ -22,19 +22,19 @@ file:
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-#    url: jdbc:mysql://47.101.157.246:3307/timesequence?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&useSSL=false
-#    username: root
-#    password: 123456
+    #    url: jdbc:mysql://47.101.157.246:3307/timesequence?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&useSSL=false
+    #    username: root
+    #    password: 123456
     url: jdbc:mysql://localhost:3306/timesequence?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&useSSL=false
     username: root
     password:
-#    username: timesequence
-#    password: 19991029SSK
+    #    username: timesequence
+    #    password: 19991029SSK
     # 创建数据库  初始数据  由sql脚本创建：initialization-mode设置为always
     # 也可以只初始化数据，则注释掉schema
     # 若由实体Bean映射自动创建表，则initialization-mode设置为never
     initialization-mode: never
-#    data: classpath*:/db-import.sql
+  #    data: classpath*:/db-import.sql
   jpa:
     database: MySQL
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
@@ -53,8 +53,8 @@ spring:
     encoding: utf-8
 
   redis:
-#    host: 47.101.157.246 #此为默认值
-#    port: 10000 #此为默认值
+    #    host: 47.101.157.246 #此为默认值
+    #    port: 10000 #此为默认值
     host: localhost #此为默认值
     port: 6379 #此为默认值
     database: 0 #此为默认值
@@ -67,3 +67,7 @@ spring:
         max-wait: 60000ms # 连接池最大阻塞等待时间 默认-1ms （-1 :表示没有限制） 这里设置1分钟
         max-idle: 8 # 最大空闲连接  默认 8
         min-idle: 0 # 最小空闲连接  默认 0
+
+  data:
+    solr:
+      host: http://localhost:8983/solr/incident

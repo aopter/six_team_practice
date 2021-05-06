@@ -27,6 +27,12 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".activity.book.BookDetailActivity"></activity>
         <activity
+            android:name=".activity.benefit_shop.DonateShopActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.dynasty.TextSearchActivity"
+            android:screenOrientation="landscape" />
+        <activity
             android:name=".activity.user.FirstOpenActivity"
             android:screenOrientation="landscape">
             <intent-filter>
@@ -102,7 +108,11 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".activity.user.LoginActivity"
+<<<<<<< HEAD
             android:screenOrientation="landscape"></activity>
+=======
+            android:screenOrientation="landscape" />
+>>>>>>> c481c8f1baec166589edef760b0b6ecc407c2a31
         <activity
             android:name=".activity.card.SpectficCardDetailActivity"
             android:screenOrientation="landscape" />

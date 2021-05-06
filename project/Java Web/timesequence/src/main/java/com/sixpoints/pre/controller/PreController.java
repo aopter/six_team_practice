@@ -29,4 +29,9 @@ public class PreController {
     public String bloomFilter(){
         return "{'result':"+ preService.addBloomFilter() +"}";
     }
+
+    @RequestMapping("/solr")
+    public void luceneSearch(){
+        preService.addIncidentIndex();
+    }
 }
