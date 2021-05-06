@@ -25,11 +25,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
+        <activity android:name=".activity.book.BookDetailActivity"></activity>
         <activity
             android:name=".activity.user.FirstOpenActivity"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -100,9 +102,7 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".activity.user.LoginActivity"
-            android:screenOrientation="landscape">
-
-        </activity>
+            android:screenOrientation="landscape"></activity>
         <activity
             android:name=".activity.card.SpectficCardDetailActivity"
             android:screenOrientation="landscape" />

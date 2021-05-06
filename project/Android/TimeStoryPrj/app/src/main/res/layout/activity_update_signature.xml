@@ -28,7 +28,7 @@
             android:id="@+id/btn_signature_save"
             android:layout_width="60dp"
             android:layout_height="40dp"
-            android:text="保存"
+            android:text="确定"
             android:background="@mipmap/button"
             android:textColor="@color/ourDynastyRed"
             android:textSize="22sp"

@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import me.leefeng.promptlibrary.PromptDialog;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -58,6 +59,7 @@ public class DetailsEventActivity extends AppCompatActivity {
     private String dynastyName;
     private String INCIDENT_URL = "/incident/list/";
     private String UNLOCK_INCIDENT_URL = "/userincident/list/";
+    private PromptDialog promptDialog;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -71,6 +73,7 @@ public class DetailsEventActivity extends AppCompatActivity {
                     else{
                         showIncidentDialog();
                     }
+                    promptDialog.dismissImmediately();
                     break;
             }
         }
@@ -99,6 +102,9 @@ public class DetailsEventActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_event);
+        promptDialog = new PromptDialog(this);
+        promptDialog.getDefaultBuilder().touchAble(false).round(3).loadingDuration(1000);
+        promptDialog.showLoading("正在加载");
         findViews();
         initGson();
         initOkHttp();

@@ -41,7 +41,7 @@ public class UpdateNickNameActivity extends AppCompatActivity {
                 String nickname = etName.getText().toString().trim();
                 Constant.User.setUserNickname(nickname);
                 Constant.UserDetails.setUserNickname(nickname);
-                ToastUtil.showEncourageToast(getApplicationContext(),"保存成功",Toast.LENGTH_SHORT);
+                ToastUtil.showEncourageToast(getApplicationContext(),"记得右下角保存哦",Toast.LENGTH_SHORT);
                 finish();
             }
         });

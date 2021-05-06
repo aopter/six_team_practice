@@ -41,7 +41,7 @@ public class UpdateSignatureActivity extends AppCompatActivity {
                 String signature = etSignature.getText().toString().trim();
                 Constant.User.setUserSignature(signature);
                 Constant.UserDetails.setUserSignature(signature);
-                ToastUtil.showEncourageToast(getApplicationContext(),"保存成功",Toast.LENGTH_SHORT);
+                ToastUtil.showEncourageToast(getApplicationContext(),"记得右下角保存哦",Toast.LENGTH_SHORT);
                 finish();
             }
         });
