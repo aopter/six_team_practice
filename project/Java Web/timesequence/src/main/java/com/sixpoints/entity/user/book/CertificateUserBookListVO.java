@@ -1,5 +1,7 @@
 package com.sixpoints.entity.user.book;
 
+import java.io.Serializable;
+
 /**
  * @author ASUS
  * @createTime 2021/5/5 9:58
@@ -7,25 +9,25 @@ package com.sixpoints.entity.user.book;
  * @className UserBookListVO.java
  * @description 证书中用户公益列表实体类
  */
-public class CertificateUserBookListVO {
-    private long donateTime;//捐赠时间,当process达到100时记录
+public class CertificateUserBookListVO implements Serializable {
+    private String donateTime;//捐赠时间,当process达到100时记录
     private String donateObject;//捐赠对象
     private Integer bookId;//相对的图书标识符
 
     public CertificateUserBookListVO() {
     }
 
-    public CertificateUserBookListVO(long donateTime, String donateObject, Integer bookId) {
+    public CertificateUserBookListVO(String donateTime, String donateObject, Integer bookId) {
         this.donateTime = donateTime;
         this.donateObject = donateObject;
         this.bookId = bookId;
     }
 
-    public long getDonateTime() {
+    public String getDonateTime() {
         return donateTime;
     }
 
-    public void setDonateTime(long donateTime) {
+    public void setDonateTime(String donateTime) {
         this.donateTime = donateTime;
     }
 

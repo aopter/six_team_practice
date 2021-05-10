@@ -1,5 +1,7 @@
 package com.sixpoints.entity.book;
 
+import java.io.Serializable;
+
 /**
  * @author ASUS
  * @createTime 2021/5/5 9:55
@@ -7,7 +9,7 @@ package com.sixpoints.entity.book;
  * @className BookVO.java
  * @description 公益图书详情
  */
-public class BookVO {
+public class BookVO implements Serializable {
     private Integer bookId;//图书标识符
     private String bookName;//图书名称
     private String bookDes;//图书描述

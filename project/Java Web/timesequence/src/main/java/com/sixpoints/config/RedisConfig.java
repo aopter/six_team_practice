@@ -100,6 +100,6 @@ public class RedisConfig {
     @Bean
     @Scope("singleton")
     public BloomFilterHelper bookIdBloomFilterHelper() {
-        return new BloomFilterHelper<>(Funnels.integerFunnel(), 50, 0.1);
+        return new BloomFilterHelper<>(Funnels.integerFunnel(), 100, 0.1);
     }
 }
