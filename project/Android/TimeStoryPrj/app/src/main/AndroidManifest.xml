@@ -26,7 +26,8 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity android:name=".activity.benefit_shop.CertificationActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape" />
+
         <activity
             android:name=".activity.benefit_shop.DonateShopActivity"
             android:screenOrientation="landscape" />
