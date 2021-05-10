@@ -25,9 +25,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
+<<<<<<< Updated upstream
         <activity android:name=".activity.benefit_shop.CertificationActivity"
             android:screenOrientation="landscape" />
 
+=======
+        <activity android:name=".activity.benefit_shop.DonateProjectActivity"
+            android:screenOrientation="landscape"></activity>
+>>>>>>> Stashed changes
         <activity
             android:name=".activity.benefit_shop.DonateShopActivity"
             android:screenOrientation="landscape" />
