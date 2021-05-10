@@ -17,6 +17,30 @@ public class UserBookListVO {
         this.bookListVO = bookListVO;
     }
 
+    public Integer getProcessId() {
+        return processId;
+    }
+
+    public void setProcessId(Integer processId) {
+        this.processId = processId;
+    }
+
+    public int getProcess() {
+        return process;
+    }
+
+    public void setProcess(int process) {
+        this.process = process;
+    }
+
+    public BookListVO getBookListVO() {
+        return bookListVO;
+    }
+
+    public void setBookListVO(BookListVO bookListVO) {
+        this.bookListVO = bookListVO;
+    }
+
     @Override
     public String toString() {
         return "UserBookListVO{" +
