@@ -1,8 +1,10 @@
 package com.sixpoints.pre.service;
 
+import com.sixpoints.book.dao.BookDao;
 import com.sixpoints.card.dao.CardDao;
 import com.sixpoints.constant.Constant;
 import com.sixpoints.dynasty.dao.DynastyDao;
+import com.sixpoints.entity.book.Book;
 import com.sixpoints.entity.card.Card;
 import com.sixpoints.entity.dynasty.Dynasty;
 import com.sixpoints.entity.dynasty.Incident;
@@ -52,6 +54,9 @@ public class PreService {
 
     @Resource
     private ProblemDao problemDao;
+
+    @Resource
+    private BookDao bookDao;
 
     @Resource
     private AuxiliaryBloomFilterUtil auxiliaryBloomFilterUtil;
@@ -135,7 +140,8 @@ public class PreService {
         List<Incident> incidentList = incidentDao.findAll();
         List<Card> cardList = cardDao.findAll();
         List<Problem> problemList = problemDao.findAll();
-        if (userList == null || dynastyList == null || incidentList == null || cardList == null || problemList == null) {
+        List<Book> bookList = bookDao.findAll();
+        if (userList == null || dynastyList == null || incidentList == null || cardList == null || problemList == null || bookList == null) {
             return false;
         }
         for (int i = 0; i < userList.size(); i++) {
@@ -152,6 +158,9 @@ public class PreService {
         }
         for (int i = 0; i < problemList.size(); i++) {
             auxiliaryBloomFilterUtil.problemIdAdd(problemList.get(i).getProblemId());
+        }
+        for (int i = 0; i < bookList.size(); i++) {
+            auxiliaryBloomFilterUtil.bookIdAdd(bookList.get(i).getBookId());
         }
         return true;
     }
