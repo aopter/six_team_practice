@@ -3,18 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:background="@mipmap/bg_big_donate"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/bg_big_donate"
     android:padding="15dp"
-    tools:context=".activity.benefit_shop.DonateShopActivity">
+    tools:context=".activity.benefit_shop.DonateProjectActivity">
 
     <RelativeLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:alpha="0.95"
-        android:gravity="center">
+        android:alpha="0.95">
 
         <ImageView
             android:id="@+id/back"
@@ -32,29 +31,15 @@
             android:layout_toRightOf="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="爱心公益"
+            android:text="我的项目"
             android:textColor="@android:color/black"
             android:textSize="18sp" />
 
-        <Button
-            android:layout_marginTop="10dp"
-            android:id="@+id/btn_certification"
-            style="@style/normalBtn"
-            android:text="我的证书"
-            android:layout_alignParentRight="true"/>
-
-        <Button
-            android:layout_marginTop="10dp"
-            android:id="@+id/btn_project"
-            android:text="我的项目"
-            android:layout_marginRight="20dp"
-            android:layout_toLeftOf="@+id/btn_certification"
-            style="@style/normalBtn"/>
     </RelativeLayout>
 
     <GridView
         android:layout_below="@+id/header"
-        android:id="@+id/gv_donate_books"
+        android:id="@+id/gv_donate_mybooks"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="10dp"

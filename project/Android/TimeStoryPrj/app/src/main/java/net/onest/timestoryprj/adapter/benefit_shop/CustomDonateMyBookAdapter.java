@@ -9,46 +9,47 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import net.onest.timestoryprj.R;
-import net.onest.timestoryprj.entity.donate.BookListVO;
+import net.onest.timestoryprj.constant.Constant;
+import net.onest.timestoryprj.entity.donate.UserBookListVO;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class CustomDonateBookAdapter extends BaseAdapter {
+public class CustomDonateMyBookAdapter extends BaseAdapter {
     private Context mContext;
-    private List<BookListVO> bookList = new ArrayList<>();
+    private List<UserBookListVO> userBookList = new ArrayList<>();
     private int itemLayoutRes;
-    private Activity anim;
-    private Button btnBookDetail;
+    private ProgressBar progressBar;
     private ImageView ivBookPic;
+    private Activity anim;
     private TextView text;
-    private TextView sum;
-    private TextView target;
+    private TextView processText;
+    private Button btnDonateCard;
 
-    public CustomDonateBookAdapter(Context mContext, List<BookListVO> bookList, int itemLayoutRes, Activity anim) {
+    public CustomDonateMyBookAdapter(Context mContext, List<UserBookListVO> userBookList, int itemLayoutRes, Activity anim) {
         this.mContext = mContext;
-        this.bookList = bookList;
+        this.userBookList = userBookList;
         this.itemLayoutRes = itemLayoutRes;
         this.anim = anim;
     }
 
-
     @Override
     public int getCount() {
-        if (null != bookList){
-            return bookList.size();
+        if (null != userBookList){
+            return userBookList.size();
         }
         return 0;
     }
 
     @Override
     public Object getItem(int position) {
-        if (null != bookList){
-            return bookList.get(position);
+        if (null != userBookList){
+            return userBookList.get(position);
         }
         return null;
     }
@@ -64,20 +65,21 @@ public class CustomDonateBookAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(mContext).inflate(itemLayoutRes, null);
             ivBookPic = convertView.findViewById(R.id.iv_book_pic);
             text = convertView.findViewById(R.id.text);
-            sum = convertView.findViewById(R.id.sum);
-            target = convertView.findViewById(R.id.target);
-            btnBookDetail = convertView.findViewById(R.id.btn_book_detail);
+            btnDonateCard = convertView.findViewById(R.id.btn_donate_card);
+            progressBar = convertView.findViewById(R.id.process);
+            processText = convertView.findViewById(R.id.process_text);
         }
-        text.setText(bookList.get(position).getBookName());
-        sum.setText(bookList.get(position).getTotalNum() + "");
-        target.setText(bookList.get(position).getGoalNum() + "");
-        btnBookDetail.setOnClickListener(new View.OnClickListener() {
+        initProgress(position);
+        text.setText(userBookList.get(position).getBookListVO().getBookName());
+        processText.setText(userBookList.get(position).getProcess() + "");
+
+        btnDonateCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 switch (view.getId()){
-                    case R.id.btn_book_detail:
+                    case R.id.btn_donate_card:
                         Intent intent = new Intent();
-                        intent.putExtra("book_id", bookList.get(position).getBookId());
+                        intent.putExtra("user_id", Constant.User.getUserId());
                         mContext.startActivity(intent);
                         anim.overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
                         break;
@@ -85,5 +87,14 @@ public class CustomDonateBookAdapter extends BaseAdapter {
             }
         });
         return convertView;
+    }
+
+    /**
+     * 初始化进度条
+     */
+    private void initProgress(int position) {
+        int rate = userBookList.get(position).getProcess();
+        int progress = rate * 100;
+        progressBar.setProgress(progress);
     }
 }

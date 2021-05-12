@@ -13,8 +13,8 @@
         android:gravity="center">
         <ImageView
             android:id="@+id/iv_book_pic"
-            android:layout_width="100dp"
-            android:layout_height="80dp"
+            android:layout_width="120dp"
+            android:layout_height="100dp"
             android:src="@mipmap/book"/>
         <net.onest.timestoryprj.customview.CusTextView
             android:gravity="center"
@@ -85,6 +85,7 @@
         android:orientation="vertical">
 
         <Button
+            android:id="@+id/btn_book_detail"
             style="@style/normalBtn"
             android:text="去看看"/>
     </LinearLayout>

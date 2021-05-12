@@ -3,6 +3,7 @@ package net.onest.timestoryprj.activity.benefit_shop;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -63,7 +64,7 @@ public class DonateShopActivity extends AppCompatActivity {
     };
 
     private void initAdapter() {
-        customDonateBookAdapter = new CustomDonateBookAdapter(this, bookListVOS, R.layout.item_donate_book);
+        customDonateBookAdapter = new CustomDonateBookAdapter(this, bookListVOS, R.layout.item_donate_book, this);
         gvDonateBook = findViewById(R.id.gv_donate_books);
         gvDonateBook.setAdapter(customDonateBookAdapter);
     }
@@ -139,9 +140,14 @@ public class DonateShopActivity extends AppCompatActivity {
         public void onClick(View view) {
             switch (view.getId()){
                 case R.id.btn_certification:
-
+                    Intent intent1 = new Intent(DonateShopActivity.this, CertificationActivity.class);
+                    startActivity(intent1);
+                    overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
                     break;
                 case R.id.btn_project:
+                    Intent intent = new Intent(DonateShopActivity.this, DonateProjectActivity.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
                     break;
             }
         }
