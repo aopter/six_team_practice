@@ -100,7 +100,7 @@ public class DonateShopActivity extends AppCompatActivity {
                 response = call.execute();
                 String json = response.body().string();
                 //1.得到集合类型
-                Type type = new TypeToken<List<SearchIncident>>(){
+                Type type = new TypeToken<List<BookListVO>>(){
                 }.getType();
 //            List<BookListVO> bookList = gson.fromJson(json, type);
                 List<BookListVO> bookList = new ArrayList<>();

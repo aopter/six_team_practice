@@ -1,13 +1,18 @@
 package net.onest.timestoryprj.adapter.book;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import net.onest.timestoryprj.R;
+import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.entity.CertificateUserBookListVO;
 
 import java.util.ArrayList;
@@ -54,6 +59,7 @@ public class BookDatailAdapter extends BaseAdapter {
         TextView tvDetail = view.findViewById(R.id.tv_detail);
         tvTime.setText(bookListVOs.get(i).getDonateTime());
         tvDetail.setText("进展详情："+bookListVOs.get(i).getDonateTime()+"向"+bookListVOs.get(i).getDonateObject()+"捐赠图书，同时学生们也录制了视频表示感谢");
+        Log.e("图书", tvDetail.getText().toString());
         return view;
     }
 }

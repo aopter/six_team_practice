@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.onest.timestoryprj.R;
+import net.onest.timestoryprj.activity.book.BookDetailActivity;
 import net.onest.timestoryprj.entity.donate.BookListVO;
 
 import java.util.ArrayList;
@@ -76,7 +77,7 @@ public class CustomDonateBookAdapter extends BaseAdapter {
             public void onClick(View view) {
                 switch (view.getId()){
                     case R.id.btn_book_detail:
-                        Intent intent = new Intent();
+                        Intent intent = new Intent(mContext, BookDetailActivity.class);
                         intent.putExtra("book_id", bookList.get(position).getBookId());
                         mContext.startActivity(intent);
                         anim.overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);

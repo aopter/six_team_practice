@@ -1,39 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:background="@mipmap/dot"
-        android:layout_marginTop="5dp"/>
 
-    <LinearLayout
+    <net.onest.timestoryprj.customview.CusTextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginLeft="20dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="进展名称"
-            android:textSize="25sp"
-            android:textStyle="bold"/>
-        <TextView
-            android:id="@+id/tv_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2021-06-01"
-            android:textSize="20sp"/>
-        <TextView
-            android:id="@+id/tv_detail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="进展详情:xxx年xx月，向xxx地区捐赠图书"
-            android:textSize="20sp"/>
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:text="进度详情"
+        android:textSize="25sp"
+        android:textColor="@android:color/black" />
 
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="2021-06-01"
+        android:textSize="15sp" />
 
+    <TextView
+        android:id="@+id/tv_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="进展详情:xxx年xx月，向xxx地区捐赠图书"
+        android:textSize="15sp" />
 </LinearLayout>
+
