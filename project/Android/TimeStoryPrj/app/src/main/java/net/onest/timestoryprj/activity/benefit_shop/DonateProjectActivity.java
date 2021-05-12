@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageView;
 
@@ -112,6 +113,7 @@ public class DonateProjectActivity extends AppCompatActivity {
             }
         }).start();
     }
+
 
     /**
      * 初始化OKHTTP对象

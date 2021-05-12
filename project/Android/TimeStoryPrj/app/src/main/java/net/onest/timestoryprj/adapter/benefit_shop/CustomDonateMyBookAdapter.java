@@ -12,11 +12,13 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import net.onest.timestoryprj.R;
-import net.onest.timestoryprj.constant.Constant;
+import net.onest.timestoryprj.activity.benefit_shop.DonateCardActivity;
+import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.entity.donate.UserBookListVO;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,6 +72,9 @@ public class CustomDonateMyBookAdapter extends BaseAdapter {
             processText = convertView.findViewById(R.id.process_text);
         }
         initProgress(position);
+//        Glide.with(mContext)
+//                .load(ServiceConfig.SERVICE_ROOT + "/img/" + userBookList.get(position).getBookListVO().getBookPic())
+//                .into(ivBookPic);
         text.setText(userBookList.get(position).getBookListVO().getBookName());
         processText.setText(userBookList.get(position).getProcess() + "");
 
@@ -78,8 +83,9 @@ public class CustomDonateMyBookAdapter extends BaseAdapter {
             public void onClick(View view) {
                 switch (view.getId()){
                     case R.id.btn_donate_card:
-                        Intent intent = new Intent();
-                        intent.putExtra("user_id", Constant.User.getUserId());
+                        Intent intent = new Intent(mContext, DonateCardActivity.class);
+                        intent.putExtra("processId", userBookList.get(position).getProcessId());
+                        intent.putExtra("process", userBookList.get(position).getProcess());
                         mContext.startActivity(intent);
                         anim.overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
                         break;
@@ -88,7 +94,6 @@ public class CustomDonateMyBookAdapter extends BaseAdapter {
         });
         return convertView;
     }
-
     /**
      * 初始化进度条
      */
