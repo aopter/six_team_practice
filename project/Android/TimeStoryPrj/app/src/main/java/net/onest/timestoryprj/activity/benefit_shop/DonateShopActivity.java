@@ -19,7 +19,6 @@ import com.google.gson.reflect.TypeToken;
 
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.adapter.benefit_shop.CustomDonateBookAdapter;
-import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.entity.SearchIncident;
 import net.onest.timestoryprj.entity.donate.BookListVO;
@@ -146,12 +145,7 @@ public class DonateShopActivity extends AppCompatActivity {
                     overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
                     break;
                 case R.id.btn_project:
-<<<<<<< Updated upstream
                     Intent intent = new Intent(DonateShopActivity.this, DonateProjectActivity.class);
-=======
-                    Intent intent = new Intent(DonateShopActivity.this, DonateShopActivity.class);
-                    intent.putExtra("user_id", Constant.User.getUserId());
->>>>>>> Stashed changes
                     startActivity(intent);
                     overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
                     break;

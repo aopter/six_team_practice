@@ -45,6 +45,7 @@ import java.net.URL;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.leefeng.promptlibrary.PromptDialog;
 
 public class DynastyIntroduceActivity extends AppCompatActivity {
 
@@ -62,6 +63,7 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
     private Gson gson;
     private TextUtil textUtil;
     private Dynasty dynasty1;
+    private PromptDialog promptDialog;
     //    private ScrollView svIntroWord;
     private Handler handler = new Handler() {
         @Override
@@ -77,6 +79,7 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
                     tvDynastyName.setText(dynasty1.getDynastyName());
 //                    tvDynastyIntro.setText(dynasty1.getDynastyInfo());
                     textUtil = new TextUtil(tvDynastyIntro, dynasty1.getDynastyInfo(), 100);
+                    promptDialog.dismissImmediately();
                     break;
             }
         }
@@ -86,6 +89,10 @@ public class DynastyIntroduceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dynasty_introduce);
+        promptDialog = new PromptDialog(this);
+        //设置自定义属性
+        promptDialog.getDefaultBuilder().touchAble(false).round(3).loadingDuration(1000);
+        promptDialog.showLoading("正在加载");
         findViews();
         ButterKnife.bind(this);
         initGson();

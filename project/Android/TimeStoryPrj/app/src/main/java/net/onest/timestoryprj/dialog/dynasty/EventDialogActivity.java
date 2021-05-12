@@ -52,6 +52,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.leefeng.promptlibrary.PromptButton;
+import me.leefeng.promptlibrary.PromptDialog;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -87,6 +88,7 @@ public class EventDialogActivity extends AppCompatActivity {
     private long prelongTim = 0;
     private long curTime = 0;
     private TextUtil textUtil;
+    private PromptDialog promptDialog;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -210,6 +212,7 @@ public class EventDialogActivity extends AppCompatActivity {
                             }
                         }
                     });
+                    promptDialog.dismissImmediately();
                     break;
             }
         }
@@ -260,6 +263,9 @@ public class EventDialogActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_dialog);
+        promptDialog = new PromptDialog(this);
+        promptDialog.getDefaultBuilder().touchAble(false).round(3).loadingDuration(1000);
+        promptDialog.showLoading("正在加载");
         findViews();
         ButterKnife.bind(this);
         initGson();

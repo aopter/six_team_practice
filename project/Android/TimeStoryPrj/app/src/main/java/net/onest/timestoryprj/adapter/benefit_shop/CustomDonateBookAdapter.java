@@ -25,11 +25,9 @@ public class CustomDonateBookAdapter extends BaseAdapter {
     private Activity anim;
     private Button btnBookDetail;
     private ImageView ivBookPic;
-    private Activity anim;
     private TextView text;
     private TextView sum;
     private TextView target;
-    private Button btnBookDetail;
 
     public CustomDonateBookAdapter(Context mContext, List<BookListVO> bookList, int itemLayoutRes, Activity anim) {
         this.mContext = mContext;

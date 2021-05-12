@@ -25,19 +25,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-<<<<<<< Updated upstream
         <activity android:name=".activity.benefit_shop.CertificationActivity"
             android:screenOrientation="landscape" />
-
-=======
         <activity android:name=".activity.benefit_shop.DonateProjectActivity"
             android:screenOrientation="landscape"></activity>
->>>>>>> Stashed changes
+        <activity android:name=".activity.book.BookDetailActivity"></activity>
         <activity
             android:name=".activity.benefit_shop.DonateShopActivity"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".activity.benefit_shop.DonateProjectActivity"
             android:screenOrientation="landscape" />
         <activity
             android:name=".activity.dynasty.TextSearchActivity"
@@ -118,7 +112,7 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".activity.user.LoginActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape"></activity>
         <activity
             android:name=".activity.card.SpectficCardDetailActivity"
             android:screenOrientation="landscape" />
