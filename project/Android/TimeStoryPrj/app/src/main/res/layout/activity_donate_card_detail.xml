@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg_card_detail"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/gif_card_detail" />
+
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:alpha="0.95"
+        android:gravity="center_vertical"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:padding="10dp"
+            android:src="@mipmap/back" />
+
+        <net.onest.timestoryprj.customview.CusTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="捐赠卡片详情"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="30dp"
+            android:gravity="right"
+            android:paddingRight="20dp"
+            android:text="tip：当卡片全部捐赠后，将失去本卡片信息，请谨慎捐卡~"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/header"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <RelativeLayout
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/card_img"
+                android:layout_width="120dp"
+                android:layout_height="260dp"
+                android:layout_above="@+id/card_name_container"
+                android:transitionName="ivGetCard" />
+
+            <LinearLayout
+                android:id="@id/card_name_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/card_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:alpha="0.7"
+                    android:background="@android:color/holo_red_dark"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/btn_donate_card"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="7dp"
+                android:background="@mipmap/bg_card_detail_info"
+                android:padding="15dp">
+
+                <TextView
+                    android:id="@+id/card_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="15dp"
+                    android:alpha="0.85"
+                    android:lineSpacingExtra="5dp"
+                    android:scrollbars="vertical"
+                    android:textColor="@android:color/black"
+                    android:textSize="17sp" />
+            </LinearLayout>
+
+            <!-- 展示进度捐卡进度 -->
+            <TextView
+                android:id="@+id/process_now"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/btn_donate_card"
+                android:layout_alignBottom="@+id/btn_donate_card"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="20dp"
+                android:gravity="center"
+                android:textColor="@color/black" />
+            <!-- 对卡片数目的加减 -->
+            <RelativeLayout
+                android:id="@+id/num"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignTop="@+id/btn_donate_card"
+                android:layout_alignBottom="@+id/btn_donate_card"
+                android:layout_marginRight="20dp"
+                android:layout_toLeftOf="@+id/btn_donate_card">
+
+                <ImageView
+                    android:id="@+id/reduce_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:background="@mipmap/reduce" />
+
+                <TextView
+                    android:id="@+id/donate_num"
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@+id/reduce_num"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:id="@+id/increase_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/donate_num"
+                    android:background="@mipmap/increase" />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btn_donate_card"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="30dp"
+                android:alpha="0.7"
+                android:background="@android:color/holo_red_dark"
+                android:text="捐卡"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

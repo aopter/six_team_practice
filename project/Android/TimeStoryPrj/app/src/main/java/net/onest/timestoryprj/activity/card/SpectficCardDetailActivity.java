@@ -5,11 +5,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.speech.tts.TextToSpeech;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -27,6 +29,7 @@ import net.onest.timestoryprj.util.TextUtil;
 import net.onest.timestoryprj.util.ToastUtil;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,6 +43,7 @@ import okhttp3.Response;
 
 public class SpectficCardDetailActivity extends AppCompatActivity {
     private Card card;
+    private TextToSpeech textToSpeech;
     @BindView(R.id.card_img)
     ImageView cardPic;
     @BindView(R.id.card_name)
@@ -72,7 +76,9 @@ public class SpectficCardDetailActivity extends AppCompatActivity {
     };
 
     private void showDatas() {
-        textUtil = new TextUtil(cardInfo, card.getCardInfo(), 100);
+        textUtil = new TextUtil(cardInfo, card.getCardInfo(), 200);
+        textToSpeech.setSpeechRate(1.5f);
+        textToSpeech.speak(card.getCardInfo(), TextToSpeech.QUEUE_FLUSH, null);
         cardName.setText(card.getCardName());
         Glide.with(getApplicationContext())
                 .load(ServiceConfig.SERVICE_ROOT + "/img/" + card.getCardPicture())
@@ -98,6 +104,18 @@ public class SpectficCardDetailActivity extends AppCompatActivity {
         gson = new GsonBuilder()//创建GsonBuilder对象
                 .serializeNulls()//允许输出Null值属性
                 .create();//创建Gson对象
+        // 设置播报器
+        textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+                    int result = textToSpeech.setLanguage(Locale.CHINESE);
+                    if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Toast.makeText(getApplicationContext(), "数据丢失或不支持", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
         initView();
     }
 
@@ -193,5 +211,12 @@ public class SpectficCardDetailActivity extends AppCompatActivity {
     @OnClick(R.id.back)
     void backToLastPage() {
         finish();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        textToSpeech.stop(); // 不管是否正在朗读TTS都被打断
+        textToSpeech.shutdown(); // 关闭，释放资源
     }
 }

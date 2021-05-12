@@ -24,4 +24,5 @@ public final class Constant {
     public static final int LINK_PROBLEM = 2;//连线题编号
     public static final int ORDER_PROBLEM = 3;//排序题编号
 
+    public static final String DONATE_OBJECT = "希望小学";  // 捐赠图书对象
 }

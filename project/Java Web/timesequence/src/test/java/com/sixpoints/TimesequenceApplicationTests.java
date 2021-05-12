@@ -83,8 +83,6 @@ class TimesequenceApplicationTests {
 
     @Test
     void testService() {
-        System.out.println(userCardService.queryExistingCardByIdAndDynasty(12, 11));
-//        System.out.println(userBookService.getUserBookListVO(1));
-//        System.out.println(userBookService.donateCard(12, 13, 1, 3));
+
     }
 }

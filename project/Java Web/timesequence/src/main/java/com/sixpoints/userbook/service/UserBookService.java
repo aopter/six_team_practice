@@ -1,6 +1,7 @@
 package com.sixpoints.userbook.service;
 
 import com.sixpoints.book.dao.BookDao;
+import com.sixpoints.constant.Constant;
 import com.sixpoints.entity.book.Book;
 import com.sixpoints.entity.book.BookListVO;
 import com.sixpoints.entity.user.User;
@@ -9,13 +10,13 @@ import com.sixpoints.entity.user.book.SpecificBookCompletedListVO;
 import com.sixpoints.entity.user.book.UserBookListVO;
 import com.sixpoints.entity.user.book.UserBookProcess;
 import com.sixpoints.entity.user.card.UserCard;
-import com.sixpoints.entity.user.dynasty.UserProblem;
 import com.sixpoints.user.dao.UserDao;
 import com.sixpoints.userbook.dao.UserBookDao;
 import com.sixpoints.usercard.dao.UserCardDao;
 import com.sixpoints.utils.AuxiliaryBloomFilterUtil;
 import com.sixpoints.utils.DateFormatUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.LinkedList;
@@ -43,6 +44,7 @@ public class UserBookService {
 
     @Resource
     private UserCardDao userCardDao;
+
 
     @Resource
     private DateFormatUtil dateFormatUtil;
@@ -115,7 +117,7 @@ public class UserBookService {
     }
 
     // 用户进行捐卡
-    // TODO 如何在数据库中中间表中删除
+    @Transactional
     public boolean donateCard(int userId, int cardId, int cardNum, int processId) {
         //查询用户,并修改用户信息
         Optional<User> userOptional = userDao.findById(userId);
@@ -123,17 +125,17 @@ public class UserBookService {
             User user = userOptional.get();
             Set<UserBookProcess> userBookProcesses = user.getUserBookProcesses();
             Set<UserCard> userCards = user.getUserCards();
-            System.out.println(userCards);
-            System.out.println(userBookProcesses);
             for (UserBookProcess userBookProcess : userBookProcesses) {
                 // 找到要进行捐卡的项目
                 if (userBookProcess.getProcessId() == processId) {
                     // 判断是否到达100条件
-                    if (userBookProcess.getProcess() + 10 * cardNum >= 100) {
+                    if (userBookProcess.getProcess() + 10 * cardNum > 100) {
+                        return false;
+                    } else if (userBookProcess.getProcess() + 10 * cardNum == 100) {
                         // 设置process为100
                         userBookProcess.setProcess(100);
                         // 设置捐赠对象
-                        userBookProcess.setDonateObject("希望小学");
+                        userBookProcess.setDonateObject(Constant.DONATE_OBJECT);
                         // 设置捐赠时间
                         userBookProcess.setDonateTime(System.currentTimeMillis());
                         // 判断是否为第一次捐赠
@@ -142,6 +144,11 @@ public class UserBookService {
                         }
                         // 对用户总捐赠书籍个数+1
                         user.setUserTotalDonateBooks(user.getUserTotalDonateBooks() + 1);
+                        // TODO 对图书的累计捐赠数量加1,数据库中数据未修改
+                        System.out.println(userBookProcess.getBook().getTotalNum());
+                        int totalNum = userBookProcess.getBook().getTotalNum();
+                        userBookProcess.getBook().setTotalNum(totalNum + 1);
+                        System.out.println(userBookProcess.getBook().getTotalNum());
                     } else {
                         // 未到达100，直接加进度
                         int process = userBookProcess.getProcess() + 10 * cardNum;
