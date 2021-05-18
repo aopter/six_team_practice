@@ -2,10 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/bg_big_donate"
+    android:orientation="vertical"
     android:padding="15dp"
     tools:context=".activity.benefit_shop.DonateProjectActivity">
 
@@ -19,18 +19,20 @@
             android:id="@+id/back"
             android:layout_width="40dp"
             android:layout_height="50dp"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:padding="10dp"
             android:src="@mipmap/back" />
 
         <net.onest.timestoryprj.customview.CusTextView
             android:id="@+id/text"
-            android:gravity="center"
-            android:padding="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_toRightOf="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/back"
+            android:gravity="center"
+            android:padding="5dp"
             android:text="我的项目"
             android:textColor="@android:color/black"
             android:textSize="18sp" />
@@ -38,13 +40,13 @@
     </RelativeLayout>
 
     <GridView
-        android:layout_below="@+id/header"
         android:id="@+id/gv_donate_mybooks"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/header"
+        android:numColumns="2"
         android:padding="10dp"
-        android:verticalSpacing="15dp"
-        android:numColumns="2">
+        android:verticalSpacing="15dp">
 
     </GridView>
 </RelativeLayout>

@@ -3,6 +3,7 @@ package net.onest.timestoryprj.adapter.benefit_shop;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +12,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.activity.book.BookDetailActivity;
+import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.entity.donate.BookListVO;
 
 import java.util.ArrayList;
@@ -24,11 +28,6 @@ public class CustomDonateBookAdapter extends BaseAdapter {
     private List<BookListVO> bookList = new ArrayList<>();
     private int itemLayoutRes;
     private Activity anim;
-    private Button btnBookDetail;
-    private ImageView ivBookPic;
-    private TextView text;
-    private TextView sum;
-    private TextView target;
 
     public CustomDonateBookAdapter(Context mContext, List<BookListVO> bookList, int itemLayoutRes, Activity anim) {
         this.mContext = mContext;
@@ -40,7 +39,7 @@ public class CustomDonateBookAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        if (null != bookList){
+        if (null != bookList) {
             return bookList.size();
         }
         return 0;
@@ -48,7 +47,7 @@ public class CustomDonateBookAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        if (null != bookList){
+        if (null != bookList) {
             return bookList.get(position);
         }
         return null;
@@ -61,30 +60,43 @@ public class CustomDonateBookAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (null == convertView){
+        ViewHolder viewHolder = null;
+        if (null == convertView) {
             convertView = LayoutInflater.from(mContext).inflate(itemLayoutRes, null);
-            ivBookPic = convertView.findViewById(R.id.iv_book_pic);
-            text = convertView.findViewById(R.id.text);
-            sum = convertView.findViewById(R.id.sum);
-            target = convertView.findViewById(R.id.target);
-            btnBookDetail = convertView.findViewById(R.id.btn_book_detail);
+            viewHolder = new ViewHolder();
+            viewHolder.ivBookPic = convertView.findViewById(R.id.iv_book_pic);
+            viewHolder.text = convertView.findViewById(R.id.text);
+            viewHolder.sum = convertView.findViewById(R.id.sum);
+            viewHolder.target = convertView.findViewById(R.id.target);
+            viewHolder.btnBookDetail = convertView.findViewById(R.id.btn_book_detail);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
-        text.setText(bookList.get(position).getBookName());
-        sum.setText(bookList.get(position).getTotalNum() + "");
-        target.setText(bookList.get(position).getGoalNum() + "");
-        btnBookDetail.setOnClickListener(new View.OnClickListener() {
+        viewHolder.text.setText(bookList.get(position).getBookName());
+        viewHolder.sum.setText(bookList.get(position).getTotalNum() + "");
+        viewHolder.target.setText(bookList.get(position).getGoalNum() + "");
+        Glide.with(mContext)
+                .load(ServiceConfig.SERVICE_ROOT + "/img/" + bookList.get(position).getBookPic())
+                .into(viewHolder.ivBookPic);
+        viewHolder.btnBookDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switch (view.getId()){
-                    case R.id.btn_book_detail:
-                        Intent intent = new Intent(mContext, BookDetailActivity.class);
-                        intent.putExtra("book_id", bookList.get(position).getBookId());
-                        mContext.startActivity(intent);
-                        anim.overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
-                        break;
-                }
+                Intent intent = new Intent(mContext, BookDetailActivity.class);
+                Log.e("click", bookList.get(position).getBookId() + "");
+                intent.putExtra("bookId", bookList.get(position).getBookId());
+                mContext.startActivity(intent);
+                anim.overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
             }
         });
         return convertView;
+    }
+
+    public class ViewHolder {
+        private ImageView ivBookPic;
+        private TextView text;
+        private TextView sum;
+        private TextView target;
+        private Button btnBookDetail;
     }
 }

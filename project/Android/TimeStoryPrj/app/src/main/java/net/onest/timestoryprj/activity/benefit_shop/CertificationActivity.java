@@ -20,6 +20,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import net.onest.timestoryprj.R;
+import net.onest.timestoryprj.adapter.benefit_shop.CertificationAdapter;
 import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.entity.donate.CertificateUserBookListVO;
@@ -40,9 +41,10 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class CertificationActivity extends AppCompatActivity {
-
     @BindView(R.id.back)
     ImageView back;
+    @BindView(R.id.user_donate_num)
+    TextView userDonateNum;
     private Gson gson;
     private OkHttpClient okHttpClient;
     String url = "/userbook/donatedlist/";
@@ -52,12 +54,16 @@ public class CertificationActivity extends AppCompatActivity {
     private PromptDialog promptDialog;
     private ListView lvDonateNote;
     private List<CertificateUserBookListVO> cerLists;
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case 1:
-                    cerLists = (List<CertificateUserBookListVO>) msg.obj;
+                    String json = (String) msg.obj;
+                    Log.e("zhengshu", json);
+                    Type type = new TypeToken<ArrayList<CertificateUserBookListVO>>() {
+                    }.getType();
+                    cerLists = gson.fromJson(json, type);
                     initListView();
                     promptDialog.dismissImmediately();
                     break;
@@ -66,20 +72,8 @@ public class CertificationActivity extends AppCompatActivity {
     };
 
     private void initListView() {
-        ArrayList<HashMap<String, String>> lists = new ArrayList<HashMap<String, String>>();
-        for (int i = 0; i < cerLists.size(); i++){
-            HashMap<String, String> map = new HashMap<>();
-            map.put("time", cerLists.get(i).getDonateTime());
-            map.put("intro", "向" + cerLists.get(i).getDonateObject() + "捐赠书籍");
-            lists.add(map);
-        }
-        Log.e("donate", lists.toString());
-        SimpleAdapter myAdapter = new SimpleAdapter(CertificationActivity.this,
-                lists,
-                R.layout.item_list_text,
-                new String[]{"time", "intro"},
-                new int[]{R.id.tv_donate_time, R.id.tv_donate_intro});
-        lvDonateNote.setAdapter(myAdapter);
+        CertificationAdapter certificationAdapter = new CertificationAdapter(this, cerLists, R.layout.item_book);
+        lvDonateNote.setAdapter(certificationAdapter);
     }
 
     @Override
@@ -105,8 +99,13 @@ public class CertificationActivity extends AppCompatActivity {
                 .signature(new ObjectKey(Constant.Random))
                 .into(ivUserHead);
         tvUserName.setText(Constant.User.getUserNickname());
-//        tvFirstDonateTime.setText(Constant.User.getUserFirstDonateTime()+"");
-        tvFirstDonateTime.setText("2020年5月15日");
+        if (Constant.User.getUserTotalDonateBooks() != 0) {
+            tvFirstDonateTime.setText("自" + Constant.User.getUserFirstDonateTime() + "以来");
+            userDonateNum.setText("您共捐赠了 " + Constant.User.getUserTotalDonateBooks() + " 本图书，由六排上分组认证，统一捐赠");
+        } else {
+            tvFirstDonateTime.setText("您还没有捐赠过图书，快去公益图书看看吧~");
+            userDonateNum.setText("");
+        }
     }
 
     /**
@@ -117,24 +116,16 @@ public class CertificationActivity extends AppCompatActivity {
         Request request = new Request.Builder()
                 .url(ServiceConfig.SERVICE_ROOT + url + Constant.User.getUserId())
                 .build();
+        Log.e("url", ServiceConfig.SERVICE_ROOT + url + Constant.User.getUserId());
         Call call = okHttpClient.newCall(request);
-        new Thread(()->{
+        new Thread(() -> {
             Response response = null;
             try {
                 response = call.execute();
                 String json = response.body().string();
-                Type type = new TypeToken<CertificateUserBookListVO>(){}.getType();
-//                List<CertificateUserBookListVO> certificationBookList = gson.fromJson(json,type);
-                List<CertificateUserBookListVO> certificationBookList = new ArrayList<>();
-                CertificateUserBookListVO cerBookList = new CertificateUserBookListVO();
-                cerBookList.setDonateObject("希望小学");
-                cerBookList.setDonateTime("2021年3月3日");
-                for (int i = 0 ; i < 10;i++){
-                    certificationBookList.add(cerBookList);
-                }
                 Message msg = new Message();
                 msg.what = 1;
-                msg.obj = certificationBookList;
+                msg.obj = json;
                 handler.sendMessage(msg);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -160,9 +151,9 @@ public class CertificationActivity extends AppCompatActivity {
         gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .serializeNulls()
-                .setDateFormat("yy:mm:dd")
                 .create();
     }
+
     @OnClick(R.id.back)
     void backToLastPage() {
         finish();

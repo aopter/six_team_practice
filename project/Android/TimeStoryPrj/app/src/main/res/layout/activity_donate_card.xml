@@ -26,6 +26,7 @@
             android:layout_toRightOf="@+id/back"
             android:gravity="center"
             android:padding="10dp"
+            android:textSize="18sp"
             android:text="请选择卡片进行捐赠吧"
             android:textColor="@color/black" />
     </RelativeLayout>

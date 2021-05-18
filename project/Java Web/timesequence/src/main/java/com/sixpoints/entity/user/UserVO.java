@@ -13,13 +13,13 @@ public class UserVO implements Serializable {
 
     private UserStatus userStatus;//用户地位
 
-    private long userFirstDonateTime;//用户首次捐赠图书
+    private String userFirstDonateTime;//用户首次捐赠图书
     private int userTotalDonateBooks;//用户共计捐赠的图书数量
 
     public UserVO() {
     }
 
-    public UserVO(Integer userId, String userHeader, String userNickname, long userExperience, int userCount, UserStatus userStatus, long userFirstDonateTime, int userTotalDonateBooks) {
+    public UserVO(Integer userId, String userHeader, String userNickname, long userExperience, int userCount, UserStatus userStatus, String userFirstDonateTime, int userTotalDonateBooks) {
         this.userId = userId;
         this.userHeader = userHeader;
         this.userNickname = userNickname;
@@ -78,11 +78,11 @@ public class UserVO implements Serializable {
         this.userStatus = userStatus;
     }
 
-    public long getUserFirstDonateTime() {
+    public String getUserFirstDonateTime() {
         return userFirstDonateTime;
     }
 
-    public void setUserFirstDonateTime(long userFirstDonateTime) {
+    public void setUserFirstDonateTime(String userFirstDonateTime) {
         this.userFirstDonateTime = userFirstDonateTime;
     }
 

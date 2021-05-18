@@ -209,6 +209,12 @@ public class UserBookService {
         if (!optionalBook.isPresent()) {
             return false;
         }
+        // 判断用户是否已开启捐赠
+        for (UserBookProcess userBookProcess : user.getUserBookProcesses()) {
+            if (userBookProcess.getBook().getBookId() == bookId) {
+                return false;
+            }
+        }
         Book book = optionalBook.get();
         UserBookProcess userBookProcess = new UserBookProcess();
         userBookProcess.setUser(user);

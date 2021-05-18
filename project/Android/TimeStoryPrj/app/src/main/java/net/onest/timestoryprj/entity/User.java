@@ -17,7 +17,7 @@ public class User {
     private int userCount;//用户积分
     private String userSignature;//用户个性签名
     private int flag;//用于区分手机号登录和QQ登录
-    private long userFirstDonateTime;//用户首次捐赠图书
+    private String userFirstDonateTime;//用户首次捐赠图书
     private int userTotalDonateBooks;//用户共计捐赠的图书数量
 
     public String getUserSignature() {
@@ -148,11 +148,11 @@ public class User {
         this.flag = flag;
     }
 
-    public long getUserFirstDonateTime() {
+    public String getUserFirstDonateTime() {
         return userFirstDonateTime;
     }
 
-    public void setUserFirstDonateTime(long userFirstDonateTime) {
+    public void setUserFirstDonateTime(String userFirstDonateTime) {
         this.userFirstDonateTime = userFirstDonateTime;
     }
 

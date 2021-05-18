@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -90,9 +91,6 @@ public class DonateCardDetailActivity extends AppCompatActivity {
                         } else {
                             ToastUtil.showEncourageToast(getApplicationContext(), "卡片捐赠成功，进度加" + currentDonateNum * 10 + "%", 1500);
                         }
-                        //捐卡成功
-                        Intent intent = new Intent(getApplicationContext(), DonateShopActivity.class);
-                        startActivity(intent);
                         finish();
                     }
                     break;
@@ -179,12 +177,16 @@ public class DonateCardDetailActivity extends AppCompatActivity {
 
     private void getOriginalDatas() {
         Intent intent = getIntent();
-        processId = Integer.parseInt(intent.getStringExtra("processId"));
-        process = Integer.parseInt(intent.getStringExtra("process"));
-        cardId = Integer.parseInt(intent.getStringExtra("cardId"));
-        cardNum = Integer.parseInt(intent.getStringExtra("cardNum"));
-        maxCount = (100 - process) / 10;
-        getCardData();
+        processId = intent.getIntExtra("processId", -1);
+        process = intent.getIntExtra("process", -1);
+        cardId = intent.getIntExtra("cardId", -1);
+        cardNum = intent.getIntExtra("cardNum", -1);
+        if (process != -1 && process != -1 && cardId != -1 && cardNum != -1) {
+            maxCount = (100 - process) / 10;
+            getCardData();
+        } else {
+            ToastUtil.showSickToast(getApplicationContext(), "获取信息错误，请稍后重试", 1500);
+        }
     }
 
     private void getCardData() {
@@ -204,6 +206,7 @@ public class DonateCardDetailActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
                         String result = response.body().string();
+                        Log.e("card", result);
                         Message message = new Message();
                         message.what = 1;
                         message.obj = result;

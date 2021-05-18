@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -20,6 +21,7 @@ import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.entity.donate.BookListVO;
 import net.onest.timestoryprj.entity.donate.UserBookListVO;
+import net.onest.timestoryprj.util.ToastUtil;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -46,10 +48,10 @@ public class DonateProjectActivity extends AppCompatActivity {
     private PromptDialog promptDialog;
     private String url = "/userbook/donating/";
     private CustomDonateMyBookAdapter customDonateMyBookAdapter;
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case 1:
                     userBookList = (List<UserBookListVO>) msg.obj;
                     initAdapter();
@@ -60,6 +62,9 @@ public class DonateProjectActivity extends AppCompatActivity {
     };
 
     private void initAdapter() {
+        if (userBookList.size() == 0) {
+            ToastUtil.showEncourageToast(getApplicationContext(), "您的项目为0，快到公益界面开启吧~", 1500);
+        }
         customDonateMyBookAdapter = new CustomDonateMyBookAdapter(this, userBookList, R.layout.item_donate_mybook, this);
         gvDonateMyBook = findViewById(R.id.gv_donate_mybooks);
         gvDonateMyBook.setAdapter(customDonateMyBookAdapter);
@@ -87,23 +92,17 @@ public class DonateProjectActivity extends AppCompatActivity {
         Request request = new Request.Builder()
                 .url(ServiceConfig.SERVICE_ROOT + url + Constant.User.getUserId())
                 .build();
+        Log.e("url", ServiceConfig.SERVICE_ROOT + url + Constant.User.getUserId());
         Call call = okHttpClient.newCall(request);
-        new Thread(()->{
+        new Thread(() -> {
             Response response = null;
             try {
                 response = call.execute();
                 String json = response.body().string();
-                Type type = new TypeToken<List<UserBookListVO>>(){}.getType();
-//                List<UserBookListVO> myBookList = gson.fromJson(json,type);
-                List<UserBookListVO> myBookList = new ArrayList<>();
-                UserBookListVO ublv = new UserBookListVO();
-                ublv.setProcess(80);
-                BookListVO blv = new BookListVO();
-                blv.setBookName("小王子");
-                ublv.setBookListVO(blv);
-                for (int i = 0; i < 10; i++){
-                    myBookList.add(ublv);
-                }
+                Log.e("donate100", json);
+                Type type = new TypeToken<List<UserBookListVO>>() {
+                }.getType();
+                List<UserBookListVO> myBookList = gson.fromJson(json, type);
                 Message msg = new Message();
                 msg.what = 1;
                 msg.obj = myBookList;
@@ -126,12 +125,17 @@ public class DonateProjectActivity extends AppCompatActivity {
         gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .serializeNulls()
-                .setDateFormat("yy:mm:dd")
                 .create();
     }
 
     @OnClick(R.id.back)
     void backToLastPage() {
         finish();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        downLoadMyProject();
     }
 }

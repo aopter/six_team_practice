@@ -534,11 +534,16 @@ public class HomepageActivity extends AppCompatActivity {
                     }
                     break;
                 case R.id.btn_text_search:
-                    //跳转
-                    Intent intent6 =  new Intent(HomepageActivity.this, TextSearchActivity.class);
-                    startActivity(intent6);
-                    intent6.putExtra("searchText", etTextSearch.getText().toString());
-                    overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
+                    String key = etTextSearch.getText().toString().trim();
+                    if (!"".equals(key) && null != key) {
+                        //跳转
+                        Intent intent6 = new Intent(HomepageActivity.this, TextSearchActivity.class);
+                        intent6.putExtra("searchText", key);
+                        startActivity(intent6);
+                        overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
+                    } else {
+                        ToastUtil.showSickToast(getApplicationContext(), "请输入搜索内容", 1500);
+                    }
                     break;
                 case R.id.btn_love:
                     //跳转
@@ -571,6 +576,7 @@ public class HomepageActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         flag = 0;
+        etTextSearch.setText("");
         getUserInfo();
         List<String> unlockDynastyIds = new ArrayList<>();
         for (int j = 0; j < Constant.UnlockDynasty.size(); j++) {

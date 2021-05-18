@@ -33,6 +33,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.leefeng.promptlibrary.PromptDialog;
 import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -47,15 +48,16 @@ public class DonateShopActivity extends AppCompatActivity {
     private OkHttpClient okHttpClient;
     private Gson gson;
     private GridView gvDonateBook;
-    private List<BookListVO> bookListVOS;
+    private List<BookListVO> bookListVOS = new ArrayList<>();
     private PromptDialog promptDialog;
     private CustomDonateBookAdapter customDonateBookAdapter;
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case 1:
-                    bookListVOS = (List<BookListVO>)msg.obj;
+                    bookListVOS.clear();
+                    bookListVOS = (List<BookListVO>) msg.obj;
                     initAdapter();
                     promptDialog.dismissImmediately();
                     break;
@@ -89,36 +91,32 @@ public class DonateShopActivity extends AppCompatActivity {
      * 从服务端获取全部图书公益列表
      */
     private void downBookListVo() {
-        // /book/list
-        Request request = new Request.Builder()
-                .url(ServiceConfig.SERVICE_ROOT + url)
-                .build();
-        Call call = okHttpClient.newCall(request);
         new Thread(() -> {
-            Response response = null;
-            try {
-                response = call.execute();
-                String json = response.body().string();
-                //1.得到集合类型
-                Type type = new TypeToken<List<BookListVO>>(){
-                }.getType();
-//            List<BookListVO> bookList = gson.fromJson(json, type);
-                List<BookListVO> bookList = new ArrayList<>();
-                BookListVO bookListVO = new BookListVO();
-                bookListVO.setBookName("一千零一夜");
-                bookListVO.setBookId(1);
-                bookListVO.setGoalNum(8);
-                bookListVO.setTotalNum(5);
-                for (int i = 0; i < 10; i++){
-                    bookList.add(bookListVO);
+            // /book/list
+            Request request = new Request.Builder()
+                    .url(ServiceConfig.SERVICE_ROOT + url)
+                    .build();
+            Call call = okHttpClient.newCall(request);
+            call.enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+
                 }
-                Message msg = new Message();
-                msg.what = 1;
-                msg.obj = bookList;
-                handler.sendMessage(msg);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String json = response.body().string();
+                    Log.e("json", json);
+                    //1.得到集合类型
+                    Type type = new TypeToken<ArrayList<BookListVO>>() {
+                    }.getType();
+                    List<BookListVO> bookList = gson.fromJson(json, type);
+                    Message msg = new Message();
+                    msg.what = 1;
+                    msg.obj = bookList;
+                    handler.sendMessage(msg);
+                }
+            });
         }).start();
 
     }
@@ -138,7 +136,7 @@ public class DonateShopActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View view) {
-            switch (view.getId()){
+            switch (view.getId()) {
                 case R.id.btn_certification:
                     Intent intent1 = new Intent(DonateShopActivity.this, CertificationActivity.class);
                     startActivity(intent1);
@@ -164,7 +162,6 @@ public class DonateShopActivity extends AppCompatActivity {
         gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .serializeNulls()
-                .setDateFormat("yy:mm:dd")
                 .create();
     }
 

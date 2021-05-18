@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 public class MyMVCConfig {
     @Bean
-    public WebMvcConfigurerAdapter webMvcConfigurerAdapter(){
+    public WebMvcConfigurerAdapter webMvcConfigurerAdapter() {
         WebMvcConfigurerAdapter adapter = new WebMvcConfigurerAdapter() {
             @Override
             public void addViewControllers(ViewControllerRegistry registry) {
@@ -99,15 +99,15 @@ public class MyMVCConfig {
             @Override
             public void addInterceptors(InterceptorRegistry registry) {
                 registry.addInterceptor(new MyLoginHandlerInterceptor()).addPathPatterns("/**")
-                        .excludePathPatterns("/","/ui-register.html","/ui-login.html","/admin/login","/card/**","/dynasty/**","/incident/**","/picture/**",
-                                "/problem/**","/pricing/**","/rule","/status/**","/team","/user/**","/usercard/**",
-                                "/userdetails/**","/userproblem/**","/recharge/**","/userunlockdynasty/**","/userincident/**","/static/**","/img/**");
+                        .excludePathPatterns("/", "/ui-register.html", "/ui-login.html", "/admin/login", "/card/**", "/dynasty/**", "/incident/**", "/picture/**", "/book/**",
+                                "/problem/**", "/pricing/**", "/rule", "/status/**", "/team", "/user/**", "/usercard/**", "/userbook/**",
+                                "/userdetails/**", "/userproblem/**", "/recharge/**", "/userunlockdynasty/**", "/userincident/**", "/static/**", "/img/**");
 
             }
 
             @Override
             public void addResourceHandlers(ResourceHandlerRegistry registry) {
-                registry.addResourceHandler("/img/**").addResourceLocations("file:"+(PathUtil.getRootPath()+"\\img\\").replace("\\","/"));
+                registry.addResourceHandler("/img/**").addResourceLocations("file:" + (PathUtil.getRootPath() + "\\img\\").replace("\\", "/"));
                 super.addResourceHandlers(registry);
             }
         };

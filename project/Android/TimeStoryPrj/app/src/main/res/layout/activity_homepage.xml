@@ -2,26 +2,26 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/rl_screen"
     tools:context=".activity.dynasty.HomepageActivity">
 
     <RelativeLayout
         android:id="@+id/ll_title"
-        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
         android:layout_height="80dp"
+        android:layout_alignParentTop="true"
         android:background="@mipmap/beijing"
         android:orientation="horizontal"
         android:padding="5dp">
 
         <LinearLayout
             android:id="@+id/rl_title"
-            android:gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="80dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <!-- 头像、名称-->
@@ -92,50 +92,53 @@
 
 
                 <TextView
-                    android:paddingLeft="23dp"
-                    android:gravity="center"
-                    android:paddingRight="20dp"
                     android:id="@+id/tv_point"
                     style="@style/normalBtnT"
+                    android:gravity="center"
+                    android:paddingLeft="23dp"
+                    android:paddingRight="20dp"
                     android:text="200" />
 
                 <Button
-                    android:alpha="0.6"
-                    android:layout_marginRight="7dp"
-                    android:layout_alignRight="@+id/tv_point"
-                    android:layout_centerVertical="true"
                     android:id="@+id/btn_plus"
                     android:layout_width="16dp"
                     android:layout_height="17dp"
-                    android:background="@mipmap/plust" />
-                <TextView
-                    android:textSize="10sp"
-                    android:layout_marginLeft="8dp"
+                    android:layout_alignRight="@+id/tv_point"
                     android:layout_centerVertical="true"
-                    android:textColor="@color/ourDynastyRed"
+                    android:layout_marginRight="7dp"
+                    android:alpha="0.6"
+                    android:background="@mipmap/plust" />
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="积分:  "/>
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="8dp"
+                    android:text="积分:  "
+                    android:textColor="@color/ourDynastyRed"
+                    android:textSize="10sp" />
             </RelativeLayout>
 
             <!-- 全文检索 -->
             <RelativeLayout
-                android:layout_marginRight="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:layout_marginRight="15dp">
 
                 <EditText
                     android:id="@+id/et_text_search"
                     android:layout_width="150dp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionDone|flagNoExtractUi" />
+
                 <Button
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
                     android:id="@+id/btn_text_search"
-                    android:layout_toRightOf="@id/et_text_search"
                     style="@style/normalBtn"
-                    android:text="全文检索"/>
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@id/et_text_search"
+                    android:gravity="center"
+                    android:text="检索" />
             </RelativeLayout>
 
             <!-- 图标-->
@@ -146,11 +149,12 @@
 
                 <Button
                     android:id="@+id/btn_love"
-                    android:layout_toLeftOf="@+id/btn_voice"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginRight="10dp"
-                    android:background="@mipmap/heart"/>
+                    android:layout_toLeftOf="@+id/btn_voice"
+                    android:background="@mipmap/heart" />
+
                 <Button
                     android:id="@+id/btn_voice"
                     android:layout_width="30dp"
@@ -171,16 +175,16 @@
     </RelativeLayout>
 
     <HorizontalScrollView
-        android:layout_below="@+id/ll_title"
         android:id="@+id/hsv_dynasty"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ll_title">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="@mipmap/timg3">
+            android:background="@mipmap/timg3"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/ll_layout1"
@@ -192,20 +196,20 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_below="@id/ll_layout1"
                 android:id="@+id/ll_layout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/ll_layout1"
                 android:layout_marginLeft="30dp"
                 android:orientation="horizontal">
 
             </LinearLayout>
         </RelativeLayout>
     </HorizontalScrollView>
+
     <net.onest.timestoryprj.customview.FlowerView
         android:id="@+id/flowerview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:alpha="1">
-    </net.onest.timestoryprj.customview.FlowerView>
+        android:alpha="1"></net.onest.timestoryprj.customview.FlowerView>
 </RelativeLayout>

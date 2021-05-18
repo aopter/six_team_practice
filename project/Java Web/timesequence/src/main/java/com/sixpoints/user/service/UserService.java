@@ -2,7 +2,6 @@ package com.sixpoints.user.service;
 
 import com.sixpoints.constant.Constant;
 import com.sixpoints.dynasty.dao.DynastyDao;
-import com.sixpoints.entity.dynasty.Dynasty;
 import com.sixpoints.entity.status.UserStatus;
 import com.sixpoints.entity.user.User;
 import com.sixpoints.entity.user.UserDetails;
@@ -10,16 +9,11 @@ import com.sixpoints.entity.user.UserListVO;
 import com.sixpoints.entity.user.UserVO;
 import com.sixpoints.entity.user.dynasty.UserUnlockDynasty;
 import com.sixpoints.status.dao.UserStatusDao;
-import com.sixpoints.status.service.UserStatusService;
 import com.sixpoints.user.dao.UserDao;
 import com.sixpoints.userdetails.dao.UserDetailsDao;
 import com.sixpoints.userunlockdynasty.dao.UserUnlockDynastyDao;
-import com.sixpoints.userunlockdynasty.service.UserUnlockDynastyService;
 import com.sixpoints.utils.AuxiliaryBloomFilterUtil;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import com.sixpoints.utils.DateFormatUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,6 +41,9 @@ public class UserService {
 
     @Resource
     private AuxiliaryBloomFilterUtil auxiliaryBloomFilterUtil;
+
+    @Resource
+    private DateFormatUtil dateFormatUtil;
 
     public List<UserListVO> getTop20() {
         //查找前二十用户
@@ -127,7 +124,7 @@ public class UserService {
         Optional<User> userOptional = userDao.existsUser(userAccount, password);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            return new UserVO(user.getUserId(), user.getUserHeader(), user.getUserNickname(), user.getUserExperience(), user.getUserCount(), user.getUserStatus(), user.getUserFirstDonateTime(), user.getUserTotalDonateBooks());
+            return new UserVO(user.getUserId(), user.getUserHeader(), user.getUserNickname(), user.getUserExperience(), user.getUserCount(), user.getUserStatus(), dateFormatUtil.formatDate(user.getUserFirstDonateTime()), user.getUserTotalDonateBooks());
         }
         return new UserVO();
     }
@@ -136,7 +133,7 @@ public class UserService {
         Optional<User> userOptional = userDao.existsUser(userAccount);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            return new UserVO(user.getUserId(), user.getUserHeader(), user.getUserNickname(), user.getUserExperience(), user.getUserCount(), user.getUserStatus(), user.getUserFirstDonateTime(), user.getUserTotalDonateBooks());
+            return new UserVO(user.getUserId(), user.getUserHeader(), user.getUserNickname(), user.getUserExperience(), user.getUserCount(), user.getUserStatus(), dateFormatUtil.formatDate(user.getUserFirstDonateTime()), user.getUserTotalDonateBooks());
         }
         return new UserVO();
     }

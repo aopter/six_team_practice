@@ -2,10 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:background="@mipmap/bg_big_donate"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/bg_big_donate"
+    android:orientation="vertical"
     android:padding="15dp"
     tools:context=".activity.benefit_shop.DonateShopActivity">
 
@@ -20,46 +20,48 @@
             android:id="@+id/back"
             android:layout_width="40dp"
             android:layout_height="50dp"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:padding="10dp"
             android:src="@mipmap/back" />
 
         <net.onest.timestoryprj.customview.CusTextView
             android:id="@+id/text"
-            android:gravity="center"
-            android:padding="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_toRightOf="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/back"
+            android:gravity="center"
+            android:padding="5dp"
             android:text="爱心公益"
             android:textColor="@android:color/black"
             android:textSize="18sp" />
 
         <Button
-            android:layout_marginTop="10dp"
             android:id="@+id/btn_certification"
             style="@style/normalBtn"
-            android:text="我的证书"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:text="我的证书" />
 
         <Button
-            android:layout_marginTop="10dp"
             android:id="@+id/btn_project"
-            android:text="我的项目"
+            style="@style/normalBtn"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
             android:layout_toLeftOf="@+id/btn_certification"
-            style="@style/normalBtn"/>
+            android:text="我的项目" />
     </RelativeLayout>
 
     <GridView
-        android:layout_below="@+id/header"
         android:id="@+id/gv_donate_books"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/header"
+        android:numColumns="2"
         android:padding="10dp"
-        android:verticalSpacing="15dp"
-        android:numColumns="2">
+        android:verticalSpacing="15dp">
 
     </GridView>
 </RelativeLayout>

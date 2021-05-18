@@ -7,11 +7,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -50,13 +52,14 @@ public class DonateCardActivity extends AppCompatActivity {
     private long clickMillis = 0;
     private long clickTwiceMillis;
     private PromptDialog promptDialog;
-    private String processId;
-    private String process;
+    private int processId;
+    private int process;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
             switch (msg.what) {
                 case 1:
+                    userCards.clear();
                     String result = (String) msg.obj;
                     Type type = new TypeToken<ArrayList<UserCard>>() {
                     }.getType();
@@ -85,8 +88,8 @@ public class DonateCardActivity extends AppCompatActivity {
 
     private void initOriginalData() {
         Intent intent = getIntent();
-        processId = intent.getStringExtra("processId");
-        process = intent.getStringExtra("process");
+        processId = intent.getIntExtra("processId", -1);
+        process = intent.getIntExtra("process", -1);
         getAllCards();
     }
 
@@ -127,6 +130,7 @@ public class DonateCardActivity extends AppCompatActivity {
                 Request request = new Request.Builder()
                         .url(ServiceConfig.SERVICE_ROOT + "/usercard/all/" + Constant.User.getUserId())
                         .build();
+                Log.e("datas", ServiceConfig.SERVICE_ROOT + "/usercard/all/" + Constant.User.getUserId());
                 Call call = client.newCall(request);
                 call.enqueue(new Callback() {
                     @Override
@@ -147,4 +151,10 @@ public class DonateCardActivity extends AppCompatActivity {
         }.start();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // 重新获取
+        getAllCards();
+    }
 }

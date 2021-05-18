@@ -1,4 +1,4 @@
-package net.onest.timestoryprj.adapter.book;
+package net.onest.timestoryprj.adapter.benefit_shop;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,35 +8,34 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import net.onest.timestoryprj.R;
-import net.onest.timestoryprj.entity.SpecificBookCompletedListVO;
+import net.onest.timestoryprj.entity.donate.CertificateUserBookListVO;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class BookDatailAdapter extends BaseAdapter {
+public class CertificationAdapter extends BaseAdapter {
     private Context context;
-    private List<SpecificBookCompletedListVO> bookListVOs = new ArrayList<>();
+    private List<net.onest.timestoryprj.entity.donate.CertificateUserBookListVO> certificateUserBookListVOS = new ArrayList<>();
     private int itemLayoutRes;
 
-    public BookDatailAdapter(Context context, List<SpecificBookCompletedListVO> bookListVOs, int itemLayoutRes) {
+    public CertificationAdapter(Context context, List<CertificateUserBookListVO> certificateUserBookListVOS, int itemLayoutRes) {
         this.context = context;
-        this.bookListVOs = bookListVOs;
+        this.certificateUserBookListVOS = certificateUserBookListVOS;
         this.itemLayoutRes = itemLayoutRes;
     }
 
     @Override
     public int getCount() {
-        if (null != bookListVOs) {
-            return bookListVOs.size();
+        if (null != certificateUserBookListVOS) {
+            return certificateUserBookListVOS.size();
         }
         return 0;
     }
 
     @Override
     public Object getItem(int i) {
-        if (null != bookListVOs) {
-            return bookListVOs.get(i);
+        if (null != certificateUserBookListVOS) {
+            return certificateUserBookListVOS.get(i);
         }
         return null;
     }
@@ -52,8 +51,8 @@ public class BookDatailAdapter extends BaseAdapter {
             view = LayoutInflater.from(context).inflate(itemLayoutRes, null);
             TextView tvTime = view.findViewById(R.id.tv_time);
             TextView tvDetail = view.findViewById(R.id.tv_detail);
-            tvTime.setText(bookListVOs.get(i).getDonateTime());
-            tvDetail.setText("用户'" + bookListVOs.get(i).getUserName() + "'向" + bookListVOs.get(i).getDonateObject() + "捐赠图书，同时学生们也录制了视频表示感谢");
+            tvTime.setText(certificateUserBookListVOS.get(i).getDonateTime());
+            tvDetail.setText("您向" + certificateUserBookListVOS.get(i).getDonateObject() + "捐赠图书，学生们录制了视频向您表示感谢");
         }
         return view;
     }
