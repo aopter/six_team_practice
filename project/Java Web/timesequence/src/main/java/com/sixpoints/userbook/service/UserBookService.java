@@ -211,7 +211,7 @@ public class UserBookService {
         }
         // 判断用户是否已开启捐赠
         for (UserBookProcess userBookProcess : user.getUserBookProcesses()) {
-            if (userBookProcess.getBook().getBookId() == bookId) {
+            if (userBookProcess.getBook().getBookId() == bookId && userBookProcess.getProcess() != 100) {
                 return false;
             }
         }

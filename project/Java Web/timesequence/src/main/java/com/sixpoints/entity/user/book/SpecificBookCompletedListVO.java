@@ -23,11 +23,11 @@ public class SpecificBookCompletedListVO implements Serializable {
         this.donateObject = donateObject;
     }
 
-    public String getUserId() {
+    public String getUserName() {
         return userName;
     }
 
-    public void setUserId(String userName) {
+    public void setUserName(String userName) {
         this.userName = userName;
     }
 

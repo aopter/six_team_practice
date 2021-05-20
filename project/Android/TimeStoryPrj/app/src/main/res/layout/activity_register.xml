@@ -10,9 +10,9 @@
     <pl.droidsonroids.gif.GifImageView
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:src="@mipmap/gif_login"/>
+        android:layout_alignParentBottom="true"
+        android:src="@mipmap/gif_login" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -38,7 +38,7 @@
         <EditText
             android:id="@+id/et_res_pwd"
             style="@style/loginEtStyle"
-            android:hint="密码"
+            android:hint="密码应由12-18个数字、字符组成"
             android:imeOptions="actionDone|flagNoExtractUi"
             android:inputType="textPassword" />
 
@@ -46,11 +46,11 @@
             android:id="@+id/btn_res"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="50dp"
-            android:paddingRight="50dp"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:background="@mipmap/login_button"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp"
             android:text="注册"
             android:textColor="@color/ourDynastyRed"
             android:textSize="23sp" />

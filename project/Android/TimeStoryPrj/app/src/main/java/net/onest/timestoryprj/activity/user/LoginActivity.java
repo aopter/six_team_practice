@@ -3,6 +3,7 @@ package net.onest.timestoryprj.activity.user;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import com.google.gson.Gson;
 import com.tencent.connect.UserInfo;
 import com.tencent.connect.auth.QQToken;
@@ -24,14 +26,20 @@ import com.tencent.connect.common.Constants;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
+
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.activity.dynasty.HomepageActivity;
 import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.entity.User;
+import net.onest.timestoryprj.util.PhoneUtil;
+import net.onest.timestoryprj.util.ToastUtil;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
+
 import me.leefeng.promptlibrary.PromptDialog;
 import okhttp3.Call;
 import okhttp3.FormBody;
@@ -61,10 +69,10 @@ public class LoginActivity extends AppCompatActivity {
     private String userSex;
     private String userNickName;
     private String figureurl;
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case 1:
                     promptDialog = (PromptDialog) msg.obj;
                     promptDialog.showSuccess("登录成功");
@@ -83,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mTencent = Tencent.createInstance(1111252578+"", LoginActivity.this.getApplicationContext());
+        mTencent = Tencent.createInstance(1111252578 + "", LoginActivity.this.getApplicationContext());
 
         okHttpClient = new OkHttpClient();
         promptDialog = new PromptDialog(this);
@@ -152,13 +160,13 @@ public class LoginActivity extends AppCompatActivity {
                     Response response = call.execute();
                     String result = response.body().string();
                     Log.e("result", result);
-                    if (result.contains("false")){
+                    if (result.contains("false")) {
                         //登录失败
                         Message message = handler.obtainMessage();
                         message.what = 2;
                         message.obj = promptDialog;
                         handler.sendMessage(message);
-                    }else {
+                    } else {
                         //登录成功
                         boolean isSave = chRemember.isChecked();
                         if (isSave) {
@@ -184,7 +192,7 @@ public class LoginActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-            }.start();
+        }.start();
     }
 
     class MyListener implements View.OnClickListener {
@@ -195,10 +203,14 @@ public class LoginActivity extends AppCompatActivity {
                     phone = etPhone.getText().toString().trim();
                     pwd = etPwd.getText().toString().trim();
                     if (null != phone && null != pwd && phone.length() == 11) {
-                        upToServer();
-                        promptDialog.showLoading("正在登录");
+                        if (PhoneUtil.isMobileNo(phone)) {
+                            upToServer();
+                            promptDialog.showLoading("正在登录");
+                        } else {
+                            ToastUtil.showSickToast(getApplicationContext(), "请输入正确的手机号码", 1500);
+                        }
                     } else {
-                        Toast.makeText(getApplicationContext(), "您的格式不正确，请重新检查", Toast.LENGTH_SHORT).show();
+                        ToastUtil.showSickToast(getApplicationContext(), "您的格式不正确，请重新检查", 1500);
                     }
                     break;
                 case R.id.btn_register://注册
@@ -208,8 +220,8 @@ public class LoginActivity extends AppCompatActivity {
                     break;
                 case R.id.btn_qq://QQ登录
                     baseUiListener = new BaseUiListener();
-                    Log.e("ok","正在监听");
-                    mTencent.login(LoginActivity.this,"all",baseUiListener);
+                    Log.e("ok", "正在监听");
+                    mTencent.login(LoginActivity.this, "all", baseUiListener);
                     break;
             }
         }
@@ -218,8 +230,8 @@ public class LoginActivity extends AppCompatActivity {
     private class BaseUiListener implements IUiListener {
         @Override
         public void onComplete(Object o) {
-            Toast.makeText(getApplicationContext(),"授权成功",Toast.LENGTH_SHORT).show();
-            Log.e("LoginActivity",o.toString());
+            Toast.makeText(getApplicationContext(), "授权成功", Toast.LENGTH_SHORT).show();
+            Log.e("LoginActivity", o.toString());
             String info = o.toString();
             try {
                 JSONObject object = new JSONObject(info);
@@ -227,20 +239,20 @@ public class LoginActivity extends AppCompatActivity {
                 String accessToken = object.getString("access_token");
                 String expires = object.getString("expires_in");
                 mTencent.setOpenId(openId);
-                mTencent.setAccessToken(accessToken,expires);
+                mTencent.setAccessToken(accessToken, expires);
                 QQToken qqToken = mTencent.getQQToken();
-                userInfo = new UserInfo(getApplicationContext(),qqToken);
+                userInfo = new UserInfo(getApplicationContext(), qqToken);
                 //上传服务器
                 userInfo.getUserInfo(new IUiListener() {
                     @Override
                     public void onComplete(Object o) {
-                        Log.e("信息",o.toString());
+                        Log.e("信息", o.toString());
                         try {
                             JSONObject obj = new JSONObject(o.toString());
                             userNickName = obj.getString("nickname");
                             userSex = obj.getString("gender");
                             figureurl = obj.getString("figureurl_2");
-                            Log.e("昵称",userNickName);
+                            Log.e("昵称", userNickName);
                             upInfoToServer();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -266,30 +278,34 @@ public class LoginActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+
         @Override
         public void onError(UiError uiError) {
-            Toast.makeText(getApplicationContext(),"授权失败",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "授权失败", Toast.LENGTH_SHORT).show();
         }
+
         @Override
         public void onCancel() {
-            Toast.makeText(getApplicationContext(),"授权取消",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "授权取消", Toast.LENGTH_SHORT).show();
         }
+
         @Override
         public void onWarning(int i) {
 
         }
     }
+
     /**
      * QQ授权登录
      */
     private void upInfoToServer() {
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 FormBody.Builder formBuilder = new FormBody.Builder();
                 FormBody formBody = formBuilder.add("userAccount", openId)
-                        .add("userNickname",userNickName)
-                        .add("flag",2+"")
+                        .add("userNickname", userNickName)
+                        .add("flag", 2 + "")
                         .build();
                 Request request = new Request.Builder()
                         .url(ServiceConfig.SERVICE_ROOT + "/user/register")
@@ -300,23 +316,23 @@ public class LoginActivity extends AppCompatActivity {
                 try {
                     Response response = call.execute();
                     String obj = response.toString();
-                    Log.e("obj",obj);
+                    Log.e("obj", obj);
                     String result = response.body().string();
-                    Log.e("result", result+"2");
-                    if (result.contains("false")){
+                    Log.e("result", result + "2");
+                    if (result.contains("false")) {
                         Looper.prepare();
-                        Toast.makeText(getApplicationContext(),"登录失败",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "登录失败", Toast.LENGTH_SHORT).show();
                         Looper.loop();
-                    }else if (result == null || result.equals("")){
+                    } else if (result == null || result.equals("")) {
                         Looper.prepare();
-                        Toast.makeText(getApplicationContext(),"登录失败",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "登录失败", Toast.LENGTH_SHORT).show();
                         Looper.loop();
-                    }else{
+                    } else {
                         Intent intent = new Intent();
-                        intent.setClass(getApplicationContext(),HomepageActivity.class);
+                        intent.setClass(getApplicationContext(), HomepageActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
-                        Constant.User = gson.fromJson(result,User.class);
+                        Constant.User = gson.fromJson(result, User.class);
                         Constant.User.setFlag(1);
                         Constant.User.setUserHeader(figureurl);
                     }
@@ -329,10 +345,10 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == Constants.REQUEST_LOGIN){
-            Log.e("ok","回调函数");
-            Tencent.onActivityResultData(requestCode,resultCode,data,baseUiListener);
-            Log.e("iii","跳过去");
+        if (requestCode == Constants.REQUEST_LOGIN) {
+            Log.e("ok", "回调函数");
+            Tencent.onActivityResultData(requestCode, resultCode, data, baseUiListener);
+            Log.e("iii", "跳过去");
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
