@@ -78,7 +78,7 @@ public class Book implements Serializable {
     }
 
     public void setTotalNum(int totalNum) {
-        totalNum = totalNum;
+        this.totalNum = totalNum;
     }
 
     @Column

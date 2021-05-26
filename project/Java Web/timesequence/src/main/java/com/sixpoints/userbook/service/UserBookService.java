@@ -143,12 +143,10 @@ public class UserBookService {
                             user.setUserFirstDonateTime(System.currentTimeMillis());
                         }
                         // 对用户总捐赠书籍个数+1
-                        user.setUserTotalDonateBooks(user.getUserTotalDonateBooks() + 1);
-                        // TODO 对图书的累计捐赠数量加1,数据库中数据未修改
-                        System.out.println(userBookProcess.getBook().getTotalNum());
-                        int totalNum = userBookProcess.getBook().getTotalNum();
-                        userBookProcess.getBook().setTotalNum(totalNum + 1);
-                        System.out.println(userBookProcess.getBook().getTotalNum());
+                        int totalDonateBooks = user.getUserTotalDonateBooks() + 1;
+                        user.setUserTotalDonateBooks(totalDonateBooks);
+                        int totalNum = userBookProcess.getBook().getTotalNum() + 1;
+                        userBookProcess.getBook().setTotalNum(totalNum);
                     } else {
                         // 未到达100，直接加进度
                         int process = userBookProcess.getProcess() + 10 * cardNum;
