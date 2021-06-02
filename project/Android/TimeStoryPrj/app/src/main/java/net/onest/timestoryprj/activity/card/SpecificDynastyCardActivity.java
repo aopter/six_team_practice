@@ -67,6 +67,8 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
     ImageView searchDelete;
     @BindView(R.id.search_btn)
     TextView searchBtn;
+    @BindView(R.id.not_exist)
+    TextView notExistCards;
     private OkHttpClient client;
     private Gson gson;
     int type = 0;
@@ -152,6 +154,8 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
         super.onResume();
         searchCardName.setText("");
         typeView.textView.setText(types.get(0));
+        type = 0;
+        getCardsByType(type);
     }
 
     private void initDynastyCards() {
@@ -232,6 +236,13 @@ public class SpecificDynastyCardActivity extends AppCompatActivity {
         } else {
             getCardsByKey(key);
         }
+    }
+
+    @OnClick(R.id.not_exist)
+    void showNotExistCards() {
+        Intent intent = new Intent(getApplicationContext(), NotExistUserCardActivity.class);
+        intent.putExtra("dynastyId", dynastyId);
+        startActivity(intent);
     }
 
     private void getCardsByKey(String key) {

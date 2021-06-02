@@ -2,26 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/bg_search"
-    android:orientation="vertical">
+    android:background="@mipmap/bg_dynasty_card"
+    android:orientation="vertical"
+    android:padding="20dp">
 
     <LinearLayout
-        android:id="@+id/head"
+        android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="55dp"
+        android:alpha="0.95"
         android:gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:paddingTop="10dp"
-        android:paddingRight="10dp">
+        android:padding="10dp">
 
         <ImageView
-            android:id="@+id/btn_pre"
+            android:id="@+id/back"
             android:layout_width="40dp"
             android:layout_height="50dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
             android:padding="10dp"
             android:src="@mipmap/back" />
 
@@ -29,18 +26,14 @@
             android:id="@+id/text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="搜索结果"
+            android:text="卡片详情"
             android:textColor="@android:color/black"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
     </LinearLayout>
 
-    <!-- 显示搜索到的内容 -->
-    <ListView
-        android:id="@+id/search_incident_list"
+    <GridView
+        android:id="@+id/not_exist_cards"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/head"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
-        android:paddingBottom="20dp" />
+        android:numColumns="3" />
 </LinearLayout>

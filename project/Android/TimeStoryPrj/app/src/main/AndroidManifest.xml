@@ -25,12 +25,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.benefit_shop.CertificationActivity"
+        <activity
+            android:name=".activity.card.NotExistUserCardActivity"
             android:screenOrientation="landscape" />
-        <activity android:name=".activity.benefit_shop.DonateProjectActivity"
-            android:screenOrientation="landscape"></activity>
-        <activity android:name=".activity.book.BookDetailActivity"
-            android:screenOrientation="landscape"></activity>
+        <activity
+            android:name=".activity.benefit_shop.CertificationActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.benefit_shop.DonateProjectActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.book.BookDetailActivity"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".activity.benefit_shop.DonateShopActivity"
             android:screenOrientation="landscape" />
@@ -113,7 +119,7 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".activity.user.LoginActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".activity.card.SpectficCardDetailActivity"
             android:screenOrientation="landscape" />
@@ -156,10 +162,12 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="behind"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name=".activity.benefit_shop.DonateCardActivity"
-            android:screenOrientation="landscape"/>
-        <activity android:name=".activity.benefit_shop.DonateCardDetailActivity"
-            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".activity.benefit_shop.DonateCardActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.benefit_shop.DonateCardDetailActivity"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>

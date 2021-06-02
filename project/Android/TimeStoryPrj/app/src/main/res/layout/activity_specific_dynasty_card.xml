@@ -25,7 +25,7 @@
             android:layout_width="260dp"
             android:layout_height="50dp"
             android:layout_marginRight="20dp"
-            android:layout_toLeftOf="@+id/card_types"
+            android:layout_toLeftOf="@+id/not_exist"
             android:background="@drawable/border_style"
             android:orientation="horizontal"
             android:paddingLeft="10dp"
@@ -64,6 +64,18 @@
                 android:textSize="15sp" />
         </RelativeLayout>
 
+        <TextView
+            android:id="@+id/not_exist"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="8dp"
+            android:layout_toLeftOf="@+id/card_types"
+            android:background="@drawable/border_style"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="查看未获得卡片"
+            android:textColor="@color/black" />
+
         <net.onest.timestoryprj.customview.DropdownListView
             android:id="@+id/card_types"
             android:layout_width="wrap_content"
@@ -72,15 +84,9 @@
             android:layout_marginLeft="10dp" />
     </RelativeLayout>
 
-    <LinearLayout
+    <GridView
+        android:id="@+id/dynasty_cards"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
-
-        <GridView
-            android:id="@+id/dynasty_cards"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:numColumns="3" />
-    </LinearLayout>
+        android:numColumns="3" />
 </LinearLayout>

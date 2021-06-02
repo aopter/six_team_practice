@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -59,7 +60,7 @@ public class TextSearchActivity extends AppCompatActivity {
     private Typeface typeface;
     private PromptDialog promptDialog;
     @BindView(R.id.btn_pre)
-    Button btnPre;
+    ImageView btnPre;
     @BindView(R.id.search_incident_list)
     ListView searchIncidentResult;
     List<SearchIncident> incidentList;

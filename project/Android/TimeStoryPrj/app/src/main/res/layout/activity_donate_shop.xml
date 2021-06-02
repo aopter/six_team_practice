@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/bg_big_donate"
+    android:background="@mipmap/bg_main_donate"
     android:orientation="vertical"
     android:padding="15dp"
     tools:context=".activity.benefit_shop.DonateShopActivity">

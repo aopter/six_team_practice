@@ -1,5 +1,6 @@
 package com.sixpoints.usercard.controller;
 
+import com.sixpoints.entity.card.CardListVO;
 import com.sixpoints.entity.user.card.UserCardVO;
 import com.sixpoints.usercard.dao.UserCardDao;
 import com.sixpoints.usercard.service.UserCardService;
@@ -40,4 +41,17 @@ public class UserCardController {
     public List<UserCardVO> queryAllExistingCards(@PathVariable("userId") int userId) {
         return userCardService.queryExistingCardByUserId(userId);
     }
+
+    @RequestMapping("/not/{userId}/{dynastyId}")
+    @ResponseBody
+    public List<CardListVO> queryNotExistingCards(@PathVariable("userId") int userId, @PathVariable("dynastyId") int dynastyId) {
+        return userCardService.queryNotExistingCardByIdAndDynasty(userId, dynastyId);
+    }
+
+    @RequestMapping("/add/{userId}/{cardId}")
+    @ResponseBody
+    public String canDraw(@PathVariable("userId") int userId, @PathVariable("cardId") int cardId) {
+        return userCardService.addCard(userId, cardId) ? "{'result':true}" : "{'result':false}";
+    }
+
 }
