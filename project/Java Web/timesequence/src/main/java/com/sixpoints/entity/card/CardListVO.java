@@ -2,7 +2,7 @@ package com.sixpoints.entity.card;
 
 import java.io.Serializable;
 
-public class CardListVO implements Serializable {
+public class CardListVO implements Serializable, Comparable<CardListVO> {
     private Integer cardId;//卡片标识符
     private String cardName;//卡片名称
     private String cardPicture;//卡片图片
@@ -47,5 +47,11 @@ public class CardListVO implements Serializable {
 
     public void setCardType(Integer cardType) {
         this.cardType = cardType;
+    }
+
+
+    @Override
+    public int compareTo(CardListVO o) {
+        return this.cardId - o.getCardId();
     }
 }

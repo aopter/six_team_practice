@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @className UserBookListVO.java
  * @description 证书中用户公益列表实体类
  */
-public class CertificateUserBookListVO implements Serializable {
+public class CertificateUserBookListVO implements Serializable, Comparable<CertificateUserBookListVO> {
     private String donateTime;//捐赠时间,当process达到100时记录
     private String donateObject;//捐赠对象
     private Integer bookId;//相对的图书标识符
@@ -54,5 +54,11 @@ public class CertificateUserBookListVO implements Serializable {
                 ", donateObject='" + donateObject + '\'' +
                 ", bookId=" + bookId +
                 '}';
+    }
+
+
+    @Override
+    public int compareTo(CertificateUserBookListVO o) {
+        return o.donateTime.compareTo(this.getDonateTime());
     }
 }

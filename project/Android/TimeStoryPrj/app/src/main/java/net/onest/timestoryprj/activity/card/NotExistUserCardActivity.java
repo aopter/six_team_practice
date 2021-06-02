@@ -35,6 +35,7 @@ import javax.security.auth.login.LoginException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import me.leefeng.promptlibrary.PromptDialog;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -199,5 +200,10 @@ public class NotExistUserCardActivity extends AppCompatActivity {
                 });
             }
         }.start();
+    }
+
+    @OnClick(R.id.back)
+    void back() {
+        finish();
     }
 }

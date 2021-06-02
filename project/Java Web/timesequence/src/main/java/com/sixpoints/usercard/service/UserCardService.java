@@ -20,10 +20,7 @@ import com.sixpoints.utils.RedisUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class UserCardService {
@@ -86,6 +83,7 @@ public class UserCardService {
                 }
             }
         }
+        Collections.sort(userCardVOS);
         //返回信息
         return userCardVOS;
     }
@@ -126,6 +124,7 @@ public class UserCardService {
                 }
             }
         }
+        Collections.sort(userCardVOS);
         //返回信息
         return userCardVOS;
     }
@@ -150,6 +149,7 @@ public class UserCardService {
                 re.add(userCardVO);
             }
         }
+        Collections.sort(re);
         return re;
     }
 
@@ -166,6 +166,7 @@ public class UserCardService {
                 re.add(userCardVO);
             }
         }
+        Collections.sort(re);
         return re;
     }
 
@@ -204,6 +205,7 @@ public class UserCardService {
                 System.out.println(userCardVO);
             }
         }
+        Collections.sort(userCardVOS);
         //返回信息
         return userCardVOS;
     }
@@ -243,6 +245,7 @@ public class UserCardService {
             cardListVO.setCardPicture(card.getCardPicture());
             cardListVOS.add(cardListVO);
         }
+        Collections.sort(cardListVOS);
         //返回信息
         return cardListVOS;
     }

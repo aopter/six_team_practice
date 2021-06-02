@@ -15,14 +15,12 @@ import com.sixpoints.userbook.dao.UserBookDao;
 import com.sixpoints.usercard.dao.UserCardDao;
 import com.sixpoints.utils.AuxiliaryBloomFilterUtil;
 import com.sixpoints.utils.DateFormatUtil;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author ASUS
@@ -88,6 +86,7 @@ public class UserBookService {
                 }
             }
         }
+        Collections.sort(certificateUserBookListVOS);
         //返回信息
         return certificateUserBookListVOS;
     }
@@ -112,6 +111,7 @@ public class UserBookService {
                 }
             }
         }
+        Collections.sort(userBookListVOS);
         //返回信息
         return userBookListVOS;
     }

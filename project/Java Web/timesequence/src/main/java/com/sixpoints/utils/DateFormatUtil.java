@@ -16,7 +16,7 @@ import java.util.Date;
 public class DateFormatUtil {
 
     public String formatDate(long time) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd hh:mm");
         Date date = new Date(time);
         return format.format(date);
     }

@@ -6,6 +6,7 @@ import com.sixpoints.entity.book.BookListVO;
 import com.sixpoints.entity.book.BookVO;
 import com.sixpoints.utils.AuxiliaryBloomFilterUtil;
 import com.sixpoints.utils.RedisUtil;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -32,8 +33,9 @@ public class BookService {
         }
         //创建返回数组
         List<BookListVO> listVOS = new LinkedList<>();
+        Sort sort = Sort.by(Sort.Direction.ASC, "bookId");
         //获取图书信息
-        List<Book> books = bookDao.findAll();
+        List<Book> books = bookDao.findAll(sort);
         //将信息封装入list中
         for (Book book : books) {
             if (book.getFlag() == 1) {

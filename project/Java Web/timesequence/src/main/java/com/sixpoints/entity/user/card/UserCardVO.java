@@ -4,12 +4,13 @@ import com.sixpoints.entity.card.CardListVO;
 
 import java.io.Serializable;
 
-public class UserCardVO implements Serializable {
+public class UserCardVO implements Serializable, Comparable<UserCardVO> {
     private Integer userCardId;//用户卡片标识符
     private Integer cardCount;//卡片数量
     private CardListVO cardListVO;//卡片列表VO
 
-    public UserCardVO() {}
+    public UserCardVO() {
+    }
 
     public UserCardVO(Integer userCardId, Integer cardCount, CardListVO cardListVO) {
         this.userCardId = userCardId;
@@ -39,5 +40,10 @@ public class UserCardVO implements Serializable {
 
     public void setCardListVO(CardListVO cardListVO) {
         this.cardListVO = cardListVO;
+    }
+
+    @Override
+    public int compareTo(UserCardVO o) {
+        return this.userCardId - o.getUserCardId();
     }
 }
