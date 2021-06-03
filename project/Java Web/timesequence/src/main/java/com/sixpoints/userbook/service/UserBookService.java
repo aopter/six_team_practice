@@ -81,7 +81,7 @@ public class UserBookService {
             for (UserBookProcess userBookProcess : userBookProcesses) {
                 if (userBookProcess.getProcess() == 100) {
                     String time = dateFormatUtil.formatDate(userBookProcess.getDonateTime());
-                    CertificateUserBookListVO listVO = new CertificateUserBookListVO(time, userBookProcess.getDonateObject(), userBookProcess.getBook().getBookId());
+                    CertificateUserBookListVO listVO = new CertificateUserBookListVO(time, userBookProcess.getDonateObject(), userBookProcess.getBook().getBookId(), userBookProcess.getBook().getBookName());
                     certificateUserBookListVOS.add(listVO);
                 }
             }

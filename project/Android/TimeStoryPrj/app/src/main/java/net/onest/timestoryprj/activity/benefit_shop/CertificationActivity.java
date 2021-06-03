@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -74,6 +76,12 @@ public class CertificationActivity extends AppCompatActivity {
     private void initListView() {
         CertificationAdapter certificationAdapter = new CertificationAdapter(this, cerLists, R.layout.item_book);
         lvDonateNote.setAdapter(certificationAdapter);
+//        lvDonateNote.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+//                // 阅读器公益图书
+//            }
+//        });
     }
 
     @Override

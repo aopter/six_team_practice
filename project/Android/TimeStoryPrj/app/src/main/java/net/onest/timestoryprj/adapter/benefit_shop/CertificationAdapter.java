@@ -15,7 +15,7 @@ import java.util.List;
 
 public class CertificationAdapter extends BaseAdapter {
     private Context context;
-    private List<net.onest.timestoryprj.entity.donate.CertificateUserBookListVO> certificateUserBookListVOS = new ArrayList<>();
+    private List<CertificateUserBookListVO> certificateUserBookListVOS = new ArrayList<>();
     private int itemLayoutRes;
 
     public CertificationAdapter(Context context, List<CertificateUserBookListVO> certificateUserBookListVOS, int itemLayoutRes) {
@@ -52,7 +52,7 @@ public class CertificationAdapter extends BaseAdapter {
             TextView tvTime = view.findViewById(R.id.tv_time);
             TextView tvDetail = view.findViewById(R.id.tv_detail);
             tvTime.setText(certificateUserBookListVOS.get(i).getDonateTime());
-            tvDetail.setText("您向" + certificateUserBookListVOS.get(i).getDonateObject() + "捐赠图书，学生们录制了视频向您表示感谢");
+            tvDetail.setText("您向'" + certificateUserBookListVOS.get(i).getDonateObject() + "'捐赠了一本《" + certificateUserBookListVOS.get(i).getBookName() + "》，学生们录制了视频向您表示感谢");
         }
         return view;
     }

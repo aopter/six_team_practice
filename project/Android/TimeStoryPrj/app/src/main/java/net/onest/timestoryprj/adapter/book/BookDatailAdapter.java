@@ -53,7 +53,7 @@ public class BookDatailAdapter extends BaseAdapter {
             TextView tvTime = view.findViewById(R.id.tv_time);
             TextView tvDetail = view.findViewById(R.id.tv_detail);
             tvTime.setText(bookListVOs.get(i).getDonateTime());
-            tvDetail.setText("用户'" + bookListVOs.get(i).getUserName() + "'向" + bookListVOs.get(i).getDonateObject() + "捐赠图书，同时学生们也录制了视频表示感谢");
+            tvDetail.setText("用户'" + bookListVOs.get(i).getUserName() + "'向'" + bookListVOs.get(i).getDonateObject() + "'捐赠图书，同时学生们也录制了视频表示感谢");
         }
         return view;
     }
