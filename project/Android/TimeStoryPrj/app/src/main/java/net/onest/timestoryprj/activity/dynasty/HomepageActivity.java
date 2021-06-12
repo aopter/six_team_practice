@@ -1,10 +1,5 @@
 package net.onest.timestoryprj.activity.dynasty;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Color;
@@ -14,22 +9,26 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.signature.ObjectKey;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -39,21 +38,16 @@ import com.tinytongtong.tinyutils.LogUtils;
 import net.onest.timestoryprj.R;
 import net.onest.timestoryprj.activity.benefit_shop.DonateShopActivity;
 import net.onest.timestoryprj.activity.card.DrawCardActivity;
-import net.onest.timestoryprj.activity.card.MyCardActivity;
-import net.onest.timestoryprj.activity.problem.ProblemCollectionActivity;
 import net.onest.timestoryprj.activity.user.RechargeActivity;
 import net.onest.timestoryprj.activity.user.SettingActivity;
 import net.onest.timestoryprj.activity.user.UserCenterActivity;
-import net.onest.timestoryprj.adapter.user.UserRankListAdapter;
 import net.onest.timestoryprj.constant.Constant;
 import net.onest.timestoryprj.constant.ServiceConfig;
 import net.onest.timestoryprj.customview.FlowerView;
-import net.onest.timestoryprj.dialog.card.CustomDialog;
 import net.onest.timestoryprj.entity.Dynasty;
 import net.onest.timestoryprj.entity.User;
 import net.onest.timestoryprj.entity.UserStatus;
 import net.onest.timestoryprj.entity.UserUnlockDynasty;
-import net.onest.timestoryprj.util.DensityUtil;
 import net.onest.timestoryprj.util.ToastUtil;
 
 import java.io.BufferedReader;
@@ -88,7 +82,6 @@ public class HomepageActivity extends AppCompatActivity {
     private Button btnPlus;
     private Button btnCard;
     private Button btnLove;
-    private Button btnTextSearch;
     private ImageView ivHeader;
     private Button btnVoice;
     private Button btnSettings;
@@ -102,7 +95,7 @@ public class HomepageActivity extends AppCompatActivity {
     private Typeface typeface;
     private ProgressBar progressBar;
     private User user;
-    private EditText etTextSearch;
+    private SearchView searchView;
     private long prelongTim = 0;
     private long curTime = 0;
     /**
@@ -418,7 +411,6 @@ public class HomepageActivity extends AppCompatActivity {
         btnPlus.setOnClickListener(myListener);
         ivHeader.setOnClickListener(myListener);
         tvLevel.setOnClickListener(myListener);
-        btnTextSearch.setOnClickListener(myListener);
         btnLove.setOnClickListener(myListener);
     }
 
@@ -426,9 +418,7 @@ public class HomepageActivity extends AppCompatActivity {
         ivHeader = findViewById(R.id.iv_header);
         btnVoice = findViewById(R.id.btn_voice);
         btnSettings = findViewById(R.id.btn_settings);
-        btnTextSearch = findViewById(R.id.btn_text_search);
         btnLove = findViewById(R.id.btn_love);
-        etTextSearch = findViewById(R.id.et_text_search);
         tvLevel = findViewById(R.id.tv_level);
         tvPoint = findViewById(R.id.tv_point);
         btnPlus = findViewById(R.id.btn_plus);
@@ -436,6 +426,43 @@ public class HomepageActivity extends AppCompatActivity {
         llLayout1 = findViewById(R.id.ll_layout1);
         llLayout2 = findViewById(R.id.ll_layout2);
         progressBar = findViewById(R.id.experience_progress);
+        searchView = findViewById(R.id.text_search);
+        //设置该SearchView默认是否自动缩小为图标
+        searchView.setIconifiedByDefault(true);
+        //设置该SearchView显示搜索按钮
+        searchView.setSubmitButtonEnabled(true);
+        searchView.setQueryHint("检索");
+        //为该SearchView组件设置事件监听器
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            //单机搜索按钮时激发该方法
+            @Override
+            public boolean onQueryTextSubmit(String key) {
+                Log.e("tip", key);
+                //实际应用中应该在该方法内执行实际查询，此处仅使用Toast显示用户输入的查询内容
+                if (!"".equals(key) && null != key) {
+                    //跳转
+                    Intent intent6 = new Intent(HomepageActivity.this, TextSearchActivity.class);
+                    intent6.putExtra("searchText", key);
+                    startActivity(intent6);
+                    overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
+                } else {
+                    ToastUtil.showSickToast(HomepageActivity.this, "请输入搜索内容", 1500);
+                }
+                return false;
+            }
+
+            //用户输入字符时激发该方法
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //如果newText不是长度为0的字符串
+                if (TextUtils.isEmpty(newText)) {
+                    //清除ListView的过滤
+                } else {
+                    //使用用户输入的内容对ListView的列表项进行过滤
+                }
+                return true;
+            }
+        });
     }
 
     /**
@@ -533,18 +560,6 @@ public class HomepageActivity extends AppCompatActivity {
 
                     }
                     break;
-                case R.id.btn_text_search:
-                    String key = etTextSearch.getText().toString().trim();
-                    if (!"".equals(key) && null != key) {
-                        //跳转
-                        Intent intent6 = new Intent(HomepageActivity.this, TextSearchActivity.class);
-                        intent6.putExtra("searchText", key);
-                        startActivity(intent6);
-                        overridePendingTransition(R.anim.anim_in_right, R.anim.anim_out_left);
-                    } else {
-                        ToastUtil.showSickToast(getApplicationContext(), "请输入搜索内容", 1500);
-                    }
-                    break;
                 case R.id.btn_love:
                     //跳转
                     Intent intent2 = new Intent(HomepageActivity.this, DonateShopActivity.class);
@@ -576,7 +591,6 @@ public class HomepageActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         flag = 0;
-        etTextSearch.setText("");
         getUserInfo();
         List<String> unlockDynastyIds = new ArrayList<>();
         for (int j = 0; j < Constant.UnlockDynasty.size(); j++) {

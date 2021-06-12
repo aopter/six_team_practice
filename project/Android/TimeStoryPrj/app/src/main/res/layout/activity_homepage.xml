@@ -126,19 +126,11 @@
                 android:layout_gravity="center"
                 android:layout_marginRight="15dp">
 
-                <EditText
-                    android:id="@+id/et_text_search"
-                    android:layout_width="150dp"
+                <SearchView
+                    android:id="@+id/text_search"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionDone|flagNoExtractUi" />
-
-                <Button
-                    android:id="@+id/btn_text_search"
-                    style="@style/normalBtn"
-                    android:layout_marginTop="5dp"
-                    android:layout_toRightOf="@id/et_text_search"
-                    android:gravity="center"
-                    android:text="检索" />
             </RelativeLayout>
 
             <!-- 图标-->
